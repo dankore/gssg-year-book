@@ -6,7 +6,7 @@ exports.home = (req, res) => {
 }
 
 exports.createProfile = (req, res) => {
-  console.log(req.body.firstname)
+  console.log(req.body.firstName)
   res.send("Thank for for submitting your profile")
 }
 
