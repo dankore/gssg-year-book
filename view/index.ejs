@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-</head>
-
-<body class="flex justify-center mt-6 bg-red-400">
-  <form action="/create-profile" method="POST">
+<%- include('includes/header') %>
+<div class="flex justify-center p-2 sm:p-4 mx-auto relative min-h-full max-w-2xl">
+  <form action="/create-profile" method="POST" class="max-w-lg mx-auto shadow-md p-8 border rounded mt-4 bg-white">
     <div class="flex flex-wrap -mx-3 mb-6">
       <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
@@ -27,13 +18,13 @@
           class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
           id="grid-last-name" type="text" placeholder="Doe">
       </div>
-      <div class="w-full md:w-1/2 px-3">
+      <div class="w-full px-3">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
           Email
         </label>
         <input name="email"
           class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          id="grid-last-name" type="text" placeholder="Doe">
+          id="grid-last-name" type="text" placeholder="Email">
       </div>
     </div>
     <div class="flex flex-wrap -mx-3 mb-6">
@@ -44,7 +35,7 @@
         <input name="password"
           class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
           id="grid-password" type="password" placeholder="******************">
-        <p class="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
+        <p class="text-gray-600 text-xs italic">Password shoould minimun of 6 characters</p>
       </div>
     </div>
     <div class="flex items-center justify-between">
@@ -54,6 +45,5 @@
       </button>
     </div>
   </form>
-</body>
-
-</html>
+</div>
+<%- include('includes/footer') %>
