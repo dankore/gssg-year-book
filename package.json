@@ -1,0 +1,23 @@
+{
+  "name": "gssg-year-book",
+  "version": "1.0.0",
+  "description": "Phot book for gss gwarinpa students- past and present",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dankore/gssg-year-book.git"
+  },
+  "author": "Adamu M Dankore",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dankore/gssg-year-book/issues"
+  },
+  "homepage": "https://github.com/dankore/gssg-year-book#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.2"
+  }
+}
