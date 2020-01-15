@@ -2,7 +2,7 @@ const router = require('./router');
 const User = require('./model')
 
 exports.home = (req, res) => {
-  res.render('index')
+  res.render('home-guest')
 }
 
 exports.register = (req, res) => {
