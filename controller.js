@@ -5,12 +5,13 @@ exports.home = (req, res) => {
   res.render('home-guest')
 }
 
-exports.register = (req, res) => {
-  res.render('index')
+exports.registrationPage = (req, res) => {
+  res.render('register');
 }
-exports.createProfile = (req, res) => {
-  console.log(req.body.firstName, req.body.lastName, req.body.email, req.body.password)
-  res.send("Thank for for submitting your profile!")
+exports.registrationSubmission = (req, res) => {
+  let user = new User(req.body);
+  user.register();
+  res.send("Thank for for submitting your profile!");
 }
 
 

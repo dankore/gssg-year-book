@@ -4,7 +4,7 @@ const controller = require('./controller');
 
 
 router.get('/', controller.home);
-router.get('/register', controller.register);
-router.post('/create-profile', controller.createProfile);
+router.get('/register', controller.registrationPage);
+router.post('/register', controller.registrationSubmission);
 
 module.exports = router;

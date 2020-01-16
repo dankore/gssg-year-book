@@ -1,10 +1,12 @@
-const mongodb = require('mongodb');
 const dotenv = require('dotenv');
+const MongoClient = require('mongodb').MongoClient
 dotenv.config();
 
-mongodb.connect(process.env.CONNECTIONSTRING, {useNewUrlParser: true, useUnifiedTopology: true}, (Error, client)=>{
-    module.exports = client.db()
-    const server = require('./server');
-    const port = process.env.PORT;
-    server.listen(port, () => console.log("Listening on port " + port))
-})
+MongoClient.connect(process.env.CONNECTIONSTRING, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(function (client) {
+        module.exports = client;
+        const port = process.env.PORT;
+        const server = require('./server');
+        server.listen(port, () => console.log("Listening on port " + port));
+    })
+    .catch(error => console.log(error));
