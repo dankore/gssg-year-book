@@ -1,11 +1,11 @@
-const express  = require('express');
-const app = express();
-const port = 8080;
+const express = require('express');
+const server = express();
 const router = require('./router');
 
-// app.use(express.json());
-app.set("views", "view")
-app.set("view engine", "ejs")
-app.use(express.urlencoded({extended: true}))
-app.use(router)
-app.listen(port, ()=> console.log("Listening on port " + port))
+// server.use(express.json());
+server.set("views", "view")
+server.set("view engine", "ejs")
+server.use(express.urlencoded({ extended: true }))
+server.use(router)
+
+module.exports = server;

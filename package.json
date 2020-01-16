@@ -4,7 +4,7 @@
   "description": "Phot book for gss gwarinpa students- past and present",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server"
+    "start": "nodemon db"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/dankore/gssg-year-book#readme",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "mongodb": "^3.5.0",
