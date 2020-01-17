@@ -10,7 +10,13 @@ exports.registrationPage = (req, res) => {
 }
 exports.registrationSubmission = (req, res) => {
   let user = new User(req.body);
-  user.register();
+  user.register().then(()=>{
+    console.log("success!")
+  })
+  .catch(()=>{
+    console.log("failure!")
+  })
+
   res.send("Thank for for submitting your profile!");
 }
 
