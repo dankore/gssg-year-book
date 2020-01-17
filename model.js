@@ -50,10 +50,10 @@ User.prototype.validateUserRegistration = function(){
 
 User.prototype.cleanUp = function(){
   if(typeof this.data.firstName != 'string'){
-    this.data.firstName.length = "";
+    this.data.firstName = "";
   }
   if(typeof this.data.lastName != 'string'){
-    this.data.lastName.length = "";
+    this.data.lastName = "";
   }
   if(typeof this.data.email != 'string'){
     this.data.email = "";
@@ -76,4 +76,16 @@ User.prototype.register = function () {
  
 }
 
+User.prototype.login = function(){
+  this.cleanUp();
+  usersCollection.findOne({email: this.data.email}, (err, attemptedUser) => {
+    // attemptedUser: if email exist, attemptedUser is the whole document
+    // if user does NOT exist dont bother making a query
+    if(attemptedUser && attemptedUser.password == this.data.password){
+      console.log("congrats!")
+    } else {
+      console.log("invalid username and password!")
+    }
+  })
+}
 module.exports = User;

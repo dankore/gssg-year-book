@@ -19,8 +19,10 @@ exports.registrationSubmission = (req, res) => {
 
   res.send("Thank for for submitting your profile!");
 }
-exports.loginPage = (req, res) => {
-  res.render('loginPage')
+exports.login = (req, res) => {
+  let user = new User(req.body);
+  user.login();
+  res.send('Thank you for login in!')
 }
 
 

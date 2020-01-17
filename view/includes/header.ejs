@@ -9,16 +9,16 @@
 </head>
 <header class="bg-green-600 py-3 font-bold text-white">
     <div class="flex justify-around items-center">
-        <div>
-           <a class="sm:text-lg md:text-2xl" href="/">GSS Gwarinpa Contact Book</a>
+      <div>
+        <a class="sm:text-lg md:text-2xl" href="/">GSS Gwarinpa Contact Book</a>
       </div>
-      <div class="flex flex-wrap">
-        <form action="/" method="POST" class="flex flex-wrap">
-          <input type="text" class="mr-2 pl-2 text-black rounded" placeholder="Email" />
-          <input type="text" class="mr-2 pl-2 text-black rounded" placeholder="Password" />
-          <a href="#"><button class="mr-4 rounded border border-white hover:bg-green-800 px-3 py-1">Login</button></a>
+      <div class="">
+        <form action="/login" method="POST" class="flex flex-wrap">
+          <input name="email" type="text" class="mr-2 pl-2 text-black rounded" placeholder="Email" />
+          <input name="password" type="password" class="mr-2 pl-2 text-black rounded" placeholder="Password" />
+          <button class="mr-4 rounded border border-white hover:bg-green-800 px-3 py-1">Login</button>
         </form>
-            <a href="/register"><button class="rounded border border-white text-white hover:bg-green-800 px-4 py-1">Register</button></a>
+        <a href="/register"><button class="rounded border border-white text-white hover:bg-green-800 px-4 py-1">Register</button></a>
       </div>
     </div>
 </header>
