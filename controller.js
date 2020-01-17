@@ -27,7 +27,7 @@ exports.registrationSubmission = (req, res) => {
 exports.login = (req, res) => {
     let user = new User(req.body);
     req.session.user = {
-      username: user.data.username,
+      email: user.data.email,
       _id: user.data._id
     }
     user.login()
