@@ -20,9 +20,11 @@ exports.registrationSubmission = (req, res) => {
   res.send("Thank for for submitting your profile!");
 }
 exports.login = (req, res) => {
-  let user = new User(req.body);
-  user.login();
-  res.send('Thank you for login in!')
+    let user = new User(req.body);
+    user.login().then(()=>{
+      res.send("Login successful")
+    })
+    .catch(err => res.send(err)) 
 }
 
 
