@@ -6,7 +6,7 @@ exports.home = (req, res) => {
 }
 
 exports.registrationPage = (req, res) => {
-  res.render('register');
+  res.render('registrationPage');
 }
 exports.registrationSubmission = (req, res) => {
   let user = new User(req.body);
