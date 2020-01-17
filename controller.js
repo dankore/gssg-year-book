@@ -1,5 +1,5 @@
 const router = require('./router');
-const User = require('./model')
+const User = require('./model');
 
 exports.home = (req, res) => {
   res.render('home-guest')
@@ -10,7 +10,8 @@ exports.registrationPage = (req, res) => {
 }
 exports.registrationSubmission = (req, res) => {
   let user = new User(req.body);
-  user.register().then(()=>{
+  user.register()
+  .then(()=>{
     console.log("success!")
   })
   .catch(()=>{
@@ -21,7 +22,8 @@ exports.registrationSubmission = (req, res) => {
 }
 exports.login = (req, res) => {
     let user = new User(req.body);
-    user.login().then(()=>{
+    user.login()
+    .then(()=> {
       res.send("Login successful")
     })
     .catch(err => res.send(err)) 

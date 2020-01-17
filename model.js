@@ -1,5 +1,6 @@
 const usersCollection = require('./db').db().collection("users");
 const validator = require('validator');
+const bcryptjs = require('bcryptjs');
 
 let User = class user {
   constructor(data) {
@@ -40,7 +41,7 @@ User.prototype.validateUserRegistration = function(){
       let emailExist = await usersCollection.findOne({email: this.data.email});
 
       if(emailExist){
-        errors.push("That email is already been used.")
+        this.errors.push("That email is already been used.")
       }
     }
     resolve();
@@ -61,15 +62,18 @@ User.prototype.cleanUp = function(){
 }
 
 User.prototype.register = function () {
+
   return new Promise(async(resolve, reject) => {
     this.cleanUp();
     await this.validateUserRegistration();
 
     if(!this.errors.length){
+      let salt = bcryptjs.genSaltSync(10);
+      this.data.password = bcryptjs.hashSync(this.data.password, salt);
       await usersCollection.insertOne(this.data);
-      resolve();
+      // resolve();
     } else {
-      reject(this.errors);
+      // reject(this.errors);
     }
     
   })
@@ -84,10 +88,8 @@ User.prototype.login = function(){
       // attemptedUser: if email exist, attemptedUser is the whole document
       // if user does NOT exist dont bother making a query
       if(attemptedUser && attemptedUser.password == this.data.password){
-        console.log("congrats!");
         resolve();
       } else {
-        console.log("invalid username and password!");
         reject();
       }
     })
