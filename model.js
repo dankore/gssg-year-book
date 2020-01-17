@@ -71,9 +71,9 @@ User.prototype.register = function () {
       let salt = bcryptjs.genSaltSync(10);
       this.data.password = bcryptjs.hashSync(this.data.password, salt);
       await usersCollection.insertOne(this.data);
-      // resolve();
+      resolve();
     } else {
-      // reject(this.errors);
+      reject(this.errors);
     }
     
   })
@@ -87,7 +87,7 @@ User.prototype.login = function(){
     await usersCollection.findOne({email: this.data.email}, (err, attemptedUser) => {
       // attemptedUser: if email exist, attemptedUser is the whole document
       // if user does NOT exist dont bother making a query
-      if(attemptedUser && attemptedUser.password == this.data.password){
+      if(attemptedUser && bcryptjs.compareSync(this.data.password, attemptedUser.password)){
         resolve();
       } else {
         reject();
