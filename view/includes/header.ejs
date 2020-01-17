@@ -11,11 +11,15 @@
     <div class="flex justify-around items-center">
         <div>
            <a class="sm:text-lg md:text-2xl" href="/">GSS Gwarinpa Contact Book</a>
-        </div>
-        <div>
-            <a href="/"><button class="mr-4 rounded border border-white hover:bg-green-800 px-3 py-1">Login</button></a>
-            <a href="/register"><button class="rounded border border-white hover:bg-green-800 px-4 py-1">Register</button></a>
-        </div>
+      </div>
+      <div class="flex flex-wrap">
+        <form action="/" method="POST" class="flex flex-wrap">
+          <input type="text" class="mr-2 pl-2 text-black rounded" placeholder="Email" />
+          <input type="text" class="mr-2 pl-2 text-black rounded" placeholder="Password" />
+          <a href="#"><button class="mr-4 rounded border border-white hover:bg-green-800 px-3 py-1">Login</button></a>
+        </form>
+            <a href="/register"><button class="rounded border border-white text-white hover:bg-green-800 px-4 py-1">Register</button></a>
+      </div>
     </div>
 </header>
 

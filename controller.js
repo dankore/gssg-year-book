@@ -19,5 +19,8 @@ exports.registrationSubmission = (req, res) => {
 
   res.send("Thank for for submitting your profile!");
 }
+exports.loginPage = (req, res) => {
+  res.render('loginPage')
+}
 
 
