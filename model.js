@@ -82,19 +82,27 @@ User.prototype.register = function () {
 
 User.prototype.login = function () {
 
-  return new Promise(async (resolve, reject) => {
+  return new Promise( async (resolve, reject) => {
     this.cleanUp();
-    await usersCollection.findOne({ email: this.data.email }, (err, attemptedUser) => {
+    await usersCollection
+    .findOne({ email: this.data.email })
+    .then(attemptedUser => {
       // attemptedUser: if email exist, attemptedUser is the whole document
       // if user does NOT exist dont bother making a query
-      if (attemptedUser && bcryptjs.compareSync(this.data.password, attemptedUser.password)) {
-        resolve();
+      if (
+        attemptedUser && 
+        bcryptjs.compareSync(this.data.password, attemptedUser.password)
+        ) {
+        this.data = attemptedUser;
+        resolve("congrats");
       } else {
-        reject();
+        reject("Invalid username/password");
       }
     })
-
+      .catch(function () {
+        reject("Please try again later.");
+      });
   })
-
 }
+
 module.exports = User;
