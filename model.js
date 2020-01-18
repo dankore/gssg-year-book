@@ -41,13 +41,15 @@ User.prototype.validateUserRegistration = function () {
 User.prototype.login = function(){
   return new Promise((resolve, reject)=> {
     this.cleanUp();
-    usersCollection.findOne({email: this.data.email}, (err, attemptedUser) => {
-    if(attemptedUser && attemptedUser.password == this.data.password){
+    usersCollection.findOne({email: this.data.email}).then((attemptedUser)=>{
+      if(attemptedUser && attemptedUser.password == this.data.password){
       resolve("Congrats!")
     } else {
       reject("Invalid email/password!")
     }
-  })
+    }).catch(() => {
+      reject("Please try again later.")
+    })
   })
 }
 
