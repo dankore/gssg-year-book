@@ -7,21 +7,33 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
+
 <header class="bg-green-600 py-3 font-bold text-white">
   <div class="flex justify-around items-center">
-    <div>
-      <a class="sm:text-lg md:text-2xl" href="/">GSS Gwarinpa Contact Book</a>
+  <div>
+    <a class="sm:text-lg md:text-xl" href="/">GSS Gwarinpa Contact Book</a>
+  </div>
+
+  <% if (user) { %>
+    <form action="/logout" method="POST" class="flex flex-wrap">
+      <button class="mr-4 rounded border border-white hover:bg-green-800 px-3 py-1">Logout</button>
+    </form>
     </div>
+
+  <% } else {  %>
     <div class="flex">
       <form action="/login" method="POST" class="flex flex-wrap">
-        <input name="email" type="text" class="mr-2 pl-2 text-black rounded" placeholder="Email" />
-        <input name="password" type="password" class="mr-2 pl-2 text-black rounded" placeholder="Password" />
+        <input name="email" type="text" class="shadow appearance-none border rounded py-1 px-3 mr-2 text-gray-700 leading-tight" placeholder="Email" />
+
+        <input name="password" type="password" class="shadow appearance-none border rounded py-1 px-3 mr-2 text-gray-700 leading-tight" placeholder="Password" />
+        
         <button class="mr-4 rounded border border-white hover:bg-green-800 px-3 py-1">Login</button>
       </form>
-      <a href="/register"><button
-          class="rounded border border-white text-white hover:bg-green-800 px-4 py-1">Register</button></a>
+      <a href="/register">
+       <button class="rounded border border-white hover:bg-green-800 px-3 py-1">Register</button>
+      </a>
     </div>
   </div>
+  <% } %>
 </header>
-
 <body class="bg-gray-200">

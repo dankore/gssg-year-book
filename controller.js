@@ -5,7 +5,7 @@ exports.home = (req, res) => {
 }
 
 exports.registrationPage = (req, res) => {
-  res.render('registrationPage');
+  res.render('registrationPage', {user: req.session.user});
 }
 
 exports.registrationSubmission = (req, res) => {
