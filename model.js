@@ -10,8 +10,7 @@ let User = class user {
 };
 
 User.prototype.validateUserRegistration = function () {
-  return new Promise(async (resolve, reject) => {
-    // check for empty boxes
+      // check for empty boxes
     if (this.data.firstName.length == "") {
       this.errors.push("First name is required.")
     }
@@ -37,18 +36,19 @@ User.prototype.validateUserRegistration = function () {
     }
 
     // check to see if email is valid and not taken
-    if (validator.isEmail(this.data.email)) {
-      let emailExist = await usersCollection.findOne({ email: this.data.email });
-
-      if (emailExist) {
-        this.errors.push("That email is already been used.")
-      }
-    }
-    resolve();
-  });
 
 }
 
+User.prototype.login = function(callback){
+  this.cleanUp();
+  usersCollection.findOne({email: this.data.email}, (err, attemptedUser) => {
+    if(attemptedUser && attemptedUser.password == this.data.password){
+      callback("Congrats!")
+    } else {
+      callback("Invalid email/password!")
+    }
+  })
+}
 User.prototype.cleanUp = function () {
   if (typeof this.data.firstName != 'string') {
     this.data.firstName = "";
@@ -62,47 +62,20 @@ User.prototype.cleanUp = function () {
 }
 
 User.prototype.register = function () {
+    //Make sure username is string
+    this.cleanUp()
+    // Step #1: Validate user data
+    this.validateUserRegistration();
 
-  return new Promise(async (resolve, reject) => {
-    this.cleanUp();
-    await this.validateUserRegistration();
-
+    // Step #2: Only if there no validation error
+    // then save the user data into the database
     if (!this.errors.length) {
-      let salt = bcryptjs.genSaltSync(10);
-      this.data.password = bcryptjs.hashSync(this.data.password, salt);
-      await usersCollection.insertOne(this.data);
-      resolve();
-    } else {
-      reject(this.errors);
+        // Hash user password
+        // let salt = bcrypt.genSaltSync(10);
+        // this.data.password = bcrypt.hashSync(this.data.password, salt)
+        usersCollection.insertOne(this.data)
     }
 
-  })
-
-}
-
-User.prototype.login = function () {
-
-  return new Promise( async (resolve, reject) => {
-    this.cleanUp();
-    await usersCollection
-    .findOne({ email: this.data.email })
-    .then(attemptedUser => {
-      // attemptedUser: if email exist, attemptedUser is the whole document
-      // if user does NOT exist dont bother making a query
-      if (
-        attemptedUser && 
-        bcryptjs.compareSync(this.data.password, attemptedUser.password)
-        ) {
-        this.data = attemptedUser;
-        resolve("congrats");
-      } else {
-        reject("Invalid username/password");
-      }
-    })
-      .catch(function () {
-        reject("Please try again later.");
-      });
-  })
 }
 
 module.exports = User;
