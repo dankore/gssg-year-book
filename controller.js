@@ -1,11 +1,7 @@
 const User = require('./model');
 
 exports.home = (req, res) => {
-  if (req.session.user) {
-    res.render('homeDashboard', { email: req.session.user.email})
-  } else {
-    res.render('home-guest')
-  }
+  res.render('homePage', {user: req.session.user})
 }
 
 exports.registrationPage = (req, res) => {
@@ -21,6 +17,7 @@ exports.registrationSubmission = (req, res) => {
   } else {
     res.send("Congrats there no errors.");
   }
+
 }
 
 exports.login = (req, res) => {
@@ -29,12 +26,12 @@ exports.login = (req, res) => {
   user.login().then(function(result){
     req.session.user = {
       email: user.data.email,
-      fav: "color"
     }
     res.redirect('/')
   }).catch(function(err){
     res.send(err)
   })
+
 }
 
 exports.logout = function(req, res){
