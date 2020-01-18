@@ -33,10 +33,10 @@ User.prototype.validateUserRegistration = function () {
     if(this.data.password.length > 50){
       this.errors.push("Password cannot exceed 50 characters.")
     }
-    if(this.data.password.length < 4){
+    if(String(this.data.year).length < 4){
       this.errors.push("Year should not be less than 4 characters.")
     }
-    if(this.data.password.length > 4){
+    if(String(this.data.year).length > 4){
       this.errors.push("Year should not be greater than 4 characters.")
     }
 

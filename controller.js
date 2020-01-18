@@ -1,12 +1,13 @@
 const User = require('./model');
 
 exports.home = (req, res) => {
-  console.log(req.flash('errors'))
-  res.render('homePage', {user: req.session.user, errors: req.flash('errors')})
+  const loginErrors = req.flash('errors');
+  res.render('homePage', { errors: loginErrors, user: req.session.user})
 }
 
 exports.registrationPage = (req, res) => {
-  res.render('registrationPage', {user: req.session.user});
+ const registrationErrors = req.flash("reqError")
+  res.render('registrationPage', { reqErrors: registrationErrors, user: req.session.user });
 }
 
 exports.registrationSubmission = (req, res) => {
@@ -14,7 +15,12 @@ exports.registrationSubmission = (req, res) => {
   user.register();
 
   if (user.errors.length) {
-    res.send(user.errors);
+    user.errors.forEach(function (error) {
+      req.flash('reqError', error)
+    })
+    req.session.save(async function(){
+     await res.redirect('/register')
+    })
   } else {
     res.send("Congrats there no errors.");
   }
@@ -24,25 +30,25 @@ exports.registrationSubmission = (req, res) => {
 exports.login = (req, res) => {
   let user = new User(req.body);
 
-  user.login().then(function(result){
+  user.login().then(function (result) {
     req.session.user = {
       email: user.data.email,
     }
-    req.session.save(function() {
-        res.redirect("/");
-      }); 
+    req.session.save(function () {
+      res.redirect("/");
+    });
   })
-  .catch(function(err) {
+    .catch(function (err) {
       req.flash("errors", err);
-      req.session.save(function() {
+      req.session.save(function () {
         res.redirect("/");
       });
     });
-  }
+}
 
-exports.logout = function(req, res){
-  req.session.destroy(function(){
+exports.logout = function (req, res) {
+  req.session.destroy(function () {
     res.redirect('/')
   })
-  
+
 }
