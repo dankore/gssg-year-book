@@ -23,12 +23,21 @@ User.prototype.validateUserRegistration = function () {
     if (this.data.password.length == "") {
       this.errors.push("Password is required.")
     }
+    if (this.data.year.length == "") {
+      this.errors.push("Year of graduation is required.")
+    }
     // check for length
     if(this.data.password.length < 4){
       this.errors.push("Password should be at least 4 characters.")
     }
     if(this.data.password.length > 50){
       this.errors.push("Password cannot exceed 50 characters.")
+    }
+    if(this.data.password.length < 4){
+      this.errors.push("Year should not be less than 4 characters.")
+    }
+    if(this.data.password.length > 4){
+      this.errors.push("Year should not be greater than 4 characters.")
     }
 
     // check for non-allowed inputs
@@ -38,8 +47,11 @@ User.prototype.validateUserRegistration = function () {
     if (this.data.firstName.length != "" && !validator.isAlphanumeric(this.data.lastName)) {
       this.errors.push("Last name can only contain letters and numbers.")
     }
-    if (this.data.firstName.length != "" && !validator.isEmail(this.data.email)) {
+    if (this.data.email.length != "" && !validator.isEmail(this.data.email)) {
       this.errors.push("Email can only contain letters and numbers.")
+    }
+    if (this.data.year.length != "" && !validator.isNumeric(this.data.year)) {
+      this.errors.push("Year can only be numbers.")
     }
     // check to see if email is valid and not taken
 
