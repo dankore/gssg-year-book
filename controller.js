@@ -27,6 +27,10 @@ exports.registrationSubmission = (req, res) => {
 exports.login = (req, res) => {
   let user = new User(req.body);
   user.login().then(function(result){
+    req.session.user = {
+      email: user.data.email,
+      favPlace: "Kado"
+    }
     res.send(result)
   }).catch(function(err){
     res.send(err)
