@@ -1,7 +1,8 @@
 const User = require('./model');
 
 exports.home = (req, res) => {
-  res.render('homePage', {user: req.session.user})
+  console.log(req.flash('errors'))
+  res.render('homePage', {user: req.session.user, errors: req.flash('errors')})
 }
 
 exports.registrationPage = (req, res) => {
@@ -27,15 +28,17 @@ exports.login = (req, res) => {
     req.session.user = {
       email: user.data.email,
     }
-    req.session.save(function(){
-      res.redirect('/')
-    })
-    
-  }).catch(function(err){
-    res.redirect('/')
+    req.session.save(function() {
+        res.redirect("/");
+      }); 
   })
-
-}
+  .catch(function(err) {
+      req.flash("errors", err);
+      req.session.save(function() {
+        res.redirect("/");
+      });
+    });
+  }
 
 exports.logout = function(req, res){
   req.session.destroy(function(){

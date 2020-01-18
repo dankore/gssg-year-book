@@ -14,7 +14,7 @@ let sessionOptions = session({
 });
 
 server.use(sessionOptions);
-server.use(flash);
+server.use(flash());
 const router = require('./router');
 
 
