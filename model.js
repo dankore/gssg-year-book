@@ -34,21 +34,23 @@ User.prototype.validateUserRegistration = function () {
     if (this.data.firstName.length != "" && !validator.isEmail(this.data.email)) {
       this.errors.push("Email can only contain letters and numbers.")
     }
-
     // check to see if email is valid and not taken
 
 }
 
-User.prototype.login = function(callback){
-  this.cleanUp();
-  usersCollection.findOne({email: this.data.email}, (err, attemptedUser) => {
+User.prototype.login = function(){
+  return new Promise((resolve, reject)=> {
+    this.cleanUp();
+    usersCollection.findOne({email: this.data.email}, (err, attemptedUser) => {
     if(attemptedUser && attemptedUser.password == this.data.password){
-      callback("Congrats!")
+      resolve("Congrats!")
     } else {
-      callback("Invalid email/password!")
+      reject("Invalid email/password!")
     }
   })
+  })
 }
+
 User.prototype.cleanUp = function () {
   if (typeof this.data.firstName != 'string') {
     this.data.firstName = "";
