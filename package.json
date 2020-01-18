@@ -22,7 +22,7 @@
     "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
-    "express-session": "^1.17.0",
+    "express-session": "^1.16.2",
     "mongodb": "^3.5.0",
     "nodemon": "^2.0.2",
     "validator": "^12.1.0"
