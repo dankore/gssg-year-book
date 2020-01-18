@@ -27,9 +27,12 @@ exports.login = (req, res) => {
     req.session.user = {
       email: user.data.email,
     }
-    res.redirect('/')
+    req.session.save(function(){
+      res.redirect('/')
+    })
+    
   }).catch(function(err){
-    res.send(err)
+    res.redirect('/')
   })
 
 }

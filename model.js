@@ -53,6 +53,7 @@ User.prototype.validateUserRegistration = function () {
     if (this.data.year.length != "" && !validator.isNumeric(this.data.year)) {
       this.errors.push("Year can only be numbers.")
     }
+    
     // check to see if email is valid and not taken
 
 }
