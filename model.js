@@ -28,11 +28,8 @@ User.prototype.validateUserRegistration = function () {
       this.errors.push("Year of graduation is required.")
     }
     // check for length
-    if (this.data.password.length < 4) {
-      this.errors.push("Password should be at least 4 characters.")
-    }
-    if (this.data.password.length > 50) {
-      this.errors.push("Password cannot exceed 50 characters.")
+    if (this.data.password.length < 4 || this.data.password.length > 32) {
+      this.errors.push("Password should be between 4 and 32 characters.")
     }
     if (String(this.data.year).length < 4) {
       this.errors.push("Year should not be less than 4 characters.")
