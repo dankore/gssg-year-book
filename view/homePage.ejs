@@ -1,17 +1,25 @@
-<%- include('includes/header') %> <% errors.forEach(function(message){ %>
+<!-- HEADER -->
+<%- include('includes/header') %>
+<!-- HEADER END-->
+<!-- ERROR FLASH MESSAGE -->
+<% errors.forEach(function(message){ %>
 <div
   class="bg-red-100 border border-red-400 text-red-700 text-center px-4 py-3 rounded relative"
 >
   <%= message %>
 </div>
+<!-- ERROR FLASH MESSAGE END-->
+
 <% }) %> <% if(user){ %>
-<!-- IF USER LOGGED IN THEY WILL SEE THIS -->
+<!-- IF USER LOGGED IN -->
 <%- include('includes/loggedInUser') %>
-<!-- IF USER LOGGED IN THEY WILL SEE THIS END-->
+<!-- IF USER LOGGED IN END-->
 <% } %>
 
-<!-- GUESS USER WILL SEE THIS -->
+<!-- GUESS USER -->
 <%- include('includes/guestUser') %>
-<!-- GUESS USER WILL SEE THIS END-->
+<!-- GUESS USER END-->
 
+<!-- HEADER-->
 <%- include('includes/footer') %>
+<!-- HEADER END-->

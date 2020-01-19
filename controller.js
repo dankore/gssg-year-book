@@ -13,7 +13,10 @@ exports.registrationPage = (req, res) => {
 exports.registrationSubmission = (req, res) => {
   let user = new User(req.body);
   user.register().then(() => {
-    req.session.user = { email: user.data.email }
+    req.session.user = {
+      email: user.data.email,
+      firstName: user.data.firstName
+    };
     req.session.save(async function () {
       await res.redirect('/')
     })
