@@ -1,8 +1,23 @@
 <%- include('includes/header') %>
-<div class="text-center h-20 bg-white m-4">
-    <%- user.firstName %>
-    <%- user.lastName %>
-    <%- user.year %>
-    <%- user.email %>
+<div class="max-w-lg mx-auto text-center bg-white m-4 p-8">
+    <div class="flex">
+        <div class="">
+            <img class="w-64 h-64" src="../static/logo.jpg" alt="GSS Gwarinpa logo">
+        </div>
+        <div>
+           <div>
+                <%= user.firstName %>
+            </div>
+            <div>
+                <%= user.lastName %>
+            </div>
+            <div>
+                <%= user.year %>
+            </div>
+            <div>
+                <%= user.email %>
+            </div>
+        </div>   
+    </div>
 </div>
 <%- include('includes/footer') %>

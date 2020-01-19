@@ -70,7 +70,8 @@ exports.ifUserExists = (req, res, next) => {
       next();
     })
     .catch(() => {
-      res.send("No profile found!");
+      // res.send("No profile found!");
+      res.render('404', {user: req.session.user})
     });
 };
 
