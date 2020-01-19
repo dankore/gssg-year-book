@@ -8,6 +8,6 @@ router.post("/register", controller.registrationSubmission);
 router.post("/login", controller.login);
 router.post("/logout", controller.logout);
 
-router.get("/profile/:id", controller.ifUserExists, controller.profileScreen);
+router.get("/profile/:email", controller.ifUserExists, controller.profileScreen);
 
 module.exports = router;
