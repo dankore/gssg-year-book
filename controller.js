@@ -28,7 +28,6 @@ exports.registrationSubmission = (req, res) => {
       await res.redirect('/register')
     })
   })
-
 }
 
 exports.login = (req, res) => {
@@ -54,5 +53,12 @@ exports.logout = function (req, res) {
   req.session.destroy(function () {
     res.redirect('/')
   })
+}
 
+exports.ifUserExists = function(req, res, next){
+  next()
+}
+
+exports.profileScreen = function(req, res){
+  res.render('profile', {user: req.session.user})
 }
