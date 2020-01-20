@@ -22,8 +22,7 @@ exports.registrationSubmission = (req, res) => {
     .register()
     .then(() => {
       req.session.user = {
-        email: user.data.email,
-        firstName: user.data.firstName
+        email: user.data.email
       };
       req.session.save(async function() {
         await res.redirect("/");
@@ -73,14 +72,29 @@ exports.ifUserExists = (req, res, next) => {
       next();
     })
     .catch(() => {
-      // res.send("No profile found!");
       res.render("404", { user: req.session.user });
     });
 };
 
 exports.profileScreen = (req, res) => {
-  res.render("profile", {
-    userProfile: req.profileUser,
-    user: req.session.user
-  });
+  if (req.session.user) {
+    let requestedEmail = req.profileUser.email;
+    let loggedInEmail = req.session.user.email;
+    if (requestedEmail == loggedInEmail) {
+      res.render("profile", {
+        userProfile: req.profileUser,
+        user: req.session.user
+      });
+    } else {
+      res.render("profileGuest", {
+        userProfile: req.profileUser,
+        user: req.session.user
+      });
+    }
+  } else {
+    res.render("profileGuest", {
+      userProfile: req.profileUser,
+      user: req.session.user
+    });
+  }
 };

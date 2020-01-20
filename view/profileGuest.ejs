@@ -1,0 +1,20 @@
+<%- include('includes/header') %>
+<div class="max-w-2xl p-4 m-4 mx-auto flex flex-wrap justify-around bg-white">
+  <img
+    class="w-56 h-56 object-cover rounded"
+    title=""
+    src="../static/logo.jpg"
+  />
+  <div class="px-6 py-4 text-center md:text-left">
+    <div class="text-xl font-bold mb-2">
+      <%= userProfile.firstName %> <%= userProfile.lastName %>
+    </div>
+    <p class="mb-3">
+      <span class="text-gray-600">Class of</span>: <%= userProfile.year %>
+    </p>
+    <p class="mb-3">
+      <span class="text-gray-600">Email:</span> <%= userProfile.email %>
+    </p>
+  </div>
+</div>
+<%- include('includes/footer') %>
