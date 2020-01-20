@@ -2,7 +2,10 @@ const User = require("./model");
 
 exports.home = (req, res) => {
   const loginErrors = req.flash("errors");
-  res.render("homePage", { errors: loginErrors, user: req.session.user });
+  res.render("homePage", {
+    errors: loginErrors,
+    user: req.session.user
+  });
 };
 
 exports.registrationPage = (req, res) => {
@@ -71,10 +74,13 @@ exports.ifUserExists = (req, res, next) => {
     })
     .catch(() => {
       // res.send("No profile found!");
-      res.render('404', {user: req.session.user})
+      res.render("404", { user: req.session.user });
     });
 };
 
 exports.profileScreen = (req, res) => {
-  res.render("profile", { user: req.profileUser });
+  res.render("profile", {
+    userProfile: req.profileUser,
+    user: req.session.user
+  });
 };
