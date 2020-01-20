@@ -41,7 +41,7 @@ exports.login = (req, res) => {
 
   user
     .login()
-    .then(function(result) {
+    .then(function() {
       req.session.user = {
         email: user.data.email
       };
