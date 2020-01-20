@@ -80,8 +80,8 @@ exports.profileScreen = (req, res) => {
   if (req.session.user) {
     let requestedEmail = req.profileUser.email;
     let loggedInEmail = req.session.user.email;
-    if (requestedEmail == loggedInEmail) {
-      res.render("profile", {
+    if (requestedEmail === loggedInEmail) {
+      res.render("profileLoggedInUser", {
         userProfile: req.profileUser,
         user: req.session.user
       });
