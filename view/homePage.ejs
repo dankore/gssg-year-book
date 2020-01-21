@@ -8,13 +8,12 @@
 >
   <%= message %>
 </div>
+<% }) %>
 <!-- ERROR FLASH MESSAGE END-->
 
-<% }) %> <% if(user){ %>
 <!-- IF USER LOGGED IN -->
-<%- include('includes/loggedInUser') %>
+<% if(user){ %> <%- include('includes/loggedInUser') %> <% } %>
 <!-- IF USER LOGGED IN END-->
-<% } %>
 
 <!-- GUESS USER -->
 <%- include('includes/guestUser') %>
