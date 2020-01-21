@@ -98,3 +98,17 @@ exports.profileScreen = (req, res) => {
     });
   }
 };
+
+exports.viewEditScreen = async function(req, res) {
+  const saveErrors = req.flash("errors");
+  try {
+    let profile = await User.findByEmail(req.params.email);
+    res.render("editProfilePage", {
+      user: req.session.user,
+      errors: saveErrors,
+      profile: profile
+    });
+  } catch {
+    res.render("404", {user: req.session.user});
+  }
+};

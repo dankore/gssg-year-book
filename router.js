@@ -9,5 +9,5 @@ router.post("/login", controller.login);
 router.post("/logout", controller.logout);
 
 router.get("/profile/:email", controller.ifUserExists, controller.profileScreen);
-
+router.get('/profile/:email/edit', controller.viewEditScreen)
 module.exports = router;
