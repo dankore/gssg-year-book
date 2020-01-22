@@ -5,60 +5,22 @@ const validator = require("validator");
 const bcrypt = require("bcryptjs");
 
 let User = class user {
-  constructor(data) {
-    (this.data = data), (this.errors = []);
+  constructor(data, sessionEmail, requestedEmail) {
+    (this.data = data),
+      (this.errors = []),
+      (this.sessionEmail = sessionEmail),
+      (this.requestedEmail = requestedEmail);
   }
 };
 
-User.prototype.validateUserRegistration = function() {
+User.prototype.validateEmail = function() {
   return new Promise(async (resolve, reject) => {
-    // check for empty boxes
-    if (this.data.firstName.length == "") {
-      this.errors.push("First name is required.");
-    }
-    if (this.data.lastName.length == "") {
-      this.errors.push("Last name is required.");
-    }
     if (this.data.email.length == "") {
       this.errors.push("Email is required.");
-    }
-    if (this.data.password.length == "") {
-      this.errors.push("Password is required.");
-    }
-    if (this.data.year.length == "") {
-      this.errors.push("Year of graduation is required.");
-    }
-    // check for length
-    if (this.data.password.length < 4 || this.data.password.length > 32) {
-      this.errors.push("Password should be between 4 and 32 characters.");
-    }
-    if (String(this.data.year).length < 4) {
-      this.errors.push("Year should not be less than 4 characters.");
-    }
-    if (String(this.data.year).length > 4) {
-      this.errors.push("Year should not be greater than 4 characters.");
-    }
-
-    // check for non-allowed inputs
-    if (
-      this.data.firstName.length != "" &&
-      !validator.isAlphanumeric(this.data.firstName)
-    ) {
-      this.errors.push("First name can only contain letters and numbers.");
-    }
-    if (
-      this.data.firstName.length != "" &&
-      !validator.isAlphanumeric(this.data.lastName)
-    ) {
-      this.errors.push("Last name can only contain letters and numbers.");
     }
     if (this.data.email.length != "" && !validator.isEmail(this.data.email)) {
       this.errors.push("Email can only contain letters and numbers.");
     }
-    if (this.data.year.length != "" && !validator.isNumeric(this.data.year)) {
-      this.errors.push("Year can only be numbers.");
-    }
-
     // if email is valid, check to see if it is taken
     if (validator.isEmail(this.data.email)) {
       let emailExist = await usersCollection.findOne({
@@ -70,6 +32,58 @@ User.prototype.validateUserRegistration = function() {
     }
     resolve();
   });
+};
+User.prototype.validatePassword = function() {
+  // check for empty box
+  if (this.data.password.length == "") {
+    this.errors.push("Password is required.");
+  }
+  //check for length
+  if (this.data.password.length < 4 || this.data.password.length > 32) {
+    this.errors.push("Password should be between 4 and 32 characters.");
+  }
+};
+
+User.prototype.validateUserRegistration = function() {
+  // check for empty boxes
+  if (this.data.firstName.length == "") {
+    this.errors.push("First name is required.");
+  }
+  if (this.data.lastName.length == "") {
+    this.errors.push("Last name is required.");
+  }
+
+  if (String(this.data.year).length == "") {
+    this.errors.push("Year of graduation is required.");
+  }
+
+  if (String(this.data.year).length < 4) {
+    this.errors.push("Year should not be less than 4 characters.");
+  }
+  if (String(this.data.year).length > 4) {
+    this.errors.push("Year should not be greater than 4 characters.");
+  }
+
+  // check for non-allowed inputs
+  if (
+    this.data.firstName.length != "" &&
+    !validator.isAlphanumeric(this.data.firstName)
+  ) {
+    this.errors.push("First name can only contain letters and numbers.");
+  }
+  if (
+    this.data.firstName.length != "" &&
+    !validator.isAlphanumeric(this.data.lastName)
+  ) {
+    this.errors.push("Last name can only contain letters and numbers.");
+  }
+
+  if (
+    String(this.data.year).length != "" &&
+    !validator.isNumeric(this.data.year)
+  ) {
+    this.errors.push("Year can only be numbers.");
+  }
 };
 
 User.prototype.login = function() {
@@ -109,10 +123,14 @@ User.prototype.register = function() {
   return new Promise(async (resolve, reject) => {
     //Make sure email is string
     this.cleanUp();
-    // Step #1: Validate user data
-    await this.validateUserRegistration();
+    // Validate user data
+    this.validateUserRegistration();
+    // check password
+    this.validatePassword();
+    // check to see if email is taken
+    await this.validateEmail();
 
-    // Step #2: Only if there no validation error
+    // Only if there no validation error
     // then save the user data into the database
     if (!this.errors.length) {
       // Hash user password
@@ -145,7 +163,7 @@ User.findByEmail = function(email) {
             year: userDoc.data.year,
             email: userDoc.data.email
           };
-          
+
           resolve(userDoc);
         } else {
           reject();
@@ -154,6 +172,52 @@ User.findByEmail = function(email) {
       .catch(() => {
         reject();
       });
+  });
+};
+
+User.prototype.update = function() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let profile = await User.findByEmail(this.requestedEmail);
+
+      const requestedEmailUser = profile.email;
+      const sessionEmailUser = this.sessionEmail;
+
+      if (requestedEmailUser === sessionEmailUser) {
+        //Update
+        let status = await this.actuallyUpdate();
+   
+        resolve(status);
+      } else {
+        reject();
+      }
+    } catch {
+      reject();
+    }
+  });
+};
+
+User.prototype.actuallyUpdate = function() {
+  return new Promise(async (resolve, reject) => {
+    this.cleanUp();
+    this.validateUserRegistration();
+
+    if (!this.errors.length) {
+      await usersCollection.findOneAndUpdate(
+        { email: this.requestedEmail },
+        {
+          $set: {
+            firstName: this.data.firstName,
+            lastName: this.data.lastName,
+            email: this.data.email,
+            year: this.data.year
+          }
+        }
+      );
+      resolve("success");
+    } else {
+      resolve("failure");
+    }
   });
 };
 

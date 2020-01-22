@@ -109,6 +109,39 @@ exports.viewEditScreen = async function(req, res) {
       profile: profile
     });
   } catch {
-    res.render("404", {user: req.session.user});
+    res.render("404", { user: req.session.user });
+  }
+};
+
+exports.edit = function(req, res) {
+  if (req.session.user) {
+    let profile = new User(req.body, req.session.user.email, req.params.email);
+    profile
+      .update()
+      .then(status => {
+        if (status == "success") {
+          req.flash("success", "Profile successfully updated.");
+          req.session.save(function() {
+            res.redirect(`/profile/${req.params.email}/edit`);
+          });
+        } else {
+          profile.errors.forEach(error => {
+            req.flash("errors", error);
+          });
+          req.session.save(function() {
+            res.redirect(`/profile/${req.params.email}/edit`);
+          });
+        }
+      })
+      .catch(() => {
+        req.flash(
+          "errors",
+          "You do not have permission to perform that action."
+        );
+        res.redirect("/");
+      });
+  } else {
+    req.flash("errors", "You must be logged in to perform that action.");
+    res.redirect("/");
   }
 };
