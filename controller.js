@@ -101,12 +101,15 @@ exports.profileScreen = (req, res) => {
 
 exports.viewEditScreen = async function(req, res) {
   const saveErrors = req.flash("errors");
+  const saveSucceffullyMessage = req.flash("success");
+
   try {
     let profile = await User.findByEmail(req.params.email);
     res.render("editProfilePage", {
       user: req.session.user,
       errors: saveErrors,
-      profile: profile
+      profile: profile,
+      success: saveSucceffullyMessage
     });
   } catch {
     res.render("404", { user: req.session.user });
@@ -116,6 +119,7 @@ exports.viewEditScreen = async function(req, res) {
 exports.edit = function(req, res) {
   if (req.session.user) {
     let profile = new User(req.body, req.session.user.email, req.params.email);
+
     profile
       .update()
       .then(status => {
