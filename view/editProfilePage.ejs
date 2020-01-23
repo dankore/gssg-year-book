@@ -18,7 +18,7 @@
           class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
           for="first-name"
         >
-          First Name
+          First Name <span class="text-red-600">*</span>
         </label>
         <input
           name="firstName"
@@ -33,7 +33,7 @@
           class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
           for="last-name"
         >
-          Last Name
+          Last Name <span class="text-red-600">*</span>
         </label>
         <input
           name="lastName"
@@ -48,7 +48,7 @@
           class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
           for="email"
         >
-          Email (this Cannot Be Changed)
+          Email (this Cannot Be Changed) <span class="text-red-600">*</span>
         </label>
         <input
           value="<%= profile.email %>"
@@ -64,7 +64,7 @@
           class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
           for="year"
         >
-          What year did you graduateD OR will graduate?
+          What year did you graduateD OR will graduate? <span class="text-red-600">*</span>
         </label>
         <input
           name="year"

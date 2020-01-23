@@ -157,3 +157,7 @@ exports.edit = function(req, res) {
     res.redirect("/");
   }
 };
+
+exports.account = function(req, res){
+  res.render('account', {user: req.session.user, profile: req.profileUser})
+}

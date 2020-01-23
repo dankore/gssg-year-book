@@ -12,4 +12,6 @@ router.get("/profile/:email", controller.ifUserExists, controller.profileScreen)
 router.get('/profile/:email/edit', controller.viewEditScreen)
 router.post("/profile/:email/edit", controller.edit);
 
+router.get("/account", controller.account)
+
 module.exports = router;

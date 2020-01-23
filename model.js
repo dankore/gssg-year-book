@@ -94,7 +94,7 @@ User.prototype.login = function() {
       .then(attemptedUser => {
         // IF NO MATCHING EMAIL FOUND
         if (!attemptedUser) {
-          reject("This is not a registered email. Click 'Add Your Contact' above to register.");
+          reject("That email has not been registered. Click 'Add Your Contact' above to register.");
         }
         // IF MATCHING EMAIL FOUND
         if (
