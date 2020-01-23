@@ -1,26 +1,26 @@
 <h1 class="text-center text-2xl mt-4">FIND YOUR GSS GWARINPA CLASSMATES</h1>
 <div class="flex flex-wrap justify-center items-center">
   <% profiles.forEach(item => { %>
-  <div
-    class="max-w-2xl p-4 m-4 mx-auto flex flex-wrap justify-around bg-white rounded"
-  >
-    <img
-      class="w-56 h-56 object-cover rounded"
-      title=""
-      src="../static/logo.jpg"
-    />
-    <div class="px-6 py-4 text-center md:text-left">
-      <div class="text-xl font-bold mb-2">
-        <%= item.firstName %> <%= item.lastName %>
+  <a href="/profile/<%= item.email %>">
+    <div class="max-w-xs bg-white overflow-hidden rounded m-4 shadow-lg">
+      <img
+        class="w-full"
+        title="<%= item.firstName %> <%= item.lastName %>"
+        src="../static/pic.jpg"
+        alt="profile picture"
+      />
+      <div class="px-6 py-4">
+        <div class="text-xl font-bold mb-2">
+          <%= item.firstName %> <%= item.lastName %>
+        </div>
+        <p class="mb-3">
+          <span class="text-gray-600">Class of</span>: <%= item.year %>
+        </p>
+        <p class="mb-3">
+          <span class="text-gray-600">Email:</span> <%= item.email %>
+        </p>
       </div>
-      <p class="mb-3">
-        <span class="text-gray-600">Class of</span>: <%= item.year %>
-      </p>
-      <p class="mb-3">
-        <span class="text-gray-600">Email:</span> <%= item.email %>
-      </p>
     </div>
-  </div>
-
+  </a>
   <% }) %>
 </div>
