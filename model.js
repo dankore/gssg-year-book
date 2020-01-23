@@ -254,13 +254,12 @@ User.allProfiles = function() {
     let allProfiles = await usersCollection.find({}).toArray();
 
     allProfiles = allProfiles.map(item => {
-      item = new User(item);
       //clean up each document
       item = {
-        firstName: item.data.firstName,
-        lastName: item.data.lastName,
-        year: item.data.year,
-        email: item.data.email
+        firstName: item.firstName,
+        lastName: item.lastName,
+        year: item.year,
+        email: item.email
       };
       return item;
     });

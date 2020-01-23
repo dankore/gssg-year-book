@@ -2,11 +2,12 @@ const User = require("./model");
 
 exports.home = async (req, res) => {
   let profiles = await User.allProfiles();
-  console.log(profiles);
+
   res.render("homePage", {
     errors: req.flash("errors"),
+    success: req.flash("success"),
     user: req.session.user,
-    success: req.flash("success")
+    profiles: profiles
   });
 };
 
@@ -87,18 +88,18 @@ exports.profileScreen = (req, res) => {
 
     if (visitorIsOwner) {
       res.render("profileLoggedInUser", {
-        userProfile: req.profileUser,
+        profiles: req.profileUser,
         user: req.session.user
       });
     } else {
       res.render("profileGuest", {
-        userProfile: req.profileUser,
+        profiles: req.profileUser,
         user: req.session.user
       });
     }
   } else {
     res.render("profileGuest", {
-      userProfile: req.profileUser,
+      profiles: req.profileUser,
       user: req.session.user
     });
   }
