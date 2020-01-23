@@ -44,7 +44,7 @@ User.prototype.validatePassword = function() {
   }
 };
 
-User.prototype.validateUserRegistration = function() {
+User.prototype.validateSomeUserRegistrationInputs = function() {
   // check for empty boxes
   if (this.data.firstName.length == "") {
     this.errors.push("First name is required.");
@@ -124,7 +124,7 @@ User.prototype.register = function() {
     //Make sure email is string
     this.cleanUp();
     // Validate user data
-    this.validateUserRegistration();
+    this.validateSomeUserRegistrationInputs();
     // check password
     this.validatePassword();
     // check to see if email is taken
@@ -180,13 +180,14 @@ User.prototype.update = function() {
     try {
       let profile = await User.findByEmail(this.requestedEmail);
 
-      const requestedEmailUser = profile.email;
-      const sessionEmailUser = this.sessionEmail;
-
-      if (requestedEmailUser === sessionEmailUser) {
+      const visistorIsOwner = User.isVisitorOwner(
+        this.sessionEmail,
+        profile.email
+      );
+      if (visistorIsOwner) {
         //Update
         let status = await this.actuallyUpdate();
-   
+
         resolve(status);
       } else {
         reject();
@@ -200,7 +201,7 @@ User.prototype.update = function() {
 User.prototype.actuallyUpdate = function() {
   return new Promise(async (resolve, reject) => {
     this.cleanUp();
-    this.validateUserRegistration();
+    this.validateSomeUserRegistrationInputs();
 
     if (!this.errors.length) {
       await usersCollection.findOneAndUpdate(
@@ -221,4 +222,7 @@ User.prototype.actuallyUpdate = function() {
   });
 };
 
+User.isVisitorOwner = function(sessionEmail, requestedEmail) {
+  return sessionEmail == requestedEmail;
+};
 module.exports = User;

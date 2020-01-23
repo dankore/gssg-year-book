@@ -78,9 +78,12 @@ exports.ifUserExists = (req, res, next) => {
 
 exports.profileScreen = (req, res) => {
   if (req.session.user) {
-    const requestedEmail = req.profileUser.email;
-    const loggedInEmail = req.session.user.email;
-    if (requestedEmail === loggedInEmail) {
+    const visitorIsOwner = User.isVisitorOwner(
+      req.session.user.email,
+      req.profileUser.email
+    );
+
+    if (visitorIsOwner) {
       res.render("profileLoggedInUser", {
         userProfile: req.profileUser,
         user: req.session.user
@@ -100,17 +103,22 @@ exports.profileScreen = (req, res) => {
 };
 
 exports.viewEditScreen = async function(req, res) {
-  const saveErrors = req.flash("errors");
-  const saveSucceffullyMessage = req.flash("success");
-
   try {
     let profile = await User.findByEmail(req.params.email);
-    res.render("editProfilePage", {
-      user: req.session.user,
-      errors: saveErrors,
-      profile: profile,
-      success: saveSucceffullyMessage
-    });
+    if (req.session.user.email == req.params.email) {
+      res.render("editProfilePage", {
+        user: req.session.user,
+        errors: req.flash("errors"),
+        profile: profile,
+        success: req.flash("success")
+      });
+    } else {
+      req.flash(
+        "errors",
+        "You do not have permission to  perform that action."
+      );
+      res.session.save(() => res.redirect("/"));
+    }
   } catch {
     res.render("404", { user: req.session.user });
   }
