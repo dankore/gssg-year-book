@@ -43,17 +43,17 @@ exports.login = (req, res) => {
 
   user
     .login()
-    .then(function() {
+    .then(() => {
       req.session.user = {
         email: user.data.email
       };
-      req.session.save(function() {
+      req.session.save(() => {
         res.redirect("/");
       });
     })
-    .catch(function(err) {
+    .catch(err => {
       req.flash("errors", err);
-      req.session.save(function() {
+      req.session.save(() => {
         res.redirect("/");
       });
     });

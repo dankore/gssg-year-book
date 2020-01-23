@@ -92,11 +92,16 @@ User.prototype.login = function() {
     usersCollection
       .findOne({ email: this.data.email })
       .then(attemptedUser => {
+        // IF NO MATCHING EMAIL FOUND
+        if (!attemptedUser) {
+          reject("This is not a registered email. Click 'Add Your Contact' above to register.");
+        }
+        // IF MATCHING EMAIL FOUND
         if (
           attemptedUser &&
           bcrypt.compareSync(this.data.password, attemptedUser.password)
         ) {
-          resolve("Congrats!");
+          resolve();
         } else {
           reject("Invalid email/password!");
         }
