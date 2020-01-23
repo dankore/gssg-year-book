@@ -12,6 +12,7 @@ router.get("/profile/:email", controller.ifUserExists, controller.profileScreen)
 router.get('/profile/:email/edit', controller.viewEditScreen)
 router.post("/profile/:email/edit", controller.edit);
 
-router.get("/account", controller.account)
+router.get("/account/:email", controller.account)
+router.post("/account/:email/delete", controller.delete);
 
 module.exports = router;

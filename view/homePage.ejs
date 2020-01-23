@@ -2,13 +2,7 @@
 <%- include('includes/header') %>
 <!-- HEADER END-->
 <!-- ERROR FLASH MESSAGE -->
-<% errors.forEach(function(message){ %>
-<div
-  class="bg-red-100 border border-red-400 text-red-700 text-center px-4 py-3 rounded relative"
->
-  <%= message %>
-</div>
-<% }) %>
+<%- include('includes/flash') %>
 <!-- ERROR FLASH MESSAGE END-->
 
 <!-- IF USER LOGGED IN -->

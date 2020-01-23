@@ -94,7 +94,9 @@ User.prototype.login = function() {
       .then(attemptedUser => {
         // IF NO MATCHING EMAIL FOUND
         if (!attemptedUser) {
-          reject("That email has not been registered. Click 'Add Your Contact' above to register.");
+          reject(
+            "That email has not been registered. Click 'Add Your Contact' above to register."
+          );
         }
         // IF MATCHING EMAIL FOUND
         if (
@@ -229,5 +231,21 @@ User.prototype.actuallyUpdate = function() {
 
 User.isVisitorOwner = function(sessionEmail, requestedEmail) {
   return sessionEmail == requestedEmail;
+};
+
+User.delete = function(requestedEmail, sessionEmail) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let visistorIsOwner = User.isVisitorOwner(requestedEmail, sessionEmail);
+      if (visistorIsOwner) {
+        await usersCollection.deleteOne({ email: requestedEmail });
+        resolve();
+      } else {
+        reject();
+      }
+    } catch {
+      reject();
+    }
+  });
 };
 module.exports = User;

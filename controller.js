@@ -1,10 +1,10 @@
 const User = require("./model");
 
 exports.home = (req, res) => {
-  const loginErrors = req.flash("errors");
   res.render("homePage", {
-    errors: loginErrors,
-    user: req.session.user
+    errors: req.flash("errors"),
+    user: req.session.user,
+    success: req.flash("success")
   });
 };
 
@@ -158,6 +158,30 @@ exports.edit = function(req, res) {
   }
 };
 
-exports.account = function(req, res){
-  res.render('account', {user: req.session.user, profile: req.profileUser})
-}
+exports.account = function(req, res) {
+  if (req.session.user) {
+    let visitorIsOwner = User.isVisitorOwner(
+      req.session.user.email,
+      req.params.email
+    );
+    if (visitorIsOwner) {
+      res.render("account", { user: req.session.user });
+    } else {
+      req.flash("errors", "You do not have permission to perform that action.");
+      req.session.save(() => res.redirect("/"));
+    }
+  } else {
+    res.render("404", { user: req.session.user });
+  }
+};
+exports.delete = function(req, res) {
+  User.delete(req.params.email, req.session.user.email)
+    .then(() => {
+      req.flash("success", "Account successfully deleted.");
+      req.session.destroy(() => res.redirect("/"));
+    })
+    .catch(() => {
+      req.flash("errors", "You do not have permission to perform that action.");
+      req.session.save(() => res.redirect("/"));
+    });
+};
