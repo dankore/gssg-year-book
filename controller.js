@@ -1,6 +1,8 @@
 const User = require("./model");
 
-exports.home = (req, res) => {
+exports.home = async (req, res) => {
+  let profiles = await User.allProfiles();
+  console.log(profiles);
   res.render("homePage", {
     errors: req.flash("errors"),
     user: req.session.user,

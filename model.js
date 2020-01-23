@@ -248,4 +248,23 @@ User.delete = function(requestedEmail, sessionEmail) {
     }
   });
 };
+
+User.allProfiles = function() {
+  return new Promise(async (resolve, reject) => {
+    let allProfiles = await usersCollection.find({}).toArray();
+
+    allProfiles = allProfiles.map(item => {
+      item = new User(item);
+      //clean up each document
+      item = {
+        firstName: item.data.firstName,
+        lastName: item.data.lastName,
+        year: item.data.year,
+        email: item.data.email
+      };
+      return item;
+    });
+    resolve(allProfiles);
+  });
+};
 module.exports = User;
