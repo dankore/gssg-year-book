@@ -58,10 +58,10 @@ User.prototype.validateSomeUserRegistrationInputs = function() {
   }
 
   if (String(this.data.year).length < 4) {
-    this.errors.push("Year should not be less than 4 characters.");
+    this.errors.push("Year should not be less than 4 numbers.");
   }
   if (String(this.data.year).length > 4) {
-    this.errors.push("Year should not be greater than 4 characters.");
+    this.errors.push("Year should not be greater than 4 numbers.");
   }
 
   // check for non-allowed inputs

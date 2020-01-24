@@ -2,7 +2,7 @@ const User = require("./model");
 
 exports.home = async (req, res) => {
   let profiles = await User.allProfiles();
-  
+
   res.render("homePage", {
     errors: req.flash("errors"),
     success: req.flash("success"),
@@ -19,14 +19,15 @@ exports.registrationPage = (req, res) => {
   });
 };
 
-exports.registrationSubmission = (req, res) => {
+exports.registrationSubmission = async (req, res) => {
   let user = new User(req.body);
   
   user
     .register()
     .then(() => {
       req.session.user = {
-        email: user.data.email
+        email: user.data.email,
+        firstName: user.data.firstName
       };
       req.session.save(async function() {
         await res.redirect("/");
@@ -44,8 +45,8 @@ exports.registrationSubmission = (req, res) => {
 
 exports.login = async (req, res) => {
   let user = new User(req.body);
-  let userDoc = await User.findByEmail(req.body.email)
- 
+  let userDoc = await User.findByEmail(req.body.email);
+
   user
     .login()
     .then(() => {
