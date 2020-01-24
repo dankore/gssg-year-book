@@ -45,14 +45,12 @@ exports.registrationSubmission = async (req, res) => {
 
 exports.login = async (req, res) => {
   let user = new User(req.body);
-  let userDoc = await User.findByEmail(req.body.email);
-  
+
   user
     .login()
     .then(() => {
       req.session.user = {
-        email: user.data.email,
-        firstName: userDoc.firstName
+        email: user.data.email
       };
       req.session.save(() => {
         res.redirect("/");
