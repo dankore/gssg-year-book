@@ -21,7 +21,7 @@ exports.registrationPage = (req, res) => {
 
 exports.registrationSubmission = async (req, res) => {
   let user = new User(req.body);
-  
+
   user
     .register()
     .then(() => {
@@ -46,7 +46,7 @@ exports.registrationSubmission = async (req, res) => {
 exports.login = async (req, res) => {
   let user = new User(req.body);
   let userDoc = await User.findByEmail(req.body.email);
-
+  
   user
     .login()
     .then(() => {
