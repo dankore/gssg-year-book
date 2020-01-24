@@ -1,17 +1,11 @@
-<div class="text-center mt-2">
-  <a href="/" class="text-sm font-bold text-blue-500">
-    &laquo; Go to homepage</a
-  >
-</div>
-<div
-  class="max-w-2xl p-4 m-4 mx-auto flex flex-wrap justify-around bg-white rounded"
->
+<div class="max-w-xs bg-white overflow-hidden rounded m-4 shadow-lg">
   <img
-    class="w-56 h-56 object-cover rounded"
-    title=""
+    class="w-full"
+    title="<%= profile.firstName %> <%= profile.lastName %>"
     src="../static/pic.jpg"
+    alt="profile picture"
   />
-  <div class="px-6 py-4 text-center md:text-left">
+  <div class="px-6 py-4">
     <div class="text-xl font-bold mb-2">
       <%= profile.firstName %> <%= profile.lastName %>
     </div>

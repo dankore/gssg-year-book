@@ -1,26 +1,6 @@
 <h1 class="text-center text-2xl mt-4">FIND YOUR GSS GWARINPA CLASSMATES</h1>
 <div class="flex flex-wrap justify-center">
-  <% profiles.forEach(item => { %>
-  <a href="/profile/<%= item.email %>">
-    <div class="max-w-xs bg-white overflow-hidden rounded m-4 shadow-lg">
-      <img
-        class="w-full"
-        title="<%= item.firstName %> <%= item.lastName %>"
-        src="../static/pic.jpg"
-        alt="profile picture"
-      />
-      <div class="px-6 py-4">
-        <div class="text-xl font-bold mb-2">
-          <%= item.firstName %> <%= item.lastName %>
-        </div>
-        <p class="mb-3">
-          <span class="text-gray-600">Class of</span>: <%= item.year %>
-        </p>
-        <p class="mb-3">
-          <span class="text-gray-600">Email:</span> <%= item.email %>
-        </p>
-      </div>
-    </div>
-  </a>
-  <% }) %>
+  <% profiles.forEach(function(profile) { %>
+    <%- include('includes/profileShared', {profile: profile}) %> 
+<% }) %>
 </div>
