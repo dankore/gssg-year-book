@@ -89,6 +89,15 @@ User.prototype.validateSomeUserRegistrationInputs = function() {
 User.prototype.login = function() {
   return new Promise((resolve, reject) => {
     this.cleanUp();
+    // CHECK IF NO EMAIL IS PROVIDED
+    if (this.data.email == "" && this.data.password != "") {
+      reject("Please provide an email address.");
+    }
+    // CHECK IF NO EMAIL AND PASSWORD ARE PROVIDED
+    if (this.data.email == "" && this.data.password == "") {
+      reject("Please provide an email address and a password.");
+    }
+
     usersCollection
       .findOne({ email: this.data.email })
       .then(attemptedUser => {
@@ -99,13 +108,19 @@ User.prototype.login = function() {
           );
         }
         // IF MATCHING EMAIL FOUND
-        if (
-          attemptedUser &&
-          bcrypt.compareSync(this.data.password, attemptedUser.password)
-        ) {
-          resolve();
-        } else {
-          reject("Invalid email/password!");
+        if (attemptedUser) {
+          if (attemptedUser && this.data.password == "") {
+            reject("Please enter a password.");
+          }
+          // IF USER WITH EMAIL ADDRESS FOUND
+          if (
+            attemptedUser &&
+            bcrypt.compareSync(this.data.password, attemptedUser.password)
+          ) {
+            resolve();
+          } else {
+            reject("Invalid password!");
+          }
         }
       })
       .catch(() => {

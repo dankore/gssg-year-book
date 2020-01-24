@@ -108,7 +108,11 @@ exports.profileScreen = (req, res) => {
 exports.viewEditScreen = async function(req, res) {
   try {
     let profile = await User.findByEmail(req.params.email);
-    if (req.session.user.email == req.params.email) {
+    let isVisitorOwner = User.isVisitorOwner(
+      req.session.user.email,
+      req.params.email
+    );
+    if (isVisitorOwner) {
       res.render("editProfilePage", {
         user: req.session.user,
         errors: req.flash("errors"),
@@ -118,7 +122,7 @@ exports.viewEditScreen = async function(req, res) {
     } else {
       req.flash(
         "errors",
-        "You do not have permission to  perform that action."
+        "You did not have permission to  perform that action."
       );
       res.session.save(() => res.redirect("/"));
     }
@@ -143,7 +147,7 @@ exports.edit = function(req, res) {
           profile.errors.forEach(error => {
             req.flash("errors", error);
           });
-          req.session.save(function() {
+          req.session.save(() => {
             res.redirect(`/profile/${req.params.email}/edit`);
           });
         }
