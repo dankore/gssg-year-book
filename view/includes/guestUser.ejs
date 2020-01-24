@@ -1,8 +1,5 @@
 <h1 class="text-center text-2xl mt-4">FIND YOUR GSS GWARINPA CLASSMATES</h1>
-<div class="max-w-lg text-center">
-  <span>Filter by: </span><button class="text-md bg-white border border-white px-4 py-1 rounded">Year</button>
-</div>
-<div class="flex flex-wrap justify-center items-center">
+<div class="flex flex-wrap justify-center">
   <% profiles.forEach(item => { %>
   <a href="/profile/<%= item.email %>">
     <div class="max-w-xs bg-white overflow-hidden rounded m-4 shadow-lg">
