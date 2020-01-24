@@ -4,7 +4,7 @@
   "description": "Phot book for gss gwarinpa students- past and present",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon db"
+    "watch": "start nodemon db --ignore frontend-js --ignore public/ && start webpack --watch"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/dankore/gssg-year-book#readme",
   "dependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "babel-loader": "^8.0.6",
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^3.2.0",
@@ -26,6 +29,8 @@
     "express-session": "^1.16.2",
     "mongodb": "^3.5.0",
     "nodemon": "^2.0.2",
-    "validator": "^12.1.0"
+    "validator": "^12.1.0",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
   }
 }
