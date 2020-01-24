@@ -1,21 +1,21 @@
 <p class="text-center text-2xl my-4">
   Welcome, <strong><%= user.email %>!</strong> 
 </p>
-<div class="max-w-lg mx-4 sm:mx-auto p-4 flex flex-wrap text-center bg-white rounded">
+<div class="flex flex-wrap justify-center items-center bg-red-400">
   <div>
     <a
       href="/profile/<%= user.email %>"
-      class="text-center inline-block text-lg px-3 my-2 text-blue-800 rounded font-bold border border-blue-800 w-56 mx-auto hover:text-white hover:bg-blue-600"
+      class="text-center inline-block text-md px-3 my-2 text-blue-800 rounded font-bold border border-blue-800 mx-auto hover:text-white hover:bg-blue-600"
       >View Your Profile
     </a>
     <a
       href="/profile/<%= user.email %>/edit"
-      class="text-center inline-block text-lg px-3 my-2 text-blue-800 rounded font-bold border border-blue-800 w-56 mx-auto hover:text-white hover:bg-blue-600"
+      class="text-center inline-block text-md px-3 my-2 text-blue-800 rounded font-bold border border-blue-800 mx-auto hover:text-white hover:bg-blue-600"
       >Edit Your Profile
     </a>
     <a
       href="/account/<%= user.email %>"
-      class="text-center inline-block text-lg px-3 my-2 text-blue-800 rounded font-bold border border-blue-800 w-56 mx-auto hover:text-white hover:bg-blue-600"
+      class="text-center inline-block text-md px-3 my-2 text-blue-800 rounded font-bold border border-blue-800 mx-auto hover:text-white hover:bg-blue-600"
       >Account Settings
     </a>
   </div>
