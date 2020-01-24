@@ -10,8 +10,9 @@
 <!-- IF USER LOGGED IN END-->
 
 <!-- GUESS USER -->
+<%- include('includes/searchBar') %>
 <div class="flex flex-wrap justify-center">
-<% profiles.forEach(function(profile) { %> 
+<% profiles.forEach(profile => { %> 
     <a class="m-4" href="/profile/<%= profile.email %>"><%- include('includes/profileShared', {profile: profile}) %></a>
 <% }) %>
 </div>
