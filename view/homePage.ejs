@@ -12,7 +12,7 @@
 <!-- GUESS USER -->
 <div class="flex flex-wrap justify-center">
 <% profiles.forEach(function(profile) { %> 
-    <a href="/profile/<%= profile.email %>"><%- include('includes/profileShared',{profile: profile}) %></a>
+    <a class="m-4" href="/profile/<%= profile.email %>"><%- include('includes/profileShared', {profile: profile}) %></a>
 <% }) %>
 </div>
 <!-- GUESS USER END-->
