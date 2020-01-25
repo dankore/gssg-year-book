@@ -135,7 +135,7 @@ User.prototype.login = function() {
 User.prototype.cleanUp = function() {
   // remove spaces
     this.data.email.trim();
-    
+
   if (typeof this.data.firstName != "string") {
     this.data.firstName = "";
   }
@@ -189,9 +189,11 @@ User.findByEmail = function(email) {
             firstName: userDoc.data.firstName,
             lastName: userDoc.data.lastName,
             year: userDoc.data.year,
-            email: userDoc.data.email
+            email: userDoc.data.email,
+            nickname: userDoc.data.nickname,
+            photo: userDoc.data.photo
           };
-
+console.log(userDoc)
           resolve(userDoc);
         } else {
           reject();
@@ -239,7 +241,9 @@ User.prototype.actuallyUpdate = function() {
             firstName: this.data.firstName,
             lastName: this.data.lastName,
             email: this.data.email,
-            year: this.data.year
+            year: this.data.year,
+            nickname: this.data.nickname,
+            photo: this.data.photo
           }
         }
       );
@@ -280,7 +284,9 @@ User.allProfiles = function() {
         firstName: eachDoc.firstName,
         lastName: eachDoc.lastName,
         year: eachDoc.year,
-        email: eachDoc.email
+        email: eachDoc.email,
+        nickname: eachDoc.nickname,
+        photo: eachDoc.photo
       };
       return eachDoc;
     });

@@ -2,7 +2,7 @@ const User = require("./model");
 
 exports.home = async (req, res) => {
   let profiles = await User.allProfiles();
-  
+  console.log(profiles)
   res.render("homePage", {
     errors: req.flash("errors"),
     success: req.flash("success"),
@@ -110,6 +110,7 @@ exports.profileScreen = (req, res) => {
 exports.viewEditScreen = async function(req, res) {
   try {
     let profile = await User.findByEmail(req.params.email);
+   
     let isVisitorOwner = User.isVisitorOwner(
       req.session.user.email,
       req.params.email
@@ -136,7 +137,7 @@ exports.viewEditScreen = async function(req, res) {
 exports.edit = function(req, res) {
   if (req.session.user) {
     let profile = new User(req.body, req.session.user.email, req.params.email);
-
+    
     profile
       .update()
       .then(status => {
@@ -198,6 +199,7 @@ exports.delete = function(req, res) {
 
 exports.search = async function(req, res){
   let searchResultsArray = await User.search(req.body.q)
+  
   res.render("homePage", {
     errors: req.flash("errors"),
     success: req.flash("success"),

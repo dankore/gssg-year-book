@@ -2,7 +2,7 @@
   <img
     class="w-full"
     title="<%= profile.firstName %> <%= profile.lastName %>"
-    src="../static/pic.jpg"
+    src="<%= profile.photo %>"
     alt="profile picture"
   />
   <div class="px-6 py-4">
@@ -14,6 +14,9 @@
     </p>
     <p class="mb-3">
       <span class="text-gray-600">Email:</span> <%= profile.email %>
+    </p>
+    <p class="mb-3">
+      <span class="text-gray-600">Nickname:</span> <%= profile.nickname %>
     </p>
   </div>
 </div>

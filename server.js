@@ -16,18 +16,11 @@ server.use(sessionOptions);
 server.use(flash());
 const router = require("./router");
 
-// app.use(function(req, res, next) {
-//   if(req.session.user){
-//       req.visitorId = req.session.user._id
-//   }  else {
-//       req.visitorId = 0
-//   }
-//   res.locals.user = req.session.user;
-//   next();
-// });
+
 server.set("views", "view");
 server.set("view engine", "ejs");
-server.use(express.static("./public"));
+// server.use(express.static("public"));
+server.use("public", express.static(__dirname + "public"));
 
 server.use(express.urlencoded({ extended: false }));
 server.use(express.json());
