@@ -15,6 +15,9 @@ let User = class user {
 
 User.prototype.validateEmail = function() {
   return new Promise(async (resolve, reject) => {
+    // remove spaces
+    this.data.email.trim();
+
     if (this.data.email.length == "") {
       this.errors.push("Email is required.");
     }
@@ -130,6 +133,9 @@ User.prototype.login = function() {
 };
 
 User.prototype.cleanUp = function() {
+  // remove spaces
+    this.data.email.trim();
+    
   if (typeof this.data.firstName != "string") {
     this.data.firstName = "";
   }
