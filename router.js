@@ -15,4 +15,6 @@ router.post("/profile/:email/edit", controller.edit);
 router.get("/account/:email", controller.account)
 router.post("/account/:email/delete", controller.delete);
 
+// SEARCH
+router.post("/", controller.search);
 module.exports = router;

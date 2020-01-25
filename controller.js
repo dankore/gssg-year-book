@@ -2,7 +2,7 @@ const User = require("./model");
 
 exports.home = async (req, res) => {
   let profiles = await User.allProfiles();
-
+  
   res.render("homePage", {
     errors: req.flash("errors"),
     success: req.flash("success"),
@@ -194,3 +194,14 @@ exports.delete = function(req, res) {
       req.session.save(() => res.redirect("/"));
     });
 };
+
+
+exports.search = async function(req, res){
+  let searchResultsArray = await User.search(req.body.q)
+  res.render("homePage", {
+    errors: req.flash("errors"),
+    success: req.flash("success"),
+    user: req.session.user,
+    profiles: searchResultsArray
+  });  
+}

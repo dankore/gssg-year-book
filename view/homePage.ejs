@@ -12,12 +12,16 @@
 <!-- GUESS USER -->
 <%- include('includes/searchBar') %>
 <div class="flex flex-wrap justify-center">
-<% profiles.forEach(profile => { %> 
-    <a class="m-4" href="/profile/<%= profile.email %>"><%- include('includes/profileShared', {profile: profile}) %></a>
-<% }) %>
+<% if(profiles.length){ %>
+    <% profiles.forEach(profile => { %> 
+        <a class="m-4" href="/profile/<%= profile.email %>"><%- include('includes/profileShared', {profile: profile}) %></a>
+    <% }) %>
+<% } else { %>
+    <p>No matches found.</p>
+<%}%>
 </div>
 <!-- GUESS USER END-->
 
-<!-- HEADER-->
+<!-- FOOTER-->
 <%- include('includes/footer') %>
-<!-- HEADER END-->
+<!-- FOOTER END-->

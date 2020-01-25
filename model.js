@@ -268,17 +268,69 @@ User.allProfiles = function() {
   return new Promise(async (resolve, reject) => {
     let allProfiles = await usersCollection.find({}).toArray();
 
-    allProfiles = allProfiles.map(item => {
+    allProfiles = allProfiles.map(eachDoc => {
       //clean up each document
-      item = {
-        firstName: item.firstName,
-        lastName: item.lastName,
-        year: item.year,
-        email: item.email
+      eachDoc = {
+        firstName: eachDoc.firstName,
+        lastName: eachDoc.lastName,
+        year: eachDoc.year,
+        email: eachDoc.email
       };
-      return item;
+      return eachDoc;
     });
     resolve(allProfiles);
+  });
+};
+
+User.search = async function(searchedItem) {
+  return new Promise(async (resolve, reject) => {
+    usersCollection.createIndex({
+      firstName: "text",
+      lastName: "text",
+      year: "text"
+    });
+    if (typeof searchedItem == "string") {
+      let searchedResult = await usersCollection
+        .find(
+          {
+            $or: [
+              {
+                firstName: { $regex: new RegExp(searchedItem, "i") }
+              },
+              {
+                lastName: { $regex: new RegExp(searchedItem, "i") }
+              },
+              {
+                year: { $regex: new RegExp(searchedItem, "i") }
+              },
+              {
+                email: { $regex: new RegExp(searchedItem, "i") }
+              }
+            ]
+          },
+          {
+            $project: { score: { $meta: "textScore" } },
+            $sort: { score: { $meta: "textScore" } }
+          }
+        )
+        .toArray();
+
+      searchedResult = searchedResult.map(eachDoc => {
+        //clean up each document
+        eachDoc = {
+          firstName: eachDoc.firstName,
+          lastName: eachDoc.lastName,
+          year: eachDoc.year,
+          email: eachDoc.email
+        };
+
+        return eachDoc;
+      });
+
+      resolve(searchedResult);
+    } else {
+      reject();
+    }
   });
 };
 module.exports = User;
