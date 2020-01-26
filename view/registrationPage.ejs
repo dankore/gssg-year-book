@@ -5,7 +5,7 @@
   <p class="text-sm italic">Creating an account will automatically add your profile.</p>
 </div>
 <div class="flex justify-center p-2 sm:p-4 mx-auto relative min-h-full max-w-2xl">
-  <form action="/register" method="POST" class="max-w-lg mx-auto p-8 border rounded mt-4 bg-white">
+  <form action="/register" method="POST" enctype="multipart/form-data" class="max-w-lg mx-auto p-8 border rounded mt-4 bg-white">
     <% reqErrors.forEach(function(message){ %>
     <div class="bg-red-100 border border-red-400 text-red-700 text-center px-4 py-3 rounded"><%= message %></div>
     <% }) %>

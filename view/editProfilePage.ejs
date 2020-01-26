@@ -10,6 +10,7 @@
     action="/profile/<%= profile.email %>/edit"
     method="POST"
     class="max-w-lg mx-auto p-8 border rounded mt-4 bg-white"
+    enctype="multipart/form-data"
   >
     <%- include('includes/flash') %>
     <div class="flex flex-wrap -mx-3 mt-1 mb-6">

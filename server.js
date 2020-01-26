@@ -3,6 +3,8 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const flash = require("connect-flash");
 const server = express();
+const bodyParser = require("body-parser");
+const router = require("./router");
 
 let sessionOptions = session({
   secret: "JavaScript is soooo cool",
@@ -14,13 +16,12 @@ let sessionOptions = session({
 
 server.use(sessionOptions);
 server.use(flash());
-const router = require("./router");
 
+server.use(bodyParser.urlencoded({ extended: true }));
 
 server.set("views", "view");
 server.set("view engine", "ejs");
-// server.use(express.static("public"));
-server.use("public", express.static(__dirname + "public"));
+server.use(express.static("public"));
 
 server.use(express.urlencoded({ extended: false }));
 server.use(express.json());

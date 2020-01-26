@@ -5,8 +5,9 @@ const validator = require("validator");
 const bcrypt = require("bcryptjs");
 
 let User = class user {
-  constructor(data, sessionEmail, requestedEmail) {
+  constructor(data, photo, sessionEmail, requestedEmail) {
     (this.data = data),
+      (this.photo = photo),
       (this.errors = []),
       (this.sessionEmail = sessionEmail),
       (this.requestedEmail = requestedEmail);
@@ -134,7 +135,7 @@ User.prototype.login = function() {
 
 User.prototype.cleanUp = function() {
   // remove spaces
-    this.data.email.trim();
+  this.data.email.trim();
 
   if (typeof this.data.firstName != "string") {
     this.data.firstName = "";
@@ -193,7 +194,7 @@ User.findByEmail = function(email) {
             nickname: userDoc.data.nickname,
             photo: userDoc.data.photo
           };
-console.log(userDoc)
+
           resolve(userDoc);
         } else {
           reject();
@@ -228,6 +229,10 @@ User.prototype.update = function() {
   });
 };
 
+User.cleanImageURI = function(imagePath) {
+  return imagePath.replace(/public\\static\\/, "");
+};
+
 User.prototype.actuallyUpdate = function() {
   return new Promise(async (resolve, reject) => {
     this.cleanUp();
@@ -243,7 +248,7 @@ User.prototype.actuallyUpdate = function() {
             email: this.data.email,
             year: this.data.year,
             nickname: this.data.nickname,
-            photo: this.data.photo
+            photo: User.cleanImageURI(this.photo)
           }
         }
       );
