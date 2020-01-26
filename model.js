@@ -338,9 +338,11 @@ User.search = async function(searchedItem) {
           firstName: eachDoc.firstName,
           lastName: eachDoc.lastName,
           year: eachDoc.year,
-          email: eachDoc.email
+          email: eachDoc.email,
+          photo: eachDoc.photo,
+          nickname: eachDoc.nickname
         };
-
+console.log(eachDoc)
         return eachDoc;
       });
 

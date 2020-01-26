@@ -203,7 +203,7 @@ exports.delete = function(req, res) {
 
 exports.search = async function(req, res) {
   let searchResultsArray = await User.search(req.body.q);
-
+  
   res.render("homePage", {
     errors: req.flash("errors"),
     success: req.flash("success"),
