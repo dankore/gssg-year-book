@@ -342,7 +342,6 @@ User.search = async function(searchedItem) {
           photo: eachDoc.photo,
           nickname: eachDoc.nickname
         };
-console.log(eachDoc)
         return eachDoc;
       });
 
