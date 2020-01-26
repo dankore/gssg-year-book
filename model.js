@@ -230,7 +230,7 @@ User.prototype.update = function() {
 };
 
 User.cleanImageURI = function(imagePath) {
-  return imagePath.replace(/public\/static/, "");
+  return imagePath.replace(/public\/static\//, "");
 };
 
 User.prototype.actuallyUpdate = function() {
