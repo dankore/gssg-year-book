@@ -134,9 +134,6 @@ User.prototype.login = function() {
 };
 
 User.prototype.cleanUp = function() {
-  // remove spaces
-  this.data.email.trim();
-
   if (typeof this.data.firstName != "string") {
     this.data.firstName = "";
   }

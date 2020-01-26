@@ -21,13 +21,12 @@ exports.registrationPage = (req, res) => {
 
 exports.registrationSubmission = async (req, res) => {
   let user = new User(req.body);
-
+console.log(req.body)
   user
     .register()
     .then(() => {
       req.session.user = {
-        email: user.data.email,
-        firstName: user.data.firstName
+        email: user.data.email
       };
       req.session.save(async function() {
         await res.redirect("/");
