@@ -162,7 +162,7 @@ User.prototype.register = function() {
       // Hash user password
       let salt = bcrypt.genSaltSync(10);
       this.data.password = bcrypt.hashSync(this.data.password, salt);
-      this.data.photo = ""
+      this.data.photo = "";
       await usersCollection.insertOne(this.data);
       resolve();
     } else {
@@ -299,63 +299,61 @@ User.allProfiles = function() {
 
 User.search = async function(searchedItem) {
   return new Promise(async (resolve, reject) => {
-   try{
-     usersCollection.createIndex({
-       firstName: "text",
-       lastName: "text",
-       year: "text",
-       nickname: "text",
-       email: "text"
-     });
-     if (typeof searchedItem === "string") {
-       let searchedResult = await usersCollection
-         .find(
-           {
-             $or: [
-               {
-                 firstName: { $regex: new RegExp(searchedItem, "i") }
-               },
-               {
-                 lastName: { $regex: new RegExp(searchedItem, "i") }
-               },
-               {
-                 year: { $regex: new RegExp(searchedItem, "i") }
-               },
-               {
-                 email: { $regex: new RegExp(searchedItem, "i") }
-               },
-               {
-                 nickname: { $regex: new RegExp(searchedItem, "i") }
-               }
-             ]
-           },
-           {
-             $project: { score: { $meta: "textScore" } },
-             $sort: { score: { $meta: "textScore" } }
-           }
-         )
-         .toArray();
+    try {
+      usersCollection.createIndex({
+        firstName: "text",
+        lastName: "text",
+        year: "text"
+      });
+      if (typeof searchedItem === "string") {
+        let searchedResult = await usersCollection
+          .find(
+            {
+              $or: [
+                {
+                  firstName: { $regex: new RegExp(searchedItem, "i") }
+                },
+                {
+                  lastName: { $regex: new RegExp(searchedItem, "i") }
+                },
+                {
+                  year: { $regex: new RegExp(searchedItem, "i") }
+                },
+                {
+                  email: { $regex: new RegExp(searchedItem, "i") }
+                },
+                {
+                  nickname: { $regex: new RegExp(searchedItem, "i") }
+                }
+              ]
+            },
+            {
+              $project: { score: { $meta: "textScore" } },
+              $sort: { score: { $meta: "textScore" } }
+            }
+          )
+          .toArray();
 
-       searchedResult = searchedResult.map(eachDoc => {
-         //clean up each document
-         eachDoc = {
-           firstName: eachDoc.firstName,
-           lastName: eachDoc.lastName,
-           year: eachDoc.year,
-           email: eachDoc.email,
-           photo: eachDoc.photo,
-           nickname: eachDoc.nickname
-         };
-         return eachDoc;
-       });
+        searchedResult = searchedResult.map(eachDoc => {
+          //clean up each document
+          eachDoc = {
+            firstName: eachDoc.firstName,
+            lastName: eachDoc.lastName,
+            year: eachDoc.year,
+            email: eachDoc.email,
+            photo: eachDoc.photo,
+            nickname: eachDoc.nickname
+          };
+          return eachDoc;
+        });
 
-       resolve(searchedResult);
-     } else {
-       reject();
-     }
-   } catch {
-    reject()
-   }
+        resolve(searchedResult);
+      } else {
+        reject();
+      }
+    } catch {
+      reject();
+    }
   });
 };
 module.exports = User;
