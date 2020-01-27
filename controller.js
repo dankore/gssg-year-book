@@ -21,7 +21,7 @@ exports.registrationPage = (req, res) => {
 
 exports.registrationSubmission = async (req, res) => {
   let user = new User(req.body);
-  console.log(req.body);
+
   user
     .register()
     .then(() => {
@@ -213,12 +213,17 @@ exports.delete = function(req, res) {
 };
 
 exports.search = async function(req, res) {
-  let searchResultsArray = await User.search(req.body.q);
+  try {
+    let searchResultsArray = await User.search(req.body.q);
 
-  res.render("homePage", {
-    errors: req.flash("errors"),
-    success: req.flash("success"),
-    user: req.session.user,
-    profiles: searchResultsArray
-  });
+    res.render("homePage", {
+      errors: req.flash("errors"),
+      success: req.flash("success"),
+      user: req.session.user,
+      profiles: searchResultsArray
+    });
+  } catch {
+    req.flash("errors", "Invalid search term.");
+    req.session.save(() => res.redirect("/"));
+  }
 };
