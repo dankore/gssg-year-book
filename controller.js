@@ -21,7 +21,7 @@ exports.registrationPage = (req, res) => {
 
 exports.registrationSubmission = async (req, res) => {
   let user = new User(req.body);
-console.log(req.body)
+  console.log(req.body);
   user
     .register()
     .then(() => {
@@ -133,14 +133,26 @@ exports.viewEditScreen = async function(req, res) {
   }
 };
 
-exports.edit = function(req, res) {
+exports.edit = async function(req, res) {
   if (req.session.user) {
-    let profile = new User(
-      req.body,
-      req.file.path,
-      req.session.user.email,
-      req.params.email
-    );
+    let userInfo = await User.findByEmail(req.session.user.email);
+    let imageUrl = userInfo.photo;
+    let profile;
+    if (req.file) {
+      profile = new User(
+        req.body,
+        req.file.path,
+        req.session.user.email,
+        req.params.email
+      );
+    } else {
+      profile = new User(
+        req.body,
+        imageUrl,
+        req.session.user.email,
+        req.params.email
+      );
+    }
 
     profile
       .update()
@@ -202,7 +214,7 @@ exports.delete = function(req, res) {
 
 exports.search = async function(req, res) {
   let searchResultsArray = await User.search(req.body.q);
-  
+
   res.render("homePage", {
     errors: req.flash("errors"),
     success: req.flash("success"),
