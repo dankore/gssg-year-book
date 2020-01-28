@@ -65,7 +65,7 @@
           class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
           for="year"
         >
-          What year did you graduateD OR will graduate? <span class="text-red-600">*</span>
+          What year did you graduateD OR will graduate GSS Gwarinpa? <span class="text-red-600">*</span>
         </label>
         <input
           name="year"
@@ -87,6 +87,51 @@
           value="<%= profile.nickname %>"
           class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
           id="nickname"
+          type="text"
+        />
+      </div>
+      <div class="w-full px-3 mb-3">
+        <label
+          class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+          for="phone"
+        >
+          What is your cell phone number? 
+        </label>
+        <input
+          name="phone"
+          value="<%= profile.phone %>"
+          class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+          id="phone"
+          type="text"
+        />
+      </div>
+       <div class="w-full md:w-1/2 px-3 md:mb-0">
+        <label
+          class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+          for="social-1"
+        >
+          Social media link #1
+        </label>
+        <input
+          name="social-1"
+          value="<%= profile.social_1 %>"
+          class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+          id="social-1"
+          type="text"
+        />
+      </div>
+      <div class="w-full md:w-1/2 mb-3 md:mb-0 px-3">
+        <label
+          class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+          for="social-2"
+        >
+          Social media link #2
+        </label>
+        <input
+          name="social-2"
+          value="<%= profile.social_2 %>"
+          class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+          id="social-2"
           type="text"
         />
       </div>

@@ -137,8 +137,8 @@ exports.edit = async function(req, res) {
   if (req.session.user) {
     let userInfo = await User.findByEmail(req.session.user.email);
     let imageUrl = userInfo.photo;
-  
     let profile;
+    
     if (req.file) {
       profile = new User(
         req.body,
