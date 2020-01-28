@@ -49,7 +49,7 @@ User.prototype.validatePassword = function() {
 };
 User.prototype.editValidation = function() {
   // check for non-allowed inputs
-   // IF NOT EMPTY
+  // IF NOT EMPTY
   if (("" + this.data.phone).length != "") {
     if (!validator.isMobilePhone(this.data.phone)) {
       this.errors.push("Phone number must be valid.");
@@ -59,15 +59,15 @@ User.prototype.editValidation = function() {
     this.errors.push("Nickname must be less than 50 characters.");
   }
   // IF NOT EMPTY
-  if (
-    ("" + this.data.social_1).length != "" ||
-    ("" + this.data.social_2).length != ""
-  ) {
-    if (
-      !validator.isURL(this.data.social_1) ||
-      !validator.isURL(this.data.social_2)
-    ) {
-      this.errors.push("Each social media link must be a valid web address.");
+  if (("" + this.data.social_1).length != "") {
+    if (!validator.isURL(this.data.social_1)) {
+      this.errors.push("Social media link #1 must be a valid web address.");
+    }
+  }
+
+if (("" + this.data.social_2).length != "") {
+    if (!validator.isURL(this.data.social_2)) {
+      this.errors.push("Social media link #2 must be a valid web address.");
     }
   }
 };
