@@ -47,7 +47,30 @@ User.prototype.validatePassword = function() {
     this.errors.push("Password should be between 4 and 32 characters.");
   }
 };
-
+User.prototype.editValidation = function() {
+  // check for non-allowed inputs
+   // IF NOT EMPTY
+  if (("" + this.data.phone).length != "") {
+    if (!validator.isMobilePhone(this.data.phone)) {
+      this.errors.push("Must be a phone number.");
+    }
+  }
+  if (!validator.isLength(this.data.nickname, { min: 0, max: 50 })) {
+    this.errors.push("Nickname must be less than 50 characters.");
+  }
+  // IF NOT EMPTY
+  if (
+    ("" + this.data.social_1).length != "" ||
+    ("" + this.data.social_2).length != ""
+  ) {
+    if (
+      !validator.isURL(this.data.social_1) ||
+      !validator.isURL(this.data.social_2)
+    ) {
+      this.errors.push("Each social media link must be a valid web address.");
+    }
+  }
+};
 User.prototype.validateSomeUserRegistrationInputs = function() {
   // check for empty boxes
   if (this.data.firstName.length == "") {
@@ -227,14 +250,11 @@ User.prototype.update = function() {
   });
 };
 
-User.cleanImageURI = function(imagePath) {
-  return imagePath.replace(/^.*?(?=photo)/, "");
-};
-
 User.prototype.actuallyUpdate = function() {
   return new Promise(async (resolve, reject) => {
     this.cleanUp();
     this.validateSomeUserRegistrationInputs();
+    this.editValidation();
 
     if (!this.errors.length) {
       await usersCollection.findOneAndUpdate(
@@ -246,7 +266,7 @@ User.prototype.actuallyUpdate = function() {
             email: this.data.email,
             year: this.data.year,
             nickname: this.data.nickname,
-            photo: User.cleanImageURI(this.photo)
+            photo: this.photo
           }
         }
       );
