@@ -52,7 +52,7 @@ User.prototype.editValidation = function() {
    // IF NOT EMPTY
   if (("" + this.data.phone).length != "") {
     if (!validator.isMobilePhone(this.data.phone)) {
-      this.errors.push("Must be a phone number.");
+      this.errors.push("Phone number must be valid.");
     }
   }
   if (!validator.isLength(this.data.nickname, { min: 0, max: 50 })) {
