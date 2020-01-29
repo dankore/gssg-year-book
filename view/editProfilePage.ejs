@@ -5,7 +5,7 @@
   <h2 class="text-2xl">Edit Your Profile</h2>
 </div>
 <div
-  class="flex justify-center p-2 sm:p-4 mx-auto relative min-h-full max-w-2xl"
+  class="flex justify-center p-2 sm:p-4 sm:mx-auto relative m-4 max-w-2xl"
 >
   <form
     action="/profile/<%= profile.email %>/edit"
@@ -16,8 +16,8 @@
     <div class="max-w-lg mx-auto mt-4">
       <%- include('includes/flash') %>
       <!-- MANDATORY FIELDS -->
-      <p class="mt-3">Required fields <span class="text-red-600">*</span></p>
-      <div class="flex flex-wrap -mx-3 mt-1 mb-6 p-8 border rounded bg-white">
+      <p class="mt-3 -mx-2">Required fields <span class="text-red-600">*</span></p>
+      <div class="flex flex-wrap -mx-3 mt-1 mb-2 px-4 py-8 border rounded bg-white">
         <div class="w-full md:w-1/2 px-3 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
@@ -80,10 +80,16 @@
             type="text"
           />
         </div>
+        
       </div>
+      <button
+          class="rounded w-full bg-blue-600 hover:bg-blue-800 text-white py-1"
+        >
+          Save Changes
+        </button>
       <!-- OPTIONAL FIELDS -->
-      <p class="mt-3">Optional fields</p>
-      <div class="flex flex-wrap -mx-3 mt-1 mb-6 p-8 border rounded bg-white">
+      <p class="mt-6 -mx-2">Optional fields</p>
+      <div class="flex flex-wrap -mx-3 mt-1 mb-2 px-4 py-8 border rounded bg-white">
         <div class="w-full px-3 mb-3">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
@@ -161,13 +167,11 @@
           />
         </div>
       </div>
-      <div class="flex items-center justify-between">
         <button
-          class="rounded bg-blue-600 hover:bg-blue-800 px-3 py-1 text-white py-1 px-4"
+          class="rounded w-full bg-blue-600 hover:bg-blue-800 text-white py-1"
         >
           Save Changes
         </button>
-      </div>
     </div>
   </form>
 </div>
