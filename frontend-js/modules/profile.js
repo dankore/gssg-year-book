@@ -16,7 +16,7 @@ export default class Profile {
 
   // METHODS
   showMoreProfileHandler() {
-    if (this.showMoreProfileBtn.innerHTML == "Show full profile") {
+    if (this.moreProfileContainer.style.display == "none") {
       this.moreProfileContainer.style.display = "block";
       this.showMoreProfileBtn.innerHTML = "Show less";
     } else {
