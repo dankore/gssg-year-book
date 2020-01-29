@@ -1,15 +1,13 @@
-<%- include('includes/header') %>
-<%- include('includes/goToHomePage') %>
+<%- include('includes/header') %> <%- include('includes/goToHomePage') %>
 <p class="text-center text-2xl my-2">
   Account Settings
 </p>
 <div class="max-w-2xl text-center mx-4 sm:mx-auto p-4 rounded">
-  <form action="/account/<%= user.email %>/delete" method="POST">
-    <button
-      class="inline-block text-blue-800 rounded font-bold border border-blue-800 w-56 hover:text-white hover:bg-blue-600"
-    >
-      Delete Your Account
-    </button>
-  </form>
+  <a
+    href="/account/<%= user.email %>/confirm"
+    class="inline-block text-red-800 rounded font-bold border border-red-800 w-56 hover:text-white hover:bg-red-600"
+  >
+    Delete Your Account
+  </a>
 </div>
 <%- include('includes/footer') %>

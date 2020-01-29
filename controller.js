@@ -202,6 +202,24 @@ exports.account = function(req, res) {
     res.render("404", { user: req.session.user });
   }
 };
+
+exports.confirm = function(req, res) {
+  if (req.session.user) {
+    let visitorIsOwner = User.isVisitorOwner(
+      req.session.user.email,
+      req.params.email
+    );
+    if (visitorIsOwner) {
+      res.render("confirmDeletePage", { user: req.session.user });
+    } else {
+      req.flash("errors", "You do not have permission to perform that action.");
+      req.session.save(() => res.redirect("/"));
+    }
+  } else {
+    res.render("404", { user: req.session.user });
+  }
+};
+
 exports.delete = function(req, res) {
   User.delete(req.params.email, req.session.user.email)
     .then(() => {
@@ -229,3 +247,4 @@ exports.search = async function(req, res) {
     req.session.save(() => res.redirect("/"));
   }
 };
+
