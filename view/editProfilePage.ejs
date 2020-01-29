@@ -87,6 +87,22 @@
       <!-- OPTIONAL FIELDS -->
       <p class="mt-6">Optional fields</p>
       <div class="flex flex-wrap mt-1 mb-2 py-3 border rounded bg-white">
+        <div class="w-full px-3 py-3">
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+            for="nickname"
+          >
+            Upload your photo
+          </label>
+          <input
+            name="photo"
+            value=""
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            id="photo"
+            type="file"
+            accept="image/*"
+          />
+        </div>
         <div class="w-full px-3 mb-3">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
@@ -132,7 +148,7 @@
             type="text"
           />
         </div>
-        <div class="w-full px-3 mb-3">
+        <div class="w-full px-3 my-3">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
             for="class"
@@ -147,6 +163,15 @@
             type="text"
           />
         </div>
+      </div>
+      <button
+        class="rounded w-full bg-blue-600 hover:bg-blue-800 text-white py-1"
+      >
+        Save Changes
+      </button>
+      <!-- MORE OPTIONAL FIELDS -->
+      <p class="mt-6">More optional fields</p>
+      <div class="flex flex-wrap mt-1 mb-2 py-3 border rounded bg-white">
         <div class="w-full md:w-1/2 px-3 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
@@ -177,7 +202,7 @@
             type="text"
           />
         </div>
-        <div class="w-full px-3 mb-3">
+        <div class="w-full px-3 my-3">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
             for="dob"
@@ -220,22 +245,6 @@
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             id="social_2"
             type="text"
-          />
-        </div>
-        <div class="w-full px-3 py-3">
-          <label
-            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
-            for="nickname"
-          >
-            Upload your photo
-          </label>
-          <input
-            name="photo"
-            value=""
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            id="photo"
-            type="file"
-            accept="image/*"
           />
         </div>
       </div>
