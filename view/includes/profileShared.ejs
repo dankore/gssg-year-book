@@ -17,15 +17,15 @@
     <%}%>
   </div>
   <div class="px-6 py-4">
-    <div class="text-xl font-bold mb-1">
-      <%= profile.firstName %> <%= profile.lastName %> <span class="inline-block
-      bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 ml-3">SS3A</span>
+    <div class="text-xl font-bold mb-1 flex justify-between">
+      <span class="inline-block"><%= profile.firstName %> <%= profile.lastName %></span>
+      <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">SS3A</span>
     </div>
     <p class="mb-1 font-mono text-center">
        Class of <%= profile.year %>
     </p>
     <p class="mb-1">
-      <span class="text-gray-600">Nickname in school:</span> <%= profile.nickname %>
+      <span class="text-gray-600">Nickname:</span> <%= profile.nickname %>
     </p>
     <p class="mb-1">
       <span class="text-gray-600">Lives in 🏡:</span> Abuja, Nigeria
