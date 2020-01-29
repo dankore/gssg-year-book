@@ -5,11 +5,11 @@
 <div class="max-w-2xl text-center mx-4 sm:mx-auto p-4 rounded flex justify-center">
   <form action="/account/<%= user.email %>/delete" method="POST">
     <button
-      class="inline-block text-red-800 rounded font-bold border border-red-800 w-56 hover:text-white hover:bg-red-600"
+      class="inline-block text-red-800 rounded border border-red-800 w-56 hover:text-white hover:bg-red-600"
     >
       Yes, Delete My Account
     </button>
   </form>
-  <a href="/" class="inline-block text-blue-800 ml-4 rounded font-bold border border-blue-800 w-56 hover:text-white hover:bg-blue-600">No, Cancel</a>
+  <a href="/" class="inline-block text-blue-800 ml-4 rounded border border-blue-800 w-56 hover:text-white hover:bg-blue-600">No, Cancel</a>
 </div>
 <%- include('includes/footer') %>
