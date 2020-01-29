@@ -1,3 +1,5 @@
 import Profile from "./modules/profile";
 
-new Profile();
+if (document.querySelector("#more-profile-btn")) {
+  new Profile();
+}
