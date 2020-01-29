@@ -1,3 +1,3 @@
-import Search from "./modules/search";
+import Profile from "./modules/profile";
 
-new Search();
+new Profile();
