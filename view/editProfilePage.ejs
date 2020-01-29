@@ -4,9 +4,7 @@
   <%- include('includes/goToProfile') %>
   <h2 class="text-2xl">Edit Your Profile</h2>
 </div>
-<div
-  class="flex justify-center p-2 sm:p-4 sm:mx-auto relative mx-4 max-w-2xl"
->
+<div class="flex justify-center p-2 sm:p-4 sm:mx-auto relative mx-4 max-w-2xl">
   <form
     action="/profile/<%= profile.email %>/edit"
     method="POST"
@@ -80,13 +78,12 @@
             type="text"
           />
         </div>
-        
       </div>
       <button
-          class="rounded w-full bg-blue-600 hover:bg-blue-800 text-white py-1"
-        >
-          Save Changes
-        </button>
+        class="rounded w-full bg-blue-600 hover:bg-blue-800 text-white py-1"
+      >
+        Save Changes
+      </button>
       <!-- OPTIONAL FIELDS -->
       <p class="mt-6">Optional fields</p>
       <div class="flex flex-wrap mt-1 mb-2 py-3 border rounded bg-white">
@@ -105,7 +102,7 @@
             type="text"
           />
         </div>
-        <div class="w-full px-3 mb-3">
+        <div class="w-full md:w-1/2 px-3 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
             for="phone"
@@ -117,6 +114,81 @@
             value="<%= profile.phone %>"
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             id="phone"
+            type="text"
+          />
+        </div>
+        <div class="w-full md:w-1/2 px-3 md:mb-0">
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+            for="residence"
+          >
+            Where do you currently live?
+          </label>
+          <input
+            name="residence"
+            value="<%= profile.residence %>"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            id="residence"
+            type="text"
+          />
+        </div>
+        <div class="w-full px-3 mb-3">
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+            for="class"
+          >
+            What is your last class or current class in GSS Gwarinpa?
+          </label>
+          <input
+            name="class"
+            value="<%= profile.class %>"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            id="class"
+            type="text"
+          />
+        </div>
+        <div class="w-full md:w-1/2 px-3 md:mb-0">
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+            for="occupation"
+          >
+            What is your occupation?
+          </label>
+          <input
+            name="occupation"
+            value="<%= profile.occupation %>"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            id="occupation"
+            type="text"
+          />
+        </div>
+        <div class="w-full md:w-1/2 px-3 md:mb-0">
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+            for="teacher"
+          >
+            Your favorite teacher is/was?
+          </label>
+          <input
+            name="teacher"
+            value="<%= profile.teacher %>"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            id="teacher"
+            type="text"
+          />
+        </div>
+        <div class="w-full px-3 mb-3">
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+            for="dob"
+          >
+            What is the day and month of your birth?
+          </label>
+          <input
+            name="dob"
+            value="<%= profile.dob %>"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            id="dob"
             type="text"
           />
         </div>
@@ -167,11 +239,11 @@
           />
         </div>
       </div>
-        <button
-          class="rounded w-full bg-blue-600 hover:bg-blue-800 text-white py-1"
-        >
-          Save Changes
-        </button>
+      <button
+        class="rounded w-full bg-blue-600 hover:bg-blue-800 text-white py-1"
+      >
+        Save Changes
+      </button>
     </div>
   </form>
 </div>
