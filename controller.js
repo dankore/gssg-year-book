@@ -108,7 +108,7 @@ exports.profileScreen = (req, res) => {
 
 exports.viewEditScreen = async function(req, res) {
   try {
-    let profile = await User.findByEmail(req.params.email);
+    let profile = await User.findByEmail(req.session.user.email);
 
     let isVisitorOwner = User.isVisitorOwner(
       req.session.user.email,
@@ -135,11 +135,10 @@ exports.viewEditScreen = async function(req, res) {
 
 exports.edit = async function(req, res) {
   if (req.session.user) {
-    console.log(req.body)
     let userInfo = await User.findByEmail(req.session.user.email);
     let imageUrl = userInfo.photo;
     let profile;
-    
+
     if (req.file) {
       profile = new User(
         req.body,
@@ -247,4 +246,3 @@ exports.search = async function(req, res) {
     req.session.save(() => res.redirect("/"));
   }
 };
-

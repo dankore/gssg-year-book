@@ -65,7 +65,7 @@ User.prototype.editValidation = function() {
     }
   }
 
-if (("" + this.data.social_2).length != "") {
+  if (("" + this.data.social_2).length != "") {
     if (!validator.isURL(this.data.social_2)) {
       this.errors.push("Social media link #2 must be a valid web address.");
     }
@@ -196,34 +196,38 @@ User.prototype.register = function() {
 
 User.findByEmail = function(email) {
   return new Promise(function(resolve, reject) {
-    if (typeof email != "string") {
-      reject();
-      return;
-    }
-    usersCollection
-      .findOne({ email: email })
-      .then(userDoc => {
-        if (userDoc) {
-          userDoc = new User(userDoc);
-
-          userDoc = {
-            _id: userDoc.data._id,
-            firstName: userDoc.data.firstName,
-            lastName: userDoc.data.lastName,
-            year: userDoc.data.year,
-            email: userDoc.data.email,
-            nickname: userDoc.data.nickname,
-            photo: userDoc.data.photo
-          };
-
-          resolve(userDoc);
-        } else {
-          reject();
-        }
-      })
-      .catch(() => {
+    try {
+      if (typeof email != "string") {
         reject();
-      });
+        return;
+      }
+      usersCollection
+        .findOne({ email: email })
+        .then(userDoc => {
+          if (userDoc) {
+            userDoc = new User(userDoc);
+
+            userDoc = {
+              _id: userDoc.data._id,
+              firstName: userDoc.data.firstName,
+              lastName: userDoc.data.lastName,
+              year: userDoc.data.year,
+              email: userDoc.data.email,
+              nickname: userDoc.data.nickname,
+              photo: userDoc.data.photo
+            };
+
+            resolve(userDoc);
+          } else {
+            reject();
+          }
+        })
+        .catch(() => {
+          reject();
+        });
+    } catch {
+      reject();
+    }
   });
 };
 
