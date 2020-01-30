@@ -17,16 +17,27 @@
   <p class="mb-1 ">
     <span class="text-gray-600">Favorite Teacher:</span> <%= profile.teacher%>
   </p>
+  <% if(profile.social_type_1){ %>
   <p class="mb-1 flex">
     <span class="text-gray-600  mr-2 inline-block"
       ><%= profile.social_type_1 %>:
     </span>
     <a href="#" class="text-blue-600"><%= profile.link_social_type_1 %></a>
   </p>
+  <% } else { %>
+  <p class="mb-1 flex">
+    <span class="text-gray-600  mr-2 inline-block">Social Media #1: </span>
+  </p>
+  <%}%> <% if(profile.social_type_2){ %>
   <p class="mb-1 flex">
     <span class="text-gray-600  mr-2 inline-block"
       ><%= profile.social_type_2 %>:
     </span>
     <a href="#" class="text-blue-600"><%= profile.link_social_type_2 %></a>
   </p>
+  <% } else { %>
+  <p class="mb-1 flex">
+    <span class="text-gray-600  mr-2 inline-block">Social Media #2: </span>
+  </p>
+  <%}%>
 </div>

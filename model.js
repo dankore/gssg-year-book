@@ -58,18 +58,57 @@ User.prototype.editValidation = function() {
   if (!validator.isLength(this.data.nickname, { min: 0, max: 50 })) {
     this.errors.push("Nickname must be less than 50 characters.");
   }
+  if (!validator.isLength(this.data.residence, { min: 0, max: 50 })) {
+    this.errors.push("Place of residence must be less than 50 characters.");
+  }
+  if (!validator.isLength(this.data.occupation, { min: 0, max: 50 })) {
+    this.errors.push("Occupation must be less than 50 characters.");
+  }
   // IF NOT EMPTY
+  if (this.data.class != "") {
+    if (!validator.isAlphanumeric(this.data.class)) {
+      this.errors.push("Class can only contain letters and numbers.");
+    }
+    if (!validator.isLength(this.data.class, { min: 0, max: 20 })) {
+      this.errors.push("Class must be less than 20 characters.");
+    }
+  }
   if (this.data.link_social_type_1 != "") {
     if (!validator.isURL(this.data.link_social_type_1)) {
       this.errors.push("Social media link #1 must be a valid web address.");
     }
   }
-
+  if ((this.data.social_type_1 == "" && this.data.link_social_type_1 != "")) {
+    this.errors.push(
+      "Social Media Type #1 cannot be blank if Link to Social Media Type #1 has a value."
+    );
+  }
   if (this.data.link_social_type_2 != "") {
     if (!validator.isURL(this.data.link_social_type_2)) {
       this.errors.push("Social media link #2 must be a valid web address.");
     }
   }
+  if (this.data.social_type_2 == "" && this.data.link_social_type_2 != "") {
+    this.errors.push(
+      "Social Media Type #2 cannot be blank if Link to Social Media Type #2 has a value."
+    );
+  }
+  if (this.data.teacher != "") {
+    if (typeof this.data.teacher != "string") {
+      this.errors.push("Name of favorite teacher can only be letters.");
+    }
+    if (!validator.isLength(this.data.teacher, { min: 0, max: 50 })) {
+      this.errors.push(
+        "Name of favorite teacher must be less than 50 characters."
+      );
+    }
+  }
+  if (this.data.day != "") {
+    if (!validator.isNumeric(this.data.day)) {
+      this.errors.push("Day of Birth can only be numbers.");
+    }
+  }
+  // END
 };
 User.prototype.validateSomeUserRegistrationInputs = function() {
   // check for empty boxes
