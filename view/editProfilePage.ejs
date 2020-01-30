@@ -202,49 +202,158 @@
             type="text"
           />
         </div>
-        <div class="w-full px-3 my-3">
+        <div class="w-full md:w-1/2 px-3 md:mb-0">
           <label
-            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
-            for="dob"
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1 mt-2"
+            for="month"
           >
-            What is the day and month of your birth?
+            Month of birth
+          </label>
+          <div class="relative">
+            <select
+              name="month"
+              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="month"
+            >
+              <option></option>
+              <option>January</option>
+              <option>February</option>
+              <option>March</option>
+              <option>April</option>
+              <option>May</option>
+              <option>June</option>
+              <option>July</option>
+              <option>August</option>
+              <option>September</option>
+              <option>October</option>
+              <option>November</option>
+              <option>December</option>
+            </select>
+            <div
+              class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+            >
+              <svg
+                class="fill-current h-4 w-4"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="w-full md:w-1/2 mb-3 md:mb-0 px-3">
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1 mt-2"
+            for="day"
+          >
+            Day
           </label>
           <input
-            name="dob"
-            value="<%= profile.dob %>"
+            name="day"
+            value="<%= profile.day %>"
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            id="dob"
+            id="day"
             type="text"
           />
         </div>
         <div class="w-full md:w-1/2 px-3 md:mb-0">
           <label
-            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
-            for="social_1"
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1 mt-2"
+            for="social_type_1"
           >
-            Social media link #1
+            Social media #1
           </label>
-          <input
-            name="social_1"
-            value="<%= profile.social_1 %>"
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-            id="social_1"
-            type="text"
-          />
+          <div class="relative">
+            <select
+              name="social_type_1"
+              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="social_type_1"
+            >
+              <option></option>
+              <option>Facebook</option>
+              <option>Twitter</option>
+              <option>Instagram</option>
+              <option>WhatsApp</option>
+            </select>
+            <div
+              class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+            >
+              <svg
+                class="fill-current h-4 w-4"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                />
+              </svg>
+            </div>
+          </div>
         </div>
         <div class="w-full md:w-1/2 mb-3 md:mb-0 px-3">
           <label
-            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
-            for="social_2"
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1 mt-2"
+            for="link_social_type_1"
           >
-            Social media link #2
+            Link to social media #1
           </label>
           <input
-            name="social_2"
-            value="<%= profile.social_2 %>"
+            name="link_social_type_1"
+            value="<%= profile.link_social_type_1 %>"
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            id="social_2"
-            type="text"
+            id="link_social_type_1"
+            type="url"
+          />
+        </div>
+        <div class="w-full md:w-1/2 px-3 md:mb-0">
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1 mt-2"
+            for="social_type_2"
+          >
+            Social media #2
+          </label>
+          <div class="relative">
+            <select
+              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="social_type_2"
+            >
+              <option></option>
+              <option>Facebook</option>
+              <option>Twitter</option>
+              <option>Instagram</option>
+              <option>WhatsApp</option>
+            </select>
+            <div
+              class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+            >
+              <svg
+                class="fill-current h-4 w-4"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="w-full md:w-1/2 mb-3 md:mb-0 px-3">
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1 mt-2"
+            for="link_social_type_2"
+          >
+            Link to social media #2
+          </label>
+          <input
+            name="link_social_type_2"
+            value="<%= profile.link_social_type_2 %>"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            id="link_social_type_2"
+            type="url"
           />
         </div>
       </div>
