@@ -215,7 +215,7 @@
               class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               id="month"
             >
-              <option></option>
+              <option><%= profile.month %></option>
               <option>January</option>
               <option>February</option>
               <option>March</option>
@@ -228,6 +228,7 @@
               <option>October</option>
               <option>November</option>
               <option>December</option>
+              <option></option>
             </select>
             <div
               class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
@@ -268,15 +269,17 @@
           </label>
           <div class="relative">
             <select
+              
               name="social_type_1"
               class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               id="social_type_1"
             >
-              <option></option>
+              <option><%= profile.social_type_1 %></option>
               <option>Facebook</option>
               <option>Twitter</option>
               <option>Instagram</option>
               <option>WhatsApp</option>
+              <option></option>
             </select>
             <div
               class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
@@ -321,11 +324,12 @@
               class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               id="social_type_2"
             >
-              <option></option>
+              <option><%= profile.social_type_2 %></option>
               <option>Facebook</option>
               <option>Twitter</option>
               <option>Instagram</option>
               <option>WhatsApp</option>
+              <option></option>
             </select>
             <div
               class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"

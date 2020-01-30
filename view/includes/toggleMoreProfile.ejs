@@ -12,17 +12,21 @@
     <span class="text-gray-600">Email:</span> <%= profile.email %>
   </p>
   <p class="mb-1 ">
-    <span class="text-gray-600">Phone Number:</span> 0805-546-3432
+    <span class="text-gray-600">Phone Number:</span> <%= profile.phone %>
   </p>
   <p class="mb-1 ">
-    <span class="text-gray-600">Favorite Teacher:</span> Mr. Ogunnusi
+    <span class="text-gray-600">Favorite Teacher:</span> <%= profile.teacher%>
   </p>
   <p class="mb-1 flex">
-    <span class="text-gray-600  mr-2 inline-block">Facebook: </span>
-    <a href="#" class="text-blue-600">https://www.facebook.com</a>
+    <span class="text-gray-600  mr-2 inline-block"
+      ><%= profile.social_type_1 %>:
+    </span>
+    <a href="#" class="text-blue-600"><%= profile.link_social_type_1 %></a>
   </p>
   <p class="mb-1 flex">
-    <span class="text-gray-600  mr-2 inline-block">Twitter: </span>
-    <a href="#"class="text-blue-600">https://www.twitter.com</a>
+    <span class="text-gray-600  mr-2 inline-block"
+      ><%= profile.social_type_2 %>:
+    </span>
+    <a href="#" class="text-blue-600"><%= profile.link_social_type_2 %></a>
   </p>
 </div>

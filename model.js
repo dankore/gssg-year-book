@@ -215,16 +215,17 @@ User.findByEmail = function(email) {
               email: userDoc.data.email,
               nickname: userDoc.data.nickname,
               photo: userDoc.data.photo,
-              residence: userDoc.residence,
-              class: userDoc.class,
-              occupation: userDoc.occupation,
-              teacher: userDoc.teacher,
-              month: userDoc.month,
-              day: userDoc.day,
-              social_type_1: userDoc.social_type_1,
-              link_social_type_1: userDoc.link_social_type_1,
-              social_type_2: userDoc.social_type_2,
-              link_social_type_2: userDoc.link_social_type_2
+              residence: userDoc.data.residence,
+              class: userDoc.data.class,
+              occupation: userDoc.data.occupation,
+              teacher: userDoc.data.teacher,
+              month: userDoc.data.month,
+              day: userDoc.data.day,
+              phone: userDoc.data.phone,
+              social_type_1: userDoc.data.social_type_1,
+              link_social_type_1: userDoc.data.link_social_type_1,
+              social_type_2: userDoc.data.social_type_2,
+              link_social_type_2: userDoc.data.link_social_type_2
             };
 
             resolve(userDoc);
@@ -281,16 +282,17 @@ User.prototype.actuallyUpdate = function() {
             year: this.data.year,
             nickname: this.data.nickname,
             photo: this.photo,
-            residence: this.residence,
-            class: this.class,
-            occupation: this.occupation,
-            teacher: this.teacher,
-            month: this.month,
-            day: this.day,
-            social_type_1: this.social_type_1,
-            link_social_type_1: this.link_social_type_1,
-            social_type_2: this.social_type_2,
-            link_social_type_2: this.link_social_type_2
+            residence: this.data.residence,
+            class: this.data.class,
+            occupation: this.data.occupation,
+            teacher: this.data.teacher,
+            month: this.data.month,
+            day: this.data.day,
+            phone: this.data.phone,
+            social_type_1: this.data.social_type_1,
+            link_social_type_1: this.data.link_social_type_1,
+            social_type_2: this.data.social_type_2,
+            link_social_type_2: this.data.link_social_type_2
           }
         }
       );
@@ -334,16 +336,17 @@ User.allProfiles = function() {
         email: eachDoc.email,
         nickname: eachDoc.nickname,
         photo: eachDoc.photo,
-        residence: userDoc.residence,
-        class: userDoc.class,
-        occupation: userDoc.occupation,
-        teacher: userDoc.teacher,
-        month: userDoc.month,
-        day: userDoc.day,
-        social_type_1: userDoc.social_type_1,
-        link_social_type_1: userDoc.link_social_type_1,
-        social_type_2: userDoc.social_type_2,
-        link_social_type_2: userDoc.link_social_type_2
+        residence: eachDoc.residence,
+        class: eachDoc.class,
+        occupation: eachDoc.occupation,
+        teacher: eachDoc.teacher,
+        month: eachDoc.month,
+        day: eachDoc.day,
+        phone: eachDoc.phone,
+        social_type_1: eachDoc.social_type_1,
+        link_social_type_1: eachDoc.link_social_type_1,
+        social_type_2: eachDoc.social_type_2,
+        link_social_type_2: eachDoc.link_social_type_2
       };
       return eachDoc;
     });
@@ -397,16 +400,17 @@ User.search = async function(searchedItem) {
             email: eachDoc.email,
             photo: eachDoc.photo,
             nickname: eachDoc.nickname,
-            residence: userDoc.residence,
-            class: userDoc.class,
-            occupation: userDoc.occupation,
-            teacher: userDoc.teacher,
-            month: userDoc.month,
-            day: userDoc.day,
-            social_type_1: userDoc.social_type_1,
-            link_social_type_1: userDoc.link_social_type_1,
-            social_type_2: userDoc.social_type_2,
-            link_social_type_2: userDoc.link_social_type_2
+            residence: eachDoc.residence,
+            class: eachDoc.class,
+            occupation: eachDoc.occupation,
+            teacher: eachDoc.teacher,
+            month: eachDoc.month,
+            day: eachDoc.day,
+            phone: eachDoc.phone,
+            social_type_1: eachDoc.social_type_1,
+            link_social_type_1: eachDoc.link_social_type_1,
+            social_type_2: eachDoc.social_type_2,
+            link_social_type_2: eachDoc.link_social_type_2
           };
           return eachDoc;
         });
