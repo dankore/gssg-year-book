@@ -59,14 +59,14 @@ User.prototype.editValidation = function() {
     this.errors.push("Nickname must be less than 50 characters.");
   }
   // IF NOT EMPTY
-  if (("" + this.data.social_1).length != "") {
-    if (!validator.isURL(this.data.social_1)) {
+  if (this.data.link_social_type_1 != "") {
+    if (!validator.isURL(this.data.link_social_type_1)) {
       this.errors.push("Social media link #1 must be a valid web address.");
     }
   }
 
-  if (("" + this.data.social_2).length != "") {
-    if (!validator.isURL(this.data.social_2)) {
+  if (this.data.link_social_type_2 != "") {
+    if (!validator.isURL(this.data.link_social_type_2)) {
       this.errors.push("Social media link #2 must be a valid web address.");
     }
   }
@@ -214,7 +214,17 @@ User.findByEmail = function(email) {
               year: userDoc.data.year,
               email: userDoc.data.email,
               nickname: userDoc.data.nickname,
-              photo: userDoc.data.photo
+              photo: userDoc.data.photo,
+              residence: userDoc.residence,
+              class: userDoc.class,
+              occupation: userDoc.occupation,
+              teacher: userDoc.teacher,
+              month: userDoc.month,
+              day: userDoc.day,
+              social_type_1: userDoc.social_type_1,
+              link_social_type_1: userDoc.link_social_type_1,
+              social_type_2: userDoc.social_type_2,
+              link_social_type_2: userDoc.link_social_type_2
             };
 
             resolve(userDoc);
@@ -270,7 +280,17 @@ User.prototype.actuallyUpdate = function() {
             email: this.data.email,
             year: this.data.year,
             nickname: this.data.nickname,
-            photo: this.photo
+            photo: this.photo,
+            residence: this.residence,
+            class: this.class,
+            occupation: this.occupation,
+            teacher: this.teacher,
+            month: this.month,
+            day: this.day,
+            social_type_1: this.social_type_1,
+            link_social_type_1: this.link_social_type_1,
+            social_type_2: this.social_type_2,
+            link_social_type_2: this.link_social_type_2
           }
         }
       );
@@ -313,7 +333,17 @@ User.allProfiles = function() {
         year: eachDoc.year,
         email: eachDoc.email,
         nickname: eachDoc.nickname,
-        photo: eachDoc.photo
+        photo: eachDoc.photo,
+        residence: userDoc.residence,
+        class: userDoc.class,
+        occupation: userDoc.occupation,
+        teacher: userDoc.teacher,
+        month: userDoc.month,
+        day: userDoc.day,
+        social_type_1: userDoc.social_type_1,
+        link_social_type_1: userDoc.link_social_type_1,
+        social_type_2: userDoc.social_type_2,
+        link_social_type_2: userDoc.link_social_type_2
       };
       return eachDoc;
     });
@@ -366,7 +396,17 @@ User.search = async function(searchedItem) {
             year: eachDoc.year,
             email: eachDoc.email,
             photo: eachDoc.photo,
-            nickname: eachDoc.nickname
+            nickname: eachDoc.nickname,
+            residence: userDoc.residence,
+            class: userDoc.class,
+            occupation: userDoc.occupation,
+            teacher: userDoc.teacher,
+            month: userDoc.month,
+            day: userDoc.day,
+            social_type_1: userDoc.social_type_1,
+            link_social_type_1: userDoc.link_social_type_1,
+            social_type_2: userDoc.social_type_2,
+            link_social_type_2: userDoc.link_social_type_2
           };
           return eachDoc;
         });
