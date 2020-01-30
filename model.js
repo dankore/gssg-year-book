@@ -83,6 +83,11 @@ User.prototype.editValidation = function() {
       "Social Media Type #1 cannot be blank if Link to Social Media Type #1 has a value."
     );
   }
+  if (this.data.social_type_1 != "" && this.data.link_social_type_1 == "") {
+    this.errors.push(
+      "Link to Social Media Type #1 cannot be blank if Social Media Type #1 has a value."
+    );
+  }
   if (this.data.month == "" && this.data.day != "") {
     this.errors.push(
       "Month of Birth cannot be blank if Day of Birth has a value."
@@ -96,6 +101,11 @@ User.prototype.editValidation = function() {
   if (this.data.social_type_2 == "" && this.data.link_social_type_2 != "") {
     this.errors.push(
       "Social Media Type #2 cannot be blank if Link to Social Media Type #2 has a value."
+    );
+  }
+  if (this.data.social_type_2 != "" && this.data.link_social_type_2 == "") {
+    this.errors.push(
+      "Link to Social Media Type #2 cannot be blank if Social Media Type #2 has a value."
     );
   }
   if (this.data.teacher != "") {
