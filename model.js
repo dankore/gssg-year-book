@@ -59,14 +59,14 @@ User.prototype.editValidation = function() {
     this.errors.push("Nickname must be less than 50 characters.");
   }
   // IF NOT EMPTY
-  if (("" + this.data.social_1).length != "") {
-    if (!validator.isURL(this.data.social_1)) {
+  if (this.data.link_social_type_1 != "") {
+    if (!validator.isURL(this.data.link_social_type_1)) {
       this.errors.push("Social media link #1 must be a valid web address.");
     }
   }
 
-  if (("" + this.data.social_2).length != "") {
-    if (!validator.isURL(this.data.social_2)) {
+  if (this.data.link_social_type_2 != "") {
+    if (!validator.isURL(this.data.link_social_type_2)) {
       this.errors.push("Social media link #2 must be a valid web address.");
     }
   }
@@ -214,7 +214,18 @@ User.findByEmail = function(email) {
               year: userDoc.data.year,
               email: userDoc.data.email,
               nickname: userDoc.data.nickname,
-              photo: userDoc.data.photo
+              photo: userDoc.data.photo,
+              residence: userDoc.data.residence,
+              class: userDoc.data.class,
+              occupation: userDoc.data.occupation,
+              teacher: userDoc.data.teacher,
+              month: userDoc.data.month,
+              day: userDoc.data.day,
+              phone: userDoc.data.phone,
+              social_type_1: userDoc.data.social_type_1,
+              link_social_type_1: userDoc.data.link_social_type_1,
+              social_type_2: userDoc.data.social_type_2,
+              link_social_type_2: userDoc.data.link_social_type_2
             };
 
             resolve(userDoc);
@@ -270,7 +281,18 @@ User.prototype.actuallyUpdate = function() {
             email: this.data.email,
             year: this.data.year,
             nickname: this.data.nickname,
-            photo: this.photo
+            photo: this.photo,
+            residence: this.data.residence,
+            class: this.data.class,
+            occupation: this.data.occupation,
+            teacher: this.data.teacher,
+            month: this.data.month,
+            day: this.data.day,
+            phone: this.data.phone,
+            social_type_1: this.data.social_type_1,
+            link_social_type_1: this.data.link_social_type_1,
+            social_type_2: this.data.social_type_2,
+            link_social_type_2: this.data.link_social_type_2
           }
         }
       );
@@ -313,7 +335,18 @@ User.allProfiles = function() {
         year: eachDoc.year,
         email: eachDoc.email,
         nickname: eachDoc.nickname,
-        photo: eachDoc.photo
+        photo: eachDoc.photo,
+        residence: eachDoc.residence,
+        class: eachDoc.class,
+        occupation: eachDoc.occupation,
+        teacher: eachDoc.teacher,
+        month: eachDoc.month,
+        day: eachDoc.day,
+        phone: eachDoc.phone,
+        social_type_1: eachDoc.social_type_1,
+        link_social_type_1: eachDoc.link_social_type_1,
+        social_type_2: eachDoc.social_type_2,
+        link_social_type_2: eachDoc.link_social_type_2
       };
       return eachDoc;
     });
@@ -366,7 +399,18 @@ User.search = async function(searchedItem) {
             year: eachDoc.year,
             email: eachDoc.email,
             photo: eachDoc.photo,
-            nickname: eachDoc.nickname
+            nickname: eachDoc.nickname,
+            residence: eachDoc.residence,
+            class: eachDoc.class,
+            occupation: eachDoc.occupation,
+            teacher: eachDoc.teacher,
+            month: eachDoc.month,
+            day: eachDoc.day,
+            phone: eachDoc.phone,
+            social_type_1: eachDoc.social_type_1,
+            link_social_type_1: eachDoc.link_social_type_1,
+            social_type_2: eachDoc.social_type_2,
+            link_social_type_2: eachDoc.link_social_type_2
           };
           return eachDoc;
         });

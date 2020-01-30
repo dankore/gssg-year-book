@@ -134,6 +134,7 @@ exports.viewEditScreen = async function(req, res) {
 };
 
 exports.edit = async function(req, res) {
+  console.log(req.body)
   if (req.session.user) {
     let userInfo = await User.findByEmail(req.session.user.email);
     let imageUrl = userInfo.photo;
