@@ -27,4 +27,6 @@ router.post("/account/:email/delete", controller.delete);
 
 // SEARCH
 router.post("/", controller.search);
+// PRIVACY
+router.get("/privacy", controller.privacy)
 module.exports = router;

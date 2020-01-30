@@ -246,3 +246,7 @@ exports.search = async function(req, res) {
     req.session.save(() => res.redirect("/"));
   }
 };
+
+exports.privacy = function(req, res) {
+  res.render("privacy", {user: req.session.user})  
+}
