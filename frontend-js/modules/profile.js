@@ -27,4 +27,3 @@ export default class Profile {
 
   // END CLASS
 }
-
