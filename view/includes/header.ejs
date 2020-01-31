@@ -14,7 +14,7 @@
     <link type="text/css" href="/main.css" rel="stylesheet" />
   </head>
 
-  <header class="bg-green-600 py-3 font-bold text-white">
+  <header class="bg-green-600 py-3 w-full font-bold text-white">
     <div class="flex justify-around items-center mx-8">
       <a class="inline-block md:block m:text-lg md:text-xl mr-2" href="/"
         >GSS Gwarinpa Contact Book
@@ -38,7 +38,7 @@
             class="shadow appearance-none border rounded py-1 px-3 mr-2 text-gray-700 leading-tight"
             placeholder="Email"
           />
-          <div class="flex">
+          <div class="">
             <input
               name="password"
               type="password"
@@ -52,16 +52,15 @@
             </button>
           </div>
         </form>
-        <a href="/register">
-          <button
-            class="rounded border border-white bg-blue-600 hover:bg-blue-800 px-3 py-1"
-          >
-            Add Your Profile
-          </button>
+        <a
+          href="/register"
+          class="rounded text-center flex items-center inline-block border border-white bg-blue-600
+          hover:bg-blue-800 px-3 py-1"
+        >
+          Add Your Profile
         </a>
       </div>
     </div>
     <% } %>
   </header>
-  <body class="bg-gray-200"></body>
-</html>
+  <body class="bg-gray-200"> <!-- BODY  -->
