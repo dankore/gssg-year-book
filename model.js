@@ -43,8 +43,8 @@ User.prototype.validatePassword = function() {
     this.errors.push("Password is required.");
   }
   //check for length
-  if (this.data.password.length < 4 || this.data.password.length > 32) {
-    this.errors.push("Password should be between 4 and 32 characters.");
+  if (!validator.isLength(this.data.password, { min: 6, max: 50 })) {
+    this.errors.push("Password should be at least 6 characters.");
   }
 };
 User.prototype.editValidation = function() {
