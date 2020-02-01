@@ -275,7 +275,8 @@ User.findByEmail = function(email) {
               social_type_1: userDoc.data.social_type_1,
               link_social_type_1: userDoc.data.link_social_type_1,
               social_type_2: userDoc.data.social_type_2,
-              link_social_type_2: userDoc.data.link_social_type_2
+              link_social_type_2: userDoc.data.link_social_type_2,
+              relationship: userDoc.data.relationship
             };
 
             resolve(userDoc);
@@ -342,7 +343,8 @@ User.prototype.actuallyUpdate = function() {
             social_type_1: this.data.social_type_1,
             link_social_type_1: this.data.link_social_type_1,
             social_type_2: this.data.social_type_2,
-            link_social_type_2: this.data.link_social_type_2
+            link_social_type_2: this.data.link_social_type_2,
+            relationship: this.data.relationship
           }
         }
       );
@@ -396,7 +398,8 @@ User.allProfiles = function() {
         social_type_1: eachDoc.social_type_1,
         link_social_type_1: eachDoc.link_social_type_1,
         social_type_2: eachDoc.social_type_2,
-        link_social_type_2: eachDoc.link_social_type_2
+        link_social_type_2: eachDoc.link_social_type_2,
+        relationship: eachDoc.relationship
       };
       return eachDoc;
     });
@@ -460,7 +463,8 @@ User.search = async function(searchedItem) {
             social_type_1: eachDoc.social_type_1,
             link_social_type_1: eachDoc.link_social_type_1,
             social_type_2: eachDoc.social_type_2,
-            link_social_type_2: eachDoc.link_social_type_2
+            link_social_type_2: eachDoc.link_social_type_2,
+            relationship: eachDoc.relationship
           };
           return eachDoc;
         });
