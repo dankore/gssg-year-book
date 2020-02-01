@@ -23,7 +23,7 @@ User.prototype.validateEmail = function() {
       this.errors.push("Email is required.");
     }
     if (this.data.email.length != "" && !validator.isEmail(this.data.email)) {
-      this.errors.push("Email can only contain letters and numbers.");
+      this.errors.push("Email can only contain letters and numbers. No spaces as well.");
     }
     // if email is valid, check to see if it is taken
     if (validator.isEmail(this.data.email)) {
@@ -67,7 +67,7 @@ User.prototype.editValidation = function() {
   // IF NOT EMPTY
   if (this.data.class != "") {
     if (!validator.isAlphanumeric(this.data.class.trim())) {
-      this.errors.push("Class can only contain letters and numbers.");
+      this.errors.push("Class can only contain letters and numbers. No spaces as well.");
     }
     if (!validator.isLength(this.data.class, { min: 0, max: 20 })) {
       this.errors.push("Class must be less than 20 characters.");
@@ -134,15 +134,11 @@ User.prototype.validateSomeUserRegistrationInputs = function() {
     this.errors.push("Last name is required.");
   }
 
-  if (String(this.data.year).length == "") {
+  if (this.data.year.trim().length == "") {
     this.errors.push("Year of graduation is required.");
   }
-
-  if (String(this.data.year).length < 4) {
-    this.errors.push("Year should not be less than 4 numbers.");
-  }
-  if (String(this.data.year).length > 4) {
-    this.errors.push("Year should not be greater than 4 numbers.");
+  if (!validator.isLength(this.data.year.trim(), { min: 4, max: 4 })) {
+    this.errors.push("Year should be 4 characters in length.");
   }
 
   // check for non-allowed inputs
@@ -150,18 +146,18 @@ User.prototype.validateSomeUserRegistrationInputs = function() {
     this.data.firstName.length != "" &&
     !validator.isAlphanumeric(this.data.firstName.trim())
   ) {
-    this.errors.push("First name can only contain letters and numbers.");
+    this.errors.push("First name can only contain letters and numbers. No spaces as well.");
   }
   if (
     this.data.lastName.length != "" &&
     !validator.isAlphanumeric(this.data.lastName.trim())
   ) {
-    this.errors.push("Last name can only contain letters and numbers.");
+    this.errors.push("Last name can only contain letters and numbers. No spaces as well.");
   }
 
   if (
-    String(this.data.year).length != "" &&
-    !validator.isNumeric(this.data.year)
+    this.data.year.trim().length != "" &&
+    !validator.isNumeric((this.data.year).trim())
   ) {
     this.errors.push("Year can only be numbers.");
   }
