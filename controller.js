@@ -24,10 +24,11 @@ exports.registrationSubmission = async (req, res) => {
 
   user
     .register()
-    .then(() => {
+    .then(successMessage => {
       req.session.user = {
         email: user.data.email
       };
+      req.flash("success", successMessage);
       req.session.save(async function() {
         await res.redirect("/");
       });
@@ -248,5 +249,5 @@ exports.search = async function(req, res) {
 };
 
 exports.privacy = function(req, res) {
-  res.render("privacy", {user: req.session.user})  
-}
+  res.render("privacy", { user: req.session.user });
+};
