@@ -66,7 +66,7 @@ User.prototype.editValidation = function() {
   }
   // IF NOT EMPTY
   if (this.data.class != "") {
-    if (!validator.isAlphanumeric(this.data.class)) {
+    if (!validator.isAlphanumeric(this.data.class.trim())) {
       this.errors.push("Class can only contain letters and numbers.");
     }
     if (!validator.isLength(this.data.class, { min: 0, max: 20 })) {
@@ -148,13 +148,13 @@ User.prototype.validateSomeUserRegistrationInputs = function() {
   // check for non-allowed inputs
   if (
     this.data.firstName.length != "" &&
-    !validator.isAlphanumeric(this.data.firstName)
+    !validator.isAlphanumeric(this.data.firstName.trim())
   ) {
     this.errors.push("First name can only contain letters and numbers.");
   }
   if (
-    this.data.firstName.length != "" &&
-    !validator.isAlphanumeric(this.data.lastName)
+    this.data.lastName.length != "" &&
+    !validator.isAlphanumeric(this.data.lastName.trim())
   ) {
     this.errors.push("Last name can only contain letters and numbers.");
   }
