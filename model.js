@@ -241,7 +241,7 @@ User.prototype.register = function() {
       this.data.password = bcrypt.hashSync(this.data.password, salt);
       this.data.photo = "";
       await usersCollection.insertOne(this.data);
-      resolve();
+      resolve("Success! Remember to Edit Your Profile to add more info. Up GSS Gwarinpa!");
     } else {
       reject(this.errors);
     }
