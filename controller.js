@@ -252,6 +252,31 @@ exports.privacy = function(req, res) {
   res.render("privacy", { user: req.session.user });
 };
 
+exports.changePasswordPage = function(req, res) {
+  res.render("changePasswordPage", {
+    user: req.session.user,
+    errors: req.flash("errors"),
+    success: req.flash("success")
+  });
+};
+
 exports.changePassword = function(req, res) {
-  res.render("changePasswordPage", { user: req.session.user });
+  let user = new User(req.body, null, req.session.user.email, req.params.email);
+
+  user
+    .updatePassword()
+    .then(successMessage => {
+      req.flash("success", successMessage);
+      req.session.save(() =>
+        res.redirect(`/account/${req.params.email}/change-password`)
+      );
+    })
+    .catch(errors => {
+      errors.forEach(error => {
+        req.flash("errors", error);
+      });
+      req.session.save(() =>
+        res.redirect(`/account/${req.params.email}/change-password`)
+      );
+    });
 };

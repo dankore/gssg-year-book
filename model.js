@@ -23,7 +23,9 @@ User.prototype.validateEmail = function() {
       this.errors.push("Email is required.");
     }
     if (this.data.email.length != "" && !validator.isEmail(this.data.email)) {
-      this.errors.push("Email can only contain letters and numbers. No spaces as well.");
+      this.errors.push(
+        "Email can only contain letters and numbers. No spaces as well."
+      );
     }
     // if email is valid, check to see if it is taken
     if (validator.isEmail(this.data.email)) {
@@ -67,7 +69,9 @@ User.prototype.editValidation = function() {
   // IF NOT EMPTY
   if (this.data.class != "") {
     if (!validator.isAlphanumeric(this.data.class.trim())) {
-      this.errors.push("Class can only contain letters and numbers. No spaces as well.");
+      this.errors.push(
+        "Class can only contain letters and numbers. No spaces as well."
+      );
     }
     if (!validator.isLength(this.data.class, { min: 0, max: 20 })) {
       this.errors.push("Class must be less than 20 characters.");
@@ -146,18 +150,22 @@ User.prototype.validateSomeUserRegistrationInputs = function() {
     this.data.firstName.length != "" &&
     !validator.isAlphanumeric(this.data.firstName.trim())
   ) {
-    this.errors.push("First name can only contain letters and numbers. No spaces as well.");
+    this.errors.push(
+      "First name can only contain letters and numbers. No spaces as well."
+    );
   }
   if (
     this.data.lastName.length != "" &&
     !validator.isAlphanumeric(this.data.lastName.trim())
   ) {
-    this.errors.push("Last name can only contain letters and numbers. No spaces as well.");
+    this.errors.push(
+      "Last name can only contain letters and numbers. No spaces as well."
+    );
   }
 
   if (
     this.data.year.trim().length != "" &&
-    !validator.isNumeric((this.data.year).trim())
+    !validator.isNumeric(this.data.year.trim())
   ) {
     this.errors.push("Year can only be numbers.");
   }
@@ -237,7 +245,9 @@ User.prototype.register = function() {
       this.data.password = bcrypt.hashSync(this.data.password, salt);
       this.data.photo = "";
       await usersCollection.insertOne(this.data);
-      resolve("Success! Remember to Edit Your Profile to add more info. Up GSS Gwarinpa!");
+      resolve(
+        "Success! Remember to Edit Your Profile to add more info. Up GSS Gwarinpa!"
+      );
     } else {
       reject(this.errors);
     }
@@ -478,4 +488,64 @@ User.search = async function(searchedItem) {
     }
   });
 };
+User.prototype.passwordChangeValidatation = function() {
+  return new Promise(async (resolve, reject) => {
+    if (this.data.old_password == "") {
+      this.errors.push("Please enter your old password.");
+    }
+    if (this.data.new_password == "") {
+      this.errors.push("Please enter your new password.");
+    }
+    if (this.data.confirm_new_password == "") {
+      this.errors.push("Please confirm your new password.");
+    }
+    if (!validator.isLength(this.data.new_password, { min: 6, max: 50 })) {
+      this.errors.push("Password must be at least 6 characters.");
+    }
+    if (this.data.new_password !== this.data.confirm_new_password) {
+      this.errors.push("New passwords do not match.");
+    }
+    if (this.data.new_password) {
+      // FIND OLD PASSWORD AND COMPARE WITH INPUTED OLD PASSWORD
+      let userDoc = await usersCollection.findOne({
+        email: this.sessionEmail
+      });
+
+      if (!bcrypt.compareSync(this.data.old_password, userDoc.password)) {
+        this.errors.push("Old passwords do not match.");
+      }
+    }
+    resolve();
+  });
+};
+
+User.prototype.updatePassword = function() {
+  return new Promise(async (resolve, reject) => {
+    this.passwordChangeValidatation();
+    // FIND OLD PASSWORD AND COMPARE WITH NEW PASSWORD
+    let userDoc = await usersCollection.findOne({ email: this.sessionEmail });
+
+    if (!this.errors.length) {
+      // Hash user password
+      let salt = bcrypt.genSaltSync(10);
+      this.data.confirm_new_password = bcrypt.hashSync(
+        this.data.confirm_new_password,
+        salt
+      );
+      await usersCollection.findOneAndUpdate(
+        { email: this.sessionEmail },
+        {
+          $set: {
+            password: this.data.confirm_new_password
+          }
+        }
+      );
+      resolve("Password successfully updated.");
+    } else {
+      reject(this.errors);
+    }
+  });
+};
+
+// EXPORT CODE
 module.exports = User;

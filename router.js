@@ -24,10 +24,13 @@ router.post("/profile/:email/edit", singleUpload, controller.edit);
 router.get("/account/:email", controller.account);
 router.get("/account/:email/confirm", controller.confirm);
 router.post("/account/:email/delete", controller.delete);
-router.get("/account/:email/change-password", controller.changePassword)
+router.get("/account/:email/change-password", controller.changePasswordPage);
+router.post("/account/:email/change-password", controller.changePassword);
+
+
 
 // SEARCH
 router.post("/", controller.search);
 // PRIVACY
-router.get("/privacy", controller.privacy)
+router.get("/privacy", controller.privacy);
 module.exports = router;
