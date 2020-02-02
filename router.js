@@ -27,6 +27,9 @@ router.post("/account/:email/delete", controller.delete);
 router.get("/account/:email/change-password", controller.changePasswordPage);
 router.post("/account/:email/change-password", controller.changePassword);
 
+// RESET PASSWORD
+router.get("/reset-password", controller.resetPasswordPage);
+
 
 
 // SEARCH

@@ -280,3 +280,7 @@ exports.changePassword = function(req, res) {
       );
     });
 };
+
+exports.resetPasswordPage = function(req, res) {
+  res.render("resetPasswordPage", { user: req.session.user });
+};
