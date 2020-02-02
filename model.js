@@ -505,7 +505,7 @@ User.prototype.passwordChangeValidatation = function() {
     if (this.data.new_password !== this.data.confirm_new_password) {
       this.errors.push("New passwords do not match.");
     }
-    if (this.data.new_password) {
+    if (this.data.old_password) {
       // FIND OLD PASSWORD AND COMPARE WITH INPUTED OLD PASSWORD
       let userDoc = await usersCollection.findOne({
         email: this.sessionEmail
