@@ -500,7 +500,7 @@ User.prototype.passwordChangeValidatation = function() {
       this.errors.push("Please confirm your new password.");
     }
     if (!validator.isLength(this.data.new_password, { min: 6, max: 50 })) {
-      this.errors.push("Password must be at least 6 characters.");
+      this.errors.push("New password must be at least 6 characters.");
     }
     if (this.data.new_password !== this.data.confirm_new_password) {
       this.errors.push("New passwords do not match.");
