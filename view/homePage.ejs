@@ -5,20 +5,28 @@
 <%- include('includes/flash') %>
 <!-- ERROR FLASH MESSAGE END-->
 
-<!-- IF USER LOGGED IN -->
+<!-- LOGGED IN -->
 <% if(user){ %> <%- include('includes/loggedInUser') %> <% } %>
-<!-- IF USER LOGGED IN END-->
+<!-- LOGGED IN END-->
 
 <!-- GUESS USER -->
 <%- include('includes/searchBar') %>
+<div class="w-64 mx-auto">
+  <% if(profiles.length > 1) {%>
+  <div><span class="rounded-full border border-blue-400 p-2 bg-white"><%= profiles.length %></span> profiles available</div>
+  <% } else { %>
+  <div><span class="rounded-full border border-blue-400 p-2 bg-white"><%= profiles.length %></span> profile available</div>
+  <%}%>
+</div>
 <div class="flex flex-wrap justify-center">
-<% if(profiles.length){ %>
-    <% profiles.sort(( a, b ) => a.year - b.year).forEach(profile => { %> 
-        <a class="m-4" href="/profile/<%= profile.email %>"><%- include('includes/profileShared', {profile: profile}) %></a>
-    <% }) %>
-<% } else { %>
-    <p>No profile found.</p>
-<%}%>
+  <% if(profiles.length){ %> <% profiles.sort(( a, b ) => a.year -
+  b.year).forEach(profile => { %>
+  <a class="m-4" href="/profile/<%= profile.email %>"
+    ><%- include('includes/profileShared', {profile: profile}) %></a
+  >
+  <% }) %> <% } else { %>
+  <p>No profile found.</p>
+  <%}%>
 </div>
 <!-- GUESS USER END-->
 
