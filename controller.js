@@ -251,3 +251,7 @@ exports.search = async function(req, res) {
 exports.privacy = function(req, res) {
   res.render("privacy", { user: req.session.user });
 };
+
+exports.changePassword = function(req, res) {
+  res.render("changePasswordPage", { user: req.session.user });
+};
