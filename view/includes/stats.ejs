@@ -1,0 +1,28 @@
+<div class="w-64 mx-auto">
+  <% if(profiles.length > 1) {%>
+  <div>
+    <span class="rounded-full border border-blue-400 p-2 bg-white"
+      ><%= profiles.length %></span
+    >
+    profiles available<sup id="plus-sign">+</sup>
+  </div>
+  <% } else { %>
+  <div>
+    <span class="rounded-full border border-blue-400 p-2 bg-white"
+      ><%= profiles.length %></span
+    >
+    profile available<sup id="plus-sign">+</sup>
+  </div>
+  <%}%>
+  <div
+    id="stats-container"
+    class="absolute max-w-md p-5 bg-white rounded"
+    style="display: none;"
+  >
+    <% statsByYear.forEach(stat =>{ %>
+    <ul>
+      <li><%=stat%></li>
+    </ul>
+    <% }) %>
+  </div>
+</div>

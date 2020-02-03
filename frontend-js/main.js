@@ -1,5 +1,5 @@
-import Profile from "./modules/profile";
-import Toggle from "./modules/toggle";
+import Profile from "./modules/toggleProfile";
+import Toggle from "./modules/toggleEditPage";
 
 if (document.querySelector("#more-profile-btn")) {
   new Profile();

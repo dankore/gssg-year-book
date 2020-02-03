@@ -2,7 +2,7 @@ const User = require("../models/model");
 
 exports.home = async (req, res) => {
   let profiles = await User.allProfiles();
-  console.log(User.statsByYear(profiles));
+  
   res.render("homePage", {
     errors: req.flash("errors"),
     success: req.flash("success"),

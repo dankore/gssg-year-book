@@ -561,8 +561,8 @@ User.statsByYear = function(allProfiles) {
 
   for (var prop in obj) {
     obj[prop] > 1
-      ? result.push(`Year ${prop} has ${obj[prop]} profiles`)
-      : result.push(`Year ${prop} has ${obj[prop]} profile`);
+      ? result.push(`${prop}: ${obj[prop]} profiles`)
+      : result.push(`${prop}: ${obj[prop]} profile`);
   }
 
   return result;
