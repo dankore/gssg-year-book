@@ -10,9 +10,9 @@
   </div>
   <% } else { %>
   <div>
-    <span class="rounded-full border border-blue-400 p-2 bg-white"
-      ><%= profiles.length %></span
-    >
+    <span class="rounded-full border border-blue-400 p-2 bg-white">
+      <%= profiles.length %>
+    </span>
     profile available!
     <button id="plus-sign" class="text-2xl pointer">
       <sup>+</sup>
@@ -21,13 +21,21 @@
   <%}%>
   <div
     id="stats-container"
-    class="absolute max-w-md mt-3 p-5 bg-white rounded"
+    class="z-10 absolute max-w-md mt-3 p-5 bg-white rounded border border-blue-400"
     style="display: none;"
   >
+    <h3>Number of profiles per graduation year</h3>
     <% statsByYear.forEach(stat =>{ %>
     <ul>
-      <li><%=stat%></li>
+      <li class="mt-1"><%=stat%></li>
     </ul>
     <% }) %>
+  </div>
+  <div
+    id="tool-tip"
+    class="absolute bg-gray-700 px-2 py-1 text-white text-xs rounded -mt-16 ml-24"
+    style="display: none;"
+  >
+    Show more stats
   </div>
 </div>
