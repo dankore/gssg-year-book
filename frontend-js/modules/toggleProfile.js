@@ -1,4 +1,4 @@
-export default class Profile {
+export default class ToggleProfile {
   constructor() {
     this.showMoreProfileBtn = document.querySelector("#more-profile-btn");
     this.moreProfileContainer = document.querySelector(

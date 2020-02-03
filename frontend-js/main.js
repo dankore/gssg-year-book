@@ -1,9 +1,13 @@
-import Profile from "./modules/profile";
-import Toggle from "./modules/toggle";
+import ToggleProfile from "./modules/toggleProfile";
+import ToggleEditPage from "./modules/toggleEditPage";
+import ToggleStats from "./modules/toggleStats";
 
 if (document.querySelector("#more-profile-btn")) {
-  new Profile();
+  new ToggleProfile();
 }
 if (document.querySelector("#btn-optional-fields")) {
-  new Toggle();
+  new ToggleEditPage();
+}
+if (document.querySelector("#plus-sign")) {
+  new ToggleStats();
 }

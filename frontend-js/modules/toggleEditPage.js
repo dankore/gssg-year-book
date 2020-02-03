@@ -1,4 +1,4 @@
-export default class Toggle {
+export default class ToggleEditPage {
   constructor() {
     this.optionalFields = document.querySelector("#optional-fields");
     this.btnOptionalFields = document.querySelector("#btn-optional-fields");
