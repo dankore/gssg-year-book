@@ -241,7 +241,8 @@ exports.search = async function(req, res) {
       errors: req.flash("errors"),
       success: req.flash("success"),
       user: req.session.user,
-      profiles: searchResultsArray
+      profiles: searchResultsArray,
+      statsByYear: User.statsByYear(searchResultsArray)
     });
   } catch {
     req.flash("errors", "Invalid search term.");
