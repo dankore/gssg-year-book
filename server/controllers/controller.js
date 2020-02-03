@@ -1,4 +1,4 @@
-const User = require("./model");
+const User = require("../models/model");
 
 exports.home = async (req, res) => {
   let profiles = await User.allProfiles();
