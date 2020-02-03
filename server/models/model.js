@@ -1,4 +1,4 @@
-const usersCollection = require("./db")
+const usersCollection = require("../../db")
   .db()
   .collection("users");
 const validator = require("validator");

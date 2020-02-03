@@ -6,7 +6,7 @@ MongoClient.connect(process.env.CONNECTIONSTRING, { useNewUrlParser: true, useUn
     .then(function (client) {
         module.exports = client;
         const port = process.env.PORT;
-        const server = require('./server');
+        const server = require('./server/server');
         server.listen(port, () => console.log("Listening on port " + port));
     })
     .catch(error => console.log(error));
