@@ -547,5 +547,26 @@ User.prototype.updatePassword = function() {
   });
 };
 
+// STATS : gets year of graduation from each profile. Return the data.
+User.statsByYear = function(allProfiles) {
+  let yearsArray = allProfiles.map(item => item.year);
+  let obj = {};
+  let result = [];
+
+  for (var i = 0; i < yearsArray.length; i++) {
+    !obj.hasOwnProperty(yearsArray[i])
+      ? (obj[yearsArray[i]] = 1)
+      : (obj[yearsArray[i]] += 1);
+  }
+
+  for (var prop in obj) {
+    obj[prop] > 1
+      ? result.push(`Year ${prop} has ${obj[prop]} profiles`)
+      : result.push(`Year ${prop} has ${obj[prop]} profile`);
+  }
+
+  return result;
+};
+
 // EXPORT CODE
 module.exports = User;
