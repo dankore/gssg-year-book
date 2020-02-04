@@ -573,11 +573,27 @@ User.statsByYear = function(allProfiles) {
 User.prototype.resetPassword = function() {
   return new Promise(async (resolve, reject) => {
     let user = await User.findByEmail(this.data.reset_password);
-    if(user){
-
+    if (user) {
+      let token = await User.cryptoRandomData();
+      user.resetPasswordToken = token;
+      user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+    console.log(user)
     } else {
       reject("No account with that email address exists.");
     }
+  });
+};
+
+User.cryptoRandomData = function() {
+  return new Promise((resolve, reject) => {
+    crypto.randomBytes(20, (err, buf) => {
+      if (buf) {
+        var token = buf.toString("hex");
+        resolve(token);
+      } else {
+        reject(err);
+      }
+    });
   });
 };
 
