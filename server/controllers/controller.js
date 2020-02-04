@@ -297,10 +297,11 @@ exports.resetPassword = function(req, res) {
       res.redirect("/");
     })
     .catch(errors => {
+      console.log(errors);
       errors.forEach(error => {
         req.flash("errors", error);
       });
+
       res.redirect("/");
     });
-  console.log(user);
 };

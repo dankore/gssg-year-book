@@ -3,8 +3,9 @@ const usersCollection = require("../../db")
   .collection("users");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
-const nodemailer = require("nodemailer");
 const crypto = require("crypto");
+const sendgrid = require("@sendgrid/mail");
+sendgrid.setApiKey(process.env.SENDGRIDAPIKEY);
 
 let User = class user {
   constructor(data, photo, sessionEmail, requestedEmail) {
@@ -569,16 +570,21 @@ User.statsByYear = function(allProfiles) {
 
   return result;
 };
-
 User.prototype.resetPassword = function() {
   return new Promise(async (resolve, reject) => {
-    let user = await User.findByEmail(this.data.reset_password);
-    if (user) {
+    let userDoc = await usersCollection.findOne({
+      email: this.data.reset_password
+    });
+    if (!userDoc) {
+      this.errors.push("no user found!");
+    }
+
+    if (userDoc) {
       const token = await User.cryptoRandomData();
       const resetPasswordExpires = Date.now() + 3600000; // 1 hour
       // ADD TOKEN AND EXPIRY TO DB
       await usersCollection.findOneAndUpdate(
-        { email: user.email },
+        { email: userDoc.email },
         {
           $set: {
             resetPasswordToken: token,
@@ -586,9 +592,26 @@ User.prototype.resetPassword = function() {
           }
         }
       );
-      console.log(user);
+      // SEND EMAIL
+      const msg = {
+        to: "adamu.dankore@gmail.com",
+        from: "adamu.dankore@gmail.com",
+        subject: "HI!!!!!",
+        html:
+          "Please click on the following link, or paste this into your browser to complete the process:\n\n" +
+          '<a href="http://' +
+          "/login/" +
+          token +
+          '">Varify your Account</a>\n\n' +
+          "If you did not request this, please ignore this email and your password will remain unchanged.\n"
+      };
+      console.log(token);
+      sendgrid.send(msg);
+
+      // SEND EMAIL ENDs
+      resolve("Email send success!.");
     } else {
-      reject("No account with that email address exists.");
+      reject(this.errors);
     }
   });
 };
