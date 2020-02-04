@@ -2,7 +2,7 @@ const User = require("../models/model");
 
 exports.home = async (req, res) => {
   let profiles = await User.allProfiles();
-  
+
   res.render("homePage", {
     errors: req.flash("errors"),
     success: req.flash("success"),
@@ -285,4 +285,22 @@ exports.changePassword = function(req, res) {
 
 exports.resetPasswordPage = function(req, res) {
   res.render("resetPasswordPage", { user: req.session.user });
+};
+
+exports.resetPassword = function(req, res) {
+  let user = new User(req.body);
+
+  user
+    .resetPassword()
+    .then(successMessage => {
+      req.flash("success", successMessage);
+      res.redirect("/");
+    })
+    .catch(errors => {
+      errors.forEach(error => {
+        req.flash("errors", error);
+      });
+      res.redirect("/");
+    });
+  console.log(user);
 };

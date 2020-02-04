@@ -29,11 +29,13 @@ router.post("/account/:email/change-password", controller.changePassword);
 
 // RESET PASSWORD
 router.get("/reset-password", controller.resetPasswordPage);
-
-
+router.post("/reset-password", controller.resetPassword);
 
 // SEARCH
 router.post("/", controller.search);
+
 // PRIVACY
 router.get("/privacy", controller.privacy);
+
+// EXPORT CODE
 module.exports = router;

@@ -3,6 +3,8 @@ const usersCollection = require("../../db")
   .collection("users");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
+const crypto = require("crypto");
 
 let User = class user {
   constructor(data, photo, sessionEmail, requestedEmail) {
@@ -566,6 +568,17 @@ User.statsByYear = function(allProfiles) {
   }
 
   return result;
+};
+
+User.prototype.resetPassword = function() {
+  return new Promise(async (resolve, reject) => {
+    let user = await User.findByEmail(this.data.reset_password);
+    if(user){
+
+    } else {
+      reject("No account with that email address exists.");
+    }
+  });
 };
 
 // EXPORT CODE
