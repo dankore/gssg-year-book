@@ -572,11 +572,10 @@ User.statsByYear = function(allProfiles) {
 };
 User.prototype.resetPassword = function(url) {
   return new Promise(async (resolve, reject) => {
-
     let userDoc = await usersCollection.findOne({
       email: this.data.reset_password
     });
-    
+
     if (!userDoc) {
       this.errors.push("No account with that email address exists.");
     }
@@ -704,6 +703,16 @@ User.prototype.resetToken = function(token) {
       reject(this.errors);
     }
     resolve("Password successfully reset. You may now login to your account.");
+    // SET RESET TOKEN AND EXPIRY TO UNDEFINED
+    usersCollection.findOneAndUpdate(
+      { resetPasswordToken: token },
+      {
+        $set: {
+          resetPasswordToken: undefined,
+          resetPasswordExpires: undefined
+        }
+      }
+    );
   });
 };
 
