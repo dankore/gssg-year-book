@@ -717,7 +717,7 @@ User.prototype.resetToken = function(token) {
           "<br><br>" +
           `This is a confirmation that the password for your account <strong>${user.email}</strong> has just been changed.\n` +
           "<br><br>" +
-          "If you did not reset your password, secure your account by resetting your password again:\n" +
+          "If you did not reset your password, secure your account by resetting your password:\n" +
           '<a href="https://www.gssgcontactbook.com/reset-password">Reset your password</a>'
       };
       sendgrid.send(msgConfirmation);
