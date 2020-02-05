@@ -3,6 +3,9 @@ const usersCollection = require("../../db")
   .collection("users");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
+const sendgrid = require("@sendgrid/mail");
+sendgrid.setApiKey(process.env.SENDGRIDAPIKEY);
 
 let User = class user {
   constructor(data, photo, sessionEmail, requestedEmail) {
@@ -566,6 +569,142 @@ User.statsByYear = function(allProfiles) {
   }
 
   return result;
+};
+User.prototype.resetPassword = function(url) {
+  return new Promise(async (resolve, reject) => {
+
+    let userDoc = await usersCollection.findOne({
+      email: this.data.reset_password
+    });
+    
+    if (!userDoc) {
+      this.errors.push("No account with that email address exists.");
+    }
+
+    if (userDoc) {
+      const token = await User.cryptoRandomData();
+      const resetPasswordExpires = Date.now() + 3600000; // 1 HOUR
+      // ADD TOKEN AND EXPIRY TO DB
+      await usersCollection.findOneAndUpdate(
+        { email: userDoc.email },
+        {
+          $set: {
+            resetPasswordToken: token,
+            resetPasswordExpires: resetPasswordExpires
+          }
+        }
+      );
+      // SEND EMAIL
+      const msg = {
+        to: userDoc.email,
+        from: "adamu.dankore@gmail.com",
+        subject: "Reset Your Password - GSS Gwarinpa Contact Book 📗",
+        html:
+          "Please click on the following link to complete the process:\n" +
+          '<a href="http://' +
+          url +
+          "/reset-password/" +
+          token +
+          '">Reset your password</a><br>' +
+          "OR" +
+          "<br>" +
+          "Paste the below URL into your browser to complete the process:" +
+          "<br>" +
+          "http://" +
+          url +
+          "/reset-password/" +
+          token +
+          "<br><br>" +
+          "If you did not request this, please ignore this email and your password will remain unchanged.\n"
+      };
+      sendgrid.send(msg);
+      // SEND EMAIL ENDs
+      resolve(
+        `Sucesss! Check your email ${userDoc.email} for further instruction. Check your SPAM folder too.`
+      );
+    } else {
+      reject(this.errors);
+    }
+  });
+};
+
+User.cryptoRandomData = function() {
+  return new Promise((resolve, reject) => {
+    crypto.randomBytes(20, (err, buf) => {
+      if (buf) {
+        var token = buf.toString("hex");
+        resolve(token);
+      } else {
+        reject(err);
+      }
+    });
+  });
+};
+
+User.resetTokenExpiryTest = function(token) {
+  return new Promise(async (resolve, reject) => {
+    let user = await usersCollection.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() }
+    });
+    if (!user) {
+      reject(
+        "Password reset token is invalid or has expired. Please generate another token below."
+      );
+    }
+    if (user) {
+      resolve();
+    }
+  });
+};
+
+User.prototype.passwordResetValidatation = function() {
+  if (this.data.new_password == "") {
+    this.errors.push("Please enter a new password.");
+  }
+  if (!validator.isLength(this.data.new_password, { min: 6, max: 50 })) {
+    this.errors.push("New password must be at least 6 characters.");
+  }
+  if (this.data.new_password != this.data.confirm_new_password) {
+    this.errors.push("Passwords do not match.");
+  }
+};
+
+User.prototype.resetToken = function(token) {
+  return new Promise(async (resolve, reject) => {
+    // CHECK FOR ERRORS
+    this.passwordResetValidatation();
+    // IS TOKEN IN DB AND NOT EXPIRED?
+    let user = await usersCollection.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() }
+    });
+    if (!user) {
+      reject(
+        "Password reset token is invalid or has expired. Please generate another token below."
+      );
+    }
+    // HASH USER PASSWORD
+    let salt = bcrypt.genSaltSync(10);
+    this.data.confirm_new_password = bcrypt.hashSync(
+      this.data.confirm_new_password,
+      salt
+    );
+    // IF VALIDATION ERRORS
+    if (!this.errors.length) {
+      await usersCollection.findOneAndUpdate(
+        { email: user.email },
+        {
+          $set: {
+            password: this.data.confirm_new_password
+          }
+        }
+      );
+    } else {
+      reject(this.errors);
+    }
+    resolve("Password successfully reset. You may now login to your account.");
+  });
 };
 
 // EXPORT CODE

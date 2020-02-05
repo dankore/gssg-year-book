@@ -1,0 +1,50 @@
+<%- include('includes/header') %> <%- include('includes/goToHomePage') %>
+<p class="text-center text-2xl mt-4">
+  Change Your Password
+</p>
+<div class="w-full max-w-md sm:max-w-sm mx-auto mt-8">
+  <%- include('includes/flash') %>
+  <form
+    action="/reset-password/<%= token %>"
+    method="POST"
+    class="bg-white shadow-md rounded px-4 pt-6 pb-8 m-4"
+  >
+    <div class="mb-4">
+      <label
+        class="block uppercase text-gray-700 text-sm font-bold mb-2"
+        for="new-password"
+      >
+        New Password
+      </label>
+      <input
+        name="new_password"
+        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+        id="new-password"
+        type="password"
+      />
+    </div>
+    <div class="mb-1">
+      <label
+        class="block uppercase text-gray-700 text-sm font-bold mb-2"
+        for="confirm-new-password"
+      >
+        Confirm new Password
+      </label>
+      <input
+        name="confirm_new_password"
+        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+        id="confirm-new-password"
+        type="password"
+      />
+    </div>
+    <p class="text-red-600 text-xs mb-6 italic">
+      New password should be a minimun of 6 characters
+    </p>
+    <button
+      class="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+    >
+      Change Password
+    </button>
+  </form>
+</div>
+<%- include('includes/footer') %>
