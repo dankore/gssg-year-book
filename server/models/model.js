@@ -703,32 +703,35 @@ User.prototype.resetToken = function(token) {
           }
         }
       );
+      // SEND CONFIRMATION EMAIL
+      const msgConfirmation = {
+        to: user.email,
+        from: "adamu.dankore@gmail.com",
+        subject: `${user.firstName}, You Successfully Reset Your Password - GSS Gwarinpa Contact Book 📗`,
+        html:
+          `Hello ${user.firstName},` +
+          "<br><br>" +
+          `This is a confirmation that the password for your account ${user.email} has just been changed.\n`
+      };
+      sendgrid.send(msgConfirmation);
+      // SEND CONFIRMATION EMAIL ENDs
+
+      // SET RESET TOKEN AND EXPIRY TO UNDEFINED
+      usersCollection.findOneAndUpdate(
+        { resetPasswordToken: token },
+        {
+          $set: {
+            resetPasswordToken: undefined,
+            resetPasswordExpires: undefined
+          }
+        }
+      );
+      resolve(
+        "Password successfully reset. You may now login to your account."
+      );
     } else {
       reject(this.errors);
     }
-    // SEND CONFIRMATION EMAIL
-    const msgConfirmation = {
-      to: user.email,
-      from: "adamu.dankore@gmail.com",
-      subject: `${user.firstName}, You Successfully Reset Your Password - GSS Gwarinpa Contact Book 📗`,
-      html:
-        `Hello ${user.firstName},` +
-        "<br><br>" +
-        `This is a confirmation that the password for your account ${user.email} has just been changed.\n`
-    };
-    sendgrid.send(msgConfirmation);
-    // SEND CONFIRMATION EMAIL ENDs
-    resolve("Password successfully reset. You may now login to your account.");
-    // SET RESET TOKEN AND EXPIRY TO UNDEFINED
-    usersCollection.findOneAndUpdate(
-      { resetPasswordToken: token },
-      {
-        $set: {
-          resetPasswordToken: undefined,
-          resetPasswordExpires: undefined
-        }
-      }
-    );
   });
 };
 
