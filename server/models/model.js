@@ -600,7 +600,7 @@ User.prototype.resetPassword = function(url) {
         subject: "Reset Your Password - GSS Gwarinpa Contact Book 📗",
         html:
           "Please click on the following link to complete the process:\n" +
-          '<a href="http://' +
+          '<a href="https://' +
           url +
           "/reset-password/" +
           token +
@@ -609,7 +609,7 @@ User.prototype.resetPassword = function(url) {
           "<br>" +
           "Paste the below URL into your browser to complete the process:" +
           "<br>" +
-          "http://" +
+          "https://" +
           url +
           "/reset-password/" +
           token +
