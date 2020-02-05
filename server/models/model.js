@@ -508,6 +508,7 @@ User.prototype.passwordChangeValidatation = function() {
     if (this.data.new_password !== this.data.confirm_new_password) {
       this.errors.push("New passwords do not match.");
     }
+
     if (this.data.old_password) {
       // FIND OLD PASSWORD AND COMPARE WITH INPUTED OLD PASSWORD
       let userDoc = await usersCollection.findOne({
@@ -570,8 +571,12 @@ User.statsByYear = function(allProfiles) {
 
   return result;
 };
+
 User.prototype.resetPassword = function(url) {
   return new Promise(async (resolve, reject) => {
+    // TRIM AND LOWERCASE EMAIL
+    this.data.reset_password = this.data.reset_password.trim().toLowerCase();
+    // TRIM AND LOWERCASE EMAIL END
     let userDoc = await usersCollection.findOne({
       email: this.data.reset_password
     });
