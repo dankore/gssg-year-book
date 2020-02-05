@@ -574,7 +574,6 @@ User.statsByYear = function(allProfiles) {
 
 User.prototype.resetPassword = function(url) {
   return new Promise(async (resolve, reject) => {
-
     let userDoc = await usersCollection.findOne({
       email: this.data.reset_password.trim().toLowerCase()
     });
@@ -596,12 +595,14 @@ User.prototype.resetPassword = function(url) {
           }
         }
       );
-      // SEND EMAIL
-      const msg = {
+      // SEND TOKEN TO USER'S EMAIL
+      const msgSendToken = {
         to: userDoc.email,
         from: "adamu.dankore@gmail.com",
-        subject: "Reset Your Password - GSS Gwarinpa Contact Book 📗",
+        subject: `${userDoc.firstName}, Reset Your Password - GSS Gwarinpa Contact Book 📗`,
         html:
+          `Hello ${userDoc.firstName},` +
+          "<br><br>" +
           "Please click on the following link to complete the process:\n" +
           '<a href="https://' +
           url +
@@ -619,8 +620,8 @@ User.prototype.resetPassword = function(url) {
           "<br><br>" +
           "If you did not request this, please ignore this email and your password will remain unchanged.\n"
       };
-      sendgrid.send(msg);
-      // SEND EMAIL ENDs
+      sendgrid.send(msgSendToken);
+      // SEND TOKEN TO USER'S EMAIL ENDs
       resolve(
         `Sucesss! Check your email ${userDoc.email} for further instruction. Check your SPAM folder too.`
       );
@@ -705,6 +706,18 @@ User.prototype.resetToken = function(token) {
     } else {
       reject(this.errors);
     }
+    // SEND CONFIRMATION EMAIL
+    const msgConfirmation = {
+      to: user.email,
+      from: "adamu.dankore@gmail.com",
+      subject: `${user.firstName}, You Successfully Reset Your Password - GSS Gwarinpa Contact Book 📗`,
+      html:
+        `Hello ${user.firstName},` +
+        "<br><br>" +
+        `This is a confirmation that the password for your account ${user.email} has just been changed.\n`
+    };
+    sendgrid.send(msgConfirmation);
+    // SEND CONFIRMATION EMAIL ENDs
     resolve("Password successfully reset. You may now login to your account.");
     // SET RESET TOKEN AND EXPIRY TO UNDEFINED
     usersCollection.findOneAndUpdate(
