@@ -575,7 +575,7 @@ User.statsByYear = function(allProfiles) {
 User.prototype.resetPassword = function(url) {
   return new Promise(async (resolve, reject) => {
     let userDoc = await usersCollection.findOne({
-      email: this.data.reset_password.trim().toLowerCase()
+      email: this.data.reset_password.trim()
     });
 
     if (!userDoc) {
