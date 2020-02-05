@@ -27,7 +27,8 @@ exports.registrationSubmission = async (req, res) => {
     .register()
     .then(successMessage => {
       req.session.user = {
-        email: user.data.email
+        email: user.data.email,
+        firstName: user.data.firstName
       };
       req.flash("success", successMessage);
       req.session.save(async function() {
@@ -49,9 +50,10 @@ exports.login = async (req, res) => {
 
   user
     .login()
-    .then(() => {
+    .then((firstName) => {
       req.session.user = {
-        email: user.data.email
+        email: user.data.email,
+        firstName: firstName
       };
       req.session.save(() => {
         res.redirect("/");
