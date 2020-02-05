@@ -570,13 +570,13 @@ User.statsByYear = function(allProfiles) {
 
   return result;
 };
-User.prototype.resetPassword = function() {
+User.prototype.resetPassword = function(url) {
   return new Promise(async (resolve, reject) => {
     let userDoc = await usersCollection.findOne({
       email: this.data.reset_password
     });
     if (!userDoc) {
-      this.errors.push("no user found!");
+      this.errors.push("No account with that email address exists.");
     }
 
     if (userDoc) {
@@ -596,20 +596,24 @@ User.prototype.resetPassword = function() {
       const msg = {
         to: "adamu.dankore@gmail.com",
         from: "adamu.dankore@gmail.com",
-        subject: "HI!!!!!",
+        subject: "Reset Your Password - GSS Gwarinpa Contact Book",
         html:
           "Please click on the following link, or paste this into your browser to complete the process:\n\n" +
           '<a href="http://' +
-          "/login/" +
+          url +
+          "/reset-password/" +
           token +
-          '">Varify your Account</a>\n\n' +
+          '">Verify your Account</a>\n\n' +
+          "paste the below URL into your browser to complete the process\n" +
+          "COMING SOON\n\n" +
           "If you did not request this, please ignore this email and your password will remain unchanged.\n"
       };
-      console.log(token);
       sendgrid.send(msg);
-
       // SEND EMAIL ENDs
-      resolve("Email send success!.");
+
+      resolve(
+        `Sucesss! Check your email ${userDoc.email} for further instruction.`
+      );
     } else {
       reject(this.errors);
     }
@@ -626,6 +630,67 @@ User.cryptoRandomData = function() {
         reject(err);
       }
     });
+  });
+};
+
+User.resetTokenExpiryTest = function(token) {
+  return new Promise(async (resolve, reject) => {
+    let user = await usersCollection.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() }
+    });
+    if (!user) {
+      reject("Password reset token is invalid or has expired.");
+    }
+    if (user) {
+      resolve();
+    }
+  });
+};
+
+User.prototype.passwordResetValidatation = function() {
+  if (this.data.new_password == "") {
+    this.errors.push("Please enter a new password.");
+  }
+  if (!validator.isLength(this.data.new_password, { min: 6, max: 50 })) {
+    this.errors.push("New password must be at least 6 characters.");
+  }
+  if (this.data.new_password != this.data.confirm_new_password) {
+    this.errors.push("Passwords do not match.");
+  }
+};
+
+User.prototype.resetToken = function(token) {
+  return new Promise(async (resolve, reject) => {
+    // CHECK FOR ERRORS
+    this.passwordResetValidatation();
+    // IS TOKEN IN DB AND NOT EXPIRED?
+    let user = await usersCollection.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() }
+    });
+    if (!user) {
+      reject("Password reset token is invalid or has expired.");
+    }
+    // Hash user password
+    let salt = bcrypt.genSaltSync(10);
+    this.data.confirm_new_password = bcrypt.hashSync(
+      this.data.confirm_new_password,
+      salt
+    );
+    if (!this.errors.length) {
+      await usersCollection.findOneAndUpdate(
+        { email: user.email },
+        {
+          $set: {
+            password: this.data.confirm_new_password
+          }
+        }
+      );
+    } else {
+      reject(this.errors);
+    }
+    resolve("Password successfully reset.");
   });
 };
 

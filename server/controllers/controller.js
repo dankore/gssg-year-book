@@ -284,24 +284,60 @@ exports.changePassword = function(req, res) {
 };
 
 exports.resetPasswordPage = function(req, res) {
-  res.render("resetPasswordPage", { user: req.session.user });
+  res.render("resetPasswordPage", {
+    user: req.session.user,
+    errors: req.flash("errors"),
+    success: req.flash("success")
+  });
 };
 
 exports.resetPassword = function(req, res) {
   let user = new User(req.body);
 
   user
-    .resetPassword()
+    .resetPassword(req.headers.host)
     .then(successMessage => {
       req.flash("success", successMessage);
       res.redirect("/");
     })
     .catch(errors => {
-      console.log(errors);
       errors.forEach(error => {
         req.flash("errors", error);
       });
 
+      res.redirect("/reset-password");
+    });
+};
+
+exports.resetPasswordTokenPage = function(req, res) {
+  let user = User.resetTokenExpiryTest(req.params.token);
+
+  user
+    .then(() => {
+      res.render("resetTokenPage", {
+        user: req.session.user,
+        token: req.params.token,
+        errors: req.flash("errors"),
+        success: req.flash("success")
+      });
+    })
+    .catch(error => {
+      req.flash("errors", error);
+      res.redirect("/reset-password");
+    });
+};
+
+exports.resetPasswordToken = function(req, res) {
+  let user = new User(req.body);
+
+  user
+    .resetToken(req.params.token)
+    .then(message => {
+      req.flash("success", message);
       res.redirect("/");
+    })
+    .catch(error => {
+      req.flash("errors", error);
+      res.redirect(`/reset-password/${req.params.token}`);
     });
 };
