@@ -19,9 +19,6 @@ let User = class user {
 
 User.prototype.validateEmail = function() {
   return new Promise(async (resolve, reject) => {
-    // remove spaces
-    this.data.email.trim();
-
     if (this.data.email.length == "") {
       this.errors.push("Email is required.");
     }
@@ -133,6 +130,13 @@ User.prototype.editValidation = function() {
   // END
 };
 User.prototype.validateSomeUserRegistrationInputs = function() {
+  // REMOVE UNWATED CHARACTERS
+  (this.data.firstName = this.data.firstName.trim()),
+    (this.data.lastName = this.data.lastName.trim()),
+    (this.data.email = this.data.email.trim()),
+    (this.data.year = this.data.year.trim()),
+    (this.data.password = this.data.password);
+
   // check for empty boxes
   if (this.data.firstName.length == "") {
     this.errors.push("First name is required.");
@@ -141,17 +145,17 @@ User.prototype.validateSomeUserRegistrationInputs = function() {
     this.errors.push("Last name is required.");
   }
 
-  if (this.data.year.trim().length == "") {
+  if (this.data.year.length == "") {
     this.errors.push("Year of graduation is required.");
   }
-  if (!validator.isLength(this.data.year.trim(), { min: 4, max: 4 })) {
+  if (!validator.isLength(this.data.year, { min: 4, max: 4 })) {
     this.errors.push("Year should be 4 characters in length.");
   }
 
   // check for non-allowed inputs
   if (
     this.data.firstName.length != "" &&
-    !validator.isAlphanumeric(this.data.firstName.trim())
+    !validator.isAlphanumeric(this.data.firstName)
   ) {
     this.errors.push(
       "First name can only contain letters and numbers. No spaces as well."
@@ -159,7 +163,7 @@ User.prototype.validateSomeUserRegistrationInputs = function() {
   }
   if (
     this.data.lastName.length != "" &&
-    !validator.isAlphanumeric(this.data.lastName.trim())
+    !validator.isAlphanumeric(this.data.lastName)
   ) {
     this.errors.push(
       "Last name can only contain letters and numbers. No spaces as well."
@@ -167,8 +171,8 @@ User.prototype.validateSomeUserRegistrationInputs = function() {
   }
 
   if (
-    this.data.year.trim().length != "" &&
-    !validator.isNumeric(this.data.year.trim())
+    this.data.year.length != "" &&
+    !validator.isNumeric(this.data.year)
   ) {
     this.errors.push("Year can only be numbers.");
   }
@@ -205,7 +209,7 @@ User.prototype.login = function() {
             attemptedUser &&
             bcrypt.compareSync(this.data.password, attemptedUser.password)
           ) {
-            resolve();
+            resolve(attemptedUser.firstName);
           } else {
             reject("Invalid password!");
           }
