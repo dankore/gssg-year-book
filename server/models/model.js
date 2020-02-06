@@ -249,6 +249,23 @@ User.prototype.register = function() {
       this.data.password = bcrypt.hashSync(this.data.password, salt);
       this.data.photo = "";
       await usersCollection.insertOne(this.data);
+
+      // SEND REGISTRATION SUCCESS EMAIL
+      const registrationSuccessEmail = {
+        to: "adamu.dankore@gmail.com", //this.data.email,
+        from: "adamu.dankore@gmail.com",
+        subject: `Congratulations, ${this.data.firstName}! Registration Success.`,
+        html: `<p>Hello <strong>${this.data.firstName},</strong></p>
+        <p>You have successfully created an account and added your profile to GSS Gwarinpa Contact Book.</p>
+        <a 
+        href="https://www.gssgcontactbook.com" 
+        style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
+          font-size: 15px; width: 300px; text-align: center; display:inline-block;">Discover GSS Gwarinpa Contact Book
+        </a>
+        `
+      };
+      sendgrid.send(registrationSuccessEmail);
+      // SEND REGISTRATION SUCCESS EMAIL END
       resolve(
         "Success! Remember to Edit Your Profile to add more info. Up GSS Gwarinpa!"
       );
