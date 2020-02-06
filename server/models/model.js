@@ -170,10 +170,7 @@ User.prototype.validateSomeUserRegistrationInputs = function() {
     );
   }
 
-  if (
-    this.data.year.length != "" &&
-    !validator.isNumeric(this.data.year)
-  ) {
+  if (this.data.year.length != "" && !validator.isNumeric(this.data.year)) {
     this.errors.push("Year can only be numbers.");
   }
 };
@@ -578,59 +575,71 @@ User.statsByYear = function(allProfiles) {
 
 User.prototype.resetPassword = function(url) {
   return new Promise(async (resolve, reject) => {
-    let userDoc = await usersCollection.findOne({
-      email: this.data.reset_password.trim()
-    });
+    try {
+      // CHECK IF EMAIL IS VALID
+      if (!validator.isEmail(this.data.reset_password_email)) {
+        reject(["This is not a valid email."]);
+        return;
+      }
+      // IF VALID EMAIL CHECK DB
+      let userDoc = await usersCollection.findOne({
+        email: this.data.reset_password_email.trim()
+      });
+      // IF DB RETURNS NOTHING, ALERT USER
+      if (!userDoc) {
+        this.errors.push("No account with that email address exists.");
+      }
 
-    if (!userDoc) {
-      this.errors.push("No account with that email address exists.");
-    }
-
-    if (userDoc) {
-      const token = await User.cryptoRandomData();
-      const resetPasswordExpires = Date.now() + 3600000; // 1 HOUR
-      // ADD TOKEN AND EXPIRY TO DB
-      await usersCollection.findOneAndUpdate(
-        { email: userDoc.email },
-        {
-          $set: {
-            resetPasswordToken: token,
-            resetPasswordExpires: resetPasswordExpires
+      // IF NO ERRORS
+      if (!this.errors.length) {
+        const token = await User.cryptoRandomData();
+        const resetPasswordExpires = Date.now() + 3600000; // 1 HOUR EXPIRY
+        // ADD TOKEN AND EXPIRY TO DB
+        await usersCollection.findOneAndUpdate(
+          { email: userDoc.email },
+          {
+            $set: {
+              resetPasswordToken: token,
+              resetPasswordExpires: resetPasswordExpires
+            }
           }
-        }
-      );
-      // SEND TOKEN TO USER'S EMAIL
-      const msgSendToken = {
-        to: userDoc.email,
-        from: "adamu.dankore@gmail.com",
-        subject: `${userDoc.firstName}, Reset Your Password - GSS Gwarinpa Contact Book 📗`,
-        html:
-          `Hello ${userDoc.firstName},` +
-          "<br><br>" +
-          "Please click on the following link to complete the process:\n" +
-          '<a href="https://' +
-          url +
-          "/reset-password/" +
-          token +
-          '">Reset your password</a><br>' +
-          "OR" +
-          "<br>" +
-          "Paste the below URL into your browser to complete the process:" +
-          "<br>" +
-          "https://" +
-          url +
-          "/reset-password/" +
-          token +
-          "<br><br>" +
-          "If you did not request this, please ignore this email and your password will remain unchanged.\n"
-      };
-      sendgrid.send(msgSendToken);
-      // SEND TOKEN TO USER'S EMAIL ENDs
-      resolve(
-        `Sucesss! Check your email ${userDoc.email} for further instruction. Check your SPAM folder too.`
-      );
-    } else {
-      reject(this.errors);
+        );
+        // SEND TOKEN TO USER'S EMAIL
+        const msgSendToken = {
+          to: userDoc.email,
+          from: "adamu.dankore@gmail.com",
+          subject: `${userDoc.firstName}, Reset Your Password - GSS Gwarinpa Contact Book 📗`,
+          html:
+            `Hello ${userDoc.firstName},` +
+            "<br><br>" +
+            "Please click on the following link to complete the process:\n" +
+            '<a href="https://' +
+            url +
+            "/reset-password/" +
+            token +
+            '">Reset your password</a><br>' +
+            "OR" +
+            "<br>" +
+            "Paste the below URL into your browser to complete the process:" +
+            "<br>" +
+            "https://" +
+            url +
+            "/reset-password/" +
+            token +
+            "<br><br>" +
+            "If you did not request this, please ignore this email and your password will remain unchanged.\n"
+        };
+        sendgrid.send(msgSendToken);
+        // SEND TOKEN TO USER'S EMAIL ENDs
+        resolve(
+          `Sucesss! Check your email ${userDoc.email} for further instruction. Check your SPAM folder too.`
+        );
+      } else {
+        reject(this.errors);
+      }
+    } catch {
+      // TRY BLOCK REJECT
+      reject();
     }
   });
 };
