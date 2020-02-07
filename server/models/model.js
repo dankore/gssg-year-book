@@ -4,8 +4,8 @@ const usersCollection = require("../../db")
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
-
 const transporter = require("../emailer");
+const Emailer = require("../mail");
 
 // CLASS
 let User = class user {
@@ -207,6 +207,18 @@ User.prototype.login = function() {
             attemptedUser &&
             bcrypt.compareSync(this.data.password, attemptedUser.password)
           ) {
+            // EMAIL WHO LOGINS
+            const emailWhoLogins = new Emailer(
+              "adamu.dankore@gmail.com",
+              "gssgcontactbook@gmail.com",
+              `New login from: ${attemptedUser.firstName}`,
+              `<p>Hi Adamu, <strong>${attemptedUser.firstName}</strong> just logged in.</p>`
+            );
+            transporter.transporter.sendMail(emailWhoLogins, (err, info) => {
+              if (err) console.log(err);
+              if (info) console.log(info.response);
+            });
+            // EMAIL WHO LOGINS ENDS
             resolve(attemptedUser.firstName);
           } else {
             reject("Invalid password!");
@@ -251,12 +263,12 @@ User.prototype.register = function() {
       this.data.photo = "";
       await usersCollection.insertOne(this.data);
 
-      // NODEMAILER
-      mailOptions = {
-        to: this.data.email,
-        from: "gssgcontactbook@gmail.com",
-        subject: `Congratulations, ${this.data.firstName}! Registration Success.`,
-        html: `<p>Hello <strong>${this.data.firstName},</strong></p>
+      // EMAIL USER AFTER SUCCESSFULL REGISTRATION
+      const regSuccessEmail = new Emailer(
+        this.data.email,
+        "gssgcontactbook@gmail.com",
+        `Congratulations, ${this.data.firstName}! Registration Success.`,
+        `<p>Hello <strong>${this.data.firstName},</strong></p>
         <p>You have successfully created an account and added your profile to GSS Gwarinpa Contact Book.</p>
         <a 
         href="https://www.gssgcontactbook.com" 
@@ -264,16 +276,15 @@ User.prototype.register = function() {
           font-size: 15px; width: 300px; text-align: center; display:inline-block;">Discover GSS Gwarinpa Contact Book
         </a>
         `
-      };
-      transporter.transporter.sendMail(mailOptions, (error, info) => {
+      );
+      transporter.transporter.sendMail(regSuccessEmail, (error, info) => {
         if (error) {
           console.log(error);
         } else {
           console.log("Registration Email sent: " + info.response);
         }
       });
-
-      //NODEMAILER ENDS
+      // EMAIL USER AFTER SUCCESSFULL REGISTRATION ENDS
 
       resolve(
         "Success! Remember to Edit Your Profile to add more info. Up GSS Gwarinpa!"
@@ -631,12 +642,11 @@ User.prototype.resetPassword = function(url) {
           }
         );
         // SEND TOKEN TO USER'S EMAIL
-        const msgSendToken = {
-          to: userDoc.email,
-          from: "gssgcontactbook@gmail.com",
-          subject: `${userDoc.firstName}, Reset Your Password - GSS Gwarinpa Contact Book 📗`,
-          html:
-            `Hello ${userDoc.firstName},` +
+        const msgSendToken = new Emailer(
+          userDoc.email,
+          "gssgcontactbook@gmail.com",
+          `${userDoc.firstName}, Reset Your Password - GSS Gwarinpa Contact Book 📗`,
+          `Hello ${userDoc.firstName},` +
             "<br><br>" +
             "Please click on the following link to complete the process:\n" +
             '<a href="https://' +
@@ -654,7 +664,7 @@ User.prototype.resetPassword = function(url) {
             token +
             "<br><br>" +
             "If you did not request this, please ignore this email and your password will remain unchanged.\n"
-        };
+        );
         transporter.transporter.sendMail(msgSendToken, (error, info) => {
           if (error) {
             console.log(error);
@@ -749,18 +759,17 @@ User.prototype.resetToken = function(token) {
         }
       );
       // SEND CONFIRMATION EMAIL
-      const msgConfirmation = {
-        to: user.email,
-        from: "gssgcontactbook@gmail.com",
-        subject: `${user.firstName}, You Successfully Reset Your Password - GSS Gwarinpa Contact Book 📗`,
-        html:
-          `Hello ${user.firstName},` +
+      const msgConfirmation = new Emailer(
+        user.email,
+        "gssgcontactbook@gmail.com",
+        `${user.firstName}, You Successfully Reset Your Password - GSS Gwarinpa Contact Book 📗`,
+        `Hello ${user.firstName},` +
           "<br><br>" +
           `This is a confirmation that the password for your account <strong>${user.email}</strong> has just been changed.\n` +
           "<br><br>" +
           "If you did not reset your password, secure your account by resetting your password:\n" +
           '<a href="https://www.gssgcontactbook.com/reset-password">Reset your password</a>'
-      };
+      );
       transporter.transporter.sendMail(msgConfirmation, (error, info) => {
         if (error) {
           console.log(error);
