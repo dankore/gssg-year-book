@@ -216,7 +216,7 @@ User.prototype.login = function() {
             );
             transporter.transporter.sendMail(emailWhoLogins, (err, info) => {
               if (err) console.log(err);
-              if (info) console.log(info.response);
+              else console.log("Who logs in email sent: " + info.response);
             });
             // EMAIL WHO LOGINS ENDS
             resolve(attemptedUser.firstName);
@@ -278,11 +278,8 @@ User.prototype.register = function() {
         `
       );
       transporter.transporter.sendMail(regSuccessEmail, (error, info) => {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log("Registration Email sent: " + info.response);
-        }
+        if (error) console.log(error);
+        else console.log("Registration Email sent: " + info.response);
       });
       // EMAIL USER AFTER SUCCESSFULL REGISTRATION ENDS
 
@@ -666,11 +663,8 @@ User.prototype.resetPassword = function(url) {
             "If you did not request this, please ignore this email and your password will remain unchanged.\n"
         );
         transporter.transporter.sendMail(msgSendToken, (error, info) => {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log("Token Email sent: " + info.response);
-          }
+          if (error) console.log(error);
+          else console.log("Token Email sent: " + info.response);
         });
         // SEND TOKEN TO USER'S EMAIL ENDs
         resolve(
@@ -771,11 +765,8 @@ User.prototype.resetToken = function(token) {
           '<a href="https://www.gssgcontactbook.com/reset-password">Reset your password</a>'
       );
       transporter.transporter.sendMail(msgConfirmation, (error, info) => {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log("Confirmation Email sent: " + info.response);
-        }
+        if (error) console.log(error);
+        else console.log("Confirmation Email sent: " + info.response);
       });
       // SEND CONFIRMATION EMAIL ENDs
 
