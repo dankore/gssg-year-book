@@ -300,7 +300,7 @@ exports.resetPassword = function(req, res) {
     .resetPassword(req.headers.host)
     .then(successMessage => {
       req.flash("success", successMessage);
-      res.redirect("/");
+      res.redirect("/reset-password");
     })
     .catch(errors => {
       errors.forEach(error => {

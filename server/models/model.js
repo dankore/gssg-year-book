@@ -668,7 +668,7 @@ User.prototype.resetPassword = function(url) {
         });
         // SEND TOKEN TO USER'S EMAIL ENDs
         resolve(
-          `Sucesss! Check your email ${userDoc.email} for further instruction. Check your SPAM folder too.`
+          `Sucesss! Check your email inbox at ${userDoc.email} for further instruction. Check your SPAM folder too.`
         );
       } else {
         reject(this.errors);
