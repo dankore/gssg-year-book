@@ -4,9 +4,10 @@ const usersCollection = require("../../db")
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
-const sendgrid = require("@sendgrid/mail");
-sendgrid.setApiKey(process.env.SENDGRIDAPIKEY);
 
+const transporter = require("../emailer");
+
+// CLASS
 let User = class user {
   constructor(data, photo, sessionEmail, requestedEmail) {
     (this.data = data),
@@ -16,7 +17,7 @@ let User = class user {
       (this.requestedEmail = requestedEmail);
   }
 };
-
+// CLASS ENDS
 User.prototype.validateEmail = function() {
   return new Promise(async (resolve, reject) => {
     if (this.data.email.length == "") {
@@ -250,10 +251,10 @@ User.prototype.register = function() {
       this.data.photo = "";
       await usersCollection.insertOne(this.data);
 
-      // SEND REGISTRATION SUCCESS EMAIL
-      const registrationSuccessEmail = {
-        to: "adamu.dankore@gmail.com", //this.data.email,
-        from: "adamu.dankore@gmail.com",
+      // NODEMAILER
+      mailOptions = {
+        to: this.data.email,
+        from: "gssgcontactbook@gmail.com",
         subject: `Congratulations, ${this.data.firstName}! Registration Success.`,
         html: `<p>Hello <strong>${this.data.firstName},</strong></p>
         <p>You have successfully created an account and added your profile to GSS Gwarinpa Contact Book.</p>
@@ -264,8 +265,16 @@ User.prototype.register = function() {
         </a>
         `
       };
-      sendgrid.send(registrationSuccessEmail);
-      // SEND REGISTRATION SUCCESS EMAIL END
+      transporter.transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Registration Email sent: " + info.response);
+        }
+      });
+
+      //NODEMAILER ENDS
+
       resolve(
         "Success! Remember to Edit Your Profile to add more info. Up GSS Gwarinpa!"
       );
@@ -624,7 +633,7 @@ User.prototype.resetPassword = function(url) {
         // SEND TOKEN TO USER'S EMAIL
         const msgSendToken = {
           to: userDoc.email,
-          from: "adamu.dankore@gmail.com",
+          from: "gssgcontactbook@gmail.com",
           subject: `${userDoc.firstName}, Reset Your Password - GSS Gwarinpa Contact Book 📗`,
           html:
             `Hello ${userDoc.firstName},` +
@@ -646,7 +655,13 @@ User.prototype.resetPassword = function(url) {
             "<br><br>" +
             "If you did not request this, please ignore this email and your password will remain unchanged.\n"
         };
-        sendgrid.send(msgSendToken);
+        transporter.transporter.sendMail(msgSendToken, (error, info) => {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log("Token Email sent: " + info.response);
+          }
+        });
         // SEND TOKEN TO USER'S EMAIL ENDs
         resolve(
           `Sucesss! Check your email ${userDoc.email} for further instruction. Check your SPAM folder too.`
@@ -736,7 +751,7 @@ User.prototype.resetToken = function(token) {
       // SEND CONFIRMATION EMAIL
       const msgConfirmation = {
         to: user.email,
-        from: "adamu.dankore@gmail.com",
+        from: "gssgcontactbook@gmail.com",
         subject: `${user.firstName}, You Successfully Reset Your Password - GSS Gwarinpa Contact Book 📗`,
         html:
           `Hello ${user.firstName},` +
@@ -746,7 +761,13 @@ User.prototype.resetToken = function(token) {
           "If you did not reset your password, secure your account by resetting your password:\n" +
           '<a href="https://www.gssgcontactbook.com/reset-password">Reset your password</a>'
       };
-      sendgrid.send(msgConfirmation);
+      transporter.transporter.sendMail(msgConfirmation, (error, info) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Confirmation Email sent: " + info.response);
+        }
+      });
       // SEND CONFIRMATION EMAIL ENDs
 
       // SET RESET TOKEN AND EXPIRY TO UNDEFINED
