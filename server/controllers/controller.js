@@ -2,7 +2,7 @@ const User = require("../models/model");
 
 exports.home = async (req, res) => {
   let profiles = await User.allProfiles();
-console.log(JSON.stringify(User.statsByYear(profiles)[0]));
+
   res.render("homePage", {
     errors: req.flash("errors"),
     success: req.flash("success"),
@@ -50,7 +50,7 @@ exports.login = async (req, res) => {
 
   user
     .login()
-    .then((firstName) => {
+    .then(firstName => {
       req.session.user = {
         email: user.data.email,
         firstName: firstName

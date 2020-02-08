@@ -8,6 +8,6 @@ if (document.querySelector("#more-profile-btn")) {
 if (document.querySelector("#btn-optional-fields")) {
   new ToggleEditPage();
 }
-if (document.querySelector("#plus-sign")) {
+if (document.querySelector("#arrow-down")) {
   new ToggleStats();
 }

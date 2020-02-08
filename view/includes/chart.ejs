@@ -1,6 +1,19 @@
-<div class="mx-auto" style="width: 800px; height: 400px">
-  <canvas id="myChart"></canvas>
+<div class="rounded-lg mx-auto my-4 bg-white shadow-lg" style="width: 1000px;">
+  <div class="h-10 relative flex justify-center">
+    <button id="arrow-down" class="absolute mt-6">
+      <i
+        class="text-white h-6 w-6 rounded-full bg-blue-600"
+        data-feather="arrow-down"
+      ></i>
+    </button>
+  </div>
+  <canvas
+    class=""
+    id="myChart"
+    style="width: 800px; height: 150px; display: none;"
+  ></canvas>
 </div>
+
 <script>
   var ctx = document.getElementById("myChart").getContext("2d");
   var myChart = new Chart(ctx, {
@@ -9,7 +22,7 @@
       labels: <%- JSON.stringify(statsByYear[0]) %>,
       datasets: [
         {
-          label: "# of profiles per graduation year",
+          label: "Profiles per graduation year",
           data: <%- JSON.stringify(statsByYear[1]) %>,
           backgroundColor: [
             "rgba(255, 99, 132, 0.2)",
@@ -44,14 +57,11 @@
       ]
     },
   options: {
-  			responsive: true,
-  			legend: {
-  				position: 'top',
-  			},
-  			title: {
-  				display: true,
-  				text: 'Chart.js Bar Chart'
-  			}
-  		}
+      legend: { display: false },
+      title: {
+        display: true,
+        text: 'Number of profiles per graduation year'
+      }
+    }
   });
 </script>
