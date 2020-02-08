@@ -20,7 +20,7 @@ export default class ToggleProfile {
       this.moreProfileContainer.style.display = "block";
       this.showMoreProfileBtn.innerHTML = "Show less &#8593";
     } else {
-      this.showMoreProfileBtn.innerHTML = "Show full profile &#8595";
+      this.showMoreProfileBtn.innerHTML = "Show more &#8595";
       this.moreProfileContainer.style.display = "none";
     }
   }
