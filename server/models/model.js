@@ -4,8 +4,9 @@ const usersCollection = require("../../db")
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
-const transporter = require("../emailer");
-const Emailer = require("../mail");
+const transporter = require("../misc/emailTransporter");
+const Emailer = require("../misc/mail");
+const helpers = require("../misc/helpers");
 
 // CLASS
 let User = class user {
@@ -156,18 +157,18 @@ User.prototype.validateSomeUserRegistrationInputs = function() {
   // check for non-allowed inputs
   if (
     this.data.firstName.length != "" &&
-    !validator.isAlphanumeric(this.data.firstName)
+    !helpers.isAlphaNumericDashHyphen(this.data.firstName)
   ) {
     this.errors.push(
-      "First name can only contain letters and numbers. No spaces as well."
+      "First name can only contain letters, dashes, undercores, and numbers."
     );
   }
   if (
     this.data.lastName.length != "" &&
-    !validator.isAlphanumeric(this.data.lastName)
+    !helpers.isAlphaNumericDashHyphen(this.data.lastName)
   ) {
     this.errors.push(
-      "Last name can only contain letters and numbers. No spaces as well."
+      "Last name can only contain letters, dashes, undercores, and numbers."
     );
   }
 
