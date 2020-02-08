@@ -591,7 +591,6 @@ User.prototype.updatePassword = function() {
 User.statsByYear = function(allProfiles) {
   let yearsArray = allProfiles.map(item => item.year);
   let obj = {};
-  let result = [];
 
   for (var i = 0; i < yearsArray.length; i++) {
     !obj.hasOwnProperty(yearsArray[i])
@@ -599,13 +598,7 @@ User.statsByYear = function(allProfiles) {
       : (obj[yearsArray[i]] += 1);
   }
 
-  for (var prop in obj) {
-    obj[prop] > 1
-      ? result.push(`${prop}: ${obj[prop]} profiles`)
-      : result.push(`${prop}: ${obj[prop]} profile`);
-  }
-
-  return result;
+  return [Object.keys(obj), Object.values(obj)];
 };
 
 User.prototype.resetPassword = function(url) {
@@ -769,7 +762,7 @@ User.prototype.resetToken = function(token) {
         if (error) console.log(error);
         else console.log("Confirmation Email sent: " + info.response);
       });
-      // SEND CONFIRMATION EMAIL ENDs
+      // SEND CONFIRMATION EMAIL ENDS
 
       // SET RESET TOKEN AND EXPIRY TO UNDEFINED
       usersCollection.findOneAndUpdate(

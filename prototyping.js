@@ -673,13 +673,11 @@ function test() {
            obj[years[i]] += 1
        }
    }
- 
 
-   for(var p in obj){
-       r.push(`Year ${p} has ${obj[p]} profiles`)
-   }
+  //  return [Object.keys(obj), ];
+ 
+console.log([...Object.keys(obj)])
    
-   return r
    
 }
 
