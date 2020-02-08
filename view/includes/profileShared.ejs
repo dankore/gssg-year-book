@@ -1,4 +1,4 @@
-<div class="w-64 mx-auto text-xs rounded overflow-hidden shadow-lg bg-white" style="height: 22rem">
+<div class="mx-auto text-sm rounded overflow-hidden shadow-lg bg-white" style="height: 23rem; width: 18rem;">
     <% if(profile.photo){ %>
     <img
       class="w-full h-48 object-cover"
@@ -14,23 +14,23 @@
       alt="profile picture"
     />
     <%}%>
-  <div class="w-64 text-xs px-3 py-2 relative">
+  <div class="text-sm px-3 relative">
   <% if(profile.class){ %>
       <span
-        class="absolute text-xs ml-48 inline-block bg-gray-200 rounded-full p-1 -mt-1 font-semibold text-gray-700">
+        class="absolute text-sm ml-56 inline-block bg-gray-200 rounded-full p-1 -mt-1 font-semibold text-gray-700">
         <%= profile.class %>
       </span
       >
   <% } else { %>
       <span
-        class="absolute text-xs ml-48 inline-block bg-gray-200 rounded-full p-1 -mt-1 font-semibold text-gray-700">
+        class="absolute text-xs ml-56 inline-block bg-gray-200 rounded-full p-1 -mt-1 font-semibold text-gray-700">
         Class?
       </span
       >
   <%}%>
     <div
       class="font-bold text-md mb-1"
-      style="overflow-wrap: break-word; min-width: 0px;"
+      style="overflow-wrap: break-word; min-width: 0px; width: 18rem"
     >
       <%= profile.firstName %> <%= profile.lastName %>
     </div>
