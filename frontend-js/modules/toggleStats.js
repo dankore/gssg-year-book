@@ -12,7 +12,6 @@ export default class ToggleStats {
 
   // METHODS
   toggleStats() {
-    console.log("hi")
     if (this.statsContainer.style.display == "none") {
       this.statsContainer.style.display = "block";
       this.arrowSigns.innerHTML = "&#8911";
