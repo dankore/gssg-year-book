@@ -1,4 +1,6 @@
 const User = require("../models/model");
+const helpers = require("../misc/helpers");
+
 
 exports.home = async (req, res) => {
   let profiles = await User.allProfiles();
@@ -8,7 +10,7 @@ exports.home = async (req, res) => {
     success: req.flash("success"),
     user: req.session.user,
     profiles: profiles,
-    statsByYear: User.statsByYear(profiles)
+    statsByYear: helpers.statsByYear(profiles)
   });
 };
 
@@ -244,7 +246,7 @@ exports.search = async function(req, res) {
       success: req.flash("success"),
       user: req.session.user,
       profiles: searchResultsArray,
-      statsByYear: User.statsByYear(searchResultsArray)
+      statsByYear: helpers.statsByYear(searchResultsArray)
     });
   } catch {
     req.flash("errors", "Invalid search term.");
