@@ -1,13 +1,20 @@
 <!-- MODAL -->
 <div
   id="profile-image-modal"
-  class="fixed pin flex items-center justify-center z-50 bg-white"
+  class="fixed pin flex relative items-center justify-center z-50 bg-white"
   style="display: none;"
 >
-  <div id="close-image" class="text-2xl bg-white flex justify-end p-2">
+  <div
+    id="close-image"
+    class="cursor-pointer text-2xl bg-white flex justify-end p-2"
+  >
     &#10005;
   </div>
-  <img src="<%= profile.photo %>" style="max-height: 75vh;" />
+  <img
+    src="<%= profile.photo %>"
+    style="max-height: 75vh; right: 0; left: 0;"
+    class="absolute"
+  />
 </div>
 <!-- MODAL ENDS -->
 <div
