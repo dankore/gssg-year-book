@@ -5,6 +5,7 @@ const flash = require("connect-flash");
 const server = express();
 const bodyParser = require("body-parser");
 const router = require("./router");
+const compression = require("compression");
 
 let sessionOptions = session({
   secret: "JavaScript is soooo cool",
@@ -16,6 +17,7 @@ let sessionOptions = session({
 
 server.use(sessionOptions);
 server.use(flash());
+server.use(compression());
 
 server.use(bodyParser.urlencoded({ extended: true }));
 
