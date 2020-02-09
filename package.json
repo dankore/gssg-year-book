@@ -4,7 +4,8 @@
   "description": "Phot book for gss gwarinpa students- past and present",
   "main": "server.js",
   "scripts": {
-    "watch": "nodemon db && webpack --watch"
+    "watch": "webpack --watch",
+    "start": "nodemon db"
   },
   "repository": {
     "type": "git",

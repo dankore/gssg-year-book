@@ -1,0 +1,76 @@
+
+ <div class="w-full flex justify-center relative">
+  <div id="arrow-down" class="flex px-3 py-1 cursor-pointer items-center justify-around bg-white rounded-tl rounded-tr">
+    View Stats for
+    <span class="inline-block mx-2 bg-white border border-blue-700 rounded-full p-1"> <%= profiles.length %> </span>
+    Profiles
+    <span id="arrows" class="text-blue-700 px-2 font-bold">&#8910</span>
+  </div>
+  
+ </div>
+<div style="width: 35%; min-width: 300px; height: 25%" class="rounded-bl-lg rounded-br-lg w-1/2 mx-auto flex justify-center bg-white relative shadow-lg">
+  <canvas
+    class=""
+    id="myChart"
+    style="display: none;"
+  ></canvas>
+</div>
+
+<script>
+  var ctx = document.getElementById("myChart").getContext("2d");
+  var myChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: <%- JSON.stringify(statsByYear[0]) %>,
+      datasets: [
+        {
+          label: "Profiles per graduation year",
+          data: <%- JSON.stringify(statsByYear[1]) %>,
+          backgroundColor: [
+            "rgba(255, 99, 132, 0.2)",
+            "rgba(54, 162, 235, 0.2)",
+            "rgba(255, 206, 86, 0.2)",
+            "rgba(75, 192, 192, 0.2)",
+            "rgba(153, 102, 255, 0.2)",
+            "rgba(255, 159, 64, 0.2)",
+            "rgba(255, 99, 132, 0.2)",
+            "rgba(54, 162, 235, 0.2)",
+            "rgba(255, 206, 86, 0.2)",
+            "rgba(75, 192, 192, 0.2)",
+            "rgba(153, 102, 255, 0.2)",
+            "rgba(255, 159, 64, 0.2)"
+          ],
+          borderColor: [
+            "rgba(255, 99, 132, 1)",
+            "rgba(54, 162, 235, 1)",
+            "rgba(255, 206, 86, 1)",
+            "rgba(75, 192, 192, 1)",
+            "rgba(153, 102, 255, 1)",
+            "rgba(255, 159, 64, 1)",
+            "rgba(255, 99, 132, 1)",
+            "rgba(54, 162, 235, 1)",
+            "rgba(255, 206, 86, 1)",
+            "rgba(75, 192, 192, 1)",
+            "rgba(153, 102, 255, 1)",
+            "rgba(255, 159, 64, 1)"
+          ],
+          borderWidth: 1
+        }
+      ]
+    },
+  options: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: 'Number of profiles per graduation year'
+      },
+          scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+  });
+</script>

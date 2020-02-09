@@ -1,39 +1,25 @@
 export default class ToggleStats {
   constructor() {
-    this.btnPluSign = document.querySelector("#plus-sign");
-    this.statsContainer = document.querySelector("#stats-container");
-    this.body = document.querySelector("body");
-    this.toolTip = document.querySelector("#tool-tip");
+    this.arrowDown = document.querySelector("#arrow-down");
+    this.statsContainer = document.querySelector("#myChart");
+    this.arrowSigns = document.querySelector("#arrows");
     this.events();
   }
   // EVENTS
   events() {
-    this.btnPluSign.addEventListener("click", e => this.toggleStats(e));
-    this.body.addEventListener("click", () => this.closeStatsModel());
-    this.btnPluSign.addEventListener("mouseover", e => this.showToolTip(e));
-    this.body.addEventListener("mouseover", () => this.closeToolTip());
+    this.arrowDown.addEventListener("click", () => this.toggleStats());
   }
 
   // METHODS
-  toggleStats(e) {
-    e.stopPropagation();
+  toggleStats() {
+    console.log("hi")
     if (this.statsContainer.style.display == "none") {
       this.statsContainer.style.display = "block";
+      this.arrowSigns.innerHTML = "&#8911";
     } else {
       this.statsContainer.style.display = "none";
+       this.arrowSigns.innerHTML = "&#8910";
     }
-  }
-
-  closeStatsModel() {
-    this.statsContainer.style.display = "none";
-  }
-
-  showToolTip(e) {
-    e.stopPropagation();
-    this.toolTip.style.display = "block";
-  }
-  closeToolTip() {
-    this.toolTip.style.display = "none";
   }
   // END CLASS
 }

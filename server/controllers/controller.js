@@ -50,7 +50,7 @@ exports.login = async (req, res) => {
 
   user
     .login()
-    .then((firstName) => {
+    .then(firstName => {
       req.session.user = {
         email: user.data.email,
         firstName: firstName
