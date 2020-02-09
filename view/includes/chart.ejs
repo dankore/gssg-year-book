@@ -1,16 +1,18 @@
-<div class="rounded-lg mx-auto my-4 bg-white shadow-lg" style="width: 1000px;">
-  <div class="h-10 relative flex justify-center">
-    <button id="arrow-down" class="absolute mt-6">
-      <i
-        class="text-white h-6 w-6 rounded-full bg-blue-600"
-        data-feather="arrow-down"
-      ></i>
-    </button>
+
+ <div class="w-full flex justify-center relative">
+  <div id="arrow-down" class="flex cursor-pointer items-center justify-around bg-white rounded-tl rounded-tr w-64">
+    View Stats for
+    <span class="inline-block bg-white border border-blue-700 rounded-full p-1"> <%= profiles.length %> </span>
+    profiles
+    <span id="arrows" class="text-blue-700 font-bold">&#8910</span>
   </div>
+  
+ </div>
+<div class="rounded-lg mx-auto flex justify-center bg-white relative shadow-lg" style="width: 600px;">
   <canvas
     class=""
     id="myChart"
-    style="width: 800px; height: 150px; display: none;"
+    style="width: 800px; height: 250px; display: none;"
   ></canvas>
 </div>
 
@@ -61,7 +63,14 @@
       title: {
         display: true,
         text: 'Number of profiles per graduation year'
-      }
+      },
+          scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
     }
   });
 </script>
