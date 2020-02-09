@@ -1,6 +1,17 @@
-<div class="mx-auto text-sm rounded overflow-hidden shadow-lg bg-white" style="height: 23rem; width: 18rem;">
+ <!-- MODAL -->
+<div id="profile-image-modal" class="z-20 rounded absolute bg-white" style="display: none; height: 80vh;">
+    <div id="close-image" class="text-2xl bg-white flex justify-end p-2">&#10005;</div>
+    <img  
+      class="" 
+      src="<%= profile.photo %>" 
+      style="height: 70vh;"
+    />
+</div>
+<!-- MODAL ENDS -->
+<div class="mx-auto text-sm z-10 rounded overflow-hidden shadow-lg bg-white" style="height: 23rem; width: 18rem;">
     <% if(profile.photo){ %>
     <img
+      id="profile-image"
       class="w-full h-48 object-cover"
       title="<%= profile.firstName %>"
       src="<%= profile.photo %>"
