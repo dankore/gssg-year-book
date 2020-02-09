@@ -1,18 +1,19 @@
 export default class ToggleImage {
     constructor(){
-        this.image = document.querySelector("#profile-image");
+        this.imageProfile = document.querySelector("#profile-image");
         this.closeImage = document.querySelector("#close-image");
         this.profileImageModal = document.querySelector("#profile-image-modal");
         this.events();
     }
     // EVENTS
     events(){
-        this.image.addEventListener("click", () => this.toggleImage());
+        this.imageProfile.addEventListener("click", (e) => this.toggleImage(e));
         this.closeImage.addEventListener("click", () => this.closeImageModal())
     }
 
     // METHODS
-    toggleImage(){
+    toggleImage(e){
+        console.log(e.target)
         if(this.profileImageModal.style.display == "none"){
             this.profileImageModal.style.display = "block"
         } else {

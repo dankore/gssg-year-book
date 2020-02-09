@@ -1,43 +1,50 @@
- <!-- MODAL -->
-<div id="profile-image-modal" class="rounded z-30 absolute bg-white" style="display: none;">
-    <div id="close-image" class="text-2xl bg-white flex justify-end p-2">&#10005;</div>
-    <img
-      src="<%= profile.photo %>" 
-      style=""
-    />
+<!-- MODAL -->
+<div
+  id="profile-image-modal"
+  class="fixed pin flex items-center justify-center z-50 bg-white"
+  style="display: none;"
+>
+  <div id="close-image" class="text-2xl bg-white flex justify-end p-2">
+    &#10005;
+  </div>
+  <img src="<%= profile.photo %>" style="max-height: 75vh;" />
 </div>
 <!-- MODAL ENDS -->
-<div class="mx-auto text-sm rounded overflow-hidden shadow-lg bg-white" style="height: 23rem; width: 18rem;">
-    <% if(profile.photo){ %>
-    <img
-      id="profile-image"
-      class="w-full h-48 object-cover"
-      title="<%= profile.firstName %>"
-      src="<%= profile.photo %>"
-      alt="profile picture"
-    />
-    <% } else { %>
-    <img
-      class="w-full h-48 object-cover"
-      title="<%= profile.firstName %> <%= profile.lastName %>"
-      src="../../static/blank.png"
-      alt="profile picture"
-    />
-    <%}%>
-  <div class="text-sm px-3 relative">
-  <% if(profile.class){ %>
-      <span
-        class="absolute text-sm ml-56 inline-block bg-gray-200 rounded-full p-1 -mt-1 font-semibold text-gray-700">
-        <%= profile.class %>
-      </span
-      >
+<div
+  class="mx-auto text-sm rounded overflow-hidden shadow-lg bg-white"
+  style="height: 23rem; width: 18rem;"
+>
+  <% if(profile.photo){ %>
+  <img
+    id="profile-image"
+    class="w-full h-48 object-cover"
+    title="<%= profile.firstName %>"
+    src="<%= profile.photo %>"
+    alt="profile picture"
+  />
   <% } else { %>
-      <span
-        class="absolute text-xs ml-56 inline-block bg-gray-200 rounded-full p-1 -mt-1 font-semibold text-gray-700">
-        Class?
-      </span
-      >
+  <img
+    id="profile-image"
+    class="w-full h-48 object-cover"
+    title="<%= profile.firstName %> <%= profile.lastName %>"
+    src="../../static/blank.png"
+    alt="profile picture"
+  />
   <%}%>
+  <div class="text-sm px-3 relative">
+    <% if(profile.class){ %>
+    <span
+      class="absolute text-sm ml-56 inline-block bg-gray-200 rounded-full p-1 -mt-1 font-semibold text-gray-700"
+    >
+      <%= profile.class %>
+    </span>
+    <% } else { %>
+    <span
+      class="absolute text-xs ml-56 inline-block bg-gray-200 rounded-full p-1 -mt-1 font-semibold text-gray-700"
+    >
+      Class?
+    </span>
+    <%}%>
     <div
       class="font-bold text-md p-px mb-1"
       style="overflow-wrap: break-word; min-width: 0px; width: 18rem"
