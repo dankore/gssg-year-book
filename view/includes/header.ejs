@@ -39,11 +39,13 @@
 
       <% if (user) { %>
       <form action="/logout" method="POST" class="flex flex-wrap">
-        <button
-          class="mr-4 rounded border border-white hover:bg-green-800 px-3 py-1"
-        >
-          Logout
-        </button>
+        <label for="logout">
+            <input
+                id="logout"
+                value="Logout"
+                type="submit"
+                class="mr-4 rounded bg-transparent cursor-pointer border border-white hover:bg-green-800 px-3 py-1">
+        </label>
       </form>
 
       <% } else { %>
