@@ -4,7 +4,7 @@
   class="fixed pin flex relative items-center justify-center bg-white"
   style="display: none;"
 >
-<div class="flex justify-between items-center px-2">
+<div class="flex justify-between items-center px-2" style="max-height: 75vh; right: 0; left: 0;">
   <div><%= profile.firstName %> <%= profile.lastName %></div>
   <div
     id="close-image"
@@ -15,7 +15,7 @@
 </div>
   <img
     src="<%= profile.photo %>"
-    style="max-height: 75vh; right: 0; left: 0;"
+    
     class="absolute z-50"
     alt="profile picture"
   />
