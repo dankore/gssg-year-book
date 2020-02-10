@@ -4,16 +4,20 @@
   class="fixed pin flex relative items-center justify-center bg-white"
   style="display: none;"
 >
+<div class="flex justify-between items-center px-2">
+  <div><%= profile.firstName %> <%= profile.lastName %></div>
   <div
     id="close-image"
-    class="cursor-pointer text-2xl bg-white flex justify-end p-2"
+    class="cursor-pointer text-2xl bg-white"
   >
     &#10005;
   </div>
+</div>
   <img
     src="<%= profile.photo %>"
     style="max-height: 75vh; right: 0; left: 0;"
     class="absolute z-50"
+    alt="profile picture"
   />
 </div>
 <!-- MODAL ENDS -->
