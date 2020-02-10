@@ -16,7 +16,7 @@
 <div class="flex flex-wrap justify-center">
   <% if(profiles.length){ %> <% profiles.sort(( a, b ) => a.year -
   b.year).forEach(profile => { %>
-  <a class="m-4" href="/profile/<%= profile.email %>">
+  <a id="anchor-tag" class="m-4" href="/profile/<%= profile.email %>">
     <%- include('includes/profileShared', {profile: profile}) %>
   </a>
   <% }) %> <% } else { %>

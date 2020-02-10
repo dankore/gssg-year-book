@@ -12,6 +12,11 @@ if (document.querySelector("#btn-optional-fields")) {
 if (document.querySelector("#arrow-down")) {
   new ToggleStats();
 }
-if(document.querySelector("#profile-image") || document.querySelector("#close-image")){
+if(document.querySelector("#profile-image")){
     new ToggleImage();
 }
+if(document.querySelector("#anchor-tag")){
+    new ToggleImage();
+}
+
+
