@@ -1,14 +1,10 @@
 const User = require("../models/model");
 const helpers = require("../misc/helpers");
 
-
 exports.home = async (req, res) => {
   let profiles = await User.allProfiles();
 
   res.render("homePage", {
-    errors: req.flash("errors"),
-    success: req.flash("success"),
-    user: req.session.user,
     profiles: profiles,
     statsByYear: helpers.statsByYear(profiles)
   });
@@ -17,8 +13,7 @@ exports.home = async (req, res) => {
 exports.registrationPage = (req, res) => {
   const registrationErrors = req.flash("reqError");
   res.render("registrationPage", {
-    reqErrors: registrationErrors,
-    user: req.session.user
+    reqErrors: registrationErrors
   });
 };
 
@@ -82,7 +77,7 @@ exports.ifUserExists = (req, res, next) => {
       next();
     })
     .catch(() => {
-      res.render("404", { user: req.session.user });
+      res.render("404");
     });
 };
 
@@ -94,21 +89,12 @@ exports.profileScreen = (req, res) => {
     );
 
     if (visitorIsOwner) {
-      res.render("profileLoggedInUser", {
-        profile: req.profileUser,
-        user: req.session.user
-      });
+      res.render("profileLoggedInUser", { profile: req.profileUser });
     } else {
-      res.render("profileGuest", {
-        profile: req.profileUser,
-        user: req.session.user
-      });
+      res.render("profileGuest", { profile: req.profileUser });
     }
   } else {
-    res.render("profileGuest", {
-      profile: req.profileUser,
-      user: req.session.user
-    });
+    res.render("profileGuest", { profile: req.profileUser });
   }
 };
 
@@ -122,10 +108,7 @@ exports.viewEditScreen = async function(req, res) {
     );
     if (isVisitorOwner) {
       res.render("editProfilePage", {
-        user: req.session.user,
-        errors: req.flash("errors"),
-        profile: profile,
-        success: req.flash("success")
+        profile: profile
       });
     } else {
       req.flash(
@@ -135,7 +118,7 @@ exports.viewEditScreen = async function(req, res) {
       res.session.save(() => res.redirect("/"));
     }
   } catch {
-    res.render("404", { user: req.session.user });
+    res.render("404");
   }
 };
 
@@ -198,13 +181,13 @@ exports.account = function(req, res) {
       req.params.email
     );
     if (visitorIsOwner) {
-      res.render("account", { user: req.session.user });
+      res.render("account");
     } else {
       req.flash("errors", "You do not have permission to perform that action.");
       req.session.save(() => res.redirect("/"));
     }
   } else {
-    res.render("404", { user: req.session.user });
+    res.render("404");
   }
 };
 
@@ -215,13 +198,13 @@ exports.confirm = function(req, res) {
       req.params.email
     );
     if (visitorIsOwner) {
-      res.render("confirmDeletePage", { user: req.session.user });
+      res.render("confirmDeletePage");
     } else {
       req.flash("errors", "You do not have permission to perform that action.");
       req.session.save(() => res.redirect("/"));
     }
   } else {
-    res.render("404", { user: req.session.user });
+    res.render("404");
   }
 };
 
@@ -242,9 +225,6 @@ exports.search = async function(req, res) {
     let searchResultsArray = await User.search(req.body.q);
 
     res.render("homePage", {
-      errors: req.flash("errors"),
-      success: req.flash("success"),
-      user: req.session.user,
       profiles: searchResultsArray,
       statsByYear: helpers.statsByYear(searchResultsArray)
     });
@@ -255,14 +235,12 @@ exports.search = async function(req, res) {
 };
 
 exports.privacy = function(req, res) {
-  res.render("privacy", { user: req.session.user });
+  res.render("privacy");
 };
 
 exports.changePasswordPage = function(req, res) {
   res.render("changePasswordPage", {
-    user: req.session.user,
-    errors: req.flash("errors"),
-    success: req.flash("success")
+    user: req.session.user
   });
 };
 
@@ -288,11 +266,7 @@ exports.changePassword = function(req, res) {
 };
 
 exports.resetPasswordPage = function(req, res) {
-  res.render("resetPasswordPage", {
-    user: req.session.user,
-    errors: req.flash("errors"),
-    success: req.flash("success")
-  });
+  res.render("resetPasswordPage");
 };
 
 exports.resetPassword = function(req, res) {
@@ -319,10 +293,7 @@ exports.resetPasswordTokenPage = function(req, res) {
   user
     .then(() => {
       res.render("resetTokenPage", {
-        user: req.session.user,
-        token: req.params.token,
-        errors: req.flash("errors"),
-        success: req.flash("success")
+        token: req.params.token
       });
     })
     .catch(error => {
