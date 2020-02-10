@@ -2,6 +2,10 @@ const User = require("../models/model");
 const helpers = require("../misc/helpers");
 
 exports.home = async (req, res) => {
+  // SEO
+  req.session.profileUser = "";
+  // SEO ENDS
+  
   let profiles = await User.allProfiles();
 
   res.render("homePage", {
@@ -73,6 +77,7 @@ exports.logout = function(req, res) {
 exports.ifUserExists = (req, res, next) => {
   User.findByEmail(req.params.email)
     .then(userDoc => {
+      req.session.profileUser = userDoc;
       req.profileUser = userDoc;
       next();
     })
@@ -82,6 +87,7 @@ exports.ifUserExists = (req, res, next) => {
 };
 
 exports.profileScreen = (req, res) => {
+  console.log(req.url);
   if (req.session.user) {
     const visitorIsOwner = User.isVisitorOwner(
       req.session.user.email,
