@@ -15,9 +15,8 @@
 </div>
   <img
     src="<%= profile.photo %>"
-    
     class="absolute z-50"
-    alt="profile picture"
+    alt=""
   />
 </div>
 <!-- MODAL ENDS -->
@@ -35,7 +34,6 @@
   />
   <% } else { %>
   <img
-    id="profile-image"
     class="w-full h-48 object-cover"
     title="<%= profile.firstName %> <%= profile.lastName %>"
     src="../../static/blank.png"
