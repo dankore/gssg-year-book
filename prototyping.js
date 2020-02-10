@@ -676,9 +676,17 @@ function test() {
 
   //  return [Object.keys(obj), ];
  
-console.log([...Object.keys(obj)])
+// console.log([...Object.keys(obj)])
    
    
 }
 
-console.log(test());
+var color = "yellow";
+var colorObject = {
+  color: "blue",
+  check: function() {
+    return this.color;
+  }
+};
+console.log(colorObject.color);
+// console.log(test());
