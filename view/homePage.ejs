@@ -13,10 +13,10 @@
 
 <%- include('includes/searchBar') %> <%- include('includes/chart') %>
 
-<div class="flex flex-wrap justify-center">
+<div id="anchor-tag" class="flex flex-wrap justify-center">
   <% if(profiles.length){ %> <% profiles.sort(( a, b ) => a.year -
   b.year).forEach(profile => { %>
-  <a id="anchor-tag" class="m-4" href="/profile/<%= profile.email %>">
+  <a  class="m-4" href="/profile/<%= profile.email %>">
     <%- include('includes/profileShared', {profile: profile}) %>
   </a>
   <% }) %> <% } else { %>
