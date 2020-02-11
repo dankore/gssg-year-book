@@ -39,6 +39,7 @@ server.use((req, res, next) => {
 });
 server.use("/profile/:email", (req, res, next)=>{
   User.findByEmail(req.params.email).then((userDoc)=>{
+      userDoc.url = "https://www.gssgcontactbook.com" + req.originalUrl
       res.locals.seo = userDoc
   }).catch((err)=>{
       console.log(err);
