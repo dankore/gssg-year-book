@@ -3,14 +3,14 @@ export default class ConfirmDelete {
         this.deleteBtn = document.querySelector("#delete-profile");
         this.deleteModal = document.querySelector("#delete-profile-confirm-container");
         this.closeModalBtn = document.querySelector("#close-modal");
-        this.body = document.querySelector("body");
+        this.htmlBody = document.querySelector("html");
         this.events();
     }
     // EVENTS
     events(){
         this.deleteBtn.addEventListener("click", (e) => this.deleteHandler(e));
         this.closeModalBtn.addEventListener("click", () => this.closeModalHandler());
-        this.body.addEventListener("click", () => this.bodyHandler());
+        this.htmlBody.addEventListener("click", () => this.bodyHandler());
     }
 
     // METHODS
