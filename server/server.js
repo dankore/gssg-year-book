@@ -6,6 +6,7 @@ const server = express();
 const bodyParser = require("body-parser");
 const router = require("./router");
 const compression = require("compression");
+const User = require("./models/model")
 
 let sessionOptions = session({
   secret: "JavaScript is soooo cool",
@@ -15,6 +16,15 @@ let sessionOptions = session({
   cookie: { maxAge: 1000 * 60 * 60 * 24, httpOnly: true }
 });
 
+
+
+server.set("views", "view");
+server.set("view engine", "ejs");
+
+server.use(bodyParser.urlencoded({ extended: true }));
+server.use(express.static("public"));
+server.use(express.urlencoded({ extended: false }));
+server.use(express.json());
 server.use(sessionOptions);
 server.use(flash());
 server.use(compression());
@@ -24,18 +34,18 @@ server.use((req, res, next) => {
   res.locals.errors = req.flash("errors");
   res.locals.success = req.flash("success");
   res.locals.user = req.session.user;
-
+  
   next();
 });
+server.use("/profile/:email", (req, res, next)=>{
+  User.findByEmail(req.params.email).then((userDoc)=>{
+      res.locals.seo = userDoc
+  }).catch((err)=>{
+      console.log(err);
+  });
+  next()
+})
 
-server.use(bodyParser.urlencoded({ extended: true }));
-
-server.set("views", "view");
-server.set("view engine", "ejs");
-server.use(express.static("public"));
-
-server.use(express.urlencoded({ extended: false }));
-server.use(express.json());
 
 server.use(router);
 

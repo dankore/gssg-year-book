@@ -73,7 +73,6 @@ exports.ifUserExists = (req, res, next) => {
   User.findByEmail(req.params.email)
     .then(userDoc => {
       req.profileUser = userDoc;
-      req.adamu = userDoc;
       next();
     })
     .catch(() => {
@@ -87,7 +86,7 @@ exports.profileScreen = (req, res) => {
       req.session.user.email,
       req.profileUser.email
     );
-
+     
     if (visitorIsOwner) {
       res.render("profileLoggedInUser", { profile: req.profileUser });
     } else {
