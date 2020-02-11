@@ -8,6 +8,23 @@
     <!-- FAVICON ENDS -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- SEO -->
+    <meta itemprop="name" content="gssgcontactbook.com" />
+    <meta itemprop="description" content="Find Your GSS Gwarinpa Classmates and Their Contacts." />
+    <meta itemprop="image" content="<%= typeof(locals.seo) == 'undefined' ? 'https://gss-gwarinpa.s3.us-east-2.amazonaws.com/1580629627915' : `${locals.seo.photo}` %>" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="Web Application" />
+    <meta property="og:url" content="https://www.gssgcontactbook.com/" />
+    <meta property="og:site_name" content="gssgcontactbook.com" />
+    <meta property="og:title" content="gssgcontactbook.com" />
+    <meta property="og:description" content="Find Your GSS Gwarinpa Classmates and Their Contacts." />
+    <meta property="og:image" content="<%= typeof(locals.seo) == 'undefined' ? 'https://gss-gwarinpa.s3.us-east-2.amazonaws.com/1580629627915' : `${locals.seo.photo}` %>" />
+    <meta property="og:image:alt" content="Profile photo" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="gssgcontactbook.com" />
+    <meta name="twitter:description" content="Find Your GSS Gwarinpa Classmates and Their Contacts." />
+    <meta name="twitter:image" content="<%= typeof(locals.seo) == 'undefined' ? 'https://gss-gwarinpa.s3.us-east-2.amazonaws.com/1580629627915' : `${locals.seo.photo}` %>" />
+    <!-- SEO ENDS -->
     <link
       href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
       rel="stylesheet"
