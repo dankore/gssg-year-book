@@ -4,6 +4,7 @@ export default class ConfirmDelete {
         this.deleteModal = document.querySelector("#delete-profile-confirm-container");
         this.closeModalBtn = document.querySelector("#close-modal");
         this.htmlBody = document.querySelector("html");
+        this.body = document.querySelector("body")
         this.events();
     }
     // EVENTS
@@ -17,14 +18,17 @@ export default class ConfirmDelete {
     deleteHandler(e){
         e.stopPropagation();
         this.deleteModal.style.display = "block"
+        this.body.style.setProperty("background-color", "black")
     }
 
     closeModalHandler(){
         this.deleteModal.style.display = "none"
+        this.body.style.backgroundColor = "#edf2f7";
     }
 
     bodyHandler(){
         this.deleteModal.style.display = "none"
+        this.body.style.backgroundColor = "#edf2f7";
     }
     // END CLASS
 }
