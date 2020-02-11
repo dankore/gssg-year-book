@@ -73,6 +73,7 @@ exports.ifUserExists = (req, res, next) => {
   User.findByEmail(req.params.email)
     .then(userDoc => {
       req.profileUser = userDoc;
+      req.adamu = userDoc;
       next();
     })
     .catch(() => {
@@ -181,23 +182,6 @@ exports.account = function(req, res) {
     );
     if (visitorIsOwner) {
       res.render("account");
-    } else {
-      req.flash("errors", "You do not have permission to perform that action.");
-      req.session.save(() => res.redirect("/"));
-    }
-  } else {
-    res.render("404");
-  }
-};
-
-exports.confirm = function(req, res) {
-  if (req.session.user) {
-    let visitorIsOwner = User.isVisitorOwner(
-      req.session.user.email,
-      req.params.email
-    );
-    if (visitorIsOwner) {
-      res.render("confirmDeletePage");
     } else {
       req.flash("errors", "You do not have permission to perform that action.");
       req.session.save(() => res.redirect("/"));
