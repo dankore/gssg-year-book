@@ -4,11 +4,11 @@
 </p>
 <div class="relative flex justify-center">
 <!-- MODAL: HIDDEN ON PAGE LOAD-->
-<div id="delete-profile-confirm-container" class="bg-white rounded absolute shadow-lg p-4 max-w-md mx-auto" style="display: none">
-<p class="text-center text-2xl my-2">
+<div id="delete-profile-confirm-container" class="bg-white mx-4 rounded absolute shadow-lg max-w-xs sm:max-w-xl mx-auto" style="display: none">
+<p class="text-center text-2xl">
   Are you sure?
 </p>
-<div class="max-w-2xl text-center mx-4 sm:mx-auto p-4 rounded flex justify-center">
+<div class="mx-4 py-4 rounded flex flex-wrap justify-center">
   <form action="/account/<%= user.email %>/delete" method="POST">
     <label for="delete-my-account">
         <input
@@ -18,7 +18,7 @@
             class="inline-block cursor-pointer bg-transparent text-red-800 rounded border border-red-800 w-56 hover:text-white hover:bg-red-600">
     </label>
   </form>
-  <button id="close-modal" class="inline-block text-blue-800 ml-6 rounded border border-blue-800 w-56 hover:text-white hover:bg-blue-600">No, Cancel</button>
+  <button id="close-modal" class="inline-block text-blue-800 sm:ml-6 mt-4 sm:mt-0 rounded border border-blue-800 w-56 hover:text-white hover:bg-blue-600">No, Cancel</button>
 </div>
 </div>
 <!-- MODAL ENDS -->
