@@ -20,10 +20,9 @@ server.use(flash());
 server.use(compression());
 server.use('/favicon.ico', express.static('public/favicon.ico'));
 server.use((req, res, next) => {
-  // Make all error and success flash messsages available from all templates
+  // Make all available from all templates
   res.locals.errors = req.flash("errors");
   res.locals.success = req.flash("success");
-  // Make user session data from within view templates
   res.locals.user = req.session.user;
   next();
 });
