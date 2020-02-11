@@ -87,7 +87,6 @@ exports.ifUserExists = (req, res, next) => {
 };
 
 exports.profileScreen = (req, res) => {
-  console.log(req.url);
   if (req.session.user) {
     const visitorIsOwner = User.isVisitorOwner(
       req.session.user.email,
