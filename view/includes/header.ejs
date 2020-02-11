@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title><%= typeof(locals.seo) == "undefined" ? 'GSS Gwarinpa Contact Book 📗' : `${locals.seo.firstName} | GSS Gwarinpa Contact Book 📗` %></title>
+    <title><%= typeof(locals.seo) == "undefined" ? 'GSS Gwarinpa Contact Book 📗' : `${locals.seo.firstName} ${locals.seo.lastName} | GSS Gwarinpa Contact Book 📗` %></title>
     <!-- FAVICON -->
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <!-- FAVICON ENDS -->
@@ -16,7 +16,7 @@
     <meta property="og:type" content="profile" />
     <meta property="og:url" content="<%= typeof(locals.seo) == 'undefined' ? 'https://www.gssgcontactbook.com/' : `${locals.seo.url}` %>" />
     <meta property="og:site_name" content="GSS Gwarinpa Contact Book 📗" />
-    <meta property="og:title" content="GSS Gwarinpa Contact Book 📗" />
+    <meta property="og:title" content="<%= typeof(locals.seo) == 'undefined' ? 'GSS Gwarinpa Contact Book 📗' : `${locals.seo.firstName} ${locals.seo.lastName} | GSS Gwarinpa Contact Book 📗` %>" />
     <meta property="og:description" content="Find Your GSS Gwarinpa Classmates and Their Contacts." />
     <meta property="og:image" content="<%= typeof(locals.seo) == 'undefined' ? 'https://gss-gwarinpa.s3.us-east-2.amazonaws.com/1580629627915' : `${locals.seo.photo}` %>" />
     <meta property="og:image:alt" content="Profile photo" />
