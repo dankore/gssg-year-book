@@ -2,18 +2,40 @@
 <p class="text-center text-2xl my-2">
   Account Settings
 </p>
+<div class="relative flex justify-center">
+<!-- MODAL: HIDDEN ON PAGE LOAD-->
+<div id="delete-profile-confirm-container" class="bg-white rounded absolute shadow-lg p-4 max-w-md mx-auto" style="display: none">
+<p class="text-center text-2xl my-2">
+  Are you sure?
+</p>
+<div class="max-w-2xl text-center mx-4 sm:mx-auto p-4 rounded flex justify-center">
+  <form action="/account/<%= user.email %>/delete" method="POST">
+    <label for="delete-my-account">
+        <input
+            id="delete-my-account"
+            value="Yes, Delete My Account"
+            type="submit"
+            class="inline-block cursor-pointer bg-transparent text-red-800 rounded border border-red-800 w-56 hover:text-white hover:bg-red-600">
+    </label>
+  </form>
+  <button id="close-modal" class="inline-block text-blue-800 ml-6 rounded border border-blue-800 w-56 hover:text-white hover:bg-blue-600">No, Cancel</button>
+</div>
+</div>
+<!-- MODAL ENDS -->
+
 <div class="max-w-2xl text-center mx-4 sm:mx-auto p-4 rounded">
-  <a
-    href="/account/<%= user.email %>/confirm"
-    class="inline-block text-center text-md px-3 my-2 text-red-800 rounded border border-red-800 mx-auto hover:text-white hover:bg-red-600"
+  <button
+    id="delete-profile"
+    class="inline-block text-center text-md px-3 mr-4 my-2 text-red-800 rounded border border-red-800 mx-auto hover:text-white hover:bg-red-600"
   >
     Delete Your Account
-  </a>
+  </button>
   <a
     href="/account/<%= user.email %>/change-password"
     class="inline-block text-center text-md px-3 my-2 text-blue-800 rounded border border-blue-800 mx-auto hover:text-white hover:bg-blue-600"
   >
     Change Your Password
   </a>
+</div>
 </div>
 <%- include('includes/footer') %>
