@@ -18,7 +18,7 @@ let sessionOptions = session({
 server.use(sessionOptions);
 server.use(flash());
 server.use(compression());
-
+app.use('/favicon.ico', express.static('public/favicon.ico'));
 server.use((req, res, next) => {
   // Make all error and success flash messsages available from all templates
   res.locals.errors = req.flash("errors");
