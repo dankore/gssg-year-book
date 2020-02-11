@@ -2,12 +2,8 @@ const User = require("../models/model");
 const helpers = require("../misc/helpers");
 
 exports.home = async (req, res) => {
-  // SEO
-  req.session.profileUser = "";
-  // SEO ENDS
-  
   let profiles = await User.allProfiles();
-
+  res.locals.title = "GSS Gwarinpa Contact Book 📗"
   res.render("homePage", {
     profiles: profiles,
     statsByYear: helpers.statsByYear(profiles)
@@ -87,6 +83,7 @@ exports.ifUserExists = (req, res, next) => {
 };
 
 exports.profileScreen = (req, res) => {
+    res.locals.title = req.profileUser.firstName
   if (req.session.user) {
     const visitorIsOwner = User.isVisitorOwner(
       req.session.user.email,

@@ -23,8 +23,6 @@ server.use((req, res, next) => {
   // Make all error and success flash messsages available from all templates
   res.locals.errors = req.flash("errors");
   res.locals.success = req.flash("success");
-  // Single user
-  res.locals.profile = req.session.profileUser;
   // Make user session data from within view templates
   res.locals.user = req.session.user;
   next();
