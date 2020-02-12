@@ -88,12 +88,12 @@ exports.profileScreen = (req, res) => {
     );
      
     if (visitorIsOwner) {
-      res.render("profileLoggedInUser", { profile: req.profileUser });
+      res.render("profileLoggedInUser");
     } else {
-      res.render("profileGuest", { profile: req.profileUser });
+      res.render("profileGuest");
     }
   } else {
-    res.render("profileGuest", { profile: req.profileUser });
+    res.render("profileGuest");
   }
 };
 
@@ -221,9 +221,7 @@ exports.privacy = function(req, res) {
 };
 
 exports.changePasswordPage = function(req, res) {
-  res.render("changePasswordPage", {
-    user: req.session.user
-  });
+  res.render("changePasswordPage");
 };
 
 exports.changePassword = function(req, res) {
