@@ -661,32 +661,25 @@ let data = [
   }
 ];
 
-function test() {
-   let years = data.map(item=> item.year)
-   let obj = {}
-   let r = []
+    var m = data.length,
+      t,
+      i;
+    // GET PHOTO URLs
+    const photoUrlArray = data.filter( url => url.photo !== undefined).map( link => link.photo);
 
-   for(var i = 0; i < years.length; i++){
-       if (!obj.hasOwnProperty(years[i])) {
-            obj[years[i]] = 1
-       } else {
-           obj[years[i]] += 1
-       }
-   }
+    // While there remain elements to shuffle…
+    while (m) {
+      // Pick a remaining element…
+      i = Math.floor(Math.random() * m--);
 
-  //  return [Object.keys(obj), ];
- 
-// console.log([...Object.keys(obj)])
-   
-   
-}
-
-var color = "yellow";
-var colorObject = {
-  color: "blue",
-  check: function() {
-    return this.color;
-  }
-};
-console.log(colorObject.color);
-// console.log(test());
+      // And swap it with the current element.
+      t = photoUrlArray[m];
+      photoUrlArray[m] = photoUrlArray[i];
+      photoUrlArray[i] = t;
+    }
+console.log("hi")
+    // RETURN ONLY THE FIRST 20 URLs
+    console.log(photoUrlArray.slice(0, 20).length)
+  
+// console.log(distributeEvely_And_Shuffl(data));
+// console.log("hi")

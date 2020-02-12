@@ -49,6 +49,32 @@ server.use("/profile/:email", (req, res, next)=>{
 })
 // SEO ENDS
 
+server.use("/register", async (req, res, next)=>{
+    let allProfiles = await User.allProfiles();
+    console.log(allProfiles.length)
+    var m = allProfiles.length,
+      t,
+      i;
+    // GET PHOTO URLs
+    const photoUrlArray = allProfiles
+                        .filter(profile => profile.photo !='')
+    console.log(photoUrlArray.length)
+
+    // While there remain elements to shuffle…
+    while (m) {
+      // Pick a remaining element…
+      i = Math.floor(Math.random() * m--);
+
+      // And swap it with the current element.
+      t = photoUrlArray[m];
+      photoUrlArray[m] = photoUrlArray[i];
+      photoUrlArray[i] = t;
+    }
+    // RETURN ONLY THE FIRST 20 URLs
+    res.locals.photoUrl = photoUrlArray.slice(0, 10);
+    next()
+})
+
 
 server.use(router);
 

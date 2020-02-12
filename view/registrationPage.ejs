@@ -114,18 +114,9 @@
     <div id="profiles-container" class="p-4 mx-2 max-w-md rounded bg-white">
         <h3 class="text-center text-gray-600 mb-4">Used by Your Classmates</h3>
         <ul class="flex flex-wrap">
-            <img class="w-16 h-16 m-2 rounded-full bg-blue-600 text-white mx-auto" src="../../static/blank.png" />
-            <img class="w-16 h-16 m-2 rounded-full bg-blue-600 text-white mx-auto" src="../../static/blank.png" />
-            <img class="w-16 h-16 m-2 rounded-full bg-blue-600 text-white mx-auto" src="../../static/blank.png" />
-            <img class="w-16 h-16 m-2 rounded-full bg-blue-600 text-white mx-auto" src="../../static/blank.png" />
-            <img class="w-16 h-16 m-2 rounded-full bg-blue-600 text-white mx-auto" src="../../static/blank.png" />
-            <img class="w-16 h-16 m-2 rounded-full bg-blue-600 text-white mx-auto" src="../../static/blank.png" />
-            <img class="w-16 h-16 m-2 rounded-full bg-blue-600 text-white mx-auto" src="../../static/blank.png" />
-            <img class="w-16 h-16 m-2 rounded-full bg-blue-600 text-white mx-auto" src="../../static/blank.png" />
-            <img class="w-16 h-16 m-2 rounded-full bg-blue-600 text-white mx-auto" src="../../static/blank.png" />
-            <img class="w-16 h-16 m-2 rounded-full bg-blue-600 text-white mx-auto" src="../../static/blank.png" />
-            <img class="w-16 h-16 m-2 rounded-full bg-blue-600 text-white mx-auto" src="../../static/blank.png" />
-            <img class="w-16 h-16 m-2 rounded-full bg-blue-600 text-white mx-auto" src="../../static/blank.png" />
+           <% locals.photoUrl.forEach( url => { %>
+                <img class="w-16 h-16 m-2 rounded-full" src="<%= url %>" />
+           <% }) %>
         </ul>
     </div>
 </div>

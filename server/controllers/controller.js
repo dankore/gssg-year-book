@@ -9,7 +9,8 @@ exports.home = async (req, res) => {
   });
 };
 
-exports.registrationPage = (req, res) => {
+exports.registrationPage = async (req, res) => {
+  
   const registrationErrors = req.flash("reqError");
   res.render("registrationPage", {
     reqErrors: registrationErrors
