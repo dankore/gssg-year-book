@@ -88,12 +88,12 @@ exports.profileScreen = (req, res) => {
     );
      
     if (visitorIsOwner) {
-      res.render("profileLoggedInUser");
+      res.render("profileLoggedInUser", { profile: req.profileUser });
     } else {
-      res.render("profileGuest");
+      res.render("profileGuest", { profile: req.profileUser });
     }
   } else {
-    res.render("profileGuest");
+    res.render("profileGuest", { profile: req.profileUser });
   }
 };
 
