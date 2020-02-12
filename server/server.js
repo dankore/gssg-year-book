@@ -9,7 +9,7 @@ const compression = require("compression");
 const User = require("./models/model")
 
 let sessionOptions = session({
-  secret: "JavaScript is soooo cool",
+  secret: "Mental Model Programming",
   store: new MongoStore({ client: require("../db") }),
   resave: false,
   saveUninitialized: false,
