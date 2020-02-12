@@ -1,123 +1,123 @@
 <%- include('includes/header') %>
 
 <div id="main-container" class="flex flex-wrap justify-center items-center">
-    <div id="register-container" class="flex-initial">
-        <div class="mt-6 text-center">
-        <h2 class="text-2xl">Discover Present & Past GSS Gwarinpa Students</h2>
-        <p class="text-sm italic">
-            Creating an account will automatically add your profile.
-        </p>
-        </div>
+  <div id="register-container" class="flex-initial">
+    <div class="mt-6 text-center">
+      <h2 class="text-2xl">Discover Present & Past GSS Gwarinpa Students</h2>
+      <p class="text-sm italic">
+        Creating an account will automatically add your profile.
+      </p>
+    </div>
+    <div class="flex justify-center p-2 sm:p-4 mx-auto relative max-w-2xl">
+      <form
+        action="/register"
+        method="POST"
+        class="max-w-lg mx-auto p-8 border rounded mt-4 bg-white"
+      >
+        <% reqErrors.forEach(function(message){ %>
         <div
-        class="flex justify-center p-2 sm:p-4 mx-auto relative max-w-2xl"
+          class="bg-red-100 border border-red-400 text-red-700 text-center px-4 py-3 rounded"
         >
-        <form
-            action="/register"
-            method="POST"
-            class="max-w-lg mx-auto p-8 border rounded mt-4 bg-white"
-        >
-            <% reqErrors.forEach(function(message){ %>
-            <div
-            class="bg-red-100 border border-red-400 text-red-700 text-center px-4 py-3 rounded"
-            >
-            <%= message %>
-            </div>
-            <% }) %>
-            <div class="flex flex-wrap -mx-3 mt-1">
-            <div class="w-full md:w-1/2 px-3 md:mb-0">
-                <label
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
-                for="first-name"
-                >
-                First Name <span class="text-red-600">*</span>
-                </label>
-                <input
-                name="firstName"
-                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                id="first-name"
-                type="text"
-                />
-            </div>
-            <div class="w-full md:w-1/2 mb-3 md:mb-0 px-3">
-                <label
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
-                for="last-name"
-                >
-                Last Name <span class="text-red-600">*</span>
-                </label>
-                <input
-                name="lastName"
-                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="last-name"
-                type="text"
-                />
-            </div>
-            <div class="w-full px-3 mb-3">
-                <label
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
-                for="email"
-                >
-                Email <span class="text-red-600">*</span>
-                </label>
-                <input
-                name="email"
-                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="email"
-                type="text"
-                />
-            </div>
-            <div class="w-full px-3 mb-3">
-                <label
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
-                for="year"
-                >
-                What year did you graduateD OR will graduate GSS Gwarinpa?
-                <span class="text-red-600">*</span>
-                </label>
-                <input
-                name="year"
-                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="year"
-                type="text"
-                />
-            </div>
-            <div class="w-full px-3">
-                <label
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
-                for="password"
-                >
-                password <span class="text-red-600">*</span>
-                </label>
-                <input
-                name="password"
-                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="password"
-                type="password"
-                />
-                <p class="text-red-300 text-xs mt-1 italic">
-                Password should be a minimun of 6 characters
-                </p>
-            </div>
-            <button
-                class="rounded w-full bg-blue-600 hover:bg-blue-800 text-white m-3 py-3 px-3"
-            >
-                Create Account
-            </button>
-            <div class="text-xs flex justify-center w-full">
-                <p>By clicking Create Account, you agree to our </p>
-                <a href="/privacy" class="text-blue-600 ml-1" rel="nofollow">Privacy Policy.</a>
-            </div>
-            </div>
-        </form>
+          <%= message %>
         </div>
+        <% }) %>
+        <div class="flex flex-wrap -mx-3 mt-1">
+          <div class="w-full md:w-1/2 px-3 md:mb-0">
+            <label
+              class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+              for="first-name"
+            >
+              First Name <span class="text-red-600">*</span>
+            </label>
+            <input
+              name="firstName"
+              class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+              id="first-name"
+              type="text"
+            />
+          </div>
+          <div class="w-full md:w-1/2 mb-3 md:mb-0 px-3">
+            <label
+              class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+              for="last-name"
+            >
+              Last Name <span class="text-red-600">*</span>
+            </label>
+            <input
+              name="lastName"
+              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="last-name"
+              type="text"
+            />
+          </div>
+          <div class="w-full px-3 mb-3">
+            <label
+              class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+              for="email"
+            >
+              Email <span class="text-red-600">*</span>
+            </label>
+            <input
+              name="email"
+              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="email"
+              type="text"
+            />
+          </div>
+          <div class="w-full px-3 mb-3">
+            <label
+              class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+              for="year"
+            >
+              What year did you graduateD OR will graduate GSS Gwarinpa?
+              <span class="text-red-600">*</span>
+            </label>
+            <input
+              name="year"
+              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="year"
+              type="text"
+            />
+          </div>
+          <div class="w-full px-3">
+            <label
+              class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+              for="password"
+            >
+              password <span class="text-red-600">*</span>
+            </label>
+            <input
+              name="password"
+              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="password"
+              type="password"
+            />
+            <p class="text-red-300 text-xs mt-1 italic">
+              Password should be a minimun of 6 characters
+            </p>
+          </div>
+          <button
+            class="rounded w-full bg-blue-600 hover:bg-blue-800 text-white m-3 py-3 px-3"
+          >
+            Create Account
+          </button>
+          <div class="text-xs flex justify-center w-full">
+            <p>By clicking Create Account, you agree to our</p>
+            <a href="/privacy" class="text-blue-600 ml-1" rel="nofollow"
+              >Privacy Policy.</a
+            >
+          </div>
+        </div>
+      </form>
     </div>
-    <div id="profiles-container" class="p-4 mx-2 max-w-md rounded bg-white">
-        <h3 class="text-center text-gray-600 mb-4">Used by Your Classmates</h3>
-        <ul class="flex flex-wrap">
-           <% locals.photoUrl.forEach( url => { %>
-                <img class="w-16 h-16 m-2 rounded-full" src="<%= url %>" />
-           <% }) %>
-        </ul>
-    </div>
+  </div>
+  <div id="profiles-container" class="p-4 mx-2 max-w-md rounded bg-white">
+    <h3 class="text-center text-gray-600 mb-4">Used by Your Classmates</h3>
+    <ul class="flex flex-wrap">
+      <% locals.photoUrl.forEach( url => { %>
+         <img class="w-16 h-16 m-2 rounded-full mx-auto object-cover" src="<%= url %>" />
+      <% }) %>
+    </ul>
+  </div>
 </div>
 <%- include('includes/footer') %>

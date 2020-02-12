@@ -1,5 +1,5 @@
 const User = require("../models/model"),
-      helpers = require("../misc/helpers");
+  helpers = require("../misc/helpers");
 
 exports.home = async (req, res) => {
   let profiles = await User.allProfiles();
@@ -10,10 +10,8 @@ exports.home = async (req, res) => {
 };
 
 exports.registrationPage = async (req, res) => {
-  
-  const registrationErrors = req.flash("reqError");
   res.render("registrationPage", {
-    reqErrors: registrationErrors
+    reqErrors: req.flash("reqError")
   });
 };
 
@@ -87,7 +85,7 @@ exports.profileScreen = (req, res) => {
       req.session.user.email,
       req.profileUser.email
     );
-     
+
     if (visitorIsOwner) {
       res.render("profileLoggedInUser", { profile: req.profileUser });
     } else {

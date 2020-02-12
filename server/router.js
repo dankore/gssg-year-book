@@ -3,10 +3,11 @@ const router = express.Router();
 const controller = require("./controllers/controller");
 const upload = require("./misc/file-upload");
 const singleUpload = upload.single("photo");
+const photoUrls = require("./middlewares/photo_urls");
 
 // HOME, REGISTER, LOGIN
 router.get("/", controller.home);
-router.get("/register", controller.registrationPage);
+router.get("/register", photoUrls, controller.registrationPage);
 router.post("/register", controller.registrationSubmission);
 router.post("/login", controller.login);
 router.post("/logout", controller.logout);
