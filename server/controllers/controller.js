@@ -1,5 +1,5 @@
-const User = require("../models/model");
-const helpers = require("../misc/helpers");
+const User = require("../models/model"),
+      helpers = require("../misc/helpers");
 
 exports.home = async (req, res) => {
   let profiles = await User.allProfiles();

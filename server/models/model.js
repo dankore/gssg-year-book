@@ -1,12 +1,10 @@
-const usersCollection = require("../../db")
-  .db()
-  .collection("users");
-const validator = require("validator");
-const bcrypt = require("bcryptjs");
-const crypto = require("crypto");
-const transporter = require("../misc/emailTransporter");
-const Emailer = require("../misc/mail");
-const helpers = require("../misc/helpers");
+const usersCollection = require("../../db").db().collection("users"),
+      validator = require("validator"),
+      bcrypt = require("bcryptjs"),
+      crypto = require("crypto"),
+      transporter = require("../misc/emailTransporter"),
+      Emailer = require("../misc/mail"),
+      helpers = require("../misc/helpers");
 
 // CLASS
 let User = class user {

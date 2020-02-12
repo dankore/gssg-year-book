@@ -1,12 +1,12 @@
-const express = require("express");
-const session = require("express-session");
-const MongoStore = require("connect-mongo")(session);
-const flash = require("connect-flash");
-const server = express();
-const bodyParser = require("body-parser");
-const router = require("./router");
-const compression = require("compression");
-const User = require("./models/model")
+const express = require("express"),
+      session = require("express-session"),
+      MongoStore = require("connect-mongo")(session),
+      flash = require("connect-flash"),
+      server = express(),
+      bodyParser = require("body-parser"),
+      router = require("./router"),
+      compression = require("compression"),
+      User = require("./models/model");
 
 let sessionOptions = session({
   secret: "Mental Model Programming",
@@ -37,6 +37,7 @@ server.use((req, res, next) => {
   
   next();
 });
+// SEO
 server.use("/profile/:email", (req, res, next)=>{
   User.findByEmail(req.params.email).then((userDoc)=>{
       userDoc.url = "https://www.gssgcontactbook.com" + req.originalUrl
@@ -46,6 +47,7 @@ server.use("/profile/:email", (req, res, next)=>{
   });
   next()
 })
+// SEO ENDS
 
 
 server.use(router);
