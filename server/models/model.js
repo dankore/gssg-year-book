@@ -481,6 +481,30 @@ User.search = async function(searchedItem) {
                 },
                 {
                   nickname: { $regex: new RegExp(searchedItem, "i") }
+                },
+                {
+                  residence: { $regex: new RegExp(searchedItem, "i") }
+                },
+                {
+                  class: { $regex: new RegExp(searchedItem, "i") }
+                },
+                {
+                  relationship: { $regex: new RegExp(searchedItem, "i") }
+                },
+                {
+                  nickname: { $regex: new RegExp(searchedItem, "i") }
+                },
+                {
+                  residence: { $regex: new RegExp(searchedItem, "i") }
+                },
+                {
+                  month: { $regex: new RegExp(searchedItem, "i") }
+                },
+                {
+                  day: { $regex: new RegExp(searchedItem, "i") }
+                },
+                {
+                  teacher: { $regex: new RegExp(searchedItem, "i") }
                 }
               ]
             },
