@@ -495,7 +495,7 @@ User.search = async function(searchedItem) {
                   nickname: { $regex: new RegExp(searchedItem, "i") }
                 },
                 {
-                  residence: { $regex: new RegExp(searchedItem, "i") }
+                  occupation: { $regex: new RegExp(searchedItem, "i") }
                 },
                 {
                   month: { $regex: new RegExp(searchedItem, "i") }
