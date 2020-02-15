@@ -45,11 +45,11 @@ export default class RegistrationFormLiveValidation {
     }
   }
   hideValidationError(el) {
-    el.previousElementSibling.classList.remove("liveValidationMessage--show");
+    el.nextElementSibling.classList.remove("liveValidationMessage--show");
   }
   showValidationError(el, message) {
-    el.previousElementSibling.innerText = message;
-    el.previousElementSibling.classList.add("liveValidationMessage--show");
+    el.nextElementSibling.innerText = message;
+    el.nextElementSibling.classList.add("liveValidationMessage--show");
     el.errors = true;
   }
 
@@ -60,8 +60,8 @@ export default class RegistrationFormLiveValidation {
   insertValidationElements() {
     this.allFields.forEach(item => {
       item.insertAdjacentHTML(
-        "beforebegin",
-        '<div class="bg-red-100 border border-red-400 text-red-700 text-center text-xs rounded liveValidationMessage--hide">ada</div>'
+        "afterend",
+        '<div class="bg-red-100 border border-red-400 text-red-700 text-center text-xs rounded liveValidationMessage">ada</div>'
       );
     });
   }
