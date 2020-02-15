@@ -13,7 +13,7 @@ let sessionOptions = session({
   store: new MongoStore({ client: require("../db") }),
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 1000 * 60 * 60 * 24, httpOnly: true }
+  cookie: { maxAge: 1000 * 60 * 60 * 24 * 14, httpOnly: true }
 });
 
 server.set("views", "view");
