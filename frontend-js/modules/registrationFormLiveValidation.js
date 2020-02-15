@@ -31,15 +31,19 @@ export default class RegistrationFormLiveValidation {
   }
 
   firstNameImmediately() {
-    if (
-      this.firstName.value != "" &&
-      !/^([a-zA-Z0-9]+)$/.test(this.firstName.value)
-    ) {
+    if (this.firstName.value != "" && !/^[\w-]+$/.test(this.firstName.value)) {
       this.showValidationError(
         this.firstName,
         "First Name can only contain letters and numbers."
       );
     }
+    if (this.firstName.value.length > 30) {
+      this.showValidationError(
+        this.firstName,
+        "First Name cannot exceed 30 characters."
+      );
+    }
+
     if (!this.firstName.errors) {
       this.hideValidationError(this.firstName);
     }
@@ -54,14 +58,19 @@ export default class RegistrationFormLiveValidation {
   }
 
   firstNameAfterDelay() {
-    // alert("after delay");
+    if (this.firstName.value.length == "") {
+      this.showValidationError(
+        this.firstName,
+        "First Name cannot be empty."
+      );
+    }
   }
 
   insertValidationElements() {
     this.allFields.forEach(item => {
       item.insertAdjacentHTML(
         "afterend",
-        '<div class="bg-red-100 border border-red-400 text-red-700 text-center text-xs rounded liveValidationMessage">ada</div>'
+        '<div class="bg-red-100 border border-red-400 text-red-700 text-center text-sm w-full rounded liveValidationMessage">ada</div>'
       );
     });
   }
