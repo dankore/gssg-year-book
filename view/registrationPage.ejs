@@ -10,6 +10,7 @@
     </div>
     <div class="flex justify-center p-2 sm:p-4 mx-auto relative max-w-2xl">
       <form
+        id="registration-form"
         action="/register"
         method="POST"
         class="max-w-lg mx-auto p-8 border rounded mt-4 bg-white"
@@ -31,7 +32,7 @@
             </label>
             <input
               name="firstName"
-              class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+              class="form-control appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
               id="first-name"
               type="text"
             />
@@ -45,7 +46,7 @@
             </label>
             <input
               name="lastName"
-              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              class="form-control appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               id="last-name"
               type="text"
             />
@@ -59,7 +60,7 @@
             </label>
             <input
               name="email"
-              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              class="form-control appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               id="email"
               type="text"
             />
@@ -74,7 +75,7 @@
             </label>
             <input
               name="year"
-              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              class="form-control appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               id="year"
               type="text"
             />
@@ -88,7 +89,7 @@
             </label>
             <input
               name="password"
-              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              class="form-control appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               id="password"
               type="password"
             />
@@ -115,7 +116,7 @@
     <h3 class="text-center text-gray-600 mb-4">Used by Your Classmates</h3>
     <ul class="flex flex-wrap">
       <% locals.photoUrl.forEach( url => { %>
-         <img class="w-16 h-16 m-2 rounded-full mx-auto object-cover" src="<%= url %>" />
+         <img class="w-16 h-16 m-2 rounded-full mx-auto object-cover" src="#" />
       <% }) %>
     </ul>
   </div>
