@@ -1,7 +1,8 @@
-
-<% if(path =="/"){ %>
+<!-- IF HOMEPAGE SHOW SCROLL-TO-TOP -->
+<% if( path == "/" ){ %>
     <div style="scroll-behavior: smooth;" class="flex justify-end"><a href="#main-content"> &#8657 Scroll To Top &#8657</a></div>
 <% } %>
+<!-- FOOTER -->
 <footer class="text-center mt-8">
   <hr class="border-t border-black mb-4" />
   &copy <%= new Date().getFullYear() %> By <a href="https://dankore.com">Adamu M. Dankore.</a><a href="/privacy"> Privacy Policy.</a>
@@ -9,6 +10,7 @@
     <img class="rounded-full w-16 h-16" src="../../static/logo.jpg" alt="gss-gwarinpa logo">
   </div>
 </footer>
+<!-- FOOTER ENDS -->
 </main>
 </body>
 </html>
