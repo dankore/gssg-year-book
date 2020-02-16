@@ -110,7 +110,7 @@ formSubmitHandler(){
         !this.password.errors
     )
     {
-      this.form.submit()
+      this.form.submit();
     }
 
 }
@@ -224,7 +224,7 @@ lastNameAfterDelay(){
         this.showValidationError(this.lastName, "Last name cannot be empty.")
     }
 }
-
+// YEAR METHODS
 yearHandler(){
     this.year.errors = false;
     this.yearImmediately();
@@ -245,8 +245,8 @@ yearImmediately(){
 }
 
 yearAfterDelay(){
-    if(this.year.value.length = ""){
-        this.showValidationError(this.year, "Year cannot be empty.")
+    if(this.year.value.length < 4){
+        this.showValidationError(this.year, "Year cannot be less than 4 characters.")
     }
 }
 
