@@ -295,3 +295,8 @@ exports.resetPasswordToken = function(req, res) {
       res.redirect(`/reset-password/${req.params.token}`);
     });
 };
+// AXIOS
+exports.doesEmailExists = async (req, res) => {
+    let emailBool = await User.doesEmailExists(req.body.email)
+    res.json(emailBool);
+}

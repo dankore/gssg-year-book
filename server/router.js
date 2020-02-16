@@ -39,5 +39,8 @@ router.post("/", controller.search);
 // PRIVACY
 router.get("/privacy", controller.privacy);
 
+// AXIOS
+router.post("/doesEmailExists", controller.doesEmailExists)
+
 // EXPORT CODE
 module.exports = router;
