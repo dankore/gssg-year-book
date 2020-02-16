@@ -13,6 +13,8 @@ export default class RegistrationFormLiveValidation {
     this.email = document.querySelector("#email");
     this.email.previousValue = ""
     this.email.isUnique = false;
+    this.year = document.querySelector("#year");
+    this.year.previousValue = ""
     this.password = document.querySelector("#password");
     this.password.previousValue = "";
     this.events();
@@ -35,6 +37,9 @@ export default class RegistrationFormLiveValidation {
     this.email.addEventListener("keyup", () => {
       this.isDifferent(this.email, this.emailHandler);
     })
+    this.year.addEventListener("keyup", () => {
+        this.isDifferent(this.year, this.yearHandler());
+    })
     this.password.addEventListener("keyup", () => {
       this.isDifferent(this.password, this.passwordHandler);
     })
@@ -45,6 +50,9 @@ export default class RegistrationFormLiveValidation {
      this.lastName.addEventListener("blur", () => {
       this.isDifferent(this.lastName, this.lastNameHandler);
     });
+    this.year.addEventListener("blur", () => {
+        this.isDifferent(this.year, this.yearHandler());
+    })
     this.email.addEventListener("blur", () => {
       this.isDifferent(this.email, this.emailHandler);
     })
@@ -209,6 +217,31 @@ lastNameImmediately(){
 lastNameAfterDelay(){
     if(this.lastName.value.length == ""){
         this.showValidationError(this.lastName, "Last name cannot be empty.")
+    }
+}
+
+yearHandler(){
+    this.year.errors = false;
+    this.yearImmediately();
+    clearTimeout(this.year.timer);
+    this.year.timer = setTimeout(() => this.yearAfterDelay(), 800);
+}
+
+yearImmediately(){
+    if(this.year.value != "" && !/^[\d]+$/.test(this.year.value)){
+        this.showValidationError(this.year, "Year can only be numbers.");
+    }
+    if(this.year.value.length > 4){
+        this.showValidationError(this.year, "Year cannot exceed 4 characters.")
+    }
+    if(!this.year.errors){
+        this.hideValidationError(this.year)
+    }
+}
+
+yearAfterDelay(){
+    if(this.year.value.length = ""){
+        this.showValidationError(this.year, "Year cannot be empty.")
     }
 }
 
