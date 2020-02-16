@@ -70,7 +70,7 @@ export default class RegistrationFormLiveValidation {
     this.allFields.forEach(item => {
       item.insertAdjacentHTML(
         "afterend",
-        '<div class="bg-red-100 border border-red-400 text-red-700 text-center text-sm w-full rounded liveValidationMessage">ada</div>'
+        '<div class="bg-red-100 border-red-400 border-l border-t border-r text-red-700 text-center text-xs z-10 rounded liveValidationMessage">ada</div>'
       );
     });
   }
