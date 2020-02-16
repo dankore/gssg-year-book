@@ -40,7 +40,7 @@ export default class RegistrationFormLiveValidation {
     if (this.firstName.value.length > 30) {
       this.showValidationError(
         this.firstName,
-        "First Name cannot exceed 30 characters."
+        "First name cannot exceed 30 characters."
       );
     }
 
