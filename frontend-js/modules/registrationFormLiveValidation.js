@@ -1,12 +1,15 @@
 import axios from "axios";
 export default class RegistrationFormLiveValidation {
   constructor() {
+    this.form = document.querySelector("#registration-form");
     this.allFields = document.querySelectorAll(
       "#registration-form .form-control"
     );
     this.insertValidationElements();
     this.firstName = document.querySelector("#first-name");
     this.firstName.previousValue = "";
+    this.lastName = document.querySelector("#last-name");
+    this.lastName.previousValue = "";
     this.email = document.querySelector("#email");
     this.email.previousValue = ""
     this.email.isUnique = false;
@@ -16,16 +19,39 @@ export default class RegistrationFormLiveValidation {
   }
   //EVENTS
   events() {
+    // FORM
+      this.form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        this.formSubmitHandler();
+      })
+    // KEYUP
     this.firstName.addEventListener("keyup", () => {
       this.isDifferent(this.firstName, this.firstNameHandler);
     });
+    this.lastName.addEventListener("keyup", () => {
+      this.isDifferent(this.lastName, this.lastNameHandler);
+    });
+
     this.email.addEventListener("keyup", () => {
       this.isDifferent(this.email, this.emailHandler);
     })
     this.password.addEventListener("keyup", () => {
       this.isDifferent(this.password, this.passwordHandler);
     })
-
+    // BLUR: DISPLAYS ERROR EVEN IF USER TABS FAST
+     this.firstName.addEventListener("blur", () => {
+      this.isDifferent(this.firstName, this.firstNameHandler);
+    });
+     this.lastName.addEventListener("blur", () => {
+      this.isDifferent(this.lastName, this.lastNameHandler);
+    });
+    this.email.addEventListener("blur", () => {
+      this.isDifferent(this.email, this.emailHandler);
+    })
+    this.password.addEventListener("blur", () => {
+      this.isDifferent(this.password, this.passwordHandler);
+    })
+// END OF EVENTS()
   }
 
   // GENERAL METHODS
@@ -46,6 +72,35 @@ export default class RegistrationFormLiveValidation {
     el.errors = true;
   }
 
+  insertValidationElements() {
+    this.allFields.forEach(item => {
+      item.insertAdjacentHTML(
+        "afterend",
+        '<div class="bg-red-100 border-red-400 border-l border-t border-r text-red-700 text-center text-xs rounded liveValidationMessage">ada</div>'
+      );
+    });
+  }
+// FORM
+formSubmitHandler(){
+    this.firstNameImmediately();
+    this.firstNameAfterDelay();
+    this.lastNameImmediately();
+    this.lastNameAfterDelay();
+    this.emailAfterDelay();
+    this.passwordImmediately();
+    this.passwordAfterDelay();
+
+
+    if(
+        this.email.isUnique && 
+        !this.firstName.errors &&
+        !this.password.errors
+    )
+    {
+      this.form.submit()
+    }
+
+}
 // PASSWORD METHODS
 passwordHandler() {
     this.password.errors = false;
@@ -108,13 +163,13 @@ passwordHandler() {
     if (this.firstName.value != "" && !/^[\w-]+$/.test(this.firstName.value)) {
       this.showValidationError(
         this.firstName,
-        "First Name can only contain letters and numbers."
+        "First Name can only contain letters, numbers, dashes, and hyphens."
       );
     }
-    if (this.firstName.value.length > 30) {
+    if (this.firstName.value.length > 50) {
       this.showValidationError(
         this.firstName,
-        "First name cannot exceed 30 characters."
+        "First name cannot exceed 50 characters."
       );
     }
 
@@ -132,15 +187,30 @@ passwordHandler() {
       );
     }
   }
+// LAST NAME METHODS
+lastNameHandler(){
+    this.lastName.errors = false;
+    this.lastNameImmediately();
+    clearTimeout(this.lastName.timer);
+    this.lastName.timer = setTimeout(() => this.lastNameAfterDelay(), 800);
+}
+lastNameImmediately(){
+    if(this.lastName.value != "" && !/^[\w-]+$/.test(this.lastName.value)){
+        this.showValidationError(this.lastName, "Last name can only contain letters, numbers, dashes, and hyphens.");
+    }
+    if(this.lastName.value.length > 50){
+        this.showValidationError(this.lastName, "Last name cannot exceed 50 characters.");
+    }
+    if(!this.lastName.errors){
+        this.hideValidationError(this.lastName);
+    }
+}
 
-  insertValidationElements() {
-    this.allFields.forEach(item => {
-      item.insertAdjacentHTML(
-        "afterend",
-        '<div class="bg-red-100 border-red-400 border-l border-t border-r text-red-700 text-center text-xs rounded liveValidationMessage">ada</div>'
-      );
-    });
-  }
+lastNameAfterDelay(){
+    if(this.lastName.value.length == ""){
+        this.showValidationError(this.lastName, "Last name cannot be empty.")
+    }
+}
 
   // END CLASS
 }
