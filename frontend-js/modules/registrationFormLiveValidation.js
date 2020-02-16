@@ -132,7 +132,7 @@ passwordHandler() {
   }
 
   passwordAfterDelay(){
-      if(this.password.value != "" && this.password.value.length < 6){
+      if(this.password.value.length < 6){
           this.showValidationError(this.password, "Password must be at least 6 characters.")
       }
   }
@@ -144,7 +144,7 @@ passwordHandler() {
   }
 
   emailAfterDelay(){
-      if(this.email.value != "" && !this.isEmail(this.email.value)){
+      if(!this.isEmail(this.email.value)){
         this.showValidationError(this.email, "You must provide a valid email address.")
       }
       if(!this.email.errors){
@@ -255,7 +255,7 @@ yearImmediately(){
 }
 
 yearAfterDelay(){
-    if(this.year.value != "" && this.year.value.length < 4){
+    if(this.year.value.length < 4){
         this.showValidationError(this.year, "Year cannot be less than 4 characters.")
     }
 }
