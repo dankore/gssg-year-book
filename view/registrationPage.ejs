@@ -118,7 +118,7 @@
     <h3 class="text-center text-gray-600 mb-4">Used by Your Classmates</h3>
     <ul class="flex flex-wrap">
       <% locals.photoUrl.forEach( url => { %>
-         <img class="w-16 h-16 m-2 rounded-full mx-auto object-cover" src="#" />
+         <img class="w-16 h-16 m-2 rounded-full mx-auto object-cover" src="<%= url %>" />
       <% }) %>
     </ul>
   </div>
