@@ -27,7 +27,7 @@ exports.registrationSubmission = async (req, res) => {
       };
       req.flash("success", successMessage);
       req.session.save(async function() {
-        await res.redirect("/");
+        await res.redirect(`profile/${req.session.user.email}/edit`);
       });
     })
     .catch(regErrors => {

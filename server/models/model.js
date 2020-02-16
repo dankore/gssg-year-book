@@ -289,7 +289,7 @@ User.prototype.register = function() {
       // EMAIL USER AFTER SUCCESSFULL REGISTRATION ENDS
 
       resolve(
-        "Success! Remember to Edit Your Profile to add more info. Up GSS Gwarinpa!"
+        "Success, Up GSS Gwarinpa! Add your photo, nickname, birthday, and more below."
       );
     } else {
       reject(this.errors);
