@@ -95,6 +95,8 @@ formSubmitHandler(){
     this.lastNameImmediately();
     this.lastNameAfterDelay();
     this.emailAfterDelay();
+    this.yearImmediately();
+    this.yearAfterDelay();
     this.passwordImmediately();
     this.passwordAfterDelay();
 
