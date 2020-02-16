@@ -61,7 +61,7 @@ export default class RegistrationFormLiveValidation {
     if (this.firstName.value.length == "") {
       this.showValidationError(
         this.firstName,
-        "First Name cannot be empty."
+        "First name cannot be empty."
       );
     }
   }
