@@ -119,7 +119,7 @@ passwordHandler() {
     this.password.errors = false;
     this.passwordImmediately();
     clearTimeout(this.password.timer);
-    this.password.timer = setTimeout(() => this.passwordAfterDelay(), 800);
+    this.password.timer = setTimeout(() => this.passwordAfterDelay(), 1000);
   }
 
   passwordImmediately(){
@@ -132,7 +132,7 @@ passwordHandler() {
   }
 
   passwordAfterDelay(){
-      if(this.password.value.length < 6){
+      if(this.password.value != "" && this.password.value.length < 6){
           this.showValidationError(this.password, "Password must be at least 6 characters.")
       }
   }
@@ -140,11 +140,11 @@ passwordHandler() {
   emailHandler(){
      this.email.errors = false;
      clearTimeout(this.email.timer);
-     this.email.timer = setTimeout(() => this.emailAfterDelay(), 800);
+     this.email.timer = setTimeout(() => this.emailAfterDelay(), 1000);
   }
 
   emailAfterDelay(){
-      if(!/^\S+@\S+$/.test(this.email.value)){
+      if(this.email.value != "" && !this.isEmail(this.email.value)){
         this.showValidationError(this.email, "You must provide a valid email address.")
       }
       if(!this.email.errors){
@@ -159,17 +159,26 @@ passwordHandler() {
                 this.hideValidationError(this.email)
             }
           })
-          .catch(()=>{
+          .catch(() => {
             console.log("Please try again later.")
           })
       }
   }
+
+  isEmail(email) {
+ if (/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email))
+  {
+    return (true)
+  }
+    return (false)
+}
+
 // FIRST NAME METHODS
   firstNameHandler() {
     this.firstName.errors = false;
     this.firstNameImmediately();
     clearTimeout(this.firstName.timer);
-    this.firstName.timer = setTimeout(() => this.firstNameAfterDelay(), 800);
+    this.firstName.timer = setTimeout(() => this.firstNameAfterDelay(), 1000);
   }
 
   firstNameImmediately() {
@@ -193,7 +202,7 @@ passwordHandler() {
   
 
   firstNameAfterDelay() {
-    if (this.firstName.value.length == "") {
+    if (this.firstName.value == "") {
       this.showValidationError(
         this.firstName,
         "First name cannot be empty."
@@ -205,8 +214,9 @@ lastNameHandler(){
     this.lastName.errors = false;
     this.lastNameImmediately();
     clearTimeout(this.lastName.timer);
-    this.lastName.timer = setTimeout(() => this.lastNameAfterDelay(), 800);
+    this.lastName.timer = setTimeout(() => this.lastNameAfterDelay(), 1000);
 }
+
 lastNameImmediately(){
     if(this.lastName.value != "" && !/^[\w-]+$/.test(this.lastName.value)){
         this.showValidationError(this.lastName, "Last name can only contain letters, numbers, dashes, and hyphens.");
@@ -220,7 +230,7 @@ lastNameImmediately(){
 }
 
 lastNameAfterDelay(){
-    if(this.lastName.value.length == ""){
+    if(this.lastName.value == ""){
         this.showValidationError(this.lastName, "Last name cannot be empty.")
     }
 }
@@ -229,7 +239,7 @@ yearHandler(){
     this.year.errors = false;
     this.yearImmediately();
     clearTimeout(this.year.timer);
-    this.year.timer = setTimeout(() => this.yearAfterDelay(), 800);
+    this.year.timer = setTimeout(() => this.yearAfterDelay(), 1000);
 }
 
 yearImmediately(){
@@ -245,7 +255,7 @@ yearImmediately(){
 }
 
 yearAfterDelay(){
-    if(this.year.value.length < 4){
+    if(this.year.value != "" && this.year.value.length < 4){
         this.showValidationError(this.year, "Year cannot be less than 4 characters.")
     }
 }
