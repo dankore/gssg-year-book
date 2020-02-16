@@ -139,10 +139,10 @@ User.prototype.validateSomeUserRegistrationInputs = function() {
 
   // check for empty boxes
   if (this.data.firstName.length == "") {
-    this.errors.push("First name is required.");
+    this.errors.push("First name cannot be empty.");
   }
   if (this.data.lastName.length == "") {
-    this.errors.push("Last name is required.");
+    this.errors.push("Last name cannot be empty.");
   }
 
   if (this.data.year.length == "") {
@@ -153,6 +153,9 @@ User.prototype.validateSomeUserRegistrationInputs = function() {
   }
 
   // check for non-allowed inputs
+  if(this.data.firstName.length > 30){
+      this.errors.push("First name cannot exceed 30 characters.");
+  }
   if (
     this.data.firstName.length != "" &&
     !helpers.isAlphaNumericDashHyphen(this.data.firstName)
@@ -160,6 +163,9 @@ User.prototype.validateSomeUserRegistrationInputs = function() {
     this.errors.push(
       "First name can only contain letters, dashes, undercores, and numbers."
     );
+  }
+   if(this.data.lastName.length > 30){
+      this.errors.push("Last name cannot exceed 30 characters.");
   }
   if (
     this.data.lastName.length != "" &&
@@ -787,6 +793,22 @@ User.prototype.resetToken = function(token) {
     }
   });
 };
+
+User.doesEmailExists =  email => {
+    return new Promise(async(resolve, reject) =>{
+        if(typeof email != "string" ){
+        resolve(false);
+        return;
+    }
+
+    let user = await usersCollection.findOne({email: email});
+    if(user){
+        resolve(true)
+    } else {
+        resolve(false)
+    }
+    })
+}
 
 // EXPORT CODE
 module.exports = User;
