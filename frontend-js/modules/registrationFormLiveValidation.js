@@ -102,8 +102,11 @@ formSubmitHandler(){
 
 
     if(
-        this.email.isUnique && 
         !this.firstName.errors &&
+        !this.lastName.errors &&
+        this.email.isUnique && 
+        !this.email.errors &&
+        !this.year.errors &&
         !this.password.errors
     )
     {
