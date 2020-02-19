@@ -16,7 +16,7 @@ const express = require("express"),
 passport.use(new Strategy({
     clientID: `${process.env.FB_CLIENT_ID}`,
     clientSecret: `${process.env.FB_CLIENT_SECRET}`,
-    callbackURL: "https://gssg-contact-book.dankore.repl.co/fb-login/callback",
+    callbackURL: "https://www.gssgcontactbook.com/fb-login/callback",
     profileFields: ['id', 'first_name', 'last_name', 'email'],
     enableProof: true
   },
