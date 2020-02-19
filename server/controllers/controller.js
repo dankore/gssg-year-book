@@ -303,7 +303,6 @@ exports.doesEmailExists = async (req, res) => {
 
 //FACEBOOK LOGIN
 exports.facebookLogin = async (req, res) => {
-  
   if(req.user.returningUser){
      req.session.user = {
         email: req.user.email,
@@ -313,7 +312,6 @@ exports.facebookLogin = async (req, res) => {
         await res.redirect("/");
     }); 
   } else {
-    console.log("controller " + req.user.user);
    await User.addFbUser(req.user)
     .then(()=>{
       req.flash("success", "Success, Up GSS Gwarinpa! Add your photo, nickname, birthday, and more below.");

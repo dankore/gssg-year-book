@@ -11,9 +11,8 @@ const express = require("express"),
   controller = require("./controllers/controller"),
   passport = require('passport'),
   Strategy = require('passport-facebook').Strategy
-const dotenv = require('dotenv');
-dotenv.config();
-// PASSPORT
+
+// PASSPORT 
 passport.use(new Strategy({
     clientID: `${process.env.FB_CLIENT_ID}`,
     clientSecret: `${process.env.FB_CLIENT_SECRET}`,
