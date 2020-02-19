@@ -15,8 +15,8 @@ const dotenv = require('dotenv');
 dotenv.config();
 // PASSPORT
 passport.use(new Strategy({
-    clientID: process.env.FB_CLIENT_ID,
-    clientSecret: process.env.FB_CLIENT_SECRET,
+    clientID: `${process.env.FB_CLIENT_ID}`,
+    clientSecret: `${process.env.FB_CLIENT_SECRET}`,
     callbackURL: "https://gssg-contact-book.dankore.repl.co/fb-login/callback",
     profileFields: ['id', 'first_name', 'last_name', 'email'],
     enableProof: true
