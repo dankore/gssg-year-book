@@ -810,5 +810,17 @@ User.doesEmailExists =  email => {
     })
 }
 
+// FACEBOOK
+User.addFbUser = data => {
+  return new Promise(async(resolve, reject) => {
+  try {
+    await usersCollection.insertOne(data);
+      resolve();
+    } catch {
+      reject()
+   }
+  }) 
+}
+
 // EXPORT CODE
 module.exports = User;

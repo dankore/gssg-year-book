@@ -1,3 +1,4 @@
+// require('dotenv').config();
 const express = require("express"),
   session = require("express-session"),
   MongoStore = require("connect-mongo")(session),
@@ -6,8 +7,59 @@ const express = require("express"),
   bodyParser = require("body-parser"),
   router = require("./router"),
   compression = require("compression"),
-  User = require("./models/model")
+  User = require("./models/model"),
+  controller = require("./controllers/controller"),
+  passport = require('passport'),
+  Strategy = require('passport-facebook').Strategy
 
+// PASSPORT 
+passport.use(new Strategy({
+    clientID: `${process.env.FB_CLIENT_ID}`,
+    clientSecret: `${process.env.FB_CLIENT_SECRET}`,
+    callbackURL: "https://gssg-contact-book.dankore.repl.co/fb-login/callback",
+    profileFields: ['id', 'first_name', 'last_name', 'email'],
+    enableProof: true
+  },
+  
+  async function (accessToken, refreshToken, user, cb) {
+    // CHECK IF fbUser exist in database
+    let userBool = await User.doesEmailExists(user._json.email)
+    if(userBool){
+      // CLEAN UP DATA
+      user = {
+        firstName: user._json.first_name,
+        lastName: user._json.last_name,
+        email: user._json.email,
+        returningUser: true
+      }
+      return cb(null, user);
+    } else {
+      // CLEAN UP DATA
+      user = {
+        firstName: user._json.first_name,
+        lastName: user._json.last_name,
+        email: user._json.email,
+        photo: ""
+      }
+      return cb(null, user)
+    }
+  }
+));
+
+passport.serializeUser(function(user, cb) {
+    cb(null, user);
+  });
+  
+passport.deserializeUser(function(obj, cb) {
+    cb(null, obj);
+});
+
+
+server.use(passport.initialize());
+server.use(passport.session());
+//PASSPORT ENDS
+
+// EXPRESS SESSIONS
 let sessionOptions = session({
   secret: "Mental Model Programming",
   store: new MongoStore({ client: require("../db") }),

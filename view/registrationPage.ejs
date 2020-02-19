@@ -8,12 +8,20 @@
         Creating an account will automatically add your profile.
       </p>
     </div>
+    <!-- FB LOGIN LINK-->
+    <a 
+      class="inline-block rounded mx-4 mt-4 cursor pointer text-lg text-bold hover:bg-blue-700 px-2 py-3 bg-blue-600 text-white"
+      href="/fb-login"
+    >
+      Sign Up Using Facebook
+    </a>
+    <!-- FB LOGIN LINK END-->
     <div class="flex justify-center p-2 sm:p-4 mx-auto relative max-w-2xl">
       <form
         id="registration-form"
         action="/register"
         method="POST"
-        class="max-w-lg mx-auto p-3 border rounded mt-4 bg-white"
+        class="max-w-lg mx-auto p-3 border rounded bg-white"
       >
         <% reqErrors.forEach(function(message){ %>
         <div
