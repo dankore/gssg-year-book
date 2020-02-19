@@ -8,6 +8,37 @@ const express = require("express"),
   compression = require("compression"),
   User = require("./models/model")
 
+// PASSPORT
+var passport = require('passport');
+var Strategy = require('passport-facebook').Strategy;
+
+
+passport.use(new Strategy({
+    clientID: '196077414814422',
+    clientSecret: '8517f39af58fb0deaf33a27712859a2f',
+    callbackURL: "https://gssg-contact-book.dankore.repl.co/fb-login/callback",
+    profileFields: ['id', 'first_name', 'last_name', 'email'],
+    enableProof: true
+  },
+  function(accessToken, refreshToken, user, cb) {
+    console.log(user._json)
+    return cb(null,user);
+  }
+));
+
+passport.serializeUser(function(user, cb) {
+    cb(null, user);
+  });
+  
+passport.deserializeUser(function(obj, cb) {
+    cb(null, obj);
+});
+
+
+server.use(passport.initialize());
+server.use(passport.session());
+
+//PASSPORT ENDS
 let sessionOptions = session({
   secret: "Mental Model Programming",
   store: new MongoStore({ client: require("../db") }),
