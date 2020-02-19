@@ -810,5 +810,14 @@ User.doesEmailExists =  email => {
     })
 }
 
+// FACEBOOK
+User.addFbUser = (data) => {
+  console.log("model 815 " + data)
+  return new Promise(async(resolve, reject) => {
+    await usersCollection.insertOne(data);
+    resolve();
+  })
+}
+
 // EXPORT CODE
 module.exports = User;

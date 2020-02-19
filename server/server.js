@@ -6,7 +6,8 @@ const express = require("express"),
   bodyParser = require("body-parser"),
   router = require("./router"),
   compression = require("compression"),
-  User = require("./models/model")
+  User = require("./models/model"),
+  controller = require("./controllers/controller")
 
 // PASSPORT
 var passport = require('passport');
@@ -20,9 +21,31 @@ passport.use(new Strategy({
     profileFields: ['id', 'first_name', 'last_name', 'email'],
     enableProof: true
   },
-  function(accessToken, refreshToken, user, cb) {
-    console.log(user._json)
-    return cb(null,user);
+  
+  async function (accessToken, refreshToken, user, cb) {
+    // CHECK IF fbUser exist in database
+    let userBool = await User.doesEmailExists(user._json.email)
+    if(userBool){
+      console.log("server 29, user exisit " + user._json.email);
+      // CLEAN UP DATA
+      user = {
+        firstName: user._json.first_name,
+        lastName: user._json.last_name,
+        email: user._json.email,
+        returningUser: true
+      }
+      return cb(null, user);
+    } else {
+      console.log("new user")
+      // CLEAN UP DATA
+      user = {
+        firstName: user._json.first_name,
+        lastName: user._json.last_name,
+        email: user._json.email,
+        photo: ""
+      }
+      return cb(null, user)
+    }
   }
 ));
 

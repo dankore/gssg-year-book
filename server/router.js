@@ -4,7 +4,7 @@ const controller = require("./controllers/controller");
 const upload = require("./misc/file-upload");
 const singleUpload = upload.single("photo");
 const photoUrls = require("./middlewares/photo_urls");
-const passport = require('passport')
+const passport = require('passport');
 
 // HOME, REGISTER, LOGIN
 router.get("/", controller.home);
@@ -45,8 +45,7 @@ router.post("/doesEmailExists", controller.doesEmailExists);
 
 //FACEBOOK
 router.get('/fb-login', passport.authenticate('facebook', {scope:"email"}));
-
-router.get('/fb-login/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/register' }));
-
+router.get('/fb-login/callback', passport.authenticate('facebook', {failureRedirect: '/register' }), controller.facebookLogin);
+// router.get("/fb-auth", controller.facebookLogin)
 // EXPORT CODE
 module.exports = router;
