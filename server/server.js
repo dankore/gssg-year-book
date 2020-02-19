@@ -1,3 +1,4 @@
+// require('dotenv').config();
 const express = require("express"),
   session = require("express-session"),
   MongoStore = require("connect-mongo")(session),
@@ -7,16 +8,15 @@ const express = require("express"),
   router = require("./router"),
   compression = require("compression"),
   User = require("./models/model"),
-  controller = require("./controllers/controller")
-
+  controller = require("./controllers/controller"),
+  passport = require('passport'),
+  Strategy = require('passport-facebook').Strategy
+const dotenv = require('dotenv');
+dotenv.config();
 // PASSPORT
-var passport = require('passport');
-var Strategy = require('passport-facebook').Strategy;
-
-
 passport.use(new Strategy({
-    clientID: '196077414814422',
-    clientSecret: '8517f39af58fb0deaf33a27712859a2f',
+    clientID: process.env.FB_CLIENT_ID,
+    clientSecret: process.env.FB_CLIENT_SECRET,
     callbackURL: "https://gssg-contact-book.dankore.repl.co/fb-login/callback",
     profileFields: ['id', 'first_name', 'last_name', 'email'],
     enableProof: true
@@ -26,7 +26,6 @@ passport.use(new Strategy({
     // CHECK IF fbUser exist in database
     let userBool = await User.doesEmailExists(user._json.email)
     if(userBool){
-      console.log("server 29, user exisit " + user._json.email);
       // CLEAN UP DATA
       user = {
         firstName: user._json.first_name,
@@ -36,7 +35,6 @@ passport.use(new Strategy({
       }
       return cb(null, user);
     } else {
-      console.log("new user")
       // CLEAN UP DATA
       user = {
         firstName: user._json.first_name,
@@ -60,8 +58,9 @@ passport.deserializeUser(function(obj, cb) {
 
 server.use(passport.initialize());
 server.use(passport.session());
-
 //PASSPORT ENDS
+
+// EXPRESS SESSIONS
 let sessionOptions = session({
   secret: "Mental Model Programming",
   store: new MongoStore({ client: require("../db") }),
