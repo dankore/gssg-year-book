@@ -331,5 +331,6 @@ exports.facebookLogin = async (req, res) => {
 
 // GOOGLE LOGIN
 exports.googleLogin = (req, res) => {
-  console.log(req.user)
+  // console.log(req.user);
+  res.send(req.user);
 }

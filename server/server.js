@@ -23,9 +23,36 @@ passport.use(
       clientSecret: `${process.env.GOOGLE_CLIENT_SECRET}`,
       callbackURL: "http://localhost:8080/google-login/callback"
     },
-    function(accessToken, refreshToken, user, cb) {
-      console.log("25 " + user._json);
-      return cb(null, user);
+    async function(accessToken, refreshToken, user, cb) {
+      console.log("25 " + user._json.email);
+      let userBool = await User.doesEmailExists(user._json.email);
+      if (userBool) {
+        // USER EXISTS. LOG IN
+        // CLEAN UP
+        console.log("returning user");
+        user = {
+          google_id: user._json.sub,
+          firstName: user._json.given_name,
+          lastName: user._json.family_name,
+          email: user._json.email,
+          photo: user._json.picture,
+          returningUser: true
+        };
+        return cb(null, user);
+      } else {
+        // NEW USER. REGISTER
+        // CLEAN UP
+        console.log("New user")
+        user = {
+          google_id: user._json.sub,
+          firstName: user._json.given_name,
+          lastName: user._json.family_name,
+          email: user._json.email,
+          photo: user._json.picture,
+          returningUser: true
+        };
+        return cb(null, user);
+      }
     }
   )
 );
