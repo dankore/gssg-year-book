@@ -303,10 +303,12 @@ exports.doesEmailExists = async (req, res) => {
 
 //FACEBOOK LOGIN
 exports.facebookLogin = async (req, res) => {
+    let firstName = await User.getFirstName(req.user.email);
+    console.log("controller 307 " + firstName)
   if(req.user.returningUser){
      req.session.user = {
         email: req.user.email,
-        firstName: req.user.firstName
+        firstName: firstName
       };
       req.session.save(async() => {
         await res.redirect("/");
@@ -317,7 +319,7 @@ exports.facebookLogin = async (req, res) => {
       req.flash("success", "Success, Up GSS Gwarinpa! Add your photo, nickname, birthday, and more below.");
       req.session.user = {
         email: req.user.email,
-        firstName: req.user.firstName
+        firstName: firstName;
       };
       req.session.save(async ()=>{
         await res.redirect("/");
