@@ -23,36 +23,38 @@ passport.use(
       clientSecret: `${process.env.GOOGLE_CLIENT_SECRET}`,
       callbackURL: "http://localhost:8080/google-login/callback"
     },
-    async function(accessToken, refreshToken, user, cb) {
-      console.log("25 " + user._json.email);
-      let userBool = await User.doesEmailExists(user._json.email);
-      if (userBool) {
-        // USER EXISTS. LOG IN
-        // CLEAN UP
-        console.log("returning user");
-        user = {
-          google_id: user._json.sub,
-          firstName: user._json.given_name,
-          lastName: user._json.family_name,
-          email: user._json.email,
-          photo: user._json.picture,
-          returningUser: true
-        };
-        return cb(null, user);
-      } else {
-        // NEW USER. REGISTER
-        // CLEAN UP
-        console.log("New user")
-        user = {
-          google_id: user._json.sub,
-          firstName: user._json.given_name,
-          lastName: user._json.family_name,
-          email: user._json.email,
-          photo: user._json.picture,
-          returningUser: true
-        };
-        return cb(null, user);
-      }
+    function(accessToken, refreshToken, user, cb) {
+      User.doesEmailExists(user._json.email)
+        .then(userBool => {
+          console.log("29 " + userBool)
+          if (userBool) {
+            // USER EXISTS. LOG IN
+            // CLEAN UP
+            user = {
+              google_id: user._json.sub,
+              firstName: user._json.given_name,
+              lastName: user._json.family_name,
+              email: user._json.email,
+              photo: user._json.picture,
+              returningUser: true
+            };
+            return cb(null, user);
+          } else {
+            // NEW USER. REGISTER
+            // CLEAN UP
+            user = {
+              google_id: user._json.sub,
+              firstName: user._json.given_name,
+              lastName: user._json.family_name,
+              email: user._json.email,
+              photo: user._json.picture // END
+            };
+            return cb(null, user);
+          }
+        })
+        .catch(err => {
+          console.log("Server 58 " + err);
+        });
     }
   )
 );
@@ -68,30 +70,35 @@ passport.use(
       enableProof: true
     },
 
-    async function(accessToken, refreshToken, user, cb) {
+    function(accessToken, refreshToken, user, cb) {
       // CHECK IF fbUser exist in database
-      let userBool = await User.doesEmailExists(user._json.email);
-      if (userBool) {
-        // USER EXISTS IN DB. LOG IN
-        // CLEAN UP DATA
-        user = {
-          firstName: user._json.first_name,
-          lastName: user._json.last_name,
-          email: user._json.email,
-          returningUser: true
-        };
-        return cb(null, user);
-      } else {
-        // NEW USER. REGISTER
-        // CLEAN UP DATA
-        user = {
-          firstName: user._json.first_name,
-          lastName: user._json.last_name,
-          email: user._json.email,
-          photo: "" // INITIALIZE PHOTO WITH EMPTY. OTHERWISE BUG HAPPENS
-        };
-        return cb(null, user);
-      }
+      User.doesEmailExists(user._json.email)
+        .then(userBool => {
+          if (userBool) {
+            // USER EXISTS IN DB. LOG IN
+            // CLEAN UP DATA
+            user = {
+              firstName: user._json.first_name,
+              lastName: user._json.last_name,
+              email: user._json.email,
+              returningUser: true
+            };
+            return cb(null, user);
+          } else {
+            // NEW USER. REGISTER
+            // CLEAN UP DATA
+            user = {
+              firstName: user._json.first_name,
+              lastName: user._json.last_name,
+              email: user._json.email,
+              photo: "" // INITIALIZE PHOTO WITH EMPTY. OTHERWISE BUG HAPPENS
+            };
+            return cb(null, user);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   )
 );
@@ -137,8 +144,12 @@ server.use(async (req, res, next) => {
   res.locals.path = req.originalUrl;
   // GET FIRST NAME
   if (req.session.user) {
-    let userDoc = await User.findByEmail(req.session.user.email);
-    res.locals.first_name_welcome = userDoc.firstName;
+    User.findByEmail(req.session.user.email)
+      .then(userDoc =>{
+          res.locals.first_name_welcome = userDoc.firstName;
+      }).catch(err =>{
+        console.log("Server line 153 " + err);
+      })
   }
   next();
 });
@@ -151,7 +162,7 @@ server.use("/profile/:email", (req, res, next) => {
       res.locals.seo = userDoc;
     })
     .catch(err => {
-      console.log(err);
+      console.log("Server line 167 " + err);
     });
   next();
 });
