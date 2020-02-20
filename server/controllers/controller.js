@@ -313,14 +313,14 @@ exports.facebookLogin = async (req, res) => {
     }); 
   } else {
    await User.addFbUser(req.user)
-    .then(()=> {
+    .then( _ => {
       req.flash("success", "Success, Up GSS Gwarinpa! Add your photo, nickname, birthday, and more below.");
       req.session.user = {
         email: req.user.email,
         firstName:'Gosite'
       };
       req.session.save(async ()=>{
-        await res.redirect("/");
+        await res.redirect(`profile/${req.session.user.email}/edit`);
       })
     })
     .catch((err)=>{
