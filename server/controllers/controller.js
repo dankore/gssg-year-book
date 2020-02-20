@@ -303,7 +303,7 @@ exports.doesEmailExists = async (req, res) => {
 
 //FACEBOOK LOGIN
 exports.facebookLogin = async (req, res) => {
-    let userDoc = await User.findByEmail(req.user.email);
+    let userDoc = User.findByEmail(req.user.email);
   if(req.user.returningUser){
      req.session.user = {
         email: req.user.email,
