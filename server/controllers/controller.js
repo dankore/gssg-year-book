@@ -320,7 +320,7 @@ exports.facebookLogin = async (req, res) => {
         firstName:'Gosite'
       };
       req.session.save(async ()=>{
-        await res.redirect(`profile/${req.session.user.email}/edit`);
+        await res.redirect("/");
       })
     })
     .catch((err)=>{
