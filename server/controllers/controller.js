@@ -314,7 +314,7 @@ exports.facebookLogin = async (req, res) => {
   } else {
    await User.addFbUser(req.user)
     .then( _ => {
-      req.flash("success", "Success, Up GSS Gwarinpa! Add your photo, nickname, birthday, and more below.");
+      req.flash("success", "Success, Up GSS Gwarinpa! Click Edit Profile to add your photo, nickname, birthday, and more.");
       req.session.user = {
         email: req.user.email,
         firstName:'Gosite'
