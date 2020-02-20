@@ -319,7 +319,7 @@ exports.facebookLogin = async (req, res) => {
       req.flash("success", "Success, Up GSS Gwarinpa! Add your photo, nickname, birthday, and more below.");
       req.session.user = {
         email: req.user.email,
-        firstName: firstName;
+        firstName: firstName
       };
       req.session.save(async ()=>{
         await res.redirect("/");
