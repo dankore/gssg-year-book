@@ -96,15 +96,6 @@ server.use(async (req, res, next) => {
   next();
 });
 
-// GET FIRST NAME
-// server.use("/", async (req, res, next) =>{
-//     if(req.session.user){
-//         let userDoc = await User.findByEmail(req.session.user.email);
-//         res.locals.first_name_welcome = userDoc.firstName;
-//     }
-//     next();
-// })
-
 // SEO
 server.use("/profile/:email", (req, res, next) => {
   User.findByEmail(req.params.email)
