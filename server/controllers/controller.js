@@ -307,7 +307,7 @@ exports.facebookLogin = async (req, res) => {
   if(req.user.returningUser){
      req.session.user = {
         email: req.user.email,
-        firstName: userDoc.firstName
+        firstName: userDoc.firstName || 'Gosite!'
       };
       req.session.save(async() => {
         await res.redirect("/");
