@@ -327,5 +327,9 @@ exports.facebookLogin = async (req, res) => {
       console.log(err)
     })
   }
+}
 
+// GOOGLE LOGIN
+exports.googleLogin = (req, res) => {
+  console.log(req.user)
 }
