@@ -821,23 +821,5 @@ User.addFbUser = data => {
    }
   }) 
 }
-
-// GET FIRST NAME
-User.getFirstName = email => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            if(typeof email != 'string') {
-            reject();
-            return;
-         }
-            let userDoc = await usersCollection.findOne({email : email});
-            resolve(userDoc.firstName);
-        } catch {
-            reject("Gosite!");
-        }
-        
-    })
-}
-
 // EXPORT CODE
 module.exports = User;
