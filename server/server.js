@@ -25,6 +25,7 @@ passport.use(new Strategy({
     // CHECK IF fbUser exist in database
     let userBool = await User.doesEmailExists(user._json.email)
     if(userBool){
+       // USER EXISTS IN DB. LOG IN 
       // CLEAN UP DATA
       user = {
         firstName: user._json.first_name,
@@ -34,12 +35,13 @@ passport.use(new Strategy({
       }
       return cb(null, user);
     } else {
+       // NEW USER. REGISTER 
       // CLEAN UP DATA
       user = {
         firstName: user._json.first_name,
         lastName: user._json.last_name,
         email: user._json.email,
-        photo: ""
+        photo: "" // INITIALIZE PHOTO WITH EMPTY. OTHERWISE BUG HAPPENS
       }
       return cb(null, user)
     }
@@ -88,6 +90,7 @@ server.use((req, res, next) => {
   res.locals.path = req.originalUrl;
   next();
 });
+
 // SEO
 server.use("/profile/:email", (req, res, next) => {
   User.findByEmail(req.params.email)
