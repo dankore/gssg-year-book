@@ -81,15 +81,29 @@ server.use(sessionOptions);
 server.use(flash());
 server.use(compression());
 server.use("/favicon.ico", express.static("public/favicon.ico"));
-server.use((req, res, next) => {
+server.use(async (req, res, next) => {
   // Make all available from all templates
   res.locals.errors = req.flash("errors");
   res.locals.success = req.flash("success");
   res.locals.user = req.session.user;
   // IF PATH IS HOMEPAGE SHOW SCROLL-TO-TOP
   res.locals.path = req.originalUrl;
+// GET FIRST NAME
+  if(req.session.user){
+        let userDoc = await User.findByEmail(req.session.user.email);
+        res.locals.first_name_welcome = userDoc.firstName;
+    }
   next();
 });
+
+// GET FIRST NAME
+// server.use("/", async (req, res, next) =>{
+//     if(req.session.user){
+//         let userDoc = await User.findByEmail(req.session.user.email);
+//         res.locals.first_name_welcome = userDoc.firstName;
+//     }
+//     next();
+// })
 
 // SEO
 server.use("/profile/:email", (req, res, next) => {
