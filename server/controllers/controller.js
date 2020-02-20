@@ -306,14 +306,14 @@ exports.facebookLogin = async (req, res) => {
   if(req.user.returningUser){
      req.session.user = {
         email: req.user.email,
-        firstName: req.user.firstName
+        firstName: req.session.user.firstName
       };
       req.session.save(async() => {
         await res.redirect("/");
     }); 
   } else {
    await User.addFbUser(req.user)
-    .then(()=>{
+    .then(()=> {
       req.flash("success", "Success, Up GSS Gwarinpa! Add your photo, nickname, birthday, and more below.");
       req.session.user = {
         email: req.user.email,
