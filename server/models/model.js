@@ -817,7 +817,9 @@ User.addSocialUser = data => {
   return new Promise(async (resolve, reject) => {
     try {
       await usersCollection.insertOne(data);
-      resolve();
+      resolve(
+        "Success, Up GSS Gwarinpa! Click Edit Profile to add your photo, nickname, birthday, and more."
+      );
       // EMAIL USER FOR A SUCCESSFUL REGISTRATION
       const reqSuccessEmail = new Emailer(
         data.email,
