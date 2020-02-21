@@ -1,10 +1,12 @@
-const usersCollection = require("../../db").db().collection("users"),
-      validator = require("validator"),
-      bcrypt = require("bcryptjs"),
-      crypto = require("crypto"),
-      transporter = require("../misc/emailTransporter"),
-      Emailer = require("../misc/mail"),
-      helpers = require("../misc/helpers");
+const usersCollection = require("../../db")
+    .db()
+    .collection("users"),
+  validator = require("validator"),
+  bcrypt = require("bcryptjs"),
+  crypto = require("crypto"),
+  transporter = require("../misc/emailTransporter"),
+  Emailer = require("../misc/mail"),
+  helpers = require("../misc/helpers");
 
 // CLASS
 let User = class user {
@@ -153,8 +155,8 @@ User.prototype.validateSomeUserRegistrationInputs = function() {
   }
 
   // check for non-allowed inputs
-  if(this.data.firstName.length > 30){
-      this.errors.push("First name cannot exceed 30 characters.");
+  if (this.data.firstName.length > 30) {
+    this.errors.push("First name cannot exceed 30 characters.");
   }
   if (
     this.data.firstName.length != "" &&
@@ -164,8 +166,8 @@ User.prototype.validateSomeUserRegistrationInputs = function() {
       "First name can only contain letters, dashes, undercores, and numbers."
     );
   }
-   if(this.data.lastName.length > 30){
-      this.errors.push("Last name cannot exceed 30 characters.");
+  if (this.data.lastName.length > 30) {
+    this.errors.push("Last name cannot exceed 30 characters.");
   }
   if (
     this.data.lastName.length != "" &&
@@ -794,21 +796,21 @@ User.prototype.resetToken = function(token) {
   });
 };
 
-User.doesEmailExists =  email => {
-    return new Promise(async(resolve, reject) =>{
-        if(typeof email != "string" ){
-        resolve(false);
-        return;
+User.doesEmailExists = email => {
+  return new Promise(async (resolve, reject) => {
+    if (typeof email != "string") {
+      resolve(false);
+      return;
     }
 
-    let user = await usersCollection.findOne({email: email});
-    if(user){
-        resolve(true)
+    let user = await usersCollection.findOne({ email: email });
+    if (user) {
+      resolve(true);
     } else {
-        resolve(false)
+      resolve(false);
     }
-    })
-}
+  });
+};
 
 // FACEBOOK
 User.addSocialUser = data => {
@@ -816,6 +818,25 @@ User.addSocialUser = data => {
     try {
       await usersCollection.insertOne(data);
       resolve();
+      // EMAIL USER FOR A SUCCESSFUL REGISTRATION
+      const reqSuccessEmail = new Emailer(
+        data.email,
+        "gssgcontactbook@gmail.com",
+        `Congratulations, ${data.firstName}! Registration Success.`,
+        `<p>Hello <strong>${data.firstName},</strong></p>
+          <p>You have successfully created an account and added your profile to GSS Gwarinpa Contact Book.</p>
+          <a 
+          href="https://www.gssgcontactbook.com" 
+          style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
+            font-size: 15px; width: 300px; text-align: center; display:inline-block;">Discover GSS Gwarinpa Contact Book
+          </a>
+        `
+      );
+      transporter.transporter.sendMail(reqSuccessEmail, (error, info) => {
+        if (error) console.log(error);
+        else console.log("Registration Email Sent: " + info.response);
+      });
+      // EMAIL USER FOR A SUCCESSFUL REGISTRATION ENDS
     } catch {
       reject("Model 820 reject promise");
     }
