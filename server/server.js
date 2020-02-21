@@ -21,7 +21,7 @@ passport.use(
     {
       clientID: `${process.env.GOOGLE_CLIENT_ID}`,
       clientSecret: `${process.env.GOOGLE_CLIENT_SECRET}`,
-      callbackURL: "http://localhost:8080/google-login/callback"
+      callbackURL: "https://www.gssgcontactbook.com/google-login/callback"
     },
     function(accessToken, refreshToken, user, cb) {
       User.doesEmailExists(user._json.email)
