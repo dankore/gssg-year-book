@@ -301,7 +301,7 @@ User.findByEmail = function(email) {
   return new Promise(function(resolve, reject) {
     try {
       if (typeof email != "string") {
-        reject();
+        reject("Email not string. Model line 304");
         return;
       }
       usersCollection
@@ -334,14 +334,14 @@ User.findByEmail = function(email) {
 
             resolve(userDoc);
           } else {
-            reject();
+            reject("Cannot find one user_by_email Model line 337");
           }
         })
         .catch(() => {
-          reject();
+          reject("Cannot find one user_by_email Model line 341");
         });
     } catch {
-      reject();
+      reject("Cannot find one user_by_email line Model line 344");
     }
   });
 };
@@ -811,15 +811,15 @@ User.doesEmailExists =  email => {
 }
 
 // FACEBOOK
-User.addFbUser = data => {
-  return new Promise(async(resolve, reject) => {
-  try {
-    await usersCollection.insertOne(data);
+User.addSocialUser = data => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await usersCollection.insertOne(data);
       resolve();
     } catch {
-      reject()
-   }
-  }) 
-}
+      reject("Model 820 reject promise");
+    }
+  });
+};
 // EXPORT CODE
 module.exports = User;

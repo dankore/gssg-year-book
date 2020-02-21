@@ -46,6 +46,9 @@ router.post("/doesEmailExists", controller.doesEmailExists);
 //FACEBOOK
 router.get('/fb-login', passport.authenticate('facebook', {scope:"email"}));
 router.get('/fb-login/callback', passport.authenticate('facebook', {failureRedirect: '/register' }), controller.facebookLogin);
-// router.get("/fb-auth", controller.facebookLogin)
+
+// GOOGLE
+router.get("/google-login", passport.authenticate('google', {scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email']}));
+router.get("/google-login/callback", passport.authenticate('google', {failureRedirect: '/register' }), controller.googleLogin)
 // EXPORT CODE
 module.exports = router;

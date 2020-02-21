@@ -23,7 +23,7 @@ exports.registrationSubmission = async (req, res) => {
     .then(successMessage => {
       req.session.user = {
         email: user.data.email,
-        firstName: 'Gosite'
+        firstName: "Gosite"
       };
       req.flash("success", successMessage);
       req.session.save(async function() {
@@ -48,7 +48,7 @@ exports.login = async (req, res) => {
     .then(() => {
       req.session.user = {
         email: user.data.email,
-        firstName: 'Gosite'
+        firstName: "Gosite"
       };
       req.session.save(() => {
         res.redirect("/");
@@ -297,35 +297,77 @@ exports.resetPasswordToken = function(req, res) {
 };
 // AXIOS
 exports.doesEmailExists = async (req, res) => {
-    let emailBool = await User.doesEmailExists(req.body.email)
-    res.json(emailBool);
-}
+  let emailBool = await User.doesEmailExists(req.body.email);
+  res.json(emailBool);
+};
 
 //FACEBOOK LOGIN
 exports.facebookLogin = async (req, res) => {
-  if(req.user.returningUser){
-     req.session.user = {
-        email: req.user.email,
-        firstName: 'Gosite'
-      };
-      req.session.save(async() => {
-        await res.redirect("/");
-    }); 
+  if (req.user.returningUser) {
+    req.session.user = {
+      email: req.user.email
+    };
+    req.session.save(async ()=> {
+      await res.redirect("/");
+    });
   } else {
-   await User.addFbUser(req.user)
-    .then( _ => {
-      req.flash("success", "Success, Up GSS Gwarinpa! Click Edit Profile to add your photo, nickname, birthday, and more.");
-      req.session.user = {
-        email: req.user.email,
-        firstName:'Gosite'
-      };
-      req.session.save(async ()=>{
-        await res.redirect("/");
+    await User.addSocialUser(req.user)
+      .then(_=> {
+        req.flash(
+          "success",
+          "Success, Up GSS Gwarinpa! Click Edit Profile to add your photo, nickname, birthday, and more."
+        );
+        req.session.user = {
+          email: req.user.email
+        };
+        req.session.save(async ()=> {
+          await res.redirect("/");
+        });
       })
-    })
-    .catch((err)=>{
-      console.log(err)
-    })
+      .catch(err=> {
+        req.flash(
+          "errors",
+          "There was an issue registering your account. Please try again."
+        );
+        req.session.save(async ()=> {
+          await res.redirect("/register");
+        });
+        console.log(err);
+      });
   }
+};
 
-}
+// GOOGLE LOGIN
+exports.googleLogin = async (req, res) => {
+  if (req.user.returningUser) {
+    req.session.user = {
+      email: req.user.email
+    };
+    req.session.save(async ()=> {
+      await res.redirect("/");
+    });
+  } else {
+    await User.addSocialUser(req.user)
+      .then(_ => {
+        req.flash(
+          "success",
+          "Success, Up GSS Gwarinpa! Click Edit Profile to add your photo, nickname, birthday, and more."
+        );
+        req.session.user = {
+          email: req.user.email
+        };
+        req.session.save(async _ => {
+          await res.redirect("/");
+        });
+      })
+      .catch(_=> {
+        req.flash(
+          "errors",
+          "There was an issue registering your account. Please try again."
+        );
+        req.session.save(async ()=> {
+          await res.redirect("/register");
+        });
+      });
+  }
+};
