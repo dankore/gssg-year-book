@@ -307,12 +307,12 @@ exports.facebookLogin = async (req, res) => {
     req.session.user = {
       email: req.user.email
     };
-    req.session.save(async ()=> {
+    req.session.save(async () => {
       await res.redirect("/");
     });
   } else {
     await User.addSocialUser(req.user)
-      .then(_=> {
+      .then(_ => {
         req.flash(
           "success",
           "Success, Up GSS Gwarinpa! Click Edit Profile to add your photo, nickname, birthday, and more."
@@ -320,16 +320,17 @@ exports.facebookLogin = async (req, res) => {
         req.session.user = {
           email: req.user.email
         };
-        req.session.save(async ()=> {
+        req.session.save(async () => {
           await res.redirect("/");
         });
+        // SEND EMAIL SUCCESS HERE
       })
-      .catch(err=> {
+      .catch(err => {
         req.flash(
           "errors",
           "There was an issue registering your account. Please try again."
         );
-        req.session.save(async ()=> {
+        req.session.save(async () => {
           await res.redirect("/register");
         });
         console.log(err);
@@ -343,7 +344,7 @@ exports.googleLogin = async (req, res) => {
     req.session.user = {
       email: req.user.email
     };
-    req.session.save(async ()=> {
+    req.session.save(async () => {
       await res.redirect("/");
     });
   } else {
@@ -359,13 +360,14 @@ exports.googleLogin = async (req, res) => {
         req.session.save(async _ => {
           await res.redirect("/");
         });
+        // SEND EMAIL SUCCESS HERE
       })
-      .catch(_=> {
+      .catch(_ => {
         req.flash(
           "errors",
           "There was an issue registering your account. Please try again."
         );
-        req.session.save(async ()=> {
+        req.session.save(async () => {
           await res.redirect("/register");
         });
       });
