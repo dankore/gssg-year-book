@@ -86,7 +86,7 @@ passport.use(
               firstName: user._json.first_name,
               lastName: user._json.last_name,
               email: user._json.email,
-              class: "1984?",
+              year: "1984?",
               photo: ""// INITIALIZE PHOTO WITH EMPTY. OTHERWISE BUG HAPPENS
             };
             return cb(null, user);
