@@ -268,7 +268,7 @@ User.prototype.register = function() {
       this.data.photo = "";
       await usersCollection.insertOne(this.data);
 
-      // EMAIL USER AFTER SUCCESSFULL REGISTRATION
+      // EMAIL USER FOR A SUCCESSFULL REGISTRATION
       const regSuccessEmail = new Emailer(
         this.data.email,
         "gssgcontactbook@gmail.com",
@@ -286,7 +286,7 @@ User.prototype.register = function() {
         if (error) console.log(error);
         else console.log("Registration Email sent: " + info.response);
       });
-      // EMAIL USER AFTER SUCCESSFULL REGISTRATION ENDS
+      // EMAIL USER FOR A SUCCESSFULL REGISTRATION ENDS
 
       resolve(
         "Success, Up GSS Gwarinpa! Add your photo, nickname, birthday, and more below."
