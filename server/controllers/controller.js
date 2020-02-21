@@ -312,7 +312,7 @@ exports.facebookLogin = async (req, res) => {
     });
   } else {
     await User.addSocialUser(req.user)
-      .then(()=> {
+      .then(_=> {
         req.flash(
           "success",
           "Success, Up GSS Gwarinpa! Click Edit Profile to add your photo, nickname, birthday, and more."

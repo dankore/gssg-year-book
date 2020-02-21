@@ -8,22 +8,19 @@
         Creating an account will automatically add your profile.
       </p>
     </div>
-    <!-- FB LOGIN LINK-->
-    <a 
-      class="inline-block rounded mx-4 mt-4 cursor pointer text-lg text-bold hover:bg-blue-700 px-2 py-3 bg-blue-600 text-white"
-      href="/fb-login"
-    >
-      Sign up with Facebook
-    </a>
-    <!-- FB LOGIN LINK END-->
-    <!-- GOOGLE LOGIN LINK-->
-    <a 
-      class="inline-block rounded mx-4 mt-4 cursor pointer text-lg text-bold hover:bg-orange-700 px-2 py-3 bg-orange-600 text-white"
-      href="/google-login"
-    >
-      Sign up with Google
-    </a>
-    <!-- GOOGLE LOGIN LINK END-->
+    <div class="flex justify-between mt-6 mx-4">
+      <!-- FB LOGIN LINK-->
+      <a href="/fb-login">
+        <img src="../../static/facebook-sign-up-button.png" class="rounded" />
+      </a>
+      <!-- FB LOGIN LINK END-->
+      <!-- GOOGLE LOGIN LINK-->
+      <a href="/google-login">
+        <img src="../../static/google-sign-up-button.png" class="rounded" />
+      </a>
+      <!-- GOOGLE LOGIN LINK END-->
+    </div>
+
     <div class="flex justify-center p-2 sm:p-4 mx-auto relative max-w-2xl">
       <form
         id="registration-form"
@@ -134,7 +131,10 @@
     <h3 class="text-center text-gray-600 mb-4">Used by Your Classmates</h3>
     <ul class="flex flex-wrap">
       <% locals.photoUrl.forEach( url => { %>
-         <img class="w-16 h-16 m-2 rounded-full mx-auto object-cover" src="<%= url %>" />
+      <img
+        class="w-16 h-16 m-2 rounded-full mx-auto object-cover"
+        src="<%= url %>"
+      />
       <% }) %>
     </ul>
   </div>

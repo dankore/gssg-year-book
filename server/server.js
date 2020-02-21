@@ -26,16 +26,12 @@ passport.use(
     function(accessToken, refreshToken, user, cb) {
       User.doesEmailExists(user._json.email)
         .then(userBool => {
-          console.log("29 " + userBool)
+          console.log("Server 29 " + userBool);
           if (userBool) {
             // USER EXISTS. LOG IN
             // CLEAN UP
             user = {
-              google_id: user._json.sub,
-              firstName: user._json.given_name,
-              lastName: user._json.family_name,
               email: user._json.email,
-              photo: user._json.picture,
               returningUser: true
             };
             return cb(null, user);
@@ -47,6 +43,7 @@ passport.use(
               firstName: user._json.given_name,
               lastName: user._json.family_name,
               email: user._json.email,
+              year: "1988?",
               photo: user._json.picture // END
             };
             return cb(null, user);
@@ -66,7 +63,7 @@ passport.use(
       clientID: `${process.env.FB_CLIENT_ID}`,
       clientSecret: `${process.env.FB_CLIENT_SECRET}`,
       callbackURL: "https://www.gssgcontactbook.com/fb-login/callback",
-      profileFields: ["id", "first_name", "last_name", "email"],
+      profileFields: ["id", "first_name", "last_name", "email", "profile_pic"],
       enableProof: true
     },
 
@@ -78,8 +75,6 @@ passport.use(
             // USER EXISTS IN DB. LOG IN
             // CLEAN UP DATA
             user = {
-              firstName: user._json.first_name,
-              lastName: user._json.last_name,
               email: user._json.email,
               returningUser: true
             };
@@ -88,10 +83,12 @@ passport.use(
             // NEW USER. REGISTER
             // CLEAN UP DATA
             user = {
+              facebook_id: user._json.id,
               firstName: user._json.first_name,
               lastName: user._json.last_name,
               email: user._json.email,
-              photo: "" // INITIALIZE PHOTO WITH EMPTY. OTHERWISE BUG HAPPENS
+              class: "1984?",
+              photo: user._json.profile_pic // INITIALIZE PHOTO WITH EMPTY. OTHERWISE BUG HAPPENS
             };
             return cb(null, user);
           }
@@ -145,11 +142,12 @@ server.use(async (req, res, next) => {
   // GET FIRST NAME
   if (req.session.user) {
     User.findByEmail(req.session.user.email)
-      .then(userDoc =>{
-          res.locals.first_name_welcome = userDoc.firstName;
-      }).catch(err =>{
-        console.log("Server line 153 " + err);
+      .then(userDoc => {
+        res.locals.first_name_welcome = userDoc.firstName;
       })
+      .catch(err => {
+        console.log("Server line 153 " + err);
+      });
   }
   next();
 });
