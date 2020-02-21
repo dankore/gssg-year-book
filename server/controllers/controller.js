@@ -1,7 +1,7 @@
 const User = require("../models/model"),
   helpers = require("../misc/helpers"),
   transporter = require("../misc/emailTransporter"),
-  Emailer = require("../misc/mail")
+  Emailer = require("../misc/mail");
 
 exports.home = async (req, res) => {
   let profiles = await User.allProfiles();
@@ -325,7 +325,25 @@ exports.facebookLogin = async (req, res) => {
         req.session.save(async () => {
           await res.redirect("/");
         });
-        // SEND EMAIL SUCCESS HERE
+        // EMAIL USER FOR A SUCCESSFULL REGISTRATION
+        const reqSuccessEmail = new Emailer(
+          req.user.email,
+          "gssgcontactbook@gmail.com",
+          `Congratulations, ${req.user.firstName}! Registration Success.`,
+          `<p>Hello <strong>${req.user.firstName},</strong></p>
+          <p>You have successfully created an account and added your profile to GSS Gwarinpa Contact Book.</p>
+          <a 
+          href="https://www.gssgcontactbook.com" 
+          style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
+            font-size: 15px; width: 300px; text-align: center; display:inline-block;">Discover GSS Gwarinpa Contact Book
+          </a>
+        `
+        );
+        transporter.transporter.sendMail(reqSuccessEmail, (error, info) => {
+          if (error) console.log(error);
+          else console.log("Registration Email Sent: " + info.response);
+        });
+        // EMAIL USER FOR A SUCCESSFULL REGISTRATION ENDS
       })
       .catch(err => {
         req.flash(
@@ -376,12 +394,11 @@ exports.googleLogin = async (req, res) => {
           </a>
         `
         );
-        transporter.transporter.sendMail(reqSuccessEmail, (error, info) =>{
-          if(error) console.log(error);
+        transporter.transporter.sendMail(reqSuccessEmail, (error, info) => {
+          if (error) console.log(error);
           else console.log("Registration Email Sent: " + info.response);
-        } );
+        });
         // EMAIL USER FOR A SUCCESSFULL REGISTRATION ENDS
-
       })
       .catch(_ => {
         req.flash(
