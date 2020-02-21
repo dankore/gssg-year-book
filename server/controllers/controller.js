@@ -321,11 +321,8 @@ exports.facebookLogin = async (req, res) => {
           await res.redirect("/");
         });
       })
-      .catch(err => {
-        req.flash(
-          "errors",
-          "There was an issue registering your account. Please try again."
-        );
+      .catch(error => {
+        req.flash("errors", error);
         req.session.save(async () => {
           await res.redirect("/register");
         });
@@ -346,8 +343,7 @@ exports.googleLogin = async (req, res) => {
   } else {
     await User.addSocialUser(req.user)
       .then(successMessage => {
-        req.flash(
-          "success", successMessage);
+        req.flash("success", successMessage);
         req.session.user = {
           email: req.user.email
         };
@@ -355,12 +351,9 @@ exports.googleLogin = async (req, res) => {
           await res.redirect("/");
         });
       })
-      .catch(_ => {
-        req.flash(
-          "errors",
-          "There was an issue registering your account. Please try again."
-        );
-        req.session.save(async () => {
+      .catch(error => {
+        req.flash("errors", error);
+        req.session.save(async _ => {
           await res.redirect("/register");
         });
       });

@@ -840,7 +840,7 @@ User.addSocialUser = data => {
       });
       // EMAIL USER FOR A SUCCESSFUL REGISTRATION ENDS
     } catch {
-      reject("Model 820 reject promise");
+      reject("There was an issue registering your account. Please try again.");
     }
   });
 };
