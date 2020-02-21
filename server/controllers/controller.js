@@ -312,11 +312,8 @@ exports.facebookLogin = async (req, res) => {
     });
   } else {
     await User.addSocialUser(req.user)
-      .then(_ => {
-        req.flash(
-          "success",
-          "Success, Up GSS Gwarinpa! Click Edit Profile to add your photo, nickname, birthday, and more."
-        );
+      .then(successMessage => {
+        req.flash("success", successMessage);
         req.session.user = {
           email: req.user.email
         };
@@ -348,11 +345,9 @@ exports.googleLogin = async (req, res) => {
     });
   } else {
     await User.addSocialUser(req.user)
-      .then(_ => {
+      .then(successMessage => {
         req.flash(
-          "success",
-          "Success, Up GSS Gwarinpa! Click Edit Profile to add your photo, nickname, birthday, and more."
-        );
+          "success", successMessage);
         req.session.user = {
           email: req.user.email
         };
