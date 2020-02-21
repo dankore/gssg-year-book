@@ -63,7 +63,7 @@ passport.use(
       clientID: `${process.env.FB_CLIENT_ID}`,
       clientSecret: `${process.env.FB_CLIENT_SECRET}`,
       callbackURL: "https://www.gssgcontactbook.com/fb-login/callback",
-      profileFields: ["id", "first_name", "last_name", "email", "profile_pic"],
+      profileFields: ["id", "first_name", "last_name", "email"],
       enableProof: true
     },
 
@@ -83,12 +83,11 @@ passport.use(
             // NEW USER. REGISTER
             // CLEAN UP DATA
             user = {
-              facebook_id: user._json.id,
               firstName: user._json.first_name,
               lastName: user._json.last_name,
               email: user._json.email,
               class: "1984?",
-              photo: user._json.profile_pic // INITIALIZE PHOTO WITH EMPTY. OTHERWISE BUG HAPPENS
+              photo: ""// INITIALIZE PHOTO WITH EMPTY. OTHERWISE BUG HAPPENS
             };
             return cb(null, user);
           }
