@@ -818,7 +818,7 @@ User.addSocialUser = data => {
     try {
       await usersCollection.insertOne(data);
       resolve(
-        "Success, Up GSS Gwarinpa! Click Edit Profile to add your photo, nickname, birthday, and more."
+        "Success, Up GSS Gwarinpa! Click 'Edit Profile' to add your nickname, birthday, and more."
       );
       // EMAIL USER FOR A SUCCESSFUL REGISTRATION
       const reqSuccessEmail = new Emailer(
