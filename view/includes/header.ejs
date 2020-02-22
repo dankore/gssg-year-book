@@ -52,65 +52,17 @@
       </form>
 
       <% } else { %>
-      <div class="flex">
-        <form action="/login" method="POST" class="sm:text-md flex flex-wrap">
-          <div>
-            <input
-              name="email"
-              type="text"
-              class="shadow appearance-none border rounded py-1 px-3 mr-2 text-gray-700 leading-tight"
-              placeholder="Email"
-            />
-          </div>
-          <div class="relative">
-            <input
-              name="password"
-              type="password"
-              class="shadow appearance-none border rounded py-1 px-3 mr-2 text-gray-700 leading-tight"
-              placeholder="Password"
-            />
-            <div>
-              <a
-                href="/reset-password"
-                style="margin-left: 57px; margin-top: 40px;"
-                class="text-center absolute"
-              >
-                Reset Password
-              </a>
-            </div>
-            <div>
-              <a
-                href="/fb-login"
-                style="margin-left: 57px; margin-top: 3px;"
-                class="text-center absolute mt-2"
-              >
-                Facebook Login
-              </a>
-            </div>
-            <div>
-              <a
-                href="/google-login"
-                style="margin-left: 57px; margin-top: 22px;"
-                class="text-center absolute mt-2"
-              >
-                Google Login
-              </a>
-            </div>
-            <button
-              class="mr-4 rounded border border-white hover:bg-green-800 px-2 mt-1 py-4"
-            >
-              Login
-            </button>
-          </div>
-        </form>
-        <a
+        <div class="flex text-lg">
+          <a href="/login" class="rounded mr-12 text-center inline-block border text-black border-black bg-white
+          hover:bg-gray-200 px-3 text-bold">Login</a>
+          <a
           href="/register"
-          class="rounded text-center flex items-center inline-block border border-white bg-blue-600
-          hover:bg-blue-800 px-3 sm:text-lg text-bold"
-        >
+          class="rounded text-center inline-block border border-white bg-blue-600
+          hover:bg-blue-800 px-3 text-bold"
+          >
           Add Your Profile
-        </a>
-      </div>
+          </a>
+        </div>
     </nav>
     <% } %>
   </header>
