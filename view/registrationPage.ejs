@@ -1,14 +1,14 @@
 <%- include('includes/header') %>
 
-<div id="main-container" class="flex flex-wrap justify-center items-center">
-  <div id="register-container" class="flex-initial">
+<div id="main-container" class="flex flex-wrap justify-center items-center mx-auto" style="max-width: 900px;">
+  <div id="register-container" class="flex-initial max-w-sm">
     <div class="mt-6 text-center">
       <h2 class="text-2xl">Discover Present & Past GSS Gwarinpa Students</h2>
       <p class="text-sm italic">
         Creating an account will automatically add your profile.
       </p>
     </div>
-    <div class="max-w-2xl mt-2 p-2 sm:p-4">
+    <div class="mt-2 p-2 sm:p-4">
       <!-- FB LOGIN LINK-->
       <a href="/fb-login">
         <div class="flex justify-center items-center text-white rounded px-2 mb-4" style="background-color: #4D68A1;">
@@ -26,15 +26,15 @@
        </a>
       <!-- GOOGLE LOGIN LINK ENDS-->
     </div>
-    <div class="max-w-2xl px-2 sm:px-4">
+    <div class="px-2 sm:px-4">
         <p class="text-center">Or Use Your Email</p>
     </div>
-    <div class="flex justify-center p-2 sm:p-4 mx-auto relative max-w-2xl">
+    <div class="flex justify-center p-2 sm:p-4 mx-auto relative ">
       <form
         id="registration-form"
         action="/register"
         method="POST"
-        class="max-w-lg mx-auto p-3 border rounded bg-white"
+        class="mx-auto p-3 border rounded bg-white"
       >
         <% reqErrors.forEach(function(message){ %>
         <div
@@ -135,7 +135,7 @@
       </form>
     </div>
   </div>
-  <div id="profiles-container" class="p-4 mx-2 max-w-md rounded bg-white">
+  <div id="profiles-container" class="p-4 mx-2 max-w-sm rounded bg-white">
     <h3 class="text-center text-gray-600 mb-4">Used by Your Classmates</h3>
     <ul class="flex flex-wrap">
       <% locals.photoUrl.forEach( url => { %>
