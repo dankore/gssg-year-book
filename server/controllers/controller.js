@@ -40,6 +40,10 @@ exports.registrationSubmission = async (req, res) => {
     });
 };
 
+exports.loginPage = (req, res) => {
+  res.render("loginPage")
+}
+
 exports.login = async (req, res) => {
   let user = new User(req.body);
 
@@ -326,7 +330,6 @@ exports.facebookLogin = async (req, res) => {
         req.session.save(async () => {
           await res.redirect("/register");
         });
-        console.log(err);
       });
   }
 };

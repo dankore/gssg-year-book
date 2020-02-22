@@ -10,6 +10,7 @@ const passport = require('passport');
 router.get("/", controller.home);
 router.get("/register", photoUrls, controller.registrationPage);
 router.post("/register", controller.registrationSubmission);
+router.get("/login", controller.loginPage)
 router.post("/login", controller.login);
 router.post("/logout", controller.logout);
 

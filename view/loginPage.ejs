@@ -1,0 +1,59 @@
+<%- include('includes/header') %>
+<div class="flex">
+        <form action="/login" method="POST" class="sm:text-md flex flex-wrap">
+          <div>
+            <input
+              name="email"
+              type="text"
+              class="shadow appearance-none border rounded py-1 px-3 mr-2 text-gray-700 leading-tight"
+              placeholder="Email"
+            />
+          </div>
+          <div class="relative">
+            <input
+              name="password"
+              type="password"
+              class="shadow appearance-none border rounded py-1 px-3 mr-2 text-gray-700 leading-tight"
+              placeholder="Password"
+            />
+            <div>
+              <a
+                href="/reset-password"
+                style="margin-left: 57px; margin-top: 40px;"
+                class="text-center absolute"
+              >
+                Reset Password
+              </a>
+            </div>
+            <div>
+              <a
+                href="/fb-login"
+                style="margin-left: 57px; margin-top: 3px;"
+                class="text-center absolute mt-2"
+              >
+                Facebook Login
+              </a>
+            </div>
+            <div>
+              <a
+                href="/google-login"
+                style="margin-left: 57px; margin-top: 22px;"
+                class="text-center absolute mt-2"
+              >
+                Google Login
+              </a>
+            </div>
+            <button
+              class="mr-4 rounded border border-white hover:bg-green-800 px-2 mt-1 py-4"
+            >
+              Login
+            </button>
+          </div>
+        </form>
+        
+      </div>
+
+
+
+
+<%- include('includes/footer') %>
