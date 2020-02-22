@@ -1,59 +1,71 @@
 <%- include('includes/header') %>
-<div class="flex">
-        <form action="/login" method="POST" class="sm:text-md flex flex-wrap">
-          <div>
-            <input
-              name="email"
-              type="text"
-              class="shadow appearance-none border rounded py-1 px-3 mr-2 text-gray-700 leading-tight"
-              placeholder="Email"
-            />
-          </div>
-          <div class="relative">
-            <input
-              name="password"
-              type="password"
-              class="shadow appearance-none border rounded py-1 px-3 mr-2 text-gray-700 leading-tight"
-              placeholder="Password"
-            />
-            <div>
-              <a
-                href="/reset-password"
-                style="margin-left: 57px; margin-top: 40px;"
-                class="text-center absolute"
-              >
-                Reset Password
-              </a>
-            </div>
-            <div>
-              <a
-                href="/fb-login"
-                style="margin-left: 57px; margin-top: 3px;"
-                class="text-center absolute mt-2"
-              >
-                Facebook Login
-              </a>
-            </div>
-            <div>
-              <a
-                href="/google-login"
-                style="margin-left: 57px; margin-top: 22px;"
-                class="text-center absolute mt-2"
-              >
-                Google Login
-              </a>
-            </div>
-            <button
-              class="mr-4 rounded border border-white hover:bg-green-800 px-2 mt-1 py-4"
-            >
-              Login
-            </button>
-          </div>
-        </form>
-        
+<div class="max-w-2xl mx-auto">
+  <h2 class="my-12 text-2xl text-center">GSS Gwarinpa Contact Book</h2>
+  <div class="max-w-2xl mb-4">
+    <!-- FB LOGIN LINK-->
+    <a href="/fb-login">
+      <div
+        class="flex justify-center items-center text-white rounded px-2 mb-4"
+        style="background-color: #4D68A1;"
+      >
+        <img src="../../static/fb-btn.png" class="rounded mr-2" />
+        <p>Sign in with Facebook</p>
       </div>
-
-
-
+    </a>
+    <!-- FB LOGIN LINK ENDS-->
+    <!-- GOOGLE LOGIN LINK-->
+    <a href="/google-login">
+      <div
+        class="flex justify-center items-center border border-red-400 bg-white rounded px-2"
+      >
+        <img src="../../static/google-btn.png" class="rounded mr-2" />
+        <p>Sign in with Google</p>
+      </div>
+    </a>
+    <!-- GOOGLE LOGIN LINK ENDS-->
+  </div>
+  <div class="max-w-2xl mb-4">
+    <p class="text-center">Or Use Your Email</p>
+  </div>
+</div>
+<div class="max-w-2xl bg-white mx-auto rounded">
+  <form action="/login" method="POST" class="p-2 sm:p-4">
+    <%- include('includes/flash') %>
+    <div class="mb-4">
+      <label
+        for="email"
+        class="w-full text-xs font-bold block mb-1 uppercase tracking-wide text-gray-700 "
+        >Enter Your Email</label
+      >
+      <input
+        id="email"
+        name="email"
+        type="text"
+        class="w-full py-3 px-4 appearance-none bg-gray-200 focus:outline-none focus:border-gray-500 focus:bg-white appearance-none border rounded py-1 px-3 text-gray-700 leading-tight"
+      />
+    </div>
+    <div class="mb-4">
+      <div
+        class="flex justify-between mb-1 text-xs uppercase font-bold tracking-wide text-gray-700"
+      >
+        <label for="password" class="">Enter Your Password </label>
+        <a href="/reset-password" class="inline-block">
+          Forgot Your Password?
+        </a>
+      </div>
+      <input
+        id="password"
+        name="password"
+        type="password"
+        class="w-full py-3 px-4 appearance-none bg-gray-200 focus:outline-none focus:border-gray-500 focus:bg-white appearance-none border rounded py-1 px-3 text-gray-700 leading-tight"
+      />
+    </div>
+    <button
+      class="w-full text-white rounded border border-white bg-blue-600 hover:bg-blue-800 px-2 py-3"
+    >
+      Login
+    </button>
+  </form>
+</div>
 
 <%- include('includes/footer') %>

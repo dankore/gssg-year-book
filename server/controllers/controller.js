@@ -61,7 +61,7 @@ exports.login = async (req, res) => {
     .catch(err => {
       req.flash("errors", err);
       req.session.save(() => {
-        res.redirect("/");
+        res.redirect("/login");
       });
     });
 };
