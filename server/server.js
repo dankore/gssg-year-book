@@ -8,7 +8,6 @@ const express = require("express"),
   router = require("./router"),
   compression = require("compression"),
   User = require("./models/model"),
-  controller = require("./controllers/controller"),
   passport = require("passport"),
   FacebookStrategy = require("passport-facebook").Strategy,
   GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
@@ -117,7 +116,7 @@ let sessionOptions = session({
   store: new MongoStore({ client: require("../db") }),
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 1000 * 60 * 60 * 24 * 14, httpOnly: true } // COOKIES EXPIRES IN 14 DAYS
+  cookie: { maxAge: 1000 * 60 * 60 * 24 * 14, httpOnly: true } // COOKIES EXPIRE2 IN 14 DAYS
 });
 
 server.set("views", "view");
