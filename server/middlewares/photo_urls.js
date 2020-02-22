@@ -38,6 +38,6 @@ module.exports = function photo_urls(req, res, next) {
     photoUrls[randomIndex] = temporaryValue;
   }
 
-  res.locals.photoUrl = photoUrls;
+  res.locals.photoUrl = photoUrls.slice(0, 3);
   next();
 };
