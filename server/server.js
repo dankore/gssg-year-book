@@ -9,94 +9,13 @@ const express = require("express"),
   compression = require("compression"),
   User = require("./models/model"),
   passport = require("passport"),
-  FacebookStrategy = require("passport-facebook").Strategy,
-  GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
+  GoogleStrategyMiddleware = require("./middlewares/google.passport"),
+  FacebookStrategyMiddleware = require("./middlewares/facebook.passport");
 
 // PASSPORT
+server.use(GoogleStrategyMiddleware); // GOOGLE
 
-// GOOGLE
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: `${process.env.GOOGLE_CLIENT_ID}`,
-      clientSecret: `${process.env.GOOGLE_CLIENT_SECRET}`,
-      callbackURL: "https://www.gssgcontactbook.com/google-login/callback"
-    },
-    function(accessToken, refreshToken, user, cb) {
-      User.doesEmailExists(user._json.email)
-        .then(userBool => {
-          console.log("Server 29. New user: " + userBool);
-          if (userBool) {
-            // USER EXISTS. LOG IN
-            // CLEAN UP
-            user = {
-              email: user._json.email,
-              returningUser: true
-            };
-            return cb(null, user);
-          } else {
-            // NEW USER. REGISTER
-            // CLEAN UP
-            user = {
-              google_id: user._json.sub,
-              firstName: user._json.given_name,
-              lastName: user._json.family_name,
-              email: user._json.email,
-              year: "1988?",
-              photo: user._json.picture // END
-            };
-            return cb(null, user);
-          }
-        })
-        .catch(err => {
-          console.log("Server 58 " + err);
-        });
-    }
-  )
-);
-
-// FACEBOOK
-passport.use(
-  new FacebookStrategy(
-    {
-      clientID: `${process.env.FB_CLIENT_ID}`,
-      clientSecret: `${process.env.FB_CLIENT_SECRET}`,
-      callbackURL: "https://www.gssgcontactbook.com/fb-login/callback",
-      profileFields: ["id", "first_name", "last_name", "email"],
-      enableProof: true
-    },
-
-    function(accessToken, refreshToken, user, cb) {
-      // CHECK IF fbUser exist in database
-      User.doesEmailExists(user._json.email)
-        .then(userBool => {
-          if (userBool) {
-            // USER EXISTS IN DB. LOG IN
-            // CLEAN UP DATA
-            user = {
-              email: user._json.email,
-              returningUser: true
-            };
-            return cb(null, user);
-          } else {
-            // NEW USER. REGISTER
-            // CLEAN UP DATA
-            user = {
-              firstName: user._json.first_name,
-              lastName: user._json.last_name,
-              email: user._json.email,
-              year: "1984?",
-              photo: ""// INITIALIZE PHOTO WITH EMPTY. OTHERWISE BUG HAPPENS
-            };
-            return cb(null, user);
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
-  )
-);
+server.use(FacebookStrategyMiddleware); // FACEBOOK
 
 passport.serializeUser(function(user, cb) {
   cb(null, user);
