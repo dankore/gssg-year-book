@@ -363,6 +363,30 @@ exports.googleLogin = async (req, res) => {
   }
 };
 
-exports.twitterLogin = (req, res) => {
-  console.log("controller " + req.user);
+exports.twitterLogin = async (req, res) => {
+  if (req.user.returningUser) {
+    req.session.user = {
+      email: req.user.email
+    };
+    req.session.save(async () => {
+      await res.redirect("/");
+    });
+  } else {
+    await User.addSocialUser(req.user)
+      .then(successMessage => {
+        req.flash("success", successMessage);
+        req.session.user = {
+          email: req.user.email
+        };
+        req.session.save(async _ => {
+          await res.redirect("/");
+        });
+      })
+      .catch(error => {
+        req.flash("errors", error);
+        req.session.save(async _ => {
+          await res.redirect("/register");
+        });
+      });
+  }
 }
