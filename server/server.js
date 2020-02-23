@@ -9,10 +9,21 @@ const express = require("express"),
   User = require("./models/model"),
   passport = require("passport"),
   FacebookStrategy = require("passport-facebook").Strategy,
-  GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
+  GoogleStrategy = require("passport-google-oauth").OAuth2Strategy,
+  YahooStrategy = require('passport-yahoo-oauth').Strategy
 
 // PASSPORT
-
+// YAHOO
+passport.use(new YahooStrategy({
+    consumerKey: `${process.env.YAHOO_CONSUMER_KEY}`,
+    consumerSecret: `${process.env.YAHOO_CONSUMER_SECRET}`,
+    callbackURL: "https://gssg-contact-book.dankore.repl.co/yahoo-login/callback"
+  },
+  function(token, tokenSecret, user, cb) {
+   console.log("server " + user._json)
+  return done(err, user);
+  }
+));
 // GOOGLE
 passport.use(
   new GoogleStrategy(

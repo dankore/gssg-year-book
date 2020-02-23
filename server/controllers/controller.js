@@ -362,3 +362,7 @@ exports.googleLogin = async (req, res) => {
       });
   }
 };
+
+exports.yahooLogin = (req, res) => {
+  console.log("controller " + req.user);
+}

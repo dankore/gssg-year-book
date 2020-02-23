@@ -51,5 +51,10 @@ router.get('/fb-login/callback', passport.authenticate('facebook', {failureRedir
 // GOOGLE
 router.get("/google-login", passport.authenticate('google', {scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email']}));
 router.get("/google-login/callback", passport.authenticate('google', {failureRedirect: '/register' }), controller.googleLogin)
+
+router.get("/yahoo-login", passport.authenticate('yahoo'));
+router.get('/yahoo-login/callback', passport.authenticate('yahoo', {failureRedirect: '/register' }), controller.yahooLogin);
+
+
 // EXPORT CODE
 module.exports = router;
