@@ -13,12 +13,12 @@ const express = require("express"),
   TwitterStrategy = require('passport-twitter').Strategy
 
 // PASSPORT
-// YAHOO
+// TWITTER
 passport.use(new TwitterStrategy({
     consumerKey: `${process.env.TWITTER_CONSUMER_KEY}`,
     consumerSecret: `${process.env.TWITTER_CONSUMER_SECRET}`,
     userProfileURL: "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true",
-    callbackURL: "https://gssg-contact-book.dankore.repl.co/twitter-login/callback"
+    callbackURL: "https://www.gssgcontactbook.com/twitter-login/callback"
   },
   function(token, tokenSecret, user, cb) {
     User.doesEmailExists(user.emails[0].value)
@@ -30,7 +30,6 @@ passport.use(new TwitterStrategy({
           email : user.emails[0].value,
           returningUser: true
         };
-
         return cb(null, user);
       } else {
         // NEW USER. REGISTER
@@ -43,7 +42,6 @@ passport.use(new TwitterStrategy({
             email : user.emails[0].value,
             photo : user.photos[0].value
           };
-          
           return cb(null, user);
       }
     })
