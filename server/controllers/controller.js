@@ -363,6 +363,6 @@ exports.googleLogin = async (req, res) => {
   }
 };
 
-exports.yahooLogin = (req, res) => {
+exports.twitterLogin = (req, res) => {
   console.log("controller " + req.user);
 }

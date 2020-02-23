@@ -10,18 +10,18 @@ const express = require("express"),
   passport = require("passport"),
   FacebookStrategy = require("passport-facebook").Strategy,
   GoogleStrategy = require("passport-google-oauth").OAuth2Strategy,
-  YahooStrategy = require('passport-yahoo-oauth').Strategy
+  TwitterStrategy = require('passport-twitter').Strategy
 
 // PASSPORT
 // YAHOO
-passport.use(new YahooStrategy({
-    consumerKey: `${process.env.YAHOO_CONSUMER_KEY}`,
-    consumerSecret: `${process.env.YAHOO_CONSUMER_SECRET}`,
-    callbackURL: "https://gssg-contact-book.dankore.repl.co/yahoo-login/callback"
+passport.use(new TwitterStrategy({
+    consumerKey: `${process.env.TWITTER_CONSUMER_KEY}`,
+    consumerSecret: `${process.env.TWITTER_CONSUMER_SECRET}`,
+    callbackURL: "https://gssg-contact-book.dankore.repl.co/twitter-login/callback"
   },
   function(token, tokenSecret, user, cb) {
-   console.log("server " + user._json)
-  return done(err, user);
+   console.log("server " + JSON.stringify(user._json))
+  return cb(null, user);
   }
 ));
 // GOOGLE

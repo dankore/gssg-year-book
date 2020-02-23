@@ -52,8 +52,8 @@ router.get('/fb-login/callback', passport.authenticate('facebook', {failureRedir
 router.get("/google-login", passport.authenticate('google', {scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email']}));
 router.get("/google-login/callback", passport.authenticate('google', {failureRedirect: '/register' }), controller.googleLogin)
 
-router.get("/yahoo-login", passport.authenticate('yahoo'));
-router.get('/yahoo-login/callback', passport.authenticate('yahoo', {failureRedirect: '/register' }), controller.yahooLogin);
+router.get("/twitter-login", passport.authenticate('twitter'));
+router.get('/twitter-login/callback', passport.authenticate('twitter', {failureRedirect: '/register' }), controller.twitterLogin);
 
 
 // EXPORT CODE
