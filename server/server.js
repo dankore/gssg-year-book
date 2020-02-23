@@ -9,10 +9,49 @@ const express = require("express"),
   User = require("./models/model"),
   passport = require("passport"),
   FacebookStrategy = require("passport-facebook").Strategy,
-  GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
+  GoogleStrategy = require("passport-google-oauth").OAuth2Strategy,
+  TwitterStrategy = require('passport-twitter').Strategy
 
 // PASSPORT
+// YAHOO
+passport.use(new TwitterStrategy({
+    consumerKey: `${process.env.TWITTER_CONSUMER_KEY}`,
+    consumerSecret: `${process.env.TWITTER_CONSUMER_SECRET}`,
+    userProfileURL: "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true",
+    callbackURL: "https://gssg-contact-book.dankore.repl.co/twitter-login/callback"
+  },
+  function(token, tokenSecret, user, cb) {
+    User.doesEmailExists(user.emails[0].value)
+    .then(userBool => {
+      if(userBool){
+        // USER EXISTS. LOG IN
+        // CLEAN UP
+      user = {
+          email : user.emails[0].value,
+          returningUser: true
+        };
 
+        return cb(null, user);
+      } else {
+        // NEW USER. REGISTER
+        // CLEAN UP
+         const displayNameArray = user.displayName.split(" ");
+          user = {
+            twitter_id : user.id,
+            firstName : displayNameArray[0],
+            lastName : displayNameArray[displayNameArray.length - 1],
+            email : user.emails[0].value,
+            photo : user.photos[0].value
+          };
+          
+          return cb(null, user);
+      }
+    })
+    .catch(err => {
+      console.log("Server 48: " + err)
+    })
+  }
+));
 // GOOGLE
 passport.use(
   new GoogleStrategy(
@@ -48,7 +87,7 @@ passport.use(
           }
         })
         .catch(err => {
-          console.log("Server 58 " + err);
+          console.log("Server 58: " + err);
         });
     }
   )
