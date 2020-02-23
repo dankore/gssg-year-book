@@ -14,49 +14,53 @@ const express = require("express"),
 
 // PASSPORT
 // TWITTER
-passport.use(new TwitterStrategy({
-    consumerKey: `${process.env.TWITTER_CONSUMER_KEY}`,
-    consumerSecret: `${process.env.TWITTER_CONSUMER_SECRET}`,
-    userProfileURL: "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true",
-    callbackURL: "https://www.gssgcontactbook.com/twitter-login/callback"
-  },
-  function(token, tokenSecret, user, cb) {
-    User.doesEmailExists(user.emails[0].value)
-    .then(userBool => {
-      if(userBool){
-        // USER EXISTS. LOG IN
-        // CLEAN UP
-      user = {
-          email : user.emails[0].value,
-          returningUser: true
-        };
-        return cb(null, user);
-      } else {
-        // NEW USER. REGISTER
-        // CLEAN UP
-         const displayNameArray = user.displayName.split(" ");
-          user = {
-            twitter_id : user.id,
-            firstName : displayNameArray[0],
-            lastName : displayNameArray[displayNameArray.length - 1],
-            email : user.emails[0].value,
-            photo : user.photos[0].value
-          };
-          return cb(null, user);
-      }
-    })
-    .catch(err => {
-      console.log("Server 48: " + err)
-    })
-  }
-));
+passport.use(
+  new TwitterStrategy(
+    {
+      consumerKey: `${process.env.TWITTER_CONSUMER_KEY}`,
+      consumerSecret: `${process.env.TWITTER_CONSUMER_SECRET}`,
+      userProfileURL:
+        "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true",
+      callbackURL: `${process.env.TWITTER_CALLABCK_URL}`
+    },
+    function(token, tokenSecret, user, cb) {
+      User.doesEmailExists(user.emails[0].value)
+        .then(userBool => {
+          if (userBool) {
+            // USER EXISTS. LOG IN
+            // CLEAN UP
+            user = {
+              email: user.emails[0].value,
+              returningUser: true
+            };
+            return cb(null, user);
+          } else {
+            // NEW USER. REGISTER
+            // CLEAN UP
+            const displayNameArray = user.displayName.split(" ");
+            user = {
+              twitter_id: user.id,
+              firstName: displayNameArray[0],
+              lastName: displayNameArray[displayNameArray.length - 1],
+              email: user.emails[0].value,
+              photo: user.photos[0].value
+            };
+            return cb(null, user);
+          }
+        })
+        .catch(err => {
+          console.log("Server 48: " + err);
+        });
+    }
+  )
+);
 // GOOGLE
 passport.use(
   new GoogleStrategy(
     {
       clientID: `${process.env.GOOGLE_CLIENT_ID}`,
       clientSecret: `${process.env.GOOGLE_CLIENT_SECRET}`,
-      callbackURL: "https://www.gssgcontactbook.com/google-login/callback"
+      callbackURL: `${process.env.GOOGLE_CALLABCK_URL}`
     },
     function(accessToken, refreshToken, user, cb) {
       User.doesEmailExists(user._json.email)
@@ -97,7 +101,7 @@ passport.use(
     {
       clientID: `${process.env.FB_CLIENT_ID}`,
       clientSecret: `${process.env.FB_CLIENT_SECRET}`,
-      callbackURL: "https://www.gssgcontactbook.com/fb-login/callback",
+      callbackURL: `${process.env.FB_CALLABCK_URL}`,
       profileFields: ["id", "first_name", "last_name", "email"],
       enableProof: true
     },
@@ -122,7 +126,7 @@ passport.use(
               lastName: user._json.last_name,
               email: user._json.email,
               year: "1984?",
-              photo: ""// INITIALIZE PHOTO WITH EMPTY. OTHERWISE BUG HAPPENS
+              photo: "" // INITIALIZE PHOTO WITH EMPTY. OTHERWISE BUG HAPPENS
             };
             return cb(null, user);
           }
