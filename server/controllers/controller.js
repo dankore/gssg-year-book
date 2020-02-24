@@ -408,3 +408,8 @@ exports.twitterLogin = async (req, res) => {
       });
   }
 };
+// IF USER VISITS ANY URL THAT DON'T EXISTS ON THIS APP.
+// REDIRECT TO 404 PAGE
+exports.notFound = (req, res) => {
+  res.status(404).render("404");
+};
