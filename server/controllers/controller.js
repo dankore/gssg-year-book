@@ -2,8 +2,8 @@ const User = require("../models/model"),
   helpers = require("../misc/helpers");
 
 exports.home = async (req, res) => {
- 
   let profiles = await User.allProfiles();
+  profiles.sort((a, b) => a.year - b.year); // SORT BY YEAR DESCENDING
   res.render("homePage", {
     profiles: profiles,
     statsByYear: helpers.statsByYear(profiles)
@@ -11,14 +11,15 @@ exports.home = async (req, res) => {
 };
 
 exports.ascending = async (req, res) => {
-   let profiles = await User.getByCreationDate(req.body.q);
-  console.log(req.body.q);
+  console.log(req.body.q)
+  let profiles = await User.getByCreationDate(req.body.q);
+  
   res.render("homePage", {
     profiles: profiles,
     statsByYear: helpers.statsByYear(profiles)
   });
   // users.map(user => console.log(user))
-}
+};
 
 exports.registrationPage = async (req, res) => {
   res.render("registrationPage", {
@@ -52,8 +53,8 @@ exports.registrationSubmission = async (req, res) => {
 };
 
 exports.loginPage = (req, res) => {
-  res.render("loginPage")
-}
+  res.render("loginPage");
+};
 
 exports.login = async (req, res) => {
   let user = new User(req.body);
@@ -218,7 +219,7 @@ exports.delete = function(req, res) {
 
 exports.search = async (req, res) => {
   try {
-    console.log("controler 217 " + req.body.q)
+    console.log("controler 217 " + req.body.q);
     let searchResultsArray = await User.search(req.body.q);
 
     res.render("homePage", {
@@ -401,4 +402,4 @@ exports.twitterLogin = async (req, res) => {
         });
       });
   }
-}
+};

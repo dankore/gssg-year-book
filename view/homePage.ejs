@@ -14,8 +14,7 @@
 <%- include('includes/searchBar') %> <%- include('includes/chart') %>
 <%- include('includes/sort') %>
 <div id="anchor-tag" class="flex flex-wrap justify-center">
-  <% if(profiles.length){ %> <% profiles.sort(( a, b ) => a.year -
-  b.year).forEach(profile => { %>
+  <% if(profiles.length){ %> <% profiles.forEach(profile => { %>
   <a  class="m-4" href="/profile/<%= profile.email %>">
     <%- include('includes/profileShared', {profile: profile}) %>
   </a>

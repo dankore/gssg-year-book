@@ -850,8 +850,7 @@ User.getByCreationDate = q => {
     try {
       let users = await usersCollection
         .find()
-        .sort({ _id: +q })
-        .limit(3)
+        .sort({_id: +q})
         .toArray();
 
       resolve(users);

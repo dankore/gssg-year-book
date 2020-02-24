@@ -1,7 +1,13 @@
-<div class="w-64 mx-20">
-    <img src="../../static/filter.svg" />
-    <form action="/sort" method="POST" class="">
-        <button value="1" name="q">Ascending</button>
-        <button value="-1" name="q">Descending</button>
+<div class="max-w-2xl mx-4 mt-4 sm:mt-0">
+  <button class="flex items-center text-md sm:text-xl px-2" id="filter-icon">
+    <img src="../../static/filter.svg" class=""/>
+    <label class="ml-1">Filter</label>
+  </button>
+
+  <div id="form-container" style="display: none;">
+    <form action="/sort" method="POST" class="pt-1">
+      <button value="1" name="q" class="mr-3">Ascending</button>
+      <button value="-1" name="q">Descending</button>
     </form>
+  </div>
 </div>

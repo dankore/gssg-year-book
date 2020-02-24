@@ -4,6 +4,7 @@ import ToggleStats from "./modules/toggleStats";
 import ToggleImage from "./modules/show_bigger_profile_image";
 import ConfirmDelete from "./modules/confirmDelete";
 import RegistrationFormLiveValidation from "./modules/registrationFormLiveValidation";
+import Filter from "./modules/filter";
 
 if (document.querySelector("#more-profile-btn")) {
   new ToggleProfile();
@@ -25,4 +26,7 @@ if (document.querySelector("#delete-profile")) {
 }
 if (document.querySelector("#registration-form")) {
   new RegistrationFormLiveValidation();
+}
+if (document.querySelector("#filter-icon")) {
+  new Filter();
 }
