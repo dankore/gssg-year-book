@@ -10,22 +10,6 @@ exports.home = async (req, res) => {
   });
 };
 
-exports.sort = (req, res) => {
-  User.sortProfiles(req.body.q)
-    .then(profiles => {
-      res.render("homePage", {
-        profiles: profiles,
-        statsByYear: helpers.statsByYear(profiles)
-      });
-    })
-    .catch(errorMessage => {
-      req.flash("errors", errorMessage);
-      req.session.save(() => {
-        res.redirect("/");
-      });
-    });
-};
-
 exports.registrationPage = async (req, res) => {
   res.render("registrationPage", {
     reqErrors: req.flash("reqError")
@@ -408,6 +392,23 @@ exports.twitterLogin = async (req, res) => {
       });
   }
 };
+
+exports.sort = (req, res) => {
+  User.sortProfiles(req.body.q)
+    .then(profiles => {
+      res.render("homePage", {
+        profiles: profiles,
+        statsByYear: helpers.statsByYear(profiles)
+      });
+    })
+    .catch(errorMessage => {
+      req.flash("errors", errorMessage);
+      req.session.save(() => {
+        res.redirect("/");
+      });
+    });
+};
+
 // IF USER VISITS ANY URL THAT DON'T EXISTS ON THIS APP.
 // REDIRECT TO 404 PAGE
 exports.notFound = (req, res) => {
