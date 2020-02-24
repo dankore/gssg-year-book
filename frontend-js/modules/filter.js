@@ -1,7 +1,7 @@
 export default class Filter {
   constructor() {
-    this.filterIcon = document.getElementById("filter-icon");
-    this.formContainer = document.getElementById("form-container");
+    this.filterIcon = document.querySelector("#filter-icon");
+    this.formContainer = document.querySelector("#form-container");
     this.events();
   }
   // EVENTS
