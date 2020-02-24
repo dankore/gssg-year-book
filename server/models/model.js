@@ -844,5 +844,20 @@ User.addSocialUser = data => {
     }
   });
 };
+
+User.sortProfiles = q => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let users = await usersCollection
+        .find()
+        .sort({ _id: +q })
+        .toArray();
+
+      resolve(users);
+    } catch {
+      reject("Abeg no vex, we are having server issues.");
+    }
+  });
+};
 // EXPORT CODE
 module.exports = User;

@@ -3,6 +3,7 @@ const User = require("../models/model"),
 
 exports.home = async (req, res) => {
   let profiles = await User.allProfiles();
+  profiles.sort((a, b) => a.year - b.year); // SORT BY YEAR DESCENDING
   res.render("homePage", {
     profiles: profiles,
     statsByYear: helpers.statsByYear(profiles)
@@ -41,8 +42,8 @@ exports.registrationSubmission = async (req, res) => {
 };
 
 exports.loginPage = (req, res) => {
-  res.render("loginPage")
-}
+  res.render("loginPage");
+};
 
 exports.login = async (req, res) => {
   let user = new User(req.body);
@@ -205,8 +206,9 @@ exports.delete = function(req, res) {
     });
 };
 
-exports.search = async function(req, res) {
+exports.search = async (req, res) => {
   try {
+    console.log("controler 217 " + req.body.q);
     let searchResultsArray = await User.search(req.body.q);
 
     res.render("homePage", {
@@ -389,4 +391,26 @@ exports.twitterLogin = async (req, res) => {
         });
       });
   }
-}
+};
+
+exports.sort = (req, res) => {
+  User.sortProfiles(req.body.q)
+    .then(profiles => {
+      res.render("homePage", {
+        profiles: profiles,
+        statsByYear: helpers.statsByYear(profiles)
+      });
+    })
+    .catch(errorMessage => {
+      req.flash("errors", errorMessage);
+      req.session.save(() => {
+        res.redirect("/");
+      });
+    });
+};
+
+// IF USER VISITS ANY URL THAT DON'T EXISTS ON THIS APP.
+// REDIRECT TO 404 PAGE
+exports.notFound = (req, res) => {
+  res.status(404).render("404");
+};

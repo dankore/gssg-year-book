@@ -10,7 +10,7 @@ const express = require("express"),
   passport = require("passport"),
   FacebookStrategy = require("passport-facebook").Strategy,
   GoogleStrategy = require("passport-google-oauth").OAuth2Strategy,
-  TwitterStrategy = require('passport-twitter').Strategy
+  TwitterStrategy = require("passport-twitter").Strategy;
 
 // PASSPORT
 // TWITTER
