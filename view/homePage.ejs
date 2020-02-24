@@ -12,7 +12,7 @@
 <!-- GUESS USER -->
 
 <%- include('includes/searchBar') %> <%- include('includes/chart') %>
-
+<%- include('includes/sort') %>
 <div id="anchor-tag" class="flex flex-wrap justify-center">
   <% if(profiles.length){ %> <% profiles.sort(( a, b ) => a.year -
   b.year).forEach(profile => { %>

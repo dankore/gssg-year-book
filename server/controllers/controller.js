@@ -2,12 +2,23 @@ const User = require("../models/model"),
   helpers = require("../misc/helpers");
 
 exports.home = async (req, res) => {
+ 
   let profiles = await User.allProfiles();
   res.render("homePage", {
     profiles: profiles,
     statsByYear: helpers.statsByYear(profiles)
   });
 };
+
+exports.ascending = async (req, res) => {
+   let profiles = await User.getByCreationDate(req.body.q);
+  console.log(req.body.q);
+  res.render("homePage", {
+    profiles: profiles,
+    statsByYear: helpers.statsByYear(profiles)
+  });
+  // users.map(user => console.log(user))
+}
 
 exports.registrationPage = async (req, res) => {
   res.render("registrationPage", {
@@ -205,8 +216,9 @@ exports.delete = function(req, res) {
     });
 };
 
-exports.search = async function(req, res) {
+exports.search = async (req, res) => {
   try {
+    console.log("controler 217 " + req.body.q)
     let searchResultsArray = await User.search(req.body.q);
 
     res.render("homePage", {

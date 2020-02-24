@@ -844,5 +844,21 @@ User.addSocialUser = data => {
     }
   });
 };
+
+User.getByCreationDate = q => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let users = await usersCollection
+        .find()
+        .sort({ _id: +q })
+        .limit(3)
+        .toArray();
+
+      resolve(users);
+    } catch {
+      reject("Invalid search term.");
+    }
+  });
+};
 // EXPORT CODE
 module.exports = User;

@@ -37,6 +37,7 @@ router.post("/reset-password/:token", controller.resetPasswordToken);
 
 // SEARCH
 router.post("/", controller.search);
+router.post("/sort", controller.ascending)
 
 // PRIVACY
 router.get("/privacy", controller.privacy);
@@ -52,6 +53,7 @@ router.get('/fb-login/callback', passport.authenticate('facebook', {failureRedir
 router.get("/google-login", passport.authenticate('google', {scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email']}));
 router.get("/google-login/callback", passport.authenticate('google', {failureRedirect: '/register' }), controller.googleLogin)
 
+// TWITTER
 router.get("/twitter-login", passport.authenticate('twitter'));
 router.get('/twitter-login/callback', passport.authenticate('twitter', {failureRedirect: '/register' }), controller.twitterLogin);
 
