@@ -10,15 +10,20 @@ exports.home = async (req, res) => {
   });
 };
 
-exports.ascending = async (req, res) => {
-  console.log(req.body.q)
-  let profiles = await User.getByCreationDate(req.body.q);
-  
-  res.render("homePage", {
-    profiles: profiles,
-    statsByYear: helpers.statsByYear(profiles)
-  });
-  // users.map(user => console.log(user))
+exports.sort = (req, res) => {
+  User.sortProfiles(req.body.q)
+    .then(profiles => {
+      res.render("homePage", {
+        profiles: profiles,
+        statsByYear: helpers.statsByYear(profiles)
+      });
+    })
+    .catch(errorMessage => {
+      req.flash("errors", errorMessage);
+      req.session.save(() => {
+        res.redirect("/");
+      });
+    });
 };
 
 exports.registrationPage = async (req, res) => {

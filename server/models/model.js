@@ -845,17 +845,17 @@ User.addSocialUser = data => {
   });
 };
 
-User.getByCreationDate = q => {
+User.sortProfiles = q => {
   return new Promise(async (resolve, reject) => {
     try {
       let users = await usersCollection
         .find()
-        .sort({_id: +q})
+        .sort({ _id: +q })
         .toArray();
 
       resolve(users);
     } catch {
-      reject("Invalid search term.");
+      reject("Abeg no vex, we are having server issues.");
     }
   });
 };
