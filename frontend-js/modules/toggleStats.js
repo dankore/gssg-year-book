@@ -1,15 +1,18 @@
 export default class ToggleStats {
   constructor() {
-    this.arrowDown = document.querySelector("#arrow-down");
+    this.barChatIconContainer = document.querySelector(
+      "#bar-chart-icon-container"
+    );
     this.statsContainer = document.querySelector("#myChart");
-    this.arrowSigns = document.querySelector("#arrows");
+    this.filterIconContainer = document.querySelector("#filter-icon-container");
     this.formContainer = document.querySelector("#form-container");
-    this.filterBtn = document.querySelector("#filter-icon");
     this.events();
   }
   // EVENTS
   events() {
-    this.arrowDown.addEventListener("click", () => this.toggleStats());
+    this.barChatIconContainer.addEventListener("click", () =>
+      this.toggleStats()
+    );
   }
 
   // METHODS
@@ -17,11 +20,11 @@ export default class ToggleStats {
     if (this.statsContainer.style.display == "none") {
       this.statsContainer.style.display = "block";
       this.formContainer.style.display = "none";
-      this.filterBtn.style.color = "black";
-      this.arrowDown.style.color = "#2b6cb0";
+      this.barChatIconContainer.classList.add("top-bar");
+      this.filterIconContainer.classList.remove("top-bar");
     } else {
       this.statsContainer.style.display = "none";
-      this.arrowDown.style.color = "black";
+      this.barChatIconContainer.classList.remove("top-bar");
     }
   }
   // END CLASS
