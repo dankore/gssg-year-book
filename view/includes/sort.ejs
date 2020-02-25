@@ -43,6 +43,7 @@
       labels: <%- JSON.stringify(statsByYear[0]) %>,
       datasets: [
         {
+          label: 'profiles',
           data: <%- JSON.stringify(statsByYear[1]) %>,
           backgroundColor: [
             "rgba(255, 99, 132, 0.2)",
@@ -80,7 +81,7 @@
       legend: { display: false },
       title: {
         display: true,
-        text: 'Number of profiles per graduation year for ' + <%= profiles.length %> + ' profile'
+        text: 'Number of profiles per graduation year for ' + <%= profiles.length %> + ' profiles'
       },
           scales: {
             yAxes: [{
