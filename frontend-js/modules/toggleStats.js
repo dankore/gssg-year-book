@@ -3,6 +3,8 @@ export default class ToggleStats {
     this.arrowDown = document.querySelector("#arrow-down");
     this.statsContainer = document.querySelector("#myChart");
     this.arrowSigns = document.querySelector("#arrows");
+    this.formContainer = document.querySelector("#form-container");
+    this.filterBtn = document.querySelector("#filter-icon");
     this.events();
   }
   // EVENTS
@@ -14,10 +16,12 @@ export default class ToggleStats {
   toggleStats() {
     if (this.statsContainer.style.display == "none") {
       this.statsContainer.style.display = "block";
-      this.arrowSigns.innerHTML = "&#8911";
+      this.formContainer.style.display = "none";
+      this.filterBtn.style.color = "black";
+      this.arrowDown.style.color = "#2b6cb0";
     } else {
       this.statsContainer.style.display = "none";
-       this.arrowSigns.innerHTML = "&#8910";
+      this.arrowDown.style.color = "black";
     }
   }
   // END CLASS
