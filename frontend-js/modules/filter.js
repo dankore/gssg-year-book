@@ -1,15 +1,18 @@
 export default class Filter {
   constructor() {
-    this.filterIcon = document.querySelector("#filter-icon");
+    this.filterIconContainer = document.querySelector("#filter-icon-container");
     this.formContainer = document.querySelector("#form-container");
     this.statsContainer = document.querySelector("#myChart");
-    this.filterBtn = document.querySelector("#filter-icon");
-    this.arrowDown = document.querySelector("#arrow-down");
+    this.barChatIconContainer = document.querySelector(
+      "#bar-chart-icon-container"
+    );
     this.events();
   }
   // EVENTS
   events() {
-    this.filterIcon.addEventListener("click", () => this.handleFilterIcon());
+    this.filterIconContainer.addEventListener("click", () =>
+      this.handleFilterIcon()
+    );
   }
 
   // METHODS
@@ -17,11 +20,11 @@ export default class Filter {
     if (this.formContainer.style.display == "none") {
       this.formContainer.style.display = "block";
       this.statsContainer.style.display = "none";
-      this.filterBtn.style.color = "#2b6cb0"
-      this.arrowDown.style.color = "black";
+      this.filterIconContainer.classList.add("top-bar");
+      this.barChatIconContainer.classList.remove("top-bar");
     } else {
+      this.filterIconContainer.classList.remove("top-bar");
       this.formContainer.style.display = "none";
-      this.filterBtn.style.color = "black"
     }
   }
 }

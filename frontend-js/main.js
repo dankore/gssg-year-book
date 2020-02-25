@@ -12,7 +12,7 @@ if (document.querySelector("#more-profile-btn")) {
 if (document.querySelector("#btn-optional-fields")) {
   new ToggleEditPage();
 }
-if (document.querySelector("#arrow-down")) {
+if (document.querySelector("#bar-chart-icon-container")) {
   new ToggleStats();
 }
 if (document.querySelector("#profile-image")) {
@@ -27,6 +27,6 @@ if (document.querySelector("#delete-profile")) {
 if (document.querySelector("#registration-form")) {
   new RegistrationFormLiveValidation();
 }
-if (document.querySelector("#filter-icon")) {
+if (document.querySelector("#filter-icon-container")) {
   new Filter();
 }
