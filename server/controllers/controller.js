@@ -208,9 +208,8 @@ exports.delete = function(req, res) {
 
 exports.search = async (req, res) => {
   try {
-    console.log("controler 217 " + req.body.q);
     let searchResultsArray = await User.search(req.body.q);
-
+    searchResultsArray.sort((a, b) => a.year - b.year); // SORT BY YEAR DESCENDING
     res.render("homePage", {
       profiles: searchResultsArray,
       statsByYear: helpers.statsByYear(searchResultsArray)
