@@ -26,9 +26,9 @@
   </section>
   <section id="chart-section">
   <!--CHART -->
-    <div style="width: 35%; min-width: 300px; height: 25%" class="rounded-bl-lg rounded-br-lg w-1/2 relative shadow-lg">
+    <div style="width: 35%; min-width: 300px; height: 25%" class="rounded-bl-lg rounded-br-lg w-1/2 shadow-lg">
       <canvas
-        class=""
+        class="absolute bg-white z-10 border border-green-300"
         id="myChart"
         style="display: none;"
       >
@@ -43,7 +43,6 @@
       labels: <%- JSON.stringify(statsByYear[0]) %>,
       datasets: [
         {
-          label: "Profiles per graduation year",
           data: <%- JSON.stringify(statsByYear[1]) %>,
           backgroundColor: [
             "rgba(255, 99, 132, 0.2)",
@@ -81,7 +80,7 @@
       legend: { display: false },
       title: {
         display: true,
-        text: 'Number of profiles per graduation year'
+        text: 'Number of profiles per graduation year for ' + <%= profiles.length %> + ' profile'
       },
           scales: {
             yAxes: [{
