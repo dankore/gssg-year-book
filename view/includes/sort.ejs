@@ -26,16 +26,16 @@
   </section>
   <section id="chart-section">
   <!--CHART -->
-    <div style="width: 70%; min-width: 700px;" class="rounded-bl-lg rounded-br-lg w-1/2 shadow-lg">
+    <div style="width: 80%; min-width:300px;">
       <canvas
-        class="absolute bg-white z-10 border border-green-300"
+        class="absolute bg-white z-10 border border-green-300 shadow-lg p-2"
         id="myChart"
         style="display: none;"
       >
       </canvas>
     </div>
 
-<script>
+<script type="">
   var ctx = document.getElementById("myChart").getContext("2d");
   var myChart = new Chart(ctx, {
     type: "bar",
