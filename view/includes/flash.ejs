@@ -1,10 +1,13 @@
 <!-- ERROR FLASH -->
 <% errors.forEach(function(message){ %>
 <div
-  class="bg-red-100 border border-red-400 text-red-700 text-center px-4 py-3 rounded"
+  class="bg-red-100 border border-red-400 text-red-700 text-center px-4 py-3 flex justify-center items-center rounded"
 >
+  <img src="../../static/alert-triangle.svg" class="mr-2"/>
   <%= message %>
 </div>
+
+
 <!-- SUCCESS FLASH -->
 <% }) %> <% success.forEach(function(message){ %>
 <div
