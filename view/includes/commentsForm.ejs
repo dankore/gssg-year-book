@@ -1,22 +1,20 @@
 
 <section class="mx-auto mt-6 rounded" style="width: 18rem;">
 <!-- COMMENTS DISPLAY -->
-<div class="bg-white p-4 mb-6">
+<div class="mb-6">
     <ul>
-        <li class="m-2">Hiad</li>
-        <li class="m-2">dsdws</li>
-        <li class="m-2">ewrffsdvdfsvdf</li>
-        <li class="m-2">vsdfsdsdcsdcsdc</li>
-        <li class="m-2">werfwefsdfvsdf</li>
+        <li class="my-2 bg-white p-2 rounded">Hiad</li>
+        <li class="my-2 bg-white p-2 rounded">dsdws</li>
+        <li class="my-2 bg-white p-2 rounded">ewrffsdvdfsvdf</li>
     </ul>
 </div>
 <!-- COMMENTS FORM -->
-<div  class="bg-white ">
+<% if(user){ %>
+    <div  class="bg-white ">
     <form action="/comments" method="POST"  class="p-2">
-        <textarea name="comment" class="bg-gray-200 focus:bg-gray-100 w-full" >
-           
-        </textarea>
+        <textarea name="comment" class="bg-gray-200 focus:bg-gray-100 w-full" ></textarea>
         <button class="rounded bg-blue-600 hover:bg-blue-800 text-white w-full">Submit</button>
     </form>
 </div>
+<% } %>
 </section>

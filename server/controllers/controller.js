@@ -416,6 +416,9 @@ exports.notFound = (req, res) => {
 
 // COMMENTS
 exports.postComments = (req, res) =>{
-    console.log(req.body);
-    res.send(req.body)
+    
+    console.log(req);
+
+
+    res.send(req.params)
 }
