@@ -61,6 +61,6 @@ router.get('/twitter-login/callback', passport.authenticate('twitter', {failureR
 router.get("*", controller.notFound);
 
 // COMMETS
-router.post("/comments", controller.postComments);
+router.post("/comments/:email", controller.postComments);
 // EXPORT CODE
 module.exports = router;

@@ -416,9 +416,9 @@ exports.notFound = (req, res) => {
 
 // COMMENTS
 exports.postComments = (req, res) =>{
-    
-    console.log(req);
-
-
-    res.send(req.params)
+    console.log(req.headers.referer)
+    let url = req.headers.referer;
+    let urlArray = url.split("/");
+    let email = urlArray[urlArray.length - 1]
+      res.send(email)
 }
