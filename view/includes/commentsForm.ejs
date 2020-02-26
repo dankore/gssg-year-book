@@ -7,9 +7,11 @@
           <p><%= comment.visitorEmail %></p>
           <p><%= comment.visitorFirstName %></p>
 
+        <% if(user){ %>
         <% if(comment.visitorEmail == user.email){ %>
           <button>Edit</button>
         <%}%>
+         <%}%>
       </li>
     <% }) %> <% } else { %>
     <p>No comment found.</p>
