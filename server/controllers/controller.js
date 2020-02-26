@@ -413,3 +413,9 @@ exports.sort = (req, res) => {
 exports.notFound = (req, res) => {
   res.status(404).render("404");
 };
+
+// COMMENTS
+exports.postComments = (req, res) =>{
+    console.log(req.body);
+    res.send(req.body)
+}
