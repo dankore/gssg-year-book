@@ -3,13 +3,15 @@
 <%- include('includes/goToHomePage') %>
 <h2 class="text-2xl m-4 text-center">Profile Dashboard</h2>
 <div class="mx-auto" style="width: 18rem">
-  <%- include('includes/profileShared') %> <%-
-  include('includes/toggleMoreProfile') %>
   <a
-    class="inline-block w-full text-center mt-3 px-4 py-1 text-blue-800 rounded border border-blue-800 hover:text-white hover:bg-blue-600"
+    class="inline-block w-full text-center mb-3 px-4 py-1 text-blue-800 rounded border border-blue-800 hover:text-white hover:bg-blue-600"
     href="/profile/<%= user.email %>/Edit"
     >Edit Profile</a
   >
+  <%- include('includes/profileShared') %> <%-
+  include('includes/toggleMoreProfile') %>
+  <%- include('includes/commentsForm') %>
+  
 </div>
 <%- include('includes/footer') %>
 <!-- FOOTER-->

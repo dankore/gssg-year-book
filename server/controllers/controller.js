@@ -90,7 +90,6 @@ exports.profileScreen = (req, res) => {
       req.session.user.email,
       req.profileUser.email
     );
-
     if (visitorIsOwner) {
       res.render("profileLoggedInUser", { profile: req.profileUser });
     } else {
@@ -415,10 +414,20 @@ exports.notFound = (req, res) => {
 };
 
 // COMMENTS
-exports.postComments = (req, res) =>{
-    console.log(req.headers.referer)
-    let url = req.headers.referer;
-    let urlArray = url.split("/");
-    let email = urlArray[urlArray.length - 1]
-      res.send(email)
-}
+exports.postComments = (req, res) => {
+  let url = req.headers.referer;
+  let urlArray = url.split("/");
+  let profileEmail = urlArray[urlArray.length - 1];
+  User.addComment(
+    req.body.comment,
+    req.session.user.email,
+    req.session.user.firstName,
+    profileEmail
+  )
+    .then(() => {
+      res.redirect(`profile/${profileEmail}`);
+    })
+    .catch(errorMessage => {
+      console.log(errorMessage);
+    });
+};

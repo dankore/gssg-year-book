@@ -1,20 +1,32 @@
-
 <section class="mx-auto mt-6 rounded" style="width: 18rem;">
-<!-- COMMENTS DISPLAY -->
-<div class="mb-6">
-    <ul>
-        <li class="my-2 bg-white p-2 rounded">Hiad</li>
-        <li class="my-2 bg-white p-2 rounded">dsdws</li>
-        <li class="my-2 bg-white p-2 rounded">ewrffsdvdfsvdf</li>
-    </ul>
-</div>
-<!-- COMMENTS FORM -->
-<% if(user){ %>
-    <div  class="bg-white ">
-    <form action="/comments/:email" method="POST"  class="p-2">
-        <textarea name="comment" class="bg-gray-200 focus:bg-gray-100 w-full" ></textarea>
-        <button class="rounded bg-blue-600 hover:bg-blue-800 text-white w-full">Submit</button>
+  <!-- COMMENTS DISPLAY -->
+  <ul class="mb-6">
+    <% if(profile.comments){ %> <% profile.comments.forEach(comment => { %>
+      <li class="my-2 bg-white p-2 rounded">
+          <p><%= comment.comment %></p>
+          <p><%= comment.visitorEmail %></p>
+          <p><%= comment.visitorFirstName %></p>
+
+        <% if(comment.visitorEmail == user.email){ %>
+          <button>Edit</button>
+        <%}%>
+      </li>
+    <% }) %> <% } else { %>
+    <p>No comment found.</p>
+    <%}%>
+  </ul>
+  <!-- COMMENTS FORM -->
+  <% if(user){ %>
+  <div class="bg-white">
+    <form action="/comments/:email" method="POST" class="p-2">
+      <textarea
+        name="comment"
+        class="bg-gray-200 focus:bg-gray-100 w-full"
+      ></textarea>
+      <button class="rounded bg-blue-600 hover:bg-blue-800 text-white w-full">
+        Submit
+      </button>
     </form>
-</div>
-<% } %>
+  </div>
+  <% } %>
 </section>

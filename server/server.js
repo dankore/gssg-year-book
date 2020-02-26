@@ -200,6 +200,9 @@ server.use("/profile/:email", (req, res, next) => {
     .catch(err => {
       console.log("Server line 167 " + err);
     });
+    if(req.params.email == req.session.user){
+      res.locals.visitorCanDo = true;
+    }
   next();
 });
 // SEO ENDS

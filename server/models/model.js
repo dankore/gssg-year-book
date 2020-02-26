@@ -268,6 +268,7 @@ User.prototype.register = function() {
       let salt = bcrypt.genSaltSync(10);
       this.data.password = bcrypt.hashSync(this.data.password, salt);
       this.data.photo = "";
+      this.data.comments = [];
       await usersCollection.insertOne(this.data);
 
       // EMAIL USER FOR A SUCCESSFULL REGISTRATION
@@ -331,7 +332,8 @@ User.findByEmail = function(email) {
               link_social_type_1: userDoc.data.link_social_type_1,
               social_type_2: userDoc.data.social_type_2,
               link_social_type_2: userDoc.data.link_social_type_2,
-              relationship: userDoc.data.relationship
+              relationship: userDoc.data.relationship,
+              comments:userDoc.data.comments
             };
 
             resolve(userDoc);
@@ -454,7 +456,8 @@ User.allProfiles = function() {
         link_social_type_1: eachDoc.link_social_type_1,
         social_type_2: eachDoc.social_type_2,
         link_social_type_2: eachDoc.link_social_type_2,
-        relationship: eachDoc.relationship
+        relationship: eachDoc.relationship,
+        comments: eachDoc.comments
       };
       return eachDoc;
     });
@@ -540,7 +543,8 @@ User.search = async function(searchedItem) {
             link_social_type_1: eachDoc.link_social_type_1,
             social_type_2: eachDoc.social_type_2,
             link_social_type_2: eachDoc.link_social_type_2,
-            relationship: eachDoc.relationship
+            relationship: eachDoc.relationship,
+            comments: eachDoc.comments
           };
           return eachDoc;
         });
@@ -816,6 +820,7 @@ User.doesEmailExists = email => {
 User.addSocialUser = data => {
   return new Promise(async (resolve, reject) => {
     try {
+      data.comments = [];
       await usersCollection.insertOne(data);
       resolve(
         "Success, Up GSS Gwarinpa! Click 'Edit Profile' to add your nickname, birthday, and more."
@@ -859,5 +864,31 @@ User.sortProfiles = q => {
     }
   });
 };
+
+// COMMENTS
+User.addComment = (comment, visitorEmail, visitorFirstName, profileEmail) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      // FIND OWNER OF PROFILEEMAIL AND ADD COMMENT
+      await usersCollection.findOneAndUpdate(
+        { email: profileEmail },
+        {
+          $push: {
+            comments: {
+              comment: comment,
+              visitorEmail: visitorEmail,
+              visitorFirstName: visitorFirstName
+            }
+          
+          }
+        }
+      );
+      resolve("comment added.");
+    } catch {
+      reject("Comment not added!");
+    }
+  });
+};
+
 // EXPORT CODE
 module.exports = User;
