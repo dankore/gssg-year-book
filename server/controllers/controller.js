@@ -414,14 +414,14 @@ exports.notFound = (req, res) => {
 };
 
 // COMMENTS
-exports.postComments = (req, res) => {
-  let url = req.headers.referer;
-  let urlArray = url.split("/");
-  let profileEmail = urlArray[urlArray.length - 1];
+exports.postComments = async (req, res) => {
+  const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
+  let userDoc = await User.findByEmail(req.session.user.email);
+
   User.addComment(
     req.body.comment,
     req.session.user.email,
-    req.session.user.firstName,
+    userDoc.firstName,
     profileEmail
   )
     .then(() => {

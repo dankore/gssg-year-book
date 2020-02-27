@@ -17,6 +17,12 @@ const statsByYear = allProfiles => {
   return [Object.keys(obj), Object.values(obj)];
 };
 
+const getEmailFromHeadersReferrer = urlString => {
+  const urlArray = urlString.split("/");
+  const email = urlArray[urlArray.length - 1];
+
+  return email;
+}
 exports.isAlphaNumericDashHyphen = isAlphaNumericDashHyphen;
 exports.statsByYear = statsByYear;
-// exports.getSomeUsersPhotoURL = getSomeUsersPhotoURL;
+exports.getEmailFromHeadersReferrer = getEmailFromHeadersReferrer;

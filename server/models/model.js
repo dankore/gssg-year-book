@@ -890,5 +890,7 @@ User.addComment = (comment, visitorEmail, visitorFirstName, profileEmail) => {
   });
 };
 
+// FIND FIRST NAME BY 
+
 // EXPORT CODE
 module.exports = User;
