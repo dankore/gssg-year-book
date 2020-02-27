@@ -1,37 +1,4 @@
 <section class="mx-auto mt-6 rounded" style="width: 18rem;">
-  <!-- COMMENTS DISPLAY -->
-  <ul class="mb-6">
-    <% if(profile.comments){ %> <% profile.comments.forEach(comment => { %>
-    <li class="my-2 bg-white p-2 rounded">
-      <div class="flex justify-between">
-        <div class="flex items-center">
-          <a href="/profile/<%= comment.visitorEmail %>">
-          <img
-            src="../../static/blank.png"
-            class="w-12 h-12 rounded-full mr-3"
-          />
-          </a>
-          <div style="overflow-wrap: break-word; min-width: 0px; width: 10rem;">
-            <p class="font-bold"><%= comment.visitorFirstName %></p>
-            <p><%= comment.comment %></p>
-          </div>
-        </div>
-        <p>
-          <%= new Date().getMonth() + "/" + new Date().getDate() + "/" + new
-          Date().getFullYear() %>
-        </p>
-      </div>
-      <div class="flex justify-end">
-        <% if(user){ %> <% if(comment.visitorEmail == user.email){ %>
-        <button>Edit</button>
-        <button class="ml-2">Delete</button>
-        <%}%> <%}%>
-      </div>
-    </li>
-    <% }) %> <% } else { %>
-    <p>No comment found.</p>
-    <%}%>
-  </ul>
   <!-- COMMENTS FORM -->
   <% if(user){ %>
   <div class="bg-white">
@@ -46,4 +13,37 @@
     </form>
   </div>
   <% } %>
+  <!-- COMMENTS DISPLAY -->
+  <ul class="mb-6">
+    <% if(profile.comments){ %> <% profile.comments.reverse().forEach(comment => { %>
+    <li class="my-2 bg-white p-2 rounded">
+      <div class="flex justify-between">
+        <div class="flex items-center">
+          <a href="/profile/<%= comment.visitorEmail %>">
+          <img
+            src="../../static/blank.png"
+            class="w-12 h-12 rounded-full mr-3"
+          />
+          </a>
+          <div style="overflow-wrap: break-word; min-width: 0px; width: 10rem;">
+            <p class="font-bold"><%= comment.visitorFirstName %></p>
+            <p><%= comment.comment %></p>
+          </div>
+        </div>
+        <p class="text-xs">
+          <%= comment.commentDate %>
+        </p>
+      </div>
+      <div class="flex justify-end">
+        <% if(user){ %> <% if(comment.visitorEmail == user.email){ %>
+        <button>Edit</button>
+        <button class="ml-2">Delete</button>
+        <%}%> <%}%>
+      </div>
+    </li>
+    <% }) %> <% } else { %>
+    <p>No comment found.</p>
+    <%}%>
+  </ul>
+  
 </section>

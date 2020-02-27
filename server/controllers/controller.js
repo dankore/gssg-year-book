@@ -422,7 +422,13 @@ exports.postComments = async (req, res) => {
     req.body.comment,
     req.session.user.email,
     userDoc.firstName,
-    profileEmail
+    profileEmail,
+    new Date().getMonth() +
+      "/" +
+      new Date().getDate() +
+      "/" +
+      new Date().getFullYear() +
+      ", " + helpers.getHMS()
   )
     .then(() => {
       res.redirect(`profile/${profileEmail}`);
