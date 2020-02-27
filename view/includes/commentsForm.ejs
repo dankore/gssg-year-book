@@ -3,13 +3,16 @@
   <ul class="mb-6">
     <% if(profile.comments){ %> <% profile.comments.forEach(comment => { %>
     <li class="my-2 bg-white p-2 rounded">
-      <p><%= comment.comment %></p>
-      <p><%= comment.visitorEmail %></p>
-      <p><%= comment.visitorFirstName %></p>
-
-      <% if(user){ %> <% if(comment.visitorEmail == user.email){ %>
-      <button>Edit</button>
-      <%}%> <%}%>
+    <div class="flex justify-between">
+        <p><%= comment.comment %></p>
+        <div>
+            <p><%= comment.visitorFirstName %></p>
+            <% if(user){ %> <% if(comment.visitorEmail == user.email){ %>
+            <button>Edit</button>
+            <%}%> <%}%>
+        </div>
+    </div>
+      
     </li>
     <% }) %> <% } else { %>
     <p>No comment found.</p>
