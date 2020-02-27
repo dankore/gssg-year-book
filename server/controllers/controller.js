@@ -417,18 +417,14 @@ exports.notFound = (req, res) => {
 exports.postComments = async (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
   let userDoc = await User.findByEmail(req.session.user.email);
-
+  let commentDate = helpers.getMonthDayYear() + ", " + helpers.getHMS(); 
+  
   User.addComment(
     req.body.comment,
     req.session.user.email,
     userDoc.firstName,
     profileEmail,
-    new Date().getMonth() +
-      "/" +
-      new Date().getDate() +
-      "/" +
-      new Date().getFullYear() +
-      ", " + helpers.getHMS()
+    commentDate
   )
     .then(() => {
       res.redirect(`profile/${profileEmail}`);
