@@ -1,6 +1,8 @@
 const User = require("../models/model"),
   helpers = require("../misc/helpers");
 
+  const ObjectId = require("mongodb").ObjectID;
+
 exports.home = async (req, res) => {
   let profiles = await User.allProfiles();
   profiles.sort((a, b) => a.year - b.year); // SORT BY YEAR DESCENDING
@@ -420,6 +422,7 @@ exports.postComments = async (req, res) => {
   let commentDate = helpers.getMonthDayYear() + ", " + helpers.getHMS(); 
   
   User.addComment(
+    new ObjectId(),
     req.body.comment,
     req.session.user.email,
     userDoc.firstName,

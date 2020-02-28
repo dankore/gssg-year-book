@@ -866,7 +866,7 @@ User.sortProfiles = q => {
 };
 
 // COMMENTS
-User.addComment = (comment, visitorEmail, visitorFirstName, profileEmail, commentDate) => {
+User.addComment = (commentId, comment, visitorEmail, visitorFirstName, profileEmail, commentDate) => {
   return new Promise(async (resolve, reject) => {
     try {
       // FIND OWNER OF PROFILEEMAIL AND ADD COMMENT
@@ -875,6 +875,7 @@ User.addComment = (comment, visitorEmail, visitorFirstName, profileEmail, commen
         {
           $push: {
             comments: {
+              commentId,
               comment: comment,
               visitorEmail: visitorEmail,
               visitorFirstName: visitorFirstName,
