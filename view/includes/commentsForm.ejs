@@ -19,7 +19,7 @@
     IF COMMENTS ARRAY EXISTS ON USER DOCUMENT, THEN CHECK IF COMMENTS ARRAY HAS ANY ELEMENT(COMMENTS).
     SHOW NO COMMENT FOUND FOR BOTH IF FALSE
    -->
-  <ul class="mb-6">
+  <ul class="mb-6 relative">
     <% if(profile.comments){ %> <% if(profile.comments.length){ %> <%
     profile.comments.reverse().forEach(comment => { %>
     <li class="my-2 bg-white p-2 rounded">
@@ -80,6 +80,28 @@
           <%}%> <%}%>
         </div>
       </div>
+      <!-- EDIT COMMENT FORM -->
+      <div class="absolute w-full -ml-2 -mt-12">
+        <form
+          action="/edit-comment"
+          method="POST"
+          class="w-full  bg-red-500 p-2 "
+        >
+          <textarea
+            name="edit_comment"
+            value="<%= comment.comment %>"
+            class="bg-gray-200 focus:bg-gray-100 w-full"
+          >
+<%= comment.comment %>
+      </textarea
+          >
+        </form>
+        <div class="flex justify-between">
+          <button class="bg-green-600 text-white px-2 rounded">Cancel</button>
+          <button class="bg-blue-600 text-white px-2 rounded">Update</button>
+        </div>
+      </div>
+      <!-- EDIT COMMENT FORM ENDS -->
     </li>
     <% }) %> <% } else { %>
     <p>No comment found.</p>
