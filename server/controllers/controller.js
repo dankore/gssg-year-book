@@ -420,6 +420,7 @@ exports.postComments = async (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
   let userDoc = await User.findByEmail(req.session.user.email);
   let commentDate = helpers.getMonthDayYear() + ", " + helpers.getHMS(); 
+  // let commentDate = helpers.dateWithTimeZone("America/Chicago",2020,02,28,4,2,0);
   
   User.addComment(
     new ObjectId(),
@@ -429,29 +430,31 @@ exports.postComments = async (req, res) => {
     profileEmail,
     commentDate
   )
-    .then(() => {
+    .then( _ => {
       res.redirect(`profile/${profileEmail}`);
     })
     .catch(errorMessage => {
-      console.log(errorMessage);
+      req.flash("errors", errorMessage);
+      req.session.save(async _ =>{
+        await res.redirect(`profile/${profileEmail}`)
+      })
     });
 };
 
 // DELETE A COMMENT
 exports.deleteComment = (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
-  const [, commentId ] = helpers.getCommentIdEmail(req.body.commentId);
 
-  User.deleteComment(commentId, profileEmail)
+  User.deleteComment(req.body.commentId, profileEmail)
   .then(successMessage => {
     req.flash("success", successMessage);
-    req.session.save(async () => {
+    req.session.save(async _ => {
       await res.redirect(`profile/${profileEmail}`);
     })    
   })
   .catch(errorMessage => {
     req.flash("errors", errorMessage);
-    req.session.save(async () => {
+    req.session.save(async _ => {
       await res.redirect(`profile/${profileEmail}`);
     });
   });

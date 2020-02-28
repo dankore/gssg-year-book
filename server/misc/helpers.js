@@ -1,9 +1,3 @@
-// DELETE COMMENT HELPER
-const getCommentIdEmail = string => {
-  return string.split(",")
-}
-
-
 // VALIDATION: ALLOWS ONLY LETTERS, NUMBERS, DASHES, AND HYPHENS
 const isAlphaNumericDashHyphen = stringInput => {
   return /^[\w-]+$/.test(stringInput);
@@ -40,17 +34,20 @@ function addZero(i) {
 
 const getHMS = _ => {
   var d = new Date();
-  var h = addZero(d.getHours());
-  var m = addZero(d.getMinutes());
+  var g = d.getUTCHours()
+  var f = d.getTimezoneOffset()/60
+  var h = addZero(g - f);
+  var m = addZero(d.getUTCMinutes());
+  console.log(g, f, h)
   return h + ":" + m;
 };
 // HOURS MINUTES
 // MONTH DAY YEAR
 const getMonthDayYear = () => {
   const date = new Date();
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const day = date.getDate();
+  const year = date.getUTCFullYear();
+  const month = date.getUTCMonth();
+  const day = date.getUTCDate();
 
   const yearFormated = ("" + year).slice(2); // GET LAST TWO DIGITS
   const monthFormated = formatMonth(month);
@@ -60,40 +57,40 @@ const getMonthDayYear = () => {
 
 function formatMonth(num) {
   switch (num) {
-    case 1:
+    case 0:
       return "Jan";
       break;
-    case 2:
+    case 1:
       return "Feb";
       break;
-    case 3:
+    case 2:
       return "Mar";
       break;
-    case 4:
+    case 3:
       return "Apr";
       break;
-    case 5:
+    case 4:
       return "May";
       break;
-    case 6:
+    case 5:
       return "Jun";
       break;
-    case 7:
+    case 6:
       return "Jul";
       break;
-    case 8:
+    case 7:
       return "Aug";
       break;
-    case 9:
+    case 8:
       return "Sep";
       break;
-    case 10:
+    case 9:
       return "Oct";
       break;
-    case 11:
+    case 10:
       return "Nov";
       break;
-    case 12:
+    case 11:
       return "Dec";
   }
 }
@@ -102,4 +99,3 @@ exports.statsByYear = statsByYear;
 exports.getEmailFromHeadersReferrer = getEmailFromHeadersReferrer;
 exports.getHMS = getHMS;
 exports.getMonthDayYear = getMonthDayYear;
-exports.getCommentIdEmail = getCommentIdEmail;

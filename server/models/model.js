@@ -887,7 +887,7 @@ User.addComment = (commentId, comment, visitorEmail, visitorFirstName, profileEm
       );
       resolve("comment added.");
     } catch {
-      reject("Comment not added!");
+      reject("Comment not added. Please try again.");
     }
   });
 };
