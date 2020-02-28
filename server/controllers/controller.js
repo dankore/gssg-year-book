@@ -441,6 +441,11 @@ exports.postComments = async (req, res) => {
     });
 };
 
+// EDIT A COMMENT
+exports.editComment = (req, res) => {
+  console.log(req.body)
+}
+
 // DELETE A COMMENT
 exports.deleteComment = (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
