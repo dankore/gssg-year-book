@@ -437,24 +437,22 @@ exports.postComments = async (req, res) => {
     });
 };
 
+// DELETE A COMMENT
 exports.deleteComment = (req, res) => {
-  const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer);
-  const commentId = helpers.getCommentIdEmail(req.body.commentId)[1]
-  const commentEmail = helpers.getCommentIdEmail(req.body.commentId)[0]
+  const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
+  const [, commentId ] = helpers.getCommentIdEmail(req.body.commentId);
+
   User.deleteComment(commentId, profileEmail)
   .then(successMessage => {
-    console.log("profileEmail: " + profileEmail)
-    console.log(successMessage)
     req.flash("success", successMessage);
     req.session.save(async () => {
       await res.redirect(`profile/${profileEmail}`);
     })    
   })
   .catch(errorMessage => {
-    console.log(errorMessage)
     req.flash("errors", errorMessage);
     req.session.save(async () => {
       await res.redirect(`profile/${profileEmail}`);
-    })
-  })
+    });
+  });
 }

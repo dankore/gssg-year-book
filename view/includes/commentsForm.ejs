@@ -16,7 +16,7 @@
   <!-- COMMENTS FORM END -->
   <!-- COMMENTS DISPLAY -->
   <ul class="mb-6">
-    <% if(profile.comments){ %> <% profile.comments.reverse().forEach(comment => { %>
+    <% if(profile.comments.length){ %> <% profile.comments.reverse().forEach(comment => { %>
     <li class="my-2 bg-white p-2 rounded">
       <div class="flex justify-between">
         <div class="flex items-center">
