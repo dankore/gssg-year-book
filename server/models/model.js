@@ -7,7 +7,7 @@ const usersCollection = require("../../db")
   transporter = require("../misc/emailTransporter"),
   Emailer = require("../misc/mail"),
   helpers = require("../misc/helpers");
-
+ const ObjectId = require("mongodb").ObjectID;
 // CLASS
 let User = class user {
   constructor(data, photo, sessionEmail, requestedEmail) {
@@ -892,7 +892,20 @@ User.addComment = (commentId, comment, visitorEmail, visitorFirstName, profileEm
   });
 };
 
-// FIND FIRST NAME BY 
+// DELETE COMMENT
+User.deleteComment = (commentId, profileEmail) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+        await usersCollection.updateOne(
+        { email: profileEmail },
+        {$pull : { 'comments' : {commentId: new ObjectId(commentId) } }},
+        );
+        resolve("Comment deleted.")
+    } catch {
+      reject("Sorry, comment was not deleted. Please try again.")
+    }
+  })
+}
 
 // EXPORT CODE
 module.exports = User;

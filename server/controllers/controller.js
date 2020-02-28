@@ -438,5 +438,23 @@ exports.postComments = async (req, res) => {
 };
 
 exports.deleteComment = (req, res) => {
-  console.log(req.body.commentId )
+  const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer);
+  const commentId = helpers.getCommentIdEmail(req.body.commentId)[1]
+  const commentEmail = helpers.getCommentIdEmail(req.body.commentId)[0]
+  User.deleteComment(commentId, profileEmail)
+  .then(successMessage => {
+    console.log("profileEmail: " + profileEmail)
+    console.log(successMessage)
+    req.flash("success", successMessage);
+    req.session.save(async () => {
+      await res.redirect(`profile/${profileEmail}`);
+    })    
+  })
+  .catch(errorMessage => {
+    console.log(errorMessage)
+    req.flash("errors", errorMessage);
+    req.session.save(async () => {
+      await res.redirect(`profile/${profileEmail}`);
+    })
+  })
 }

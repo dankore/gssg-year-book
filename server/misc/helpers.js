@@ -1,3 +1,9 @@
+// DELETE COMMENT HELPER
+const getCommentIdEmail = string => {
+  return string.split(",")
+}
+
+
 // VALIDATION: ALLOWS ONLY LETTERS, NUMBERS, DASHES, AND HYPHENS
 const isAlphaNumericDashHyphen = stringInput => {
   return /^[\w-]+$/.test(stringInput);
@@ -96,3 +102,4 @@ exports.statsByYear = statsByYear;
 exports.getEmailFromHeadersReferrer = getEmailFromHeadersReferrer;
 exports.getHMS = getHMS;
 exports.getMonthDayYear = getMonthDayYear;
+exports.getCommentIdEmail = getCommentIdEmail;
