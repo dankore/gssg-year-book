@@ -436,3 +436,7 @@ exports.postComments = async (req, res) => {
       console.log(errorMessage);
     });
 };
+
+exports.deleteComment = (req, res) => {
+  console.log(req.body.commentId )
+}

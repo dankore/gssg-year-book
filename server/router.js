@@ -62,5 +62,8 @@ router.get("*", controller.notFound);
 
 // COMMETS
 router.post("/profile", controller.postComments);
+router.post("/delete-comment", controller.deleteComment)
+
+
 // EXPORT CODE
 module.exports = router;
