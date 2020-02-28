@@ -34,11 +34,8 @@ function addZero(i) {
 
 const getHMS = _ => {
   var d = new Date();
-  var g = d.getUTCHours()
-  var f = d.getTimezoneOffset()/60
-  var h = addZero(g - f);
+  var h = addZero(d.getUTCHours() - d.getTimezoneOffset()/60);
   var m = addZero(d.getUTCMinutes());
-  console.log(g, f, h)
   return h + ":" + m;
 };
 // HOURS MINUTES
