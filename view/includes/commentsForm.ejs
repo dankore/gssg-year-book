@@ -1,4 +1,4 @@
-<section class="mx-auto mt-6 rounded" style="width: 18rem;">
+<section class="mx-auto mt-2 rounded" style="width: 18rem;">
   <!-- COMMENTS FORM -->
   <% if(user){ %>
   <div class="bg-white">
@@ -100,13 +100,13 @@
           id="edit-comment-form"
           action="/edit-comment"
           method="POST"
-          class="w-full  bg-red-500 p-2 "
+          class="w-full  p-2 bg-gray-200 border border-blue-400 rounded"
         >
           <textarea
             name="comment"
             value="<%= comment.comment %>"
           
-            class="bg-gray-200 focus:bg-gray-100 w-full"
+            class="w-full"
           >
 <%= comment.comment %></textarea
           >
