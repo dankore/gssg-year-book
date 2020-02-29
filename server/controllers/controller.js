@@ -126,7 +126,7 @@ exports.viewEditScreen = async function(req, res) {
   }
 };
 
-exports.edit = async function(req, res) {
+exports.edit = async (req, res) => {
   if (req.session.user) {
     let userInfo = await User.findByEmail(req.session.user.email);
     let imageUrl = userInfo.photo;
@@ -153,15 +153,15 @@ exports.edit = async function(req, res) {
       .then(status => {
         if (status == "success") {
           req.flash("success", "Profile successfully updated.");
-          req.session.save(function() {
-            res.redirect(`/profile/${req.params.email}/edit`);
+          req.session.save(async _ =>{
+            await res.redirect(`/profile/${req.params.email}/edit`);
           });
         } else {
           profile.errors.forEach(error => {
             req.flash("errors", error);
           });
-          req.session.save(() => {
-            res.redirect(`/profile/${req.params.email}/edit`);
+          req.session.save(async _ => {
+            await res.redirect(`/profile/${req.params.email}/edit`);
           });
         }
       })
@@ -177,6 +177,11 @@ exports.edit = async function(req, res) {
     res.redirect("/");
   }
 };
+
+// NOT FOUND PAGE
+exports.notFound = (req, res) =>{
+  res.status(404).render("404");
+}
 
 exports.account = function(req, res) {
   if (req.session.user) {

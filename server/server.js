@@ -215,8 +215,6 @@ server.use((err, req, res, next) => {
     if (err.code == "EBADCSRFTOKEN") {
       req.flash("errors", "Cross site request forgery detected.");
       req.session.save(_ => res.redirect("/"));
-    } else {
-      res.render("404");
     }
   }
   next();
