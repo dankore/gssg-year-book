@@ -10,6 +10,7 @@
 </p>
 <div class="mx-4 py-4 rounded flex flex-wrap justify-center">
   <form action="/account/<%= user.email %>/delete" method="POST">
+     <input type="hidden"  name="_csrf" value="<%= csrfToken %>" >
     <label for="delete-my-account">
         <input
             id="delete-my-account"

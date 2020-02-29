@@ -409,12 +409,6 @@ exports.sort = (req, res) => {
     });
 };
 
-// IF USER VISITS ANY URL THAT DON'T EXISTS ON THIS APP.
-// REDIRECT TO 404 PAGE
-exports.notFound = (req, res) => {
-  res.status(404).render("404");
-};
-
 // COMMENTS
 exports.postComments = async (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
@@ -429,7 +423,7 @@ exports.postComments = async (req, res) => {
     profileEmail: profileEmail,
     commentDate: commentDate
   };
-  
+
   User.addComment(data)
     .then(_ => {
       res.redirect(`profile/${profileEmail}`);

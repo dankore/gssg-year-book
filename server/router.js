@@ -57,9 +57,6 @@ router.get("/google-login/callback", passport.authenticate('google', {failureRed
 router.get("/twitter-login", passport.authenticate('twitter'));
 router.get('/twitter-login/callback', passport.authenticate('twitter', {failureRedirect: '/register' }), controller.twitterLogin);
 
-// NOT FOUND
-router.get("*", controller.notFound);
-
 // COMMENTS
 router.post("/profile", controller.postComments);
 router.post("/delete-comment", controller.deleteComment);
