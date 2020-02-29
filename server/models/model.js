@@ -7,7 +7,7 @@ const usersCollection = require("../../db")
   transporter = require("../misc/emailTransporter"),
   Emailer = require("../misc/mail"),
   helpers = require("../misc/helpers");
- const ObjectId = require("mongodb").ObjectID;
+const ObjectId = require("mongodb").ObjectID;
 // CLASS
 let User = class user {
   constructor(data, photo, sessionEmail, requestedEmail) {
@@ -333,7 +333,7 @@ User.findByEmail = function(email) {
               social_type_2: userDoc.data.social_type_2,
               link_social_type_2: userDoc.data.link_social_type_2,
               relationship: userDoc.data.relationship,
-              comments:userDoc.data.comments
+              comments: userDoc.data.comments
             };
 
             resolve(userDoc);
@@ -866,7 +866,14 @@ User.sortProfiles = q => {
 };
 
 // COMMENTS
-User.addComment = (commentId, comment, visitorEmail, visitorFirstName, profileEmail, commentDate) => {
+User.addComment = (
+  commentId,
+  comment,
+  visitorEmail,
+  visitorFirstName,
+  profileEmail,
+  commentDate
+) => {
   return new Promise(async (resolve, reject) => {
     try {
       // FIND OWNER OF PROFILEEMAIL AND ADD COMMENT
@@ -881,7 +888,6 @@ User.addComment = (commentId, comment, visitorEmail, visitorFirstName, profileEm
               visitorFirstName: visitorFirstName,
               commentDate: commentDate
             }
-          
           }
         }
       );
@@ -892,20 +898,35 @@ User.addComment = (commentId, comment, visitorEmail, visitorFirstName, profileEm
   });
 };
 
-// DELETE COMMENT
+// UPDATE A COMMENT
+User.updateComment = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await usersCollection.updateOne(
+        { email: data.profileEmail },
+        { $set: { "comments.$[elem].comment": data.comment } },
+        { arrayFilters: [{ "elem.commentId": { $eq: new ObjectId(data.commentId) } }] }
+      );
+      resolve("Comment updated.")
+    } catch {
+      reject("Comment was not updated.");
+    }
+  });
+};
+// DELETE A COMMENT
 User.deleteComment = (commentId, profileEmail) => {
   return new Promise(async (resolve, reject) => {
     try {
-        await usersCollection.updateOne(
+      await usersCollection.updateOne(
         { email: profileEmail },
-        {$pull : { 'comments' : {commentId: new ObjectId(commentId) } }},
-        );
-        resolve("Comment deleted.")
+        { $pull: { comments: { commentId: new ObjectId(commentId) } } }
+      );
+      resolve("Comment deleted.");
     } catch {
-      reject("Sorry, comment was not deleted. Please try again.")
+      reject("Sorry, comment was not deleted. Please try again.");
     }
-  })
-}
+  });
+};
 
 // EXPORT CODE
 module.exports = User;

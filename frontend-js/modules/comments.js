@@ -3,7 +3,6 @@ export default class Comments {
     this.editBtn = document.querySelectorAll("#edit-button");
     this.cancelEditBtn = document.querySelectorAll("#cancel-edit-comment");
     this.updateBtn = document.querySelectorAll("#update-comment");
-    this.editForm = document.querySelectorAll("#edit-comment-form");
     this.events();
   }
 
@@ -16,27 +15,25 @@ export default class Comments {
       cancelBtn.addEventListener("click", e => this.handleCancelBtnClick(e));
     });
     Array.prototype.forEach.call(this.updateBtn, updateBtn => {
-        updateBtn.addEventListener("click", e => this.handleUpdateBtnClick(e));
-    })
+      updateBtn.addEventListener("click", e => this.handleUpdateBtnClick(e));
+    });
   }
 
   // METHODS
   handlerEditBtnClick(e) {
-    const currentElem =
+    const editCommentFormContainer =
       e.currentTarget.parentElement.parentElement.parentElement.children[2];
-    currentElem.style.display = "block";
+    editCommentFormContainer.style.display = "block";
   }
 
   handleCancelBtnClick(e) {
-    const currentElem = e.currentTarget.parentElement.parentElement;
-    currentElem.style.display = "none";
+    const editCommentFormContainer = e.currentTarget.parentElement.parentElement;
+    editCommentFormContainer.style.display = "none";
   }
 
-  handleUpdateBtnClick(e){
-      const formElem = e.currentTarget.parentElement.parentElement.children[0];
-      formElem.submit();
-    // console.log(e.currentTarget.parentElement.parentElement.children[0])
-    
+  handleUpdateBtnClick(e) {
+    const editCommentFormContainer = e.currentTarget.parentElement.parentElement.children[0];
+    editCommentFormContainer.submit(); // SUBMIT FORM
   }
 
   // END CLASS

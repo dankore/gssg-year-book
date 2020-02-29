@@ -1,7 +1,7 @@
 const User = require("../models/model"),
   helpers = require("../misc/helpers");
 
-  const ObjectId = require("mongodb").ObjectID;
+const ObjectId = require("mongodb").ObjectID;
 
 exports.home = async (req, res) => {
   let profiles = await User.allProfiles();
@@ -419,9 +419,9 @@ exports.notFound = (req, res) => {
 exports.postComments = async (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
   let userDoc = await User.findByEmail(req.session.user.email);
-  let commentDate = helpers.getMonthDayYear() + ", " + helpers.getHMS(); 
+  let commentDate = helpers.getMonthDayYear() + ", " + helpers.getHMS();
   // let commentDate = helpers.dateWithTimeZone("America/Chicago",2020,02,28,4,2,0);
-  
+
   User.addComment(
     new ObjectId(),
     req.body.comment,
@@ -430,37 +430,56 @@ exports.postComments = async (req, res) => {
     profileEmail,
     commentDate
   )
-    .then( _ => {
+    .then(_ => {
       res.redirect(`profile/${profileEmail}`);
     })
     .catch(errorMessage => {
       req.flash("errors", errorMessage);
-      req.session.save(async _ =>{
-        await res.redirect(`profile/${profileEmail}`)
-      })
+      req.session.save(async _ => {
+        await res.redirect(`profile/${profileEmail}`);
+      });
     });
 };
 
-// EDIT A COMMENT
+// UPDATE A COMMENT
 exports.editComment = (req, res) => {
-  console.log(req.body)
-}
+  const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
+  const data = { // SANITIZE DATA
+    commentId: req.body.commentId,
+    comment: req.body.comment,
+    profileEmail: profileEmail
+  };
+  console.log(data)
+  User.updateComment(data)
+    .then(successMessage => {
+      req.flash("success", successMessage);
+      req.session.save(async _ => {
+        await res.redirect(`profile/${profileEmail}`);
+      });
+    })
+    .catch(errorMessage => {
+      req.flash("errors", errorMessage);
+      req.session.save(async _ => {
+        await res.redirect(`profile/${profileEmail}`);
+      });
+    });
+};
 
 // DELETE A COMMENT
 exports.deleteComment = (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
 
   User.deleteComment(req.body.commentId, profileEmail)
-  .then(successMessage => {
-    req.flash("success", successMessage);
-    req.session.save(async _ => {
-      await res.redirect(`profile/${profileEmail}`);
-    })    
-  })
-  .catch(errorMessage => {
-    req.flash("errors", errorMessage);
-    req.session.save(async _ => {
-      await res.redirect(`profile/${profileEmail}`);
+    .then(successMessage => {
+      req.flash("success", successMessage);
+      req.session.save(async _ => {
+        await res.redirect(`profile/${profileEmail}`);
+      });
+    })
+    .catch(errorMessage => {
+      req.flash("errors", errorMessage);
+      req.session.save(async _ => {
+        await res.redirect(`profile/${profileEmail}`);
+      });
     });
-  });
-}
+};

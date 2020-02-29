@@ -103,12 +103,14 @@
           class="w-full  bg-red-500 p-2 "
         >
           <textarea
-            name="edit_comment"
+            name="comment"
             value="<%= comment.comment %>"
+          
             class="bg-gray-200 focus:bg-gray-100 w-full"
           >
 <%= comment.comment %></textarea
           >
+          <input type="text" name="commentId"  class="hidden" value="<%= comment.commentId %>" >
         </form>
         <div class="flex justify-between">
           <button
