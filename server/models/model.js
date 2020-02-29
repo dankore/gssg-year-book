@@ -899,15 +899,24 @@ User.addComment = (
 };
 
 // UPDATE A COMMENT
-User.updateComment = (data) => {
+User.updateComment = data => {
   return new Promise(async (resolve, reject) => {
     try {
       await usersCollection.updateOne(
         { email: data.profileEmail },
-        { $set: { "comments.$[elem].comment": data.comment } },
-        { arrayFilters: [{ "elem.commentId": { $eq: new ObjectId(data.commentId) } }] }
+        {
+          $set: {
+            "comments.$[elem].comment": data.comment,
+            "comments.$[elem].commentDate": `Updated ${helpers.getMonthDayYear()}, ${helpers.getHMS()}`
+          }
+        },
+        {
+          arrayFilters: [
+            { "elem.commentId": { $eq: new ObjectId(data.commentId) } }
+          ]
+        }
       );
-      resolve("Comment updated.")
+      resolve("Comment updated.");
     } catch {
       reject("Comment was not updated.");
     }
