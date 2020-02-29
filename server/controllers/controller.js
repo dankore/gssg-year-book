@@ -418,18 +418,19 @@ exports.notFound = (req, res) => {
 // COMMENTS
 exports.postComments = async (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
-  let userDoc = await User.findByEmail(req.session.user.email);
-  let commentDate = helpers.getMonthDayYear() + ", " + helpers.getHMS();
-  // let commentDate = helpers.dateWithTimeZone("America/Chicago",2020,02,28,4,2,0);
-
-  User.addComment(
-    new ObjectId(),
-    req.body.comment,
-    req.session.user.email,
-    userDoc.firstName,
-    profileEmail,
-    commentDate
-  )
+  const userDoc = await User.findByEmail(req.session.user.email);
+  const commentDate = helpers.getMonthDayYear() + ", " + helpers.getHMS();
+  // SANITIZE DATA
+  const data = {
+    commentId: new ObjectId(),
+    comment: req.body.comment,
+    visitorEmail: req.session.user.email,
+    visitorFirstName: userDoc.firstName,
+    profileEmail: profileEmail,
+    commentDate: commentDate
+  };
+  
+  User.addComment(data)
     .then(_ => {
       res.redirect(`profile/${profileEmail}`);
     })
@@ -444,12 +445,13 @@ exports.postComments = async (req, res) => {
 // UPDATE A COMMENT
 exports.editComment = (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
-  const data = { // SANITIZE DATA
+  // SANITIZE DATA
+  const data = {
     commentId: req.body.commentId,
     comment: req.body.comment,
     profileEmail: profileEmail
   };
-  console.log(data)
+  console.log(data);
   User.updateComment(data)
     .then(successMessage => {
       req.flash("success", successMessage);

@@ -866,27 +866,20 @@ User.sortProfiles = q => {
 };
 
 // COMMENTS
-User.addComment = (
-  commentId,
-  comment,
-  visitorEmail,
-  visitorFirstName,
-  profileEmail,
-  commentDate
-) => {
+User.addComment = data => {
   return new Promise(async (resolve, reject) => {
     try {
       // FIND OWNER OF PROFILEEMAIL AND ADD COMMENT
       await usersCollection.findOneAndUpdate(
-        { email: profileEmail },
+        { email: data.profileEmail },
         {
           $push: {
             comments: {
-              commentId,
-              comment: comment,
-              visitorEmail: visitorEmail,
-              visitorFirstName: visitorFirstName,
-              commentDate: commentDate
+              commentId: data.commentId,
+              comment: data.comment,
+              visitorEmail: data.visitorEmail,
+              visitorFirstName: data.visitorFirstName,
+              commentDate: data.commentDate
             }
           }
         }
