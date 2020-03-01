@@ -42,7 +42,6 @@
 
       <% if (user) { %>
       <form action="/logout" method="POST" class="flex flex-wrap">
-         <input type="hidden"  name="_csrf" value="<%= csrfToken %>" >
         <label for="logout">
             <input
                 id="logout"
