@@ -188,9 +188,11 @@ server.use(async (req, res, next) => {
   res.locals.path = req.originalUrl;
   // GET FIRST NAME
   if (req.session.user) {
-    User.findByEmail(req.session.user.email)
+    await User.findByEmail(req.session.user.email)
       .then(userDoc => {
         res.locals.first_name_welcome = userDoc.firstName;
+        res.locals.emailForComment = userDoc.email;
+        res.locals.photoUrlForComment = userDoc.photo;
       })
       .catch(err => {
         console.log("Server line 153 " + err);

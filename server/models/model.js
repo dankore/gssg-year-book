@@ -865,7 +865,7 @@ User.sortProfiles = q => {
   });
 };
 
-// COMMENTS
+// ADD A COMMENT
 User.addComment = data => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -879,6 +879,7 @@ User.addComment = data => {
               comment: data.comment,
               visitorEmail: data.visitorEmail,
               visitorFirstName: data.visitorFirstName,
+              photo: data.photo,
               commentDate: data.commentDate
             }
           }

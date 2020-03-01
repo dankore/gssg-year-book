@@ -424,6 +424,7 @@ exports.postComments = async (req, res) => {
     visitorEmail: req.session.user.email,
     visitorFirstName: userDoc.firstName,
     profileEmail: profileEmail,
+    photo: userDoc.photo,
     commentDate: commentDate
   };
 

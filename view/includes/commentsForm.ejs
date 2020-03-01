@@ -2,14 +2,21 @@
   <!-- COMMENTS FORM -->
   <% if(user){ %>
   <div class="bg-white">
-    <form action="/profile" method="POST" class="p-2">
-      <textarea
-        name="comment"
-        class="bg-gray-200 focus:bg-gray-100 w-full"
-      ></textarea>
-      <button class="rounded bg-blue-600 hover:bg-blue-800 text-white w-full">
-        Submit
-      </button>
+    <form action="/profile" method="POST" class="flex p-2">
+      <div class="mr-1">
+        <a href="/profile/<%= emailForComment %>">
+          <img src="<%= photoUrlForComment %>" class="w-8 h-8 rounded-full" />
+        </a>
+      </div>
+      <div style="width: 15rem;">
+        <textarea
+          name="comment"
+          class="bg-gray-200 focus:bg-gray-100 w-full"
+        ></textarea>
+        <button class="rounded bg-blue-600 hover:bg-blue-800 text-white w-full">
+          Submit
+        </button>
+      </div>
     </form>
   </div>
   <% } %>
@@ -23,22 +30,20 @@
     <% if(profile.comments){ %> <% if(profile.comments.length){ %> <%
     profile.comments.reverse().forEach(comment => { %>
     <li class="my-2 bg-white p-2 rounded">
-        <div class="flex">
-
-          <div class="flex mr-1">
-            <a href="/profile/<%= comment.visitorEmail %>">
-            <img
-              src="../../static/blank.png"
-              class="w-8 h-8 rounded-full"
-            />
+      <div class="flex">
+        <div class="flex mr-1">
+          <a href="/profile/<%= comment.visitorEmail %>">
+            <img src="<%= comment.photo %>" class="w-8 h-8 rounded-full" />
           </a>
-          </div>
+        </div>
 
-          <div class="rounded px-2" style="overflow-wrap: break-word; min-width: 0px; width: 15rem; background-color: #F2F3F5;">
-            <p class="font-semibold"><%= comment.visitorFirstName %></p>
-            <p><%- filterUserHTML(comment.comment) %></p>
-          </div>
-
+        <div
+          class="rounded px-2"
+          style="overflow-wrap: break-word; min-width: 0px; width: 15rem; background-color: #F2F3F5;"
+        >
+          <p class="font-medium"><%= comment.visitorFirstName %></p>
+          <p><%- filterUserHTML(comment.comment) %></p>
+        </div>
       </div>
       <div class="flex justify-between items-center mt-2 text-xs">
         <p>
