@@ -1,5 +1,16 @@
 <section class="mx-auto mt-2 rounded" style="width: 18rem;">
-  <!-- COMMENTS FORM -->
+  <div class="border text-center p-4 boder-green-600">
+     <% if(profile.comments){ %>
+        <% if(profile.comments.length > 1){ %>
+          <p>See comments (<%= profile.comments.length %>)</p>
+        <% } else { %>
+           <p>See comment (<%= profile.comments.length %>)</p>
+        <%}%>
+      <% } else { %>
+          <p>See comment (0)</p>
+      <%}%>
+  </div>
+  <!-- ADD COMMENTS FORM -->
   <% if(user){ %>
   <div class="bg-white">
     <form action="/profile" method="POST" class="flex p-2">
