@@ -203,7 +203,7 @@ server.use("/profile/:email", (req, res, next) => {
   next();
 });
 // SEO ENDS
-server.use(router);
+server.use("/", router);
 
 // EXPORT CODE
 module.exports = server;
