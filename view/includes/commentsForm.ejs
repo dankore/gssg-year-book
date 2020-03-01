@@ -10,10 +10,11 @@
       </div>
       <div style="width: 15rem;">
         <textarea
+          type="text"
           name="comment"
           class="focus:bg-gray-100 w-full p-2"
           placeholder="What's on your mind?"
-          style="background-color: #F2F3F5;"
+          style="background-color: #F2F3F5; white-space: pre-wrap;"
         ></textarea>
         <button class="rounded bg-blue-600 hover:bg-blue-800 text-white w-full">
           Submit
@@ -43,7 +44,7 @@
           class="rounded px-2"
           style="overflow-wrap: break-word; min-width: 0px; width: 15rem; background-color: #F2F3F5;"
         >
-          <a href="/profile/<%= comment.visitorEmail %>"><p class="font-medium"><%= comment.visitorFirstName %></p></a>
+          <a href="/profile/<%= comment.visitorEmail %>" class="font-medium"><%= comment.visitorFirstName %></a>
           <p><%- filterUserHTML(comment.comment) %></p>
         </div>
       </div>

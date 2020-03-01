@@ -420,7 +420,7 @@ exports.postComments = async (req, res) => {
   // GET RID OF BOGUS AND SANITIZE DATA
   const data = {
     commentId: new ObjectId(),
-    comment: sanitizeHMTL(req.body.comment, { allowedTags: [], allowedAttributes: [] }),
+    comment: req.body.comment,
     visitorEmail: req.session.user.email,
     visitorFirstName: userDoc.firstName,
     profileEmail: profileEmail,
@@ -446,7 +446,7 @@ exports.editComment = (req, res) => {
   // GET RID OF BOGUS AND SANITIZE DATA
   const data = {
     commentId: req.body.commentId,
-    comment: sanitizeHMTL(req.body.comment, { allowedTags: [], allowedAttributes: [] }),
+    comment: req.body.comment,
     profileEmail: profileEmail
   };
   
