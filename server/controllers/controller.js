@@ -25,8 +25,7 @@ exports.registrationSubmission = async (req, res) => {
     .register()
     .then(successMessage => {
       req.session.user = {
-        email: user.data.email,
-        firstName: "Gosite"
+        email: user.data.email
       };
       req.flash("success", successMessage);
       req.session.save(async function() {
