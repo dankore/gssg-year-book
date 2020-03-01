@@ -23,19 +23,22 @@
     <% if(profile.comments){ %> <% if(profile.comments.length){ %> <%
     profile.comments.reverse().forEach(comment => { %>
     <li class="my-2 bg-white p-2 rounded">
-      <div class="flex justify-between">
-        <div class="flex items-center">
-          <a href="/profile/<%= comment.visitorEmail %>">
+        <div class="flex">
+
+          <div class="flex mr-1">
+            <a href="/profile/<%= comment.visitorEmail %>">
             <img
               src="../../static/blank.png"
-              class="w-12 h-12 rounded-full mr-3"
+              class="w-8 h-8 rounded-full"
             />
           </a>
-          <div style="overflow-wrap: break-word; min-width: 0px; width: 13rem;">
+          </div>
+
+          <div class="rounded px-2" style="overflow-wrap: break-word; min-width: 0px; width: 15rem; background-color: #F2F3F5;">
             <p class="font-semibold"><%= comment.visitorFirstName %></p>
             <p><%- filterUserHTML(comment.comment) %></p>
           </div>
-        </div>
+
       </div>
       <div class="flex justify-between items-center mt-2 text-xs">
         <p>
@@ -105,12 +108,15 @@
           <textarea
             name="comment"
             value="<%= comment.comment %>"
-          
             class="w-full"
           >
 <%= comment.comment %></textarea
           >
-          <input type="hidden" name="commentId"  value="<%= comment.commentId %>" >
+          <input
+            type="hidden"
+            name="commentId"
+            value="<%= comment.commentId %>"
+          />
         </form>
         <div class="flex justify-between">
           <button
@@ -133,6 +139,6 @@
     <p>No comment found.</p>
     <%}%> <% } else { %>
     <p>No comment found!</p>
-    <%}%>    
+    <%}%>
   </ul>
 </section>
