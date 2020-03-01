@@ -3,7 +3,6 @@ const express = require("express"),
   MongoStore = require("connect-mongo")(session),
   flash = require("connect-flash"),
   server = express(),
-  csrf = require("csurf"),
   bodyParser = require("body-parser"),
   router = require("./router"),
   compression = require("compression"),
@@ -204,21 +203,6 @@ server.use("/profile/:email", (req, res, next) => {
   next();
 });
 // SEO ENDS
-server.use(csrf());
-server.use((req, res, next) => {
-  res.locals.csrfToken = req.csrfToken();
-  next();
-});
-
-server.use((err, req, res, next) => {
-  if (err) {
-    if (err.code == "EBADCSRFTOKEN") {
-      req.flash("errors", "Cross site request forgery detected.");
-      req.session.save(_ => res.redirect("/"));
-    }
-  }
-  next();
-});
 server.use(router);
 
 // EXPORT CODE
