@@ -128,8 +128,8 @@ exports.viewEditScreen = async function(req, res) {
 
 exports.edit = async (req, res) => {
   if (req.session.user) {
-    let userInfo = await User.findByEmail(req.session.user.email);
-    let imageUrl = userInfo.photo;
+    const userInfo = await User.findByEmail(req.session.user.email);
+    const imageUrl = userInfo.photo;
     let profile;
 
     if (req.file) {
@@ -150,12 +150,16 @@ exports.edit = async (req, res) => {
 
     profile
       .update()
-      .then(status => {
+      .then(async status => {
         if (status == "success") {
           req.flash("success", "Profile successfully updated.");
           req.session.save(async _ =>{
             await res.redirect(`/profile/${req.params.email}/edit`);
           });
+          // UPDATE USER COMMENTS INFO ACROSS ALL COMMENTS
+           const userInfo = await User.findByEmail(req.session.user.email);
+           await User.updateCommentFirtName(userInfo.email, userInfo.firstName);
+           // UPDATE USER COMMENTS END
         } else {
           profile.errors.forEach(error => {
             req.flash("errors", error);
