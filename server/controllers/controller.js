@@ -157,7 +157,7 @@ exports.edit = async (req, res) => {
           });
           // UPDATE USER COMMENTS INFO ACROSS ALL COMMENTS
            const userInfo = await User.findByEmail(req.session.user.email);
-           await User.updateCommentFirtName(userInfo.email, userInfo.firstName);
+           User.updateCommentFirtName(userInfo.email, userInfo.firstName);
            // UPDATE USER COMMENTS END
         } else {
           profile.errors.forEach(error => {
