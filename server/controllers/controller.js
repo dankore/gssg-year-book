@@ -1,7 +1,7 @@
 const User = require("../models/model"),
   helpers = require("../misc/helpers"),
   sanitizeHMTL = require("sanitize-html"),
-  ObjectId = require("mongodb").ObjectID
+  ObjectId = require("mongodb").ObjectID;
 
 exports.home = async (req, res) => {
   let profiles = await User.allProfiles();
@@ -126,60 +126,57 @@ exports.viewEditScreen = async function(req, res) {
 };
 
 exports.edit = async (req, res) => {
-    const userInfo = await User.findByEmail(req.session.user.email);
-    const imageUrl = userInfo.photo;
-    let profile;
+  const userInfo = await User.findByEmail(req.session.user.email);
+  const imageUrl = userInfo.photo;
+  let profile;
 
-    if (req.file) {
-      profile = new User(
-        req.body,
-        req.file.location,
-        req.session.user.email,
-        req.params.email
-      );
-    } else {
-      profile = new User(
-        req.body,
-        imageUrl,
-        req.session.user.email,
-        req.params.email
-      );
-    }
+  if (req.file) {
+    profile = new User(
+      req.body,
+      req.file.location,
+      req.session.user.email,
+      req.params.email
+    );
+  } else {
+    profile = new User(
+      req.body,
+      imageUrl,
+      req.session.user.email,
+      req.params.email
+    );
+  }
 
-    profile
-      .update()
-      .then(async status => {
-        if (status == "success") {
-          req.flash("success", "Profile successfully updated.");
-          req.session.save(async _ =>{
-            await res.redirect(`/profile/${req.params.email}/edit`);
-          });
-          // UPDATE USER COMMENTS INFO ACROSS ALL COMMENTS
-           const userInfo = await User.findByEmail(req.session.user.email);
-           User.updateCommentFirtName(userInfo.email, userInfo.firstName);
-           // UPDATE USER COMMENTS END
-        } else {
-          profile.errors.forEach(error => {
-            req.flash("errors", error);
-          });
-          req.session.save(async _ => {
-            await res.redirect(`/profile/${req.params.email}/edit`);
-          });
-        }
-      })
-      .catch(() => {
-        req.flash(
-          "errors",
-          "You do not have permission to perform that action."
-        );
-        res.redirect("/");
-      });
+  profile
+    .update()
+    .then(async status => {
+      if (status == "success") {
+        req.flash("success", "Profile successfully updated.");
+        req.session.save(async _ => {
+          await res.redirect(`/profile/${req.params.email}/edit`);
+        });
+        // UPDATE USER COMMENTS INFO ACROSS ALL COMMENTS
+        const userInfo = await User.findByEmail(req.session.user.email);
+        User.updateCommentFirtName(userInfo.email, userInfo.firstName);
+        // UPDATE USER COMMENTS END
+      } else {
+        profile.errors.forEach(error => {
+          req.flash("errors", error);
+        });
+        req.session.save(async _ => {
+          await res.redirect(`/profile/${req.params.email}/edit`);
+        });
+      }
+    })
+    .catch(() => {
+      req.flash("errors", "You do not have permission to perform that action.");
+      res.redirect("/");
+    });
 };
 
 // NOT FOUND PAGE
-exports.notFound = (req, res) =>{
+exports.notFound = (req, res) => {
   res.status(404).render("404");
-}
+};
 
 exports.account = (req, res) => {
   if (req.session.user) {
@@ -449,7 +446,7 @@ exports.editComment = (req, res) => {
     comment: req.body.comment,
     profileEmail: profileEmail
   };
-  
+
   User.updateComment(data)
     .then(successMessage => {
       req.flash("success", successMessage);

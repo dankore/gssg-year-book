@@ -362,7 +362,7 @@ User.prototype.update = function() {
       if (visistorIsOwner) {
         //Update
         let status = await this.actuallyUpdate();
-       
+
         resolve(status);
       } else {
         reject();
@@ -892,30 +892,29 @@ User.addComment = data => {
   });
 };
 // UPDATE COMMENTS FOR A USER WHO UPDATES THEIR PROFILE
- User.updateCommentFirtName = (email, firstName) => {
-   return new Promise(async(resolve, reject) => {
-     try {
-       await usersCollection.updateMany(
-       {"comments.visitorEmail": email},
-       {
-         $set: {
-           "comments.$[elem].visitorFirstName": firstName 
-         }
-       },
-       {
-        arrayFilters : [
-          {"elem.visitorEmail" : email }
-        ], "multi" : true
-       }
-      )
+User.updateCommentFirtName = (email, firstName) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await usersCollection.updateMany(
+        { "comments.visitorEmail": email },
+        {
+          $set: {
+            "comments.$[elem].visitorFirstName": firstName
+          }
+        },
+        {
+          arrayFilters: [{ "elem.visitorEmail": email }],
+          multi: true
+        }
+      );
       resolve();
-      } catch {
-       reject(err => console.log("Error updating user's comments firstname." + err));
-     }
-   })
-     
-     
- }
+    } catch {
+      reject(err =>
+        console.log("Error updating user's comments firstname." + err)
+      );
+    }
+  });
+};
 
 // UPDATE A COMMENT
 User.updateComment = data => {

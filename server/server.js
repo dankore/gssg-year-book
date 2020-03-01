@@ -174,7 +174,7 @@ server.use(compression());
 server.use("/favicon.ico", express.static("public/favicon.ico"));
 server.use(async (req, res, next) => {
   // MAKE MARKDOWN AVAILABLE GLOBALLY
-  res.locals.filterUserHTML = (content) => {
+  res.locals.filterUserHTML = content => {
     return sanitizeHTML(markdown(content), {
       allowedTags: [
         "p",
@@ -199,7 +199,7 @@ server.use(async (req, res, next) => {
       },
       allowedSchemes: ["http", "https", "ftp", "mailto"]
     });
-  }
+  };
   // Make all available from all templates
   res.locals.errors = req.flash("errors");
   res.locals.success = req.flash("success");

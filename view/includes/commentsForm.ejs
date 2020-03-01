@@ -44,7 +44,9 @@
           class="rounded px-2"
           style="overflow-wrap: break-word; min-width: 0px; width: 15rem; background-color: #F2F3F5;"
         >
-          <a href="/profile/<%= comment.visitorEmail %>" class="font-medium"><%= comment.visitorFirstName %></a>
+          <a href="/profile/<%= comment.visitorEmail %>" class="font-medium"
+            ><%= comment.visitorFirstName %></a
+          >
           <p><%- filterUserHTML(comment.comment) %></p>
         </div>
       </div>
