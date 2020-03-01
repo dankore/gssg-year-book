@@ -3,6 +3,8 @@ const express = require("express"),
   MongoStore = require("connect-mongo")(session),
   flash = require("connect-flash"),
   server = express(),
+  markdown = require("marked"),
+  sanitizeHTML = require("sanitize-html"),
   bodyParser = require("body-parser"),
   router = require("./router"),
   compression = require("compression"),
@@ -171,6 +173,13 @@ server.use(flash());
 server.use(compression());
 server.use("/favicon.ico", express.static("public/favicon.ico"));
 server.use(async (req, res, next) => {
+  // MAKE MARKDOWN AVAILABLE GLOBALLY
+  res.locals.filterUserHTML = (content) => {
+    return sanitizeHTML(markdown(content), {
+      allowedTags: ['p', 'br', 'ul', 'li', 'strong', 'i', 'em', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+      allowedAttributes: {}
+    });
+  }
   // Make all available from all templates
   res.locals.errors = req.flash("errors");
   res.locals.success = req.flash("success");

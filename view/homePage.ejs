@@ -17,6 +17,19 @@
   <% if(profiles.length){ %> <% profiles.forEach(profile => { %>
   <a  class="m-4" href="/profile/<%= profile.email %>">
     <%- include('includes/profileShared', {profile: profile}) %>
+    <!-- SHOW NUMBER OF COMMENTS -->
+    <section class="mx-auto mt-2 text-xs rounded" style="width: 18rem;">
+      <% if(profile.comments){ %>
+          <% if(profile.comments.length){ %>
+            <p>View <%= profile.comments.length %> comments</p>
+          <% } else { %>
+            <p>No comment found. Say hello.</p>
+          <% } %> 
+      <% } else { %>
+        <p>No comment found. Say hello!</p>
+      <% } %> 
+</section>
+<!-- SHOW NUMBER OF COMMENTS END -->
   </a>
   <% }) %> <% } else { %>
   <p>No profile found.</p>

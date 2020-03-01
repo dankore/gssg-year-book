@@ -1,7 +1,7 @@
 const User = require("../models/model"),
-  helpers = require("../misc/helpers");
-
-const ObjectId = require("mongodb").ObjectID;
+  helpers = require("../misc/helpers"),
+  sanitizeHMTL = require("sanitize-html"),
+  ObjectId = require("mongodb").ObjectID
 
 exports.home = async (req, res) => {
   let profiles = await User.allProfiles();
@@ -181,7 +181,7 @@ exports.notFound = (req, res) =>{
   res.status(404).render("404");
 }
 
-exports.account = function(req, res) {
+exports.account = (req, res) => {
   if (req.session.user) {
     let visitorIsOwner = User.isVisitorOwner(
       req.session.user.email,
@@ -198,7 +198,7 @@ exports.account = function(req, res) {
   }
 };
 
-exports.delete = function(req, res) {
+exports.delete = (req, res) => {
   User.delete(req.params.email, req.session.user.email)
     .then(() => {
       req.flash("success", "Account successfully deleted.");
@@ -253,11 +253,11 @@ exports.changePassword = function(req, res) {
     });
 };
 
-exports.resetPasswordPage = function(req, res) {
+exports.resetPasswordPage = (req, res) => {
   res.render("resetPasswordPage");
 };
 
-exports.resetPassword = function(req, res) {
+exports.resetPassword = (req, res) => {
   let user = new User(req.body);
 
   user
@@ -275,7 +275,7 @@ exports.resetPassword = function(req, res) {
     });
 };
 
-exports.resetPasswordTokenPage = function(req, res) {
+exports.resetPasswordTokenPage = (req, res) => {
   let user = User.resetTokenExpiryTest(req.params.token);
 
   user
@@ -290,7 +290,7 @@ exports.resetPasswordTokenPage = function(req, res) {
     });
 };
 
-exports.resetPasswordToken = function(req, res) {
+exports.resetPasswordToken = (req, res) => {
   let user = new User(req.body);
 
   user
@@ -417,10 +417,10 @@ exports.postComments = async (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
   const userDoc = await User.findByEmail(req.session.user.email);
   const commentDate = helpers.getMonthDayYear() + ", " + helpers.getHMS();
-  // SANITIZE DATA
+  // GET RID OF BOGUS AND SANITIZE DATA
   const data = {
     commentId: new ObjectId(),
-    comment: req.body.comment,
+    comment: sanitizeHMTL(req.body.comment, { allowedTags: [], allowedAttributes: [] }),
     visitorEmail: req.session.user.email,
     visitorFirstName: userDoc.firstName,
     profileEmail: profileEmail,
@@ -442,10 +442,10 @@ exports.postComments = async (req, res) => {
 // UPDATE A COMMENT
 exports.editComment = (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
-  // SANITIZE DATA
+  // GET RID OF BOGUS AND SANITIZE DATA
   const data = {
     commentId: req.body.commentId,
-    comment: req.body.comment,
+    comment: sanitizeHMTL(req.body.comment, { allowedTags: [], allowedAttributes: [] }),
     profileEmail: profileEmail
   };
   

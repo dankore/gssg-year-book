@@ -32,8 +32,8 @@
             />
           </a>
           <div style="overflow-wrap: break-word; min-width: 0px; width: 13rem;">
-            <p class="font-bold"><%= comment.visitorFirstName %></p>
-            <p><%= comment.comment %></p>
+            <p class="font-semibold"><%= comment.visitorFirstName %></p>
+            <p><%- filterUserHTML(comment.comment) %></p>
           </div>
         </div>
       </div>
