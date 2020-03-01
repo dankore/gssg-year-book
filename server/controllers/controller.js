@@ -126,7 +126,6 @@ exports.viewEditScreen = async function(req, res) {
 };
 
 exports.edit = async (req, res) => {
-  if (req.session.user) {
     const userInfo = await User.findByEmail(req.session.user.email);
     const imageUrl = userInfo.photo;
     let profile;
@@ -175,10 +174,6 @@ exports.edit = async (req, res) => {
         );
         res.redirect("/");
       });
-  } else {
-    req.flash("errors", "You must be logged in to perform that action.");
-    res.redirect("/");
-  }
 };
 
 // NOT FOUND PAGE
