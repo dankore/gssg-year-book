@@ -1,0 +1,177 @@
+<!-- TOGGLE: SHOW ALL COMMENTS -->
+<section class="mx-auto mt-2 rounded" style="width: 18rem;">
+  <div
+    id="show-all-comments-toggle"
+    class="border cursor-pointer bg-white text-center px-5 py-3 border-green-600 rounded"
+  >
+    <% if(profile.comments){ %> 
+
+    <% if(profile.comments.length < 1){ %>
+    <p>Be the first to say hello</p>
+
+    <% } else if (profile.comments.length == 1){ %>
+    <p>Comment (<%= profile.comments.length %>)</p>
+
+    <% } else if (profile.comments.length <= 2 ){ %>
+    <p>Comments (<%= profile.comments.length %>)</p>
+
+    <% } else if (profile.comments.length > 2){ %>
+    <p id="before-click-comments-count">Click to view all (<%= profile.comments.length %>) comments</p>
+    <p id="after-click-comments-count" style="display: none;">Comments (<%= profile.comments.length %>)</p>
+    <% } else { %>
+    <p>Be the first to say hello</p>
+    
+    <%}%> <% } else { %>
+    <p>Be the first to say hello</p>
+    <%}%>
+  </div>
+  <!-- TOGGLE: SHOW ALL COMMENTS ENDS -->
+  <!-- ADD COMMENTS FORM -->
+  <% if(user){ %>
+  <div class="bg-white rounded">
+    <form action="/profile" method="POST" class="flex p-2">
+      <div class="mr-1">
+        <a href="/profile/<%= emailForComment %>">
+          <img src="<%= photoUrlForComment %>" class="w-8 h-8 rounded-full" />
+        </a>
+      </div>
+      <div style="width: 15rem;">
+        <textarea
+          type="text"
+          name="comment"
+          class="focus:bg-gray-100 w-full p-2"
+          placeholder="What's on your mind?"
+          style="background-color: #F2F3F5; white-space: pre-wrap;"
+        ></textarea>
+        <button class="rounded bg-blue-600 hover:bg-blue-800 text-white w-full">
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+  <% } %>
+  <!-- COMMENTS FORM END -->
+  <!-- COMMENTS DISPLAY -->
+  <!-- 
+    IF COMMENTS ARRAY EXISTS ON USER DOCUMENT, THEN CHECK IF COMMENTS ARRAY HAS ANY ELEMENT(COMMENTS).
+    SHOW NO COMMENT FOUND FOR BOTH IF FALSE
+   -->
+  <ul id="all-comments-container" class="mb-6 relative">
+    <% if(profile.comments){ %> <% if(profile.comments.length){ %> <%
+    profile.comments.reverse().forEach(comment => { %>
+    <li class="my-2 bg-white p-2 rounded">
+      <div class="flex">
+        <div class="flex mr-1">
+          <a href="/profile/<%= comment.visitorEmail %>">
+            <img src="<%= comment.photo %>" class="w-8 h-8 rounded-full" />
+          </a>
+        </div>
+
+        <div
+          class="rounded px-2"
+          style="overflow-wrap: break-word; min-width: 0px; width: 15rem; background-color: #F2F3F5;"
+        >
+          <a href="/profile/<%= comment.visitorEmail %>" class="font-medium"
+            ><%= comment.visitorFirstName %></a
+          >
+          <p><%- filterUserHTML(comment.comment) %></p>
+        </div>
+      </div>
+      <div class="flex justify-between items-center mt-2 text-xs">
+        <p>
+          <%= comment.commentDate %>
+        </p>
+        <div class="flex">
+          <% if(user){ %> <% if(comment.visitorEmail == user.email){ %>
+          <!-- EDIT BUTTON -->
+          <button
+            id="edit-button"
+            value="<%= comment.comment %>"
+            class="flex items-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="15"
+              height="15"
+            >
+              <path
+                fill="green"
+                class="heroicon-ui"
+                d="M6.3 12.3l10-10a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-10 10a1 1 0 0 1-.7.3H7a1 1 0 0 1-1-1v-4a1 1 0 0 1 .3-.7zM8 16h2.59l9-9L17 4.41l-9 9V16zm10-2a1 1 0 0 1 2 0v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h6a1 1 0 0 1 0 2H4v14h14v-6z"
+              />
+            </svg>
+            <p>Edit</p>
+          </button>
+          <!-- EDIT BUTTON ENDS-->
+          <!-- DELETE BUTTON -->
+          <form action="/delete-comment" method="POST">
+            <button
+              name="commentId"
+              value="<%- comment.commentId %>"
+              class="flex items-center ml-2"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="15"
+                height="15"
+              >
+                <path
+                  fill="red"
+                  class="heroicon-ui"
+                  d="M8 6V4c0-1.1.9-2 2-2h4a2 2 0 0 1 2 2v2h5a1 1 0 0 1 0 2h-1v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8H3a1 1 0 1 1 0-2h5zM6 8v12h12V8H6zm8-2V4h-4v2h4zm-4 4a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0v-6a1 1 0 0 1 1-1zm4 0a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0v-6a1 1 0 0 1 1-1z"
+                />
+              </svg>
+              <p>Delete</p>
+            </button>
+          </form>
+          <!-- DELETE BUTTON ENDS -->
+          <%}%> <%}%>
+        </div>
+      </div>
+      <!-- EDIT COMMENT FORM -->
+      <div
+        id="comment-edit-container"
+        class="absolute w-full -ml-2 -mt-12"
+        style="display: none;"
+      >
+        <form
+          id="edit-comment-form"
+          action="/edit-comment"
+          method="POST"
+          class="w-full  p-2 bg-gray-200 border border-blue-400 rounded"
+        >
+          <textarea
+            name="comment"
+            value="<%= comment.comment %>"
+            class="w-full"
+          >
+<%= comment.comment %></textarea
+          >
+          <input
+            type="hidden"
+            name="commentId"
+            value="<%= comment.commentId %>"
+          />
+        </form>
+        <div class="flex justify-between">
+          <button
+            id="cancel-edit-comment"
+            class="bg-green-600 text-white px-2 rounded"
+          >
+            Cancel
+          </button>
+          <button
+            id="update-comment"
+            class="bg-blue-600 text-white px-2 rounded"
+          >
+            Update
+          </button>
+        </div>
+      </div>
+      <!-- EDIT COMMENT FORM ENDS -->
+    </li>
+    <% }) %> <%}%> <%}%>
+  </ul>
+</section>

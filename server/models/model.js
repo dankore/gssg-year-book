@@ -7,7 +7,7 @@ const usersCollection = require("../../db")
   transporter = require("../misc/emailTransporter"),
   Emailer = require("../misc/mail"),
   helpers = require("../misc/helpers");
-
+const ObjectId = require("mongodb").ObjectID;
 // CLASS
 let User = class user {
   constructor(data, photo, sessionEmail, requestedEmail) {
@@ -268,6 +268,7 @@ User.prototype.register = function() {
       let salt = bcrypt.genSaltSync(10);
       this.data.password = bcrypt.hashSync(this.data.password, salt);
       this.data.photo = "";
+      this.data.comments = [];
       await usersCollection.insertOne(this.data);
 
       // EMAIL USER FOR A SUCCESSFULL REGISTRATION
@@ -331,7 +332,8 @@ User.findByEmail = function(email) {
               link_social_type_1: userDoc.data.link_social_type_1,
               social_type_2: userDoc.data.social_type_2,
               link_social_type_2: userDoc.data.link_social_type_2,
-              relationship: userDoc.data.relationship
+              relationship: userDoc.data.relationship,
+              comments: userDoc.data.comments
             };
 
             resolve(userDoc);
@@ -454,7 +456,8 @@ User.allProfiles = function() {
         link_social_type_1: eachDoc.link_social_type_1,
         social_type_2: eachDoc.social_type_2,
         link_social_type_2: eachDoc.link_social_type_2,
-        relationship: eachDoc.relationship
+        relationship: eachDoc.relationship,
+        comments: eachDoc.comments
       };
       return eachDoc;
     });
@@ -540,7 +543,8 @@ User.search = async function(searchedItem) {
             link_social_type_1: eachDoc.link_social_type_1,
             social_type_2: eachDoc.social_type_2,
             link_social_type_2: eachDoc.link_social_type_2,
-            relationship: eachDoc.relationship
+            relationship: eachDoc.relationship,
+            comments: eachDoc.comments
           };
           return eachDoc;
         });
@@ -816,6 +820,7 @@ User.doesEmailExists = email => {
 User.addSocialUser = data => {
   return new Promise(async (resolve, reject) => {
     try {
+      data.comments = [];
       await usersCollection.insertOne(data);
       resolve(
         "Success, Up GSS Gwarinpa! Click 'Edit Profile' to add your nickname, birthday, and more."
@@ -859,5 +864,104 @@ User.sortProfiles = q => {
     }
   });
 };
+User.validateComment = data => {
+  if (data == "") {
+    reject("Body of comment cannot be empty.");
+    return;
+  }
+};
+// ADD A COMMENT
+User.addComment = data => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      User.validateComment(data.comment);
+      // FIND OWNER OF PROFILEEMAIL AND ADD COMMENT
+      await usersCollection.findOneAndUpdate(
+        { email: data.profileEmail },
+        {
+          $push: {
+            comments: {
+              commentId: data.commentId,
+              comment: data.comment,
+              visitorEmail: data.visitorEmail,
+              visitorFirstName: data.visitorFirstName,
+              photo: data.photo,
+              commentDate: data.commentDate
+            }
+          }
+        }
+      );
+      resolve("comment added.");
+    } catch {
+      reject("Comment not added. Please try again.");
+    }
+  });
+};
+// UPDATE COMMENTS FOR A USER WHO UPDATES THEIR PROFILE
+User.updateCommentFirtName = (email, firstName) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await usersCollection.updateMany(
+        { "comments.visitorEmail": email },
+        {
+          $set: {
+            "comments.$[elem].visitorFirstName": firstName
+          }
+        },
+        {
+          arrayFilters: [{ "elem.visitorEmail": email }],
+          multi: true
+        }
+      );
+      resolve();
+    } catch {
+      reject(err =>
+        console.log("Error updating user's comments firstname." + err)
+      );
+    }
+  });
+};
+
+// UPDATE A COMMENT
+User.updateComment = data => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      User.validateComment(data.comment);
+
+      await usersCollection.updateOne(
+        { email: data.profileEmail },
+        {
+          $set: {
+            "comments.$[elem].comment": data.comment,
+            "comments.$[elem].commentDate": `Updated ${helpers.getMonthDayYear()}, ${helpers.getHMS()}`
+          }
+        },
+        {
+          arrayFilters: [
+            { "elem.commentId": { $eq: new ObjectId(data.commentId) } }
+          ]
+        }
+      );
+      resolve("Comment updated.");
+    } catch {
+      reject("Comment was not updated.");
+    }
+  });
+};
+// DELETE A COMMENT
+User.deleteComment = (commentId, profileEmail) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await usersCollection.updateOne(
+        { email: profileEmail },
+        { $pull: { comments: { commentId: new ObjectId(commentId) } } }
+      );
+      resolve("Comment deleted.");
+    } catch {
+      reject("Sorry, comment was not deleted. Please try again.");
+    }
+  });
+};
+
 // EXPORT CODE
 module.exports = User;

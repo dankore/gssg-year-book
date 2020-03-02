@@ -1,5 +1,7 @@
 const User = require("../models/model"),
-  helpers = require("../misc/helpers");
+  helpers = require("../misc/helpers"),
+  sanitizeHMTL = require("sanitize-html"),
+  ObjectId = require("mongodb").ObjectID;
 
 exports.home = async (req, res) => {
   let profiles = await User.allProfiles();
@@ -23,8 +25,7 @@ exports.registrationSubmission = async (req, res) => {
     .register()
     .then(successMessage => {
       req.session.user = {
-        email: user.data.email,
-        firstName: "Gosite"
+        email: user.data.email
       };
       req.flash("success", successMessage);
       req.session.save(async function() {
@@ -90,7 +91,6 @@ exports.profileScreen = (req, res) => {
       req.session.user.email,
       req.profileUser.email
     );
-
     if (visitorIsOwner) {
       res.render("profileLoggedInUser", { profile: req.profileUser });
     } else {
@@ -125,59 +125,60 @@ exports.viewEditScreen = async function(req, res) {
   }
 };
 
-exports.edit = async function(req, res) {
-  if (req.session.user) {
-    let userInfo = await User.findByEmail(req.session.user.email);
-    let imageUrl = userInfo.photo;
-    let profile;
+exports.edit = async (req, res) => {
+  const userInfo = await User.findByEmail(req.session.user.email);
+  const imageUrl = userInfo.photo;
+  let profile;
 
-    if (req.file) {
-      profile = new User(
-        req.body,
-        req.file.location,
-        req.session.user.email,
-        req.params.email
-      );
-    } else {
-      profile = new User(
-        req.body,
-        imageUrl,
-        req.session.user.email,
-        req.params.email
-      );
-    }
-
-    profile
-      .update()
-      .then(status => {
-        if (status == "success") {
-          req.flash("success", "Profile successfully updated.");
-          req.session.save(function() {
-            res.redirect(`/profile/${req.params.email}/edit`);
-          });
-        } else {
-          profile.errors.forEach(error => {
-            req.flash("errors", error);
-          });
-          req.session.save(() => {
-            res.redirect(`/profile/${req.params.email}/edit`);
-          });
-        }
-      })
-      .catch(() => {
-        req.flash(
-          "errors",
-          "You do not have permission to perform that action."
-        );
-        res.redirect("/");
-      });
+  if (req.file) {
+    profile = new User(
+      req.body,
+      req.file.location,
+      req.session.user.email,
+      req.params.email
+    );
   } else {
-    req.flash("errors", "You must be logged in to perform that action.");
-    res.redirect("/");
+    profile = new User(
+      req.body,
+      imageUrl,
+      req.session.user.email,
+      req.params.email
+    );
   }
+
+  profile
+    .update()
+    .then(async status => {
+      if (status == "success") {
+        req.flash("success", "Profile successfully updated.");
+        req.session.save(async _ => {
+          await res.redirect(`/profile/${req.params.email}/edit`);
+        });
+        // UPDATE USER COMMENTS INFO ACROSS ALL COMMENTS
+        const userInfo = await User.findByEmail(req.session.user.email);
+        User.updateCommentFirtName(userInfo.email, userInfo.firstName);
+        // UPDATE USER COMMENTS END
+      } else {
+        profile.errors.forEach(error => {
+          req.flash("errors", error);
+        });
+        req.session.save(async _ => {
+          await res.redirect(`/profile/${req.params.email}/edit`);
+        });
+      }
+    })
+    .catch(() => {
+      req.flash("errors", "You do not have permission to perform that action.");
+      res.redirect("/");
+    });
 };
 
-exports.account = function(req, res) {
+// NOT FOUND PAGE
+exports.notFound = (req, res) => {
+  res.status(404).render("404");
+};
+
+exports.account = (req, res) => {
   if (req.session.user) {
     let visitorIsOwner = User.isVisitorOwner(
       req.session.user.email,
@@ -194,7 +195,7 @@ exports.account = function(req, res) {
   }
 };
 
-exports.delete = function(req, res) {
+exports.delete = (req, res) => {
   User.delete(req.params.email, req.session.user.email)
     .then(() => {
       req.flash("success", "Account successfully deleted.");
@@ -249,11 +250,11 @@ exports.changePassword = function(req, res) {
     });
 };
 
-exports.resetPasswordPage = function(req, res) {
+exports.resetPasswordPage = (req, res) => {
   res.render("resetPasswordPage");
 };
 
-exports.resetPassword = function(req, res) {
+exports.resetPassword = (req, res) => {
   let user = new User(req.body);
 
   user
@@ -271,7 +272,7 @@ exports.resetPassword = function(req, res) {
     });
 };
 
-exports.resetPasswordTokenPage = function(req, res) {
+exports.resetPasswordTokenPage = (req, res) => {
   let user = User.resetTokenExpiryTest(req.params.token);
 
   user
@@ -286,7 +287,7 @@ exports.resetPasswordTokenPage = function(req, res) {
     });
 };
 
-exports.resetPasswordToken = function(req, res) {
+exports.resetPasswordToken = (req, res) => {
   let user = new User(req.body);
 
   user
@@ -408,8 +409,74 @@ exports.sort = (req, res) => {
     });
 };
 
-// IF USER VISITS ANY URL THAT DON'T EXISTS ON THIS APP.
-// REDIRECT TO 404 PAGE
-exports.notFound = (req, res) => {
-  res.status(404).render("404");
+// COMMENTS
+exports.postComments = async (req, res) => {
+  const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
+  const userDoc = await User.findByEmail(req.session.user.email);
+  const commentDate = helpers.getMonthDayYear() + ", " + helpers.getHMS();
+  // GET RID OF BOGUS AND SANITIZE DATA
+  const data = {
+    commentId: new ObjectId(),
+    comment: req.body.comment,
+    visitorEmail: req.session.user.email,
+    visitorFirstName: userDoc.firstName,
+    profileEmail: profileEmail,
+    photo: userDoc.photo,
+    commentDate: commentDate
+  };
+
+  User.addComment(data)
+    .then(_ => {
+      res.redirect(`profile/${profileEmail}`);
+    })
+    .catch(errorMessage => {
+      req.flash("errors", errorMessage);
+      req.session.save(async _ => {
+        await res.redirect(`profile/${profileEmail}`);
+      });
+    });
+};
+
+// UPDATE A COMMENT
+exports.editComment = (req, res) => {
+  const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
+  // GET RID OF BOGUS AND SANITIZE DATA
+  const data = {
+    commentId: req.body.commentId,
+    comment: req.body.comment,
+    profileEmail: profileEmail
+  };
+
+  User.updateComment(data)
+    .then(successMessage => {
+      req.flash("success", successMessage);
+      req.session.save(async _ => {
+        await res.redirect(`profile/${profileEmail}`);
+      });
+    })
+    .catch(errorMessage => {
+      req.flash("errors", errorMessage);
+      req.session.save(async _ => {
+        await res.redirect(`profile/${profileEmail}`);
+      });
+    });
+};
+
+// DELETE A COMMENT
+exports.deleteComment = (req, res) => {
+  const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
+
+  User.deleteComment(req.body.commentId, profileEmail)
+    .then(successMessage => {
+      req.flash("success", successMessage);
+      req.session.save(async _ => {
+        await res.redirect(`profile/${profileEmail}`);
+      });
+    })
+    .catch(errorMessage => {
+      req.flash("errors", errorMessage);
+      req.session.save(async _ => {
+        await res.redirect(`profile/${profileEmail}`);
+      });
+    });
 };

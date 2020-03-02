@@ -5,6 +5,8 @@ import ToggleImage from "./modules/show_bigger_profile_image";
 import ConfirmDelete from "./modules/confirmDelete";
 import RegistrationFormLiveValidation from "./modules/registrationFormLiveValidation";
 import Filter from "./modules/filter";
+import EditCancelUpdateComments from "./modules/comments-edit-cancel-update-btn";
+import ShowAllComments from "./modules/comments-show-all";
 
 if (document.querySelector("#more-profile-btn")) {
   new ToggleProfile();
@@ -29,4 +31,10 @@ if (document.querySelector("#registration-form")) {
 }
 if (document.querySelector("#filter-icon-container")) {
   new Filter();
+}
+if (document.querySelectorAll("#edit-button")) {
+  new EditCancelUpdateComments();
+}
+if (document.querySelector("#show-all-comments-toggle")) {
+  new ShowAllComments();
 }

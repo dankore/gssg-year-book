@@ -3,6 +3,8 @@ const express = require("express"),
   MongoStore = require("connect-mongo")(session),
   flash = require("connect-flash"),
   server = express(),
+  markdown = require("marked"),
+  sanitizeHTML = require("sanitize-html"),
   bodyParser = require("body-parser"),
   router = require("./router"),
   compression = require("compression"),
@@ -171,6 +173,33 @@ server.use(flash());
 server.use(compression());
 server.use("/favicon.ico", express.static("public/favicon.ico"));
 server.use(async (req, res, next) => {
+  // MAKE MARKDOWN AVAILABLE GLOBALLY
+  res.locals.filterUserHTML = content => {
+    return sanitizeHTML(markdown(content), {
+      allowedTags: [
+        "p",
+        "br",
+        "ul",
+        "li",
+        "strong",
+        "i",
+        "em",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "a",
+        "code",
+        "blockquote"
+      ],
+      allowedAttributes: {
+        a: ["href", "name", "target"]
+      },
+      allowedSchemes: ["http", "https", "ftp", "mailto"]
+    });
+  };
   // Make all available from all templates
   res.locals.errors = req.flash("errors");
   res.locals.success = req.flash("success");
@@ -179,9 +208,11 @@ server.use(async (req, res, next) => {
   res.locals.path = req.originalUrl;
   // GET FIRST NAME
   if (req.session.user) {
-    User.findByEmail(req.session.user.email)
+    await User.findByEmail(req.session.user.email)
       .then(userDoc => {
         res.locals.first_name_welcome = userDoc.firstName;
+        res.locals.emailForComment = userDoc.email;
+        res.locals.photoUrlForComment = userDoc.photo;
       })
       .catch(err => {
         console.log("Server line 153 " + err);
@@ -203,7 +234,7 @@ server.use("/profile/:email", (req, res, next) => {
   next();
 });
 // SEO ENDS
+server.use("/", router);
 
-server.use(router);
-
+// EXPORT CODE
 module.exports = server;

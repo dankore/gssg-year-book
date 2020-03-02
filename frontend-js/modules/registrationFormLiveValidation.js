@@ -1,6 +1,7 @@
 import axios from "axios";
 export default class RegistrationFormLiveValidation {
   constructor() {
+    this._csrf = document.querySelector('[name="_csrf"').value;
     this.form = document.querySelector("#registration-form");
     this.allFields = document.querySelectorAll(
       "#registration-form .form-control"
@@ -148,7 +149,7 @@ passwordHandler() {
         this.showValidationError(this.email, "You must provide a valid email address.")
       }
       if(!this.email.errors){
-          axios.post('/doesEmailExists', {email: this.email.value})
+          axios.post('/doesEmailExists', {_csrf: this._csrf, email: this.email.value})
           .then(response =>{
             if(response.data){
                 console.log(response.data)
