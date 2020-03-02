@@ -16,8 +16,8 @@
     <p>Comments (<%= profile.comments.length %>)</p>
 
     <% } else if (profile.comments.length > 2){ %>
-    <p>Click to view all (<%= profile.comments.length %>) comments</p>
-
+    <p id="before-click-comments-count">Click to view all (<%= profile.comments.length %>) comments</p>
+    <p id="after-click-comments-count" style="display: none;">Comments (<%= profile.comments.length %>)</p>
     <% } else { %>
     <p>Be the first to say hello</p>
     

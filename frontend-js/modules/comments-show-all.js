@@ -6,7 +6,13 @@ export default class ShowAllComments {
     this.allCommentsContainer = document.querySelector(
       "#all-comments-container"
     );
-    this.test();
+    this.beforeClickCommentsCount = document.querySelector(
+      "#before-click-comments-count"
+    );
+    this.afterClickCommentsCount = document.querySelector(
+      "#after-click-comments-count"
+    );
+    this.onPageLoad();
     this.events();
   }
 
@@ -18,7 +24,7 @@ export default class ShowAllComments {
   }
 
   // METHODS
-  test() {
+  onPageLoad() {
     const elementsToHideOnPageLoad = Array.from(
       this.allCommentsContainer.children
     ).slice(2);
@@ -31,6 +37,10 @@ export default class ShowAllComments {
     const elementsToHideOnPageLoad = Array.from(
       this.allCommentsContainer.children
     ).slice(2);
+    this.beforeClickCommentsCount.style.display = "none";
+    this.afterClickCommentsCount.style.display = "block";
+
+
 
     Array.prototype.forEach.call(elementsToHideOnPageLoad, childNode => {
       childNode.style.display = "block";
