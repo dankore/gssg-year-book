@@ -864,11 +864,17 @@ User.sortProfiles = q => {
     }
   });
 };
-
+User.validateComment = data => {
+  if (data == "") {
+    reject("Body of comment cannot be empty.");
+    return;
+  }
+};
 // ADD A COMMENT
 User.addComment = data => {
   return new Promise(async (resolve, reject) => {
     try {
+      User.validateComment(data.comment);
       // FIND OWNER OF PROFILEEMAIL AND ADD COMMENT
       await usersCollection.findOneAndUpdate(
         { email: data.profileEmail },
@@ -920,6 +926,8 @@ User.updateCommentFirtName = (email, firstName) => {
 User.updateComment = data => {
   return new Promise(async (resolve, reject) => {
     try {
+      User.validateComment(data.comment);
+
       await usersCollection.updateOne(
         { email: data.profileEmail },
         {
