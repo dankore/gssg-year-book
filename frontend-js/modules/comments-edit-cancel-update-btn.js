@@ -1,4 +1,4 @@
-export default class Comments {
+export default class EditCancelUpdateComments {
   constructor() {
     this.editBtn = document.querySelectorAll("#edit-button");
     this.cancelEditBtn = document.querySelectorAll("#cancel-edit-comment");
