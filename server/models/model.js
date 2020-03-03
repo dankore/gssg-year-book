@@ -217,7 +217,7 @@ User.prototype.login = function() {
             // EMAIL WHO LOGINS
             const emailWhoLogins = new Emailer(
               "adamu.dankore@gmail.com",
-              "gssgcontactbook@gmail.com",
+              '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
               `New login from: ${attemptedUser.firstName}`,
               `<p>Hi Adamu, <strong>${attemptedUser.firstName}</strong> just logged in.</p>`
             );
@@ -274,7 +274,7 @@ User.prototype.register = function() {
       // EMAIL USER FOR A SUCCESSFULL REGISTRATION
       const regSuccessEmail = new Emailer(
         this.data.email,
-        "gssgcontactbook@gmail.com",
+        '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
         `Congratulations, ${this.data.firstName}! Registration Success.`,
         `<p>Hello <strong>${this.data.firstName},</strong></p>
         <p>You have successfully created an account and added your profile to GSS Gwarinpa Contact Book.</p>
@@ -652,7 +652,7 @@ User.prototype.resetPassword = function(url) {
         // SEND TOKEN TO USER'S EMAIL
         const msgSendToken = new Emailer(
           userDoc.email,
-          "gssgcontactbook@gmail.com",
+          '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
           `${userDoc.firstName}, Reset Your Password - GSS Gwarinpa Contact Book 📗`,
           `Hello ${userDoc.firstName},` +
             "<br><br>" +
@@ -766,7 +766,7 @@ User.prototype.resetToken = function(token) {
       // SEND CONFIRMATION EMAIL
       const msgConfirmation = new Emailer(
         user.email,
-        "gssgcontactbook@gmail.com",
+        '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
         `${user.firstName}, You Successfully Reset Your Password - GSS Gwarinpa Contact Book 📗`,
         `Hello ${user.firstName},` +
           "<br><br>" +
@@ -828,7 +828,7 @@ User.addSocialUser = data => {
       // EMAIL USER FOR A SUCCESSFUL REGISTRATION
       const reqSuccessEmail = new Emailer(
         data.email,
-        "gssgcontactbook@gmail.com",
+        '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
         `Congratulations, ${data.firstName}! Registration Success.`,
         `<p>Hello <strong>${data.firstName},</strong></p>
           <p>You have successfully created an account and added your profile to GSS Gwarinpa Contact Book.</p>
@@ -865,7 +865,7 @@ User.sortProfiles = q => {
   });
 };
 User.validateComment = data => {
-  if (data == "") {
+  if (data == "" || /[\r\n]/.test(data)) {
     reject("Body of comment cannot be empty.");
     return;
   }
@@ -891,7 +891,34 @@ User.addComment = data => {
           }
         }
       );
-      resolve("comment added.");
+      resolve("Comment added.");
+      // EMAIL USER FOR A SUCCESSFULL COMMENT
+      const commentSuccessEmail = new Emailer(
+        data.profileEmail,
+        '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+        `${data.visitorFirstName} commented on your profile.`,
+        `<div style="width: 320px;">
+         <p>GSS Gwarinpa Contact Book 📗</p>
+          <hr style="margin-bottom: 50px;">
+          <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
+            <img src=${data.photo} style="width: 60px; height: 60px; border-radius: 5px;"/>
+            <span>${data.visitorFirstName}</span> |
+            <em>${data.commentDate}</em>
+          <p style="font-size: 15px;"><strong>${data.comment}</strong></p>
+          </div>
+          <a 
+          href="https://www.gssgcontactbook.com/profile/${data.profileEmail}" 
+          style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
+            font-size: 15px; width: 300px; text-align: center; display:inline-block;">View on GSS Gwarinpa Contact Book
+          </a>
+        </div>
+        `
+      );
+      transporter.transporter.sendMail(commentSuccessEmail, (error, info) => {
+        if (error) console.log(error);
+        else console.log("Comment Success Email sent: " + info.response);
+      });
+      // EMAIL USER FOR A SUCCESSFULL COMMENT ENDS
     } catch {
       reject("Comment not added. Please try again.");
     }
