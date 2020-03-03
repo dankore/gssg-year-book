@@ -5,7 +5,7 @@ const User = require("../models/model"),
 
 exports.home = async (req, res) => {
   let profiles = await User.allProfiles();
-  profiles.sort((a, b) => a.year - b.year); // SORT BY YEAR DESCENDING
+  profiles.sort((a, b) => b.comments.length - a.comments.length); // SORT BY # OF COMMENTS
   res.render("homePage", {
     profiles: profiles,
     statsByYear: helpers.statsByYear(profiles)
