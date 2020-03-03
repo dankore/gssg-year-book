@@ -429,7 +429,7 @@ exports.postComments = async (req, res) => {
     .then(_ => {
       res.redirect(`profile/${profileEmail}`);
     })
-    .catch(errorMessage => {
+    .catch(errorMessage  => {
       req.flash("errors", errorMessage);
       req.session.save(async _ => {
         await res.redirect(`profile/${profileEmail}`);
