@@ -893,11 +893,12 @@ User.addComment = data => {
       );
       resolve("Comment added.");
       // EMAIL USER FOR A SUCCESSFULL COMMENT
-      const commentSuccessEmail = new Emailer(
-        data.profileEmail,
-        '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-        `${data.visitorFirstName} commented on your profile.`,
-        `<div style="width: 320px;">
+      if (data.visitorEmail != data.profileEmail) {
+        const commentSuccessEmail = new Emailer(
+          data.profileEmail,
+          '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+          `${data.visitorFirstName} commented on your profile.`,
+          `<div style="width: 320px;">
          <p>GSS Gwarinpa Contact Book 📗</p>
           <hr style="margin-bottom: 50px;">
           <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
@@ -913,11 +914,12 @@ User.addComment = data => {
           </a>
         </div>
         `
-      );
-      transporter.transporter.sendMail(commentSuccessEmail, (error, info) => {
-        if (error) console.log(error);
-        else console.log("Comment Success Email sent: " + info.response);
-      });
+        );
+        transporter.transporter.sendMail(commentSuccessEmail, (error, info) => {
+          if (error) console.log(error);
+          else console.log("Comment Success Email sent: " + info.response);
+        });
+      }
       // EMAIL USER FOR A SUCCESSFULL COMMENT ENDS
     } catch {
       reject("Comment not added. Please try again.");
