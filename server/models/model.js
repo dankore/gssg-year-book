@@ -865,7 +865,7 @@ User.sortProfiles = q => {
   });
 };
 User.validateComment = data => {
-  if (data == "" || /[\r\n]/.test(data)) {
+  if (data === "") {
     reject("Body of comment cannot be empty.");
     return;
   }
