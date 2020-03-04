@@ -421,7 +421,14 @@ User.delete = function(requestedEmail, sessionEmail) {
     try {
       let visistorIsOwner = User.isVisitorOwner(requestedEmail, sessionEmail);
       if (visistorIsOwner) {
+        // DELETE ACCOUNT
         await usersCollection.deleteOne({ email: requestedEmail });
+        // NOW DELETE COMMENTS OF THE USER ACROSS ALL DOCS
+        await usersCollection.update(
+          {},
+          { $pull: { comments: { visitorEmail: sessionEmail}}},
+          { multi: true }
+        );
         resolve();
       } else {
         reject();
