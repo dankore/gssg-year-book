@@ -62,8 +62,8 @@
     SHOW NO COMMENT FOUND FOR BOTH IF FALSE
    -->
   <ul id="all-comments-container" class="mb-6 bg-white relative">
-    <% if(profile.comments){ %> <% if(profile.comments.length){ %> <%
-    profile.comments.reverse().forEach(comment => { %>
+    <% if(profile.comments.length){ %> 
+    <% profile.comments.reverse().forEach(comment => { %>
     <li class="my-2 p-2 rounded">
       <div class="flex">
         <div class="flex mr-1">
@@ -75,7 +75,6 @@
             <%}%>
           </a>
         </div>
-
         <div
           class="rounded px-2"
           style="overflow-wrap: break-word; min-width: 0px; width: 15rem; background-color: #F2F3F5;"
@@ -181,6 +180,7 @@
       </div>
       <!-- EDIT COMMENT FORM ENDS -->
     </li>
-    <% }) %> <%}%> <%}%>
+    <% }) %> 
+    <%}%>
   </ul>
 </section>
