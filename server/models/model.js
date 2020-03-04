@@ -892,35 +892,10 @@ User.addComment = data => {
         }
       );
       resolve("Comment added.");
-      // EMAIL USER FOR A SUCCESSFULL COMMENT
-      if (data.visitorEmail != data.profileEmail) {
-        const commentSuccessEmail = new Emailer(
-          data.profileEmail,
-          '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-          `${data.visitorFirstName} commented on your profile.`,
-          `<div style="width: 320px;">
-         <p>GSS Gwarinpa Contact Book 📗</p>
-          <hr style="margin-bottom: 50px;">
-          <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
-            <img src=${data.photo} style="width: 60px; height: 60px; border-radius: 5px;" alt="profile photo"/>
-            <span>${data.visitorFirstName}</span> |
-            <em>${data.commentDate}</em>
-          <p style="font-size: 15px;"><strong>${data.comment}</strong></p>
-          </div>
-          <a 
-          href="https://www.gssgcontactbook.com/profile/${data.profileEmail}" 
-          style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
-            font-size: 15px; width: 300px; text-align: center; display:inline-block;">View on GSS Gwarinpa Contact Book
-          </a>
-        </div>
-        `
-        );
-        transporter.transporter.sendMail(commentSuccessEmail, (error, info) => {
-          if (error) console.log(error);
-          else console.log("Comment Success Email sent: " + info.response);
-        });
-      }
-      // EMAIL USER FOR A SUCCESSFULL COMMENT ENDS
+      
+      // EMAIL USERS FOR A SUCCESSFULL COMMENT
+      User.sendSuccessEmailToEmailsFromComments(data);
+      // EMAIL USERS FOR A SUCCESSFULL COMMENT ENDS
     } catch {
       reject("Comment not added. Please try again.");
     }
@@ -992,5 +967,53 @@ User.deleteComment = (commentId, profileEmail) => {
   });
 };
 
+User.sendSuccessEmailToEmailsFromComments = (data) => {
+  const emailArray = [data.profileEmail]
+  return new Promise(async (resolve, reject)=>{
+    try {
+      let userDoc = await usersCollection.find(
+        {email: data.profileEmail}
+      ).toArray();
+
+    // CLEAN UP: GET UNIQUE EMAIL ADDRESS OF ALL THOSE WHOE COMMENTED   
+    userDoc.map(allProperties => allProperties.comments.map(comment => emailArray.push(comment.visitorEmail) ));
+
+    const emailList = [... new Set(emailArray)].toString();
+
+    // EMAIL USER FOR A SUCCESSFULL COMMENT
+        const commentSuccessEmail = new Emailer(
+          emailList,
+          '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+          `New comment from ${data.visitorFirstName}.`,
+          `<div style="width: 320px;">
+         <p>GSS Gwarinpa Contact Book 📗</p>
+          <hr style="margin-bottom: 50px;">
+          <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
+            <img src=${data.photo} style="width: 60px; height: 60px; border-radius: 5px;" alt="profile photo"/>
+            <span>${data.visitorFirstName}</span> |
+            <em>${data.commentDate}</em>
+          <p style="font-size: 15px;"><strong>${data.comment}</strong></p>
+          </div>
+          <a 
+          href="https://www.gssgcontactbook.com/profile/${data.profileEmail}" 
+          style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
+            font-size: 15px; width: 300px; text-align: center; display:inline-block;">View on GSS Gwarinpa Contact Book
+          </a>
+        </div>
+        `
+        );
+        transporter.transporter.sendMail(commentSuccessEmail, (error, info) => {
+          if (error) console.log(error);
+          else console.log("Multiple Comment Success Emails sent: " + info.response);
+        });
+      // EMAIL USER FOR A SUCCESSFULL COMMENT ENDS
+   
+    resolve("Email sent")
+    } catch {
+      reject((err)=> console.log(err))
+    }
+    
+  })
+}
 // EXPORT CODE
 module.exports = User;
