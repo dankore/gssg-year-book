@@ -975,6 +975,10 @@ User.sendSuccessEmailToEmailsFromComments = (data) => {
         {email: data.profileEmail}
       ).toArray();
 
+    // DEFAULT IMAGE IF NO IMAGE IS PROVIDED
+    if(!data.photo){
+      data.photo = "https://gss-gwarinpa.s3.us-east-2.amazonaws.com/blank.png"
+    }
     // GET EMAILS FROM ALL COMMENTS FROM DB
     userDoc.map(allProperties => allProperties.comments.map(comment => emailArray.push(comment.visitorEmail) ));
 
