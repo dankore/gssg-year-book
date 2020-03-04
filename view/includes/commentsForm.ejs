@@ -70,10 +70,10 @@
     IF COMMENTS ARRAY EXISTS ON USER DOCUMENT, THEN CHECK IF COMMENTS ARRAY HAS ANY ELEMENT(COMMENTS).
     SHOW NO COMMENT FOUND FOR BOTH IF FALSE
    -->
-  <ul id="all-comments-container" class="mb-6 relative">
+  <ul id="all-comments-container" class="mb-6 bg-white relative">
     <% if(profile.comments){ %> <% if(profile.comments.length){ %> <%
     profile.comments.reverse().forEach(comment => { %>
-    <li class="my-2 bg-white p-2 rounded">
+    <li class="my-2 p-2 rounded">
       <div class="flex">
         <div class="flex mr-1">
           <a href="/profile/<%= comment.visitorEmail %>">
