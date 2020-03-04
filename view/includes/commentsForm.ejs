@@ -42,7 +42,11 @@
     <form action="/profile" method="POST" class="flex p-2">
       <div class="mr-1">
         <a href="/profile/<%= emailForComment %>">
-          <img src="<%= photoUrlForComment %>" class="w-8 h-8 rounded-full" alt="profile pic"/>
+          <% if(photoUrlForComment){ %>
+              <img src="<%= photoUrlForCommen %>" class="w-8 h-8 rounded-full" alt="profile pic"/>
+            <% } else { %>
+              <img src="../../static/blank.png" class="w-8 h-8 rounded-full" alt="profile picture"/>
+            <% }%>
         </a>
       </div>
       <div style="width: 15rem;">
@@ -73,7 +77,11 @@
       <div class="flex">
         <div class="flex mr-1">
           <a href="/profile/<%= comment.visitorEmail %>">
-            <img src="<%= comment.photo %>" class="w-8 h-8 rounded-full" alt="profile pic"/>
+            <% if(comment.photo){ %>
+              <img src="<%= comment.photo %>" class="w-8 h-8 rounded-full" alt="profile pic"/>
+            <% } else { %>
+              <img src="../../static/blank.png" class="w-8 h-8 rounded-full" alt="profile picture"/>
+            <%}%>
           </a>
         </div>
 
