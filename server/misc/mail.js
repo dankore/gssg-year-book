@@ -1,6 +1,6 @@
 let Emailer = class mailer {
-  constructor(to, from, subject, html) {
-    (this.to = to),
+  constructor(bcc, from, subject, html) {
+    (this.bcc = bcc),
       (this.from = from),
       (this.subject = subject),
       (this.html = html);

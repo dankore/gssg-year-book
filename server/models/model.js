@@ -975,16 +975,16 @@ User.sendSuccessEmailToEmailsFromComments = (data) => {
         {email: data.profileEmail}
       ).toArray();
 
-    // CLEAN UP: GET UNIQUE EMAIL ADDRESS OF ALL THOSE WHOE COMMENTED   
+    // GET EMAILS FROM ALL COMMENTS FROM DB
     userDoc.map(allProperties => allProperties.comments.map(comment => emailArray.push(comment.visitorEmail) ));
 
-    const emailList = [... new Set(emailArray)].toString();
-
-    // EMAIL USER FOR A SUCCESSFULL COMMENT
+    const emailList = [... new Set(emailArray)]; // REMOVE DUPLICATE EMAILS
+    
+    // EMAIL USERS FOR A SUCCESSFULL COMMENT
         const commentSuccessEmail = new Emailer(
           emailList,
           '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-          `New comment from ${data.visitorFirstName}.`,
+          `New comment from ${data.visitorFirstName}`,
           `<div style="width: 320px;">
          <p>GSS Gwarinpa Contact Book 📗</p>
           <hr style="margin-bottom: 50px;">
@@ -1006,7 +1006,7 @@ User.sendSuccessEmailToEmailsFromComments = (data) => {
           if (error) console.log(error);
           else console.log("Multiple Comment Success Emails sent: " + info.response);
         });
-      // EMAIL USER FOR A SUCCESSFULL COMMENT ENDS
+      // EMAIL USERS FOR A SUCCESSFULL COMMENT ENDS
    
     resolve("Email sent")
     } catch {
