@@ -424,7 +424,7 @@ User.delete = function(requestedEmail, sessionEmail) {
         // DELETE ACCOUNT
         await usersCollection.deleteOne({ email: requestedEmail });
         // NOW DELETE COMMENTS OF THE USER ACROSS ALL DOCS
-        await usersCollection.update(
+        await usersCollection.updateMany(
           {},
           { $pull: { comments: { visitorEmail: sessionEmail}}},
           { multi: true }
