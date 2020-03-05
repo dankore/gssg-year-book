@@ -13,9 +13,14 @@ exports.home = async (req, res) => {
 };
 
 exports.registrationPage = async (req, res) => {
-  res.render("registrationPage", {
+  if(req.session.user){
+    res.redirect("/");
+  } else {
+    res.render("registrationPage", {
     reqErrors: req.flash("reqError")
   });
+  }
+  
 };
 
 exports.registrationSubmission = async (req, res) => {
@@ -43,7 +48,11 @@ exports.registrationSubmission = async (req, res) => {
 };
 
 exports.loginPage = (req, res) => {
-  res.render("loginPage");
+  if(req.session.user){
+    res.redirect("/");
+  } else {
+    res.render("loginPage");
+  }
 };
 
 exports.login = async (req, res) => {
