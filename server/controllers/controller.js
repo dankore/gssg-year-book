@@ -106,6 +106,16 @@ exports.mustBeLoggedIn = (req, res, next) => {
   }
 }
 
+exports.isVisitorOwner = (req, res, next) => {
+  const visitorIsOwner = User.isVisitorOwner(req.session.user.email, req.params.email)
+  if(visitorIsOwner){
+    next()
+  } else {
+    req.flash("errors", "You do not have permission to perform that action.");
+    req.session.save(_ => res.redirect("/"));
+  }
+}
+
 exports.profileScreen = (req, res) => {
   if (req.session.user) {
     const visitorIsOwner = User.isVisitorOwner(
@@ -124,23 +134,7 @@ exports.profileScreen = (req, res) => {
 
 exports.viewEditScreen = async function(req, res) {
     let profile = await User.findByEmail(req.session.user.email);
-
-    let isVisitorOwner = User.isVisitorOwner(
-      req.session.user.email,
-      req.params.email
-    );
-    if (isVisitorOwner) {
-      res.render("editProfilePage", {
-        profile: profile
-      });
-    } else {
-      req.flash(
-        "errors",
-        "You did not have permission to  perform that action."
-      );
-      req.session.save(() => res.redirect("/"));
-    }
-  
+    res.render("editProfilePage", { profile: profile});
 };
 
 exports.edit = async (req, res) => {
@@ -197,23 +191,10 @@ exports.notFound = (req, res) => {
 };
 
 exports.account = (req, res) => {
-  if (req.session.user) {
-    let visitorIsOwner = User.isVisitorOwner(
-      req.session.user.email,
-      req.params.email
-    );
-    if (visitorIsOwner) {
-      res.render("account");
-    } else {
-      req.flash("errors", "You do not have permission to perform that action.");
-      req.session.save(() => res.redirect("/"));
-    }
-  } else {
-    res.render("404");
-  }
+  res.render("account");
 };
 
-exports.delete = (req, res) => {
+exports.account.delete = (req, res) => {
   User.delete(req.params.email, req.session.user.email)
     .then(() => {
       req.flash("success", "Account successfully deleted.");
