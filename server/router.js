@@ -26,7 +26,7 @@ router.post("/profile/:email/edit", singleUpload, controller.edit);
 // ACCOUNT
 router.get("/account/:email", controller.mustBeLoggedIn, controller.isVisitorOwner, controller.account);
 router.post("/account/:email/delete", controller.account.delete);
-router.get("/account/:email/change-password", controller.changePasswordPage);
+router.get("/account/:email/change-password", controller.mustBeLoggedIn, controller.changePasswordPage);
 router.post("/account/:email/change-password", controller.changePassword);
 
 // RESET PASSWORD
