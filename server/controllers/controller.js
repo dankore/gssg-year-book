@@ -62,8 +62,7 @@ exports.login = async (req, res) => {
     .login()
     .then(() => {
       req.session.user = {
-        email: user.data.email,
-        firstName: "Gosite"
+        email: user.data.email
       };
       req.session.save(() => {
         res.redirect("/");
