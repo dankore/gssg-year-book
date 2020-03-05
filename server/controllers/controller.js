@@ -249,7 +249,7 @@ exports.changePassword = function(req, res) {
 };
 
 exports.resetPasswordPage = (req, res) => {
-  res.render("resetPasswordPage");
+  req.session.user ? res.redirect("/") : res.render("resetPasswordPage");
 };
 
 exports.resetPassword = (req, res) => {
