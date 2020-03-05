@@ -36,3 +36,6 @@ html {
   border-top-width: 2px;
   border-color: #3182ce;
 }
+.blueOnHover:hover {
+  color: #3182ce;
+}
