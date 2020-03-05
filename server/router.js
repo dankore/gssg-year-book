@@ -20,7 +20,7 @@ router.get(
   controller.ifUserExists,
   controller.profileScreen
 );
-router.get("/profile/:email/edit", controller.viewEditScreen);
+router.get("/profile/:email/edit", controller.mustBeLoggedIn, controller.viewEditScreen);
 router.post("/profile/:email/edit", singleUpload, controller.edit);
 
 // ACCOUNT

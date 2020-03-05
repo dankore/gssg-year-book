@@ -94,6 +94,18 @@ exports.ifUserExists = (req, res, next) => {
     });
 };
 
+exports.mustBeLoggedIn = (req, res, next) => {
+  if(req.session.user){
+     next()
+  } else {
+    req.flash("errors", "Must be login to perform that action.");
+    req.session.save(_ =>{
+      res.redirect("/");
+    })
+
+  }
+}
+
 exports.profileScreen = (req, res) => {
   if (req.session.user) {
     const visitorIsOwner = User.isVisitorOwner(
@@ -111,7 +123,6 @@ exports.profileScreen = (req, res) => {
 };
 
 exports.viewEditScreen = async function(req, res) {
-  try {
     let profile = await User.findByEmail(req.session.user.email);
 
     let isVisitorOwner = User.isVisitorOwner(
@@ -127,11 +138,9 @@ exports.viewEditScreen = async function(req, res) {
         "errors",
         "You did not have permission to  perform that action."
       );
-      res.session.save(() => res.redirect("/"));
+      req.session.save(() => res.redirect("/"));
     }
-  } catch {
-    res.render("404");
-  }
+  
 };
 
 exports.edit = async (req, res) => {
