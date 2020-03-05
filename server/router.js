@@ -63,6 +63,9 @@ router.post("/delete-comment", controller.deleteComment);
 router.post("/edit-comment", controller.editComment);
 
 // NOT FOUND
-router.get("*", controller.notFound)
+router.get("*", controller.notFound);
+
+// LIKES
+router.post("/likes", controller.likes);
 // EXPORT CODE
 module.exports = router;

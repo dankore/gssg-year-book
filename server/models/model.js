@@ -426,7 +426,7 @@ User.delete = function(requestedEmail, sessionEmail) {
         // NOW DELETE COMMENTS OF THE USER ACROSS ALL DOCS
         await usersCollection.updateMany(
           {},
-          { $pull: { comments: { visitorEmail: sessionEmail}}},
+          { $pull: { comments: { visitorEmail: sessionEmail } } },
           { multi: true }
         );
         resolve();
@@ -899,7 +899,7 @@ User.addComment = data => {
         }
       );
       resolve("Comment added.");
-      
+
       // EMAIL USERS FOR A SUCCESSFULL COMMENT
       User.sendSuccessEmailToEmailsFromComments(data);
       // EMAIL USERS FOR A SUCCESSFULL COMMENT ENDS
@@ -974,29 +974,34 @@ User.deleteComment = (commentId, profileEmail) => {
   });
 };
 
-User.sendSuccessEmailToEmailsFromComments = (data) => {
-  const emailArray = [data.profileEmail]
-  return new Promise(async (resolve, reject)=>{
+User.sendSuccessEmailToEmailsFromComments = data => {
+  const emailArray = [data.profileEmail];
+  return new Promise(async (resolve, reject) => {
     try {
-      let userDoc = await usersCollection.find(
-        {email: data.profileEmail}
-      ).toArray();
+      let userDoc = await usersCollection
+        .find({ email: data.profileEmail })
+        .toArray();
 
-    // DEFAULT IMAGE IF NO IMAGE IS PROVIDED
-    if(!data.photo){
-      data.photo = "https://gss-gwarinpa.s3.us-east-2.amazonaws.com/blank.png"
-    }
-    // GET EMAILS FROM ALL COMMENTS FROM DB
-    userDoc.map(allProperties => allProperties.comments.map(comment => emailArray.push(comment.visitorEmail) ));
+      // DEFAULT IMAGE IF NO IMAGE IS PROVIDED
+      if (!data.photo) {
+        data.photo =
+          "https://gss-gwarinpa.s3.us-east-2.amazonaws.com/blank.png";
+      }
+      // GET EMAILS FROM ALL COMMENTS FROM DB
+      userDoc.map(allProperties =>
+        allProperties.comments.map(comment =>
+          emailArray.push(comment.visitorEmail)
+        )
+      );
 
-    const emailList = [... new Set(emailArray)]; // REMOVE DUPLICATE EMAILS
-    
-    // EMAIL USERS FOR A SUCCESSFULL COMMENT
-        const commentSuccessEmail = new Emailer(
-          emailList,
-          '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-          `New comment from ${data.visitorFirstName}`,
-          `<div style="width: 320px;">
+      const emailList = [...new Set(emailArray)]; // REMOVE DUPLICATE EMAILS
+
+      // EMAIL USERS FOR A SUCCESSFULL COMMENT
+      const commentSuccessEmail = new Emailer(
+        emailList,
+        '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+        `New comment from ${data.visitorFirstName}`,
+        `<div style="width: 320px;">
          <p>GSS Gwarinpa Contact Book 📗</p>
           <hr style="margin-bottom: 50px;">
           <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
@@ -1012,19 +1017,37 @@ User.sendSuccessEmailToEmailsFromComments = (data) => {
           </a>
         </div>
         `
-        );
-        transporter.transporter.sendMail(commentSuccessEmail, (error, info) => {
-          if (error) console.log(error);
-          else console.log("Multiple Comment Success Emails sent: " + info.response);
-        });
+      );
+      transporter.transporter.sendMail(commentSuccessEmail, (error, info) => {
+        if (error) console.log(error);
+        else
+          console.log("Multiple Comment Success Emails sent: " + info.response);
+      });
       // EMAIL USERS FOR A SUCCESSFULL COMMENT ENDS
-   
-    resolve("Email sent")
+
+      resolve("Email sent");
     } catch {
-      reject((err)=> console.log(err))
+      reject(err => console.log(err));
     }
-    
-  })
-}
+  });
+};
+
+User.storeLikes = (like, email) => {
+  return new Promise(async (resolve, reject) => {
+    usersCollection
+      .findOneAndUpdate(
+        { email: email },
+        {
+          $inc: {
+            likes: 1
+          }
+        },
+        (err, info)=>{
+          resolve(info.value.likes)
+        }
+      )
+      
+  });
+};
 // EXPORT CODE
 module.exports = User;

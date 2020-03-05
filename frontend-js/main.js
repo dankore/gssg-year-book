@@ -7,6 +7,7 @@ import RegistrationFormLiveValidation from "./modules/registrationFormLiveValida
 import Filter from "./modules/filter";
 import EditCancelUpdateComments from "./modules/comments-edit-cancel-update-btn";
 import ShowAllComments from "./modules/comments-show-all";
+import Likes from "./modules/likes";
 
 if (document.querySelector("#more-profile-btn")) {
   new ToggleProfile();
@@ -37,4 +38,7 @@ if (document.querySelectorAll("#edit-button")) {
 }
 if (document.querySelector("#show-all-comments-toggle")) {
   new ShowAllComments();
+}
+if (document.querySelector("#likes-form")) {
+  new Likes();
 }
