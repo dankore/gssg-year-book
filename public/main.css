@@ -1,3 +1,6 @@
+html {
+  scroll-behavior: smooth;
+}
 .screenreader-text {
   position: absolute;
   left: -999px;
