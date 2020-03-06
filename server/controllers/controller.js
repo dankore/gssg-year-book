@@ -479,12 +479,19 @@ exports.deleteComment = (req, res) => {
     });
 };
 
+// LIKES
 exports.likes = (req, res) => {
-  console.log("C " + req.body.like)
+  console.log("C " + req.body.color, req.body.like);
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
-  User.storeLikes(req.body.like, profileEmail)
+  const data = {
+    like: req.body.like,
+    color: req.body.color,
+    visitorEmail: req.session.user.email,
+    profileEmail: profileEmail
+  };
+  User.storeLikes(data)
     .then(response => {
-      res.json(response)
+      res.json(response);
     })
     .catch(err => {
       console.log(err);

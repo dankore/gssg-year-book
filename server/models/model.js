@@ -1032,26 +1032,29 @@ User.sendSuccessEmailToEmailsFromComments = data => {
   });
 };
 // LIKES
-User.storeLikes = (like, email) => {
-  console.log("M " + like);
+
+User.storeLikes = data => {
   return new Promise(async (resolve, reject) => {
     usersCollection
       .findOneAndUpdate(
-        { email: email },
+        { email: data.profileEmail },
         {
-          $inc: {
-            likes: like
+          $set: {
+            likes: {
+              like: data.like,
+              color: data.color,
+              visitorEmail: data.visitorEmail
+            }
           }
         },
-        {returnOriginal: false}
+        { returnOriginal: false }
       )
-      .then(info =>{
-           resolve(info.value.likes)
+      .then(info => {
+        resolve(info.value.likes);
       })
-      .catch(_ =>{
-          reject();
-      })
-      
+      .catch(_ => {
+        reject();
+      });
   });
 };
 // EXPORT CODE
