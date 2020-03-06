@@ -14,15 +14,10 @@
     <%- include('includes/homepageForEachProfileGuest', {profile: profile}) %>
   <!-- SHOW NUMBER OF COMMENTS AND LIKES END -->
   <%-include('includes/toggleMoreProfile') %>
-  <div class="flex justify-between mt-3 items-center mx-auto" style="width: 18rem;">
-  <%- include('includes/commentsToggle') %>
-  <% if(user) { %>
-     <%- include('includes/likes') %>
-  <%} else {%>
-      <%- include('includes/likesGuest') %>
-  <%}%>
-</div>
-  <%- include('includes/commentsForm') %>
-</div>
-<%- include('includes/footer') %>
-<!-- FOOTER-->
+  <div class="flex justify-end mt-3 mx-auto" style="width: 18rem;">
+  <%- user ? include('includes/likes') : include('includes/likesGuest') %>
+  </div>
+    <%- include('includes/commentsForm') %>
+  </div>
+  <%- include('includes/footer') %>
+  <!-- FOOTER-->

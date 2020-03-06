@@ -9,14 +9,15 @@
 <%- include('includes/toggleMoreProfile') %>
 </div>
 
-<div class="flex justify-between mt-3 items-center mx-auto" style="width: 18rem;">
-  <%- include('includes/commentsToggle') %>
-  <% if(user) { %>
-     <%- include('includes/likes') %>
-  <%} else {%>
-      <%- include('includes/likesGuest') %>
-  <%}%>
-</div>
+<% if(user){ %>
+  <div class="flex justify-end mt-3 items-center mx-auto" style="width: 18rem;">
+    <%- include('includes/likes') %>
+  </div>
+<%} else {%>
+  <div class="flex justify-between mt-3 items-center mx-auto" style="width: 18rem;">
+    <%- include('includes/loginToCommentLike') %>
+    <%- include('includes/likesGuest') %>
+  </div>
+<%}%>
 <%- include('includes/commentsForm') %>
-<%- include('includes/loginToCommentLike') %>
 <%-include('includes/footer') %>

@@ -17,7 +17,7 @@ export default class Likes {
         .then(response => {
             this.likesContainer.innerHTML = response.data;
         })
-        .catch((err)=>{
+        .catch(err=>{
             console.log(err)
         })
     }
