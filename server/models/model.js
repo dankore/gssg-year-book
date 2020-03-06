@@ -1031,15 +1031,16 @@ User.sendSuccessEmailToEmailsFromComments = data => {
     }
   });
 };
-
+// LIKES
 User.storeLikes = (like, email) => {
+  console.log("M " + like);
   return new Promise(async (resolve, reject) => {
     usersCollection
       .findOneAndUpdate(
         { email: email },
         {
           $inc: {
-            likes: 1
+            likes: like
           }
         },
         {returnOriginal: false}

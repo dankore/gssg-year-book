@@ -480,8 +480,9 @@ exports.deleteComment = (req, res) => {
 };
 
 exports.likes = (req, res) => {
+  console.log("C " + req.body.like)
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
-  User.storeLikes(req.body.likesF, profileEmail)
+  User.storeLikes(req.body.like, profileEmail)
     .then(response => {
       res.json(response)
     })
