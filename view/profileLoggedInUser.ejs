@@ -9,8 +9,19 @@
     href="/profile/<%= user.email %>/Edit"
     >Edit Profile</a
   >
-  <%- include('includes/profileShared') %> <%-
-  include('includes/toggleMoreProfile') %>
+  <%- include('includes/profileShared') %> 
+  <!-- SHOW NUMBER OF COMMENTS AND LIKES -->
+    <%- include('includes/homepageForEachProfileGuest', {profile: profile}) %>
+  <!-- SHOW NUMBER OF COMMENTS AND LIKES END -->
+  <%-include('includes/toggleMoreProfile') %>
+  <div class="flex justify-between mt-3 items-center mx-auto" style="width: 18rem;">
+  <%- include('includes/commentsToggle') %>
+  <% if(user) { %>
+     <%- include('includes/likes') %>
+  <%} else {%>
+      <%- include('includes/likesGuest') %>
+  <%}%>
+</div>
   <%- include('includes/commentsForm') %>
 </div>
 <%- include('includes/footer') %>
