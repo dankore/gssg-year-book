@@ -1,0 +1,27 @@
+<!-- USER/NON-LOGIN USER SHOW THE SAME BUT WITH LINK FOR NON-LOGIN USER-->
+ <div
+    id="show-all-comments-toggle"
+    class="px-5 py-3 border cursor-pointer bg-white text-center border-green-600 rounded"
+  >
+  <% if(profile.comments.length < 1){ %>
+      <% if(user) { %>
+        <p>Be the first to say hello</p>
+      <%} else { %>
+         <a href="/login"><p>Be the first to say hello</p></a>
+      <%}%>
+  <% } else if (profile.comments.length == 1){ %>
+    <p>Comment (<%= profile.comments.length %>)</p>
+  <%} else if (profile.comments.length <= 2 ){ %>
+    <p>Comments (<%= profile.comments.length %>)</p>
+  <% } else if (profile.comments.length > 2){ %>
+    <p id="before-click-comments-count">Click to view all (<%= profile.comments.length %>) comments</p>
+    <p id="after-click-comments-count" style="display: none;">Comments (<%= profile.comments.length %>)</p>
+  <% } else { %>
+      <% if(user) { %>
+        <p>Be the first to say hello</p>
+      <%} else { %>
+         <a href="/login"><p>Be the first to say hello</p></a>
+      <%}%>
+  <%}%> 
+  </div>
+  <!-- TOGGLE: SHOW ALL COMMENTS ENDS -->

@@ -17,11 +17,9 @@
   <% if(profiles.length){ %> <% profiles.forEach(profile => { %>
   <a  class="m-4" href="/profile/<%= profile.email %>">
     <%- include('includes/profileShared', {profile: profile}) %>
-
-  <!-- SHOW NUMBER OF COMMENTS AND LIKES -->
-  <%- include('includes/homepageForEachProfile', {profile: profile}) %>
-  <!-- SHOW NUMBER OF COMMENTS AND LIKES END -->
-
+    <!-- SHOW NUMBER OF COMMENTS AND LIKES -->
+    <%- include('includes/homepageForEachProfile', {profile: profile}) %>
+    <!-- SHOW NUMBER OF COMMENTS AND LIKES END -->
   </a>
   <% }) %> <% } else { %>
   <p>No profile found.</p>
