@@ -39,6 +39,6 @@ if (document.querySelectorAll("#edit-button")) {
 if (document.querySelector("#show-all-comments-toggle")) {
   new ShowAllComments();
 }
-if (document.querySelector("#likes-form")) {
+if (document.querySelector("#likes-button")) {
   new Likes();
 }

@@ -1042,10 +1042,14 @@ User.storeLikes = (like, email) => {
             likes: 1
           }
         },
-        (err, info)=>{
-          resolve(info.value.likes)
-        }
+        {returnOriginal: false}
       )
+      .then(info =>{
+           resolve(info.value.likes)
+      })
+      .catch(_ =>{
+          reject();
+      })
       
   });
 };

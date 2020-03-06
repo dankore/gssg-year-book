@@ -1,22 +1,21 @@
 const axios = require("axios");
 export default class Likes {
     constructor(){
-        this.likesForm = document.querySelector("#likes-form");
         this.likesButton = document.querySelector("#likes-button");
+        this.likesContainer = document.querySelector("#likes-container");
         this.events();
     }
 
     // EVENTS
     events(){
-        this.likesForm.addEventListener("submit", (e) => this.handleLikesFormSubmit(e));
+        this.likesButton.addEventListener("click", () => this.handleButtonClick());
     }
 
     // METHODS
-    handleLikesFormSubmit(e){
-        console.log("jij")
+    handleButtonClick(){
         axios.post("/likes", {likesF: 1})
         .then(response => {
-            console.log(response.data);
+            this.likesContainer.innerHTML = response.data;
         })
         .catch((err)=>{
             console.log(err)
