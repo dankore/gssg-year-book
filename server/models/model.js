@@ -462,7 +462,8 @@ User.allProfiles = function() {
         social_type_2: eachDoc.social_type_2,
         link_social_type_2: eachDoc.link_social_type_2,
         relationship: eachDoc.relationship,
-        comments: eachDoc.comments
+        comments: eachDoc.comments,
+        likes: eachDoc.likes
       };
       return eachDoc;
     });
@@ -549,7 +550,8 @@ User.search = async function(searchedItem) {
             social_type_2: eachDoc.social_type_2,
             link_social_type_2: eachDoc.link_social_type_2,
             relationship: eachDoc.relationship,
-            comments: eachDoc.comments
+            comments: eachDoc.comments,
+            likes: eachDoc.likes
           };
           return eachDoc;
         });

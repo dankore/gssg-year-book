@@ -18,8 +18,9 @@
   <a  class="m-4" href="/profile/<%= profile.email %>">
     <%- include('includes/profileShared', {profile: profile}) %>
 
-  <!-- SHOW NUMBER OF COMMENTS -->
+  <!-- SHOW NUMBER OF COMMENTS AND LIKES -->
     <section class="mx-auto p-2 border-t border-gray-200 text-xs -mt-1 rounded shadow-lg bg-white" style="width: 18rem;">
+    <div class="flex justify-between">
       <% if(profile.comments){ %>
           <% if(profile.comments.length){ %>
             <!-- CHECK IF COMMENT IS GREATER THAN 1 -->
@@ -47,8 +48,11 @@
               <p class="ml-1">Say hello</p>
             </div>
       <% } %> 
+      <div><%= profile.likes %></div>
+      </div>
     </section>
-  <!-- SHOW NUMBER OF COMMENTS END -->
+    
+  <!-- SHOW NUMBER OF COMMENTS AND LIKES END -->
 
   </a>
   <% }) %> <% } else { %>
