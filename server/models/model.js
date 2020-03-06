@@ -302,7 +302,7 @@ User.prototype.register = function() {
 
 User.findByEmail = function(email) {
   return new Promise(function(resolve, reject) {
-    try {
+    
       if (typeof email != "string") {
         reject("Email not string. Model line 304");
         return;
@@ -333,7 +333,8 @@ User.findByEmail = function(email) {
               social_type_2: userDoc.data.social_type_2,
               link_social_type_2: userDoc.data.link_social_type_2,
               relationship: userDoc.data.relationship,
-              comments: userDoc.data.comments
+              comments: userDoc.data.comments,
+              likes: userDoc.data.likes
             };
 
             resolve(userDoc);
@@ -344,9 +345,6 @@ User.findByEmail = function(email) {
         .catch(() => {
           reject("Cannot find one user_by_email Model line 341");
         });
-    } catch {
-      reject("Cannot find one user_by_email line Model line 344");
-    }
   });
 };
 
