@@ -11,7 +11,12 @@
 
 <div class="flex justify-between mt-3 items-center mx-auto" style="width: 18rem;">
   <%- include('includes/commentsToggle') %>
-  <%- include('includes/likes') %>
+  <% if(user) { %>
+     <%- include('includes/likes') %>
+  <%} else {%>
+       <%- include('includes/likesGuest') %>
+  <%}%>
+ 
 </div>
 
 
