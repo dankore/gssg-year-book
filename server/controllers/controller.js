@@ -116,6 +116,7 @@ exports.isVisitorOwner = (req, res, next) => {
 }
 
 exports.profileScreen = (req, res) => {
+  console.log(req.profileUser)
   if (req.session.user) {
     const visitorIsOwner = User.isVisitorOwner(
       req.session.user.email,

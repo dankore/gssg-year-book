@@ -334,7 +334,8 @@ User.findByEmail = function(email) {
               link_social_type_2: userDoc.data.link_social_type_2,
               relationship: userDoc.data.relationship,
               comments: userDoc.data.comments,
-              totalLikes: userDoc.data.totalLikes
+              totalLikes: userDoc.data.totalLikes,
+              likesProp: userDoc.data.likesProp
             };
 
             resolve(userDoc);
@@ -463,7 +464,8 @@ User.allProfiles = function() {
         link_social_type_2: eachDoc.link_social_type_2,
         relationship: eachDoc.relationship,
         comments: eachDoc.comments,
-        totalLikes: eachDoc.totalLikes
+        totalLikes: eachDoc.totalLikes,
+        likesProp: eachDoc.likesProp
       };
       return eachDoc;
     });
@@ -551,7 +553,8 @@ User.search = async function(searchedItem) {
             link_social_type_2: eachDoc.link_social_type_2,
             relationship: eachDoc.relationship,
             comments: eachDoc.comments,
-            totalLikes: eachDoc.totalLikes
+            totalLikes: eachDoc.totalLikes,
+            likesProp: eachDoc.likesProp
           };
           return eachDoc;
         });
