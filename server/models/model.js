@@ -1035,11 +1035,12 @@ User.sendSuccessEmailToEmailsFromComments = data => {
 // LIKES
 User.storeLikes = data => {
   return new Promise(async (resolve, reject) => {
-    // DELETE OLD LIKE PROPERTIES
+    // DELETE OLD PROPERTIES
     await usersCollection.updateOne(
       {email: data.profileEmail},
       { $pull : { likesProp: { visitorEmail: data.visitorEmail }}}
       );
+    // ADD THE NEW PROPERTY
     usersCollection
       .findOneAndUpdate(
         { email: data.profileEmail },
@@ -1055,7 +1056,8 @@ User.storeLikes = data => {
         { returnOriginal: false }
       )
       .then(info => {
-        resolve(info.value.likes);
+        const visitorInfo = info.value.likesProp.filter( i => i.visitorEmail == data.visitorEmail);
+        resolve(visitorInfo);
       })
       .catch(_ => {
         reject();
