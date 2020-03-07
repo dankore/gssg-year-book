@@ -122,7 +122,7 @@ exports.profileScreen = (req, res) => {
         prop => prop.visitorEmail == req.session.user.email
       )
     : [];
-  console.log(propExists[0].color);
+
   req.profileUser.color = propExists[0].color;
 
   if (req.session.user) {

@@ -25,6 +25,7 @@ export default class Likes {
       Array.prototype.forEach.call(this.likesButtonSVG, svg => {
         svg.classList.remove("yes");
         svg.classList.add("no");
+        svg.style.fill = "white"
       });
     } else {
       like = 1;
@@ -34,6 +35,7 @@ export default class Likes {
       Array.prototype.forEach.call(this.likesButtonSVG, svg => {
         svg.classList.add("yes");
         svg.classList.remove("no");
+        svg.style.fill = "#3182ce";
       });
     }
     console.log("like value: " + like, color);

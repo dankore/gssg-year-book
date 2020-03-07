@@ -45,4 +45,10 @@ html {
 .no {
   color: black;
 }
+.yes-fill {
+  fill: #3182ce;
+}
+.no-fill {
+  fill: white;
+}
 
