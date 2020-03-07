@@ -334,7 +334,7 @@ User.findByEmail = function(email) {
               link_social_type_2: userDoc.data.link_social_type_2,
               relationship: userDoc.data.relationship,
               comments: userDoc.data.comments,
-              likes: userDoc.data.likes
+              totalLikes: userDoc.data.totalLikes
             };
 
             resolve(userDoc);
@@ -463,7 +463,7 @@ User.allProfiles = function() {
         link_social_type_2: eachDoc.link_social_type_2,
         relationship: eachDoc.relationship,
         comments: eachDoc.comments,
-        likes: eachDoc.likes
+        totalLikes: eachDoc.totalLikes
       };
       return eachDoc;
     });
@@ -551,7 +551,7 @@ User.search = async function(searchedItem) {
             link_social_type_2: eachDoc.link_social_type_2,
             relationship: eachDoc.relationship,
             comments: eachDoc.comments,
-            likes: eachDoc.likes
+            totalLikes: eachDoc.totalLikes
           };
           return eachDoc;
         });
@@ -1057,6 +1057,8 @@ User.storeLikes = data => {
       )
       .then(info => {
         const visitorInfo = info.value.likesProp.filter( i => i.visitorEmail == data.visitorEmail);
+        visitorInfo[0].totalLikes = info.value.totalLikes
+       
         resolve(visitorInfo);
       })
       .catch(_ => {

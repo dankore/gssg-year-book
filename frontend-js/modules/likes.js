@@ -40,9 +40,8 @@ export default class Likes {
     axios
       .post("/likes", { like: like, color: color })
       .then(response => {
-          console.log("axios: " + response.data)
-        this.likesContainer.innerHTML = response.data;
-        console.log(Object.keys(response.data));
+        this.likesContainer.innerHTML = response.data[0].totalLikes;
+        console.log(response.data[0]);
       })
       .catch(err => {
         console.log(err);
