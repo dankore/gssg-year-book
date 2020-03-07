@@ -17,11 +17,10 @@ export default class Likes {
   handleButtonClick() {
     let like = 0;
     let color = "";
-    if (this.likesButton.classList.contains("like")) {
+    if (this.likesButton.classList.contains("yes")) {
       like = 1;
       color = "yes";
-      this.likesButton.classList.remove("like");
-      this.likesButton.classList.add("dislike");
+      
       this.likeWordContainer.style.color = "#3182ce";
       Array.prototype.forEach.call(this.likesButtonSVG, svg => {
         svg.style.fill = "#3182ce";
@@ -29,8 +28,7 @@ export default class Likes {
     } else {
       like = -1;
       color = "no";
-      this.likesButton.classList.add("like");
-      this.likesButton.classList.remove("dislike");
+      
       this.likeWordContainer.style.color = "black";
       Array.prototype.forEach.call(this.likesButtonSVG, svg => {
         svg.style.fill = "white";
@@ -41,6 +39,7 @@ export default class Likes {
       .post("/likes", { like: like, color: color })
       .then(response => {
         this.likesContainer.innerHTML = response.data[0].totalLikes;
+        this.likesButton.classList.add(`${response.data[0].color}`)
         console.log(response.data[0]);
       })
       .catch(err => {

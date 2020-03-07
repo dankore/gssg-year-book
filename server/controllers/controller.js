@@ -116,7 +116,6 @@ exports.isVisitorOwner = (req, res, next) => {
 }
 
 exports.profileScreen = (req, res) => {
-  console.log(req.profileUser)
   if (req.session.user) {
     const visitorIsOwner = User.isVisitorOwner(
       req.session.user.email,
@@ -482,7 +481,7 @@ exports.deleteComment = (req, res) => {
 
 // LIKES
 exports.likes = (req, res) => {
-  console.log("C " + req.body.color, req.body.like);
+ 
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
   const data = {
     like: req.body.like,
