@@ -1031,21 +1031,26 @@ User.sendSuccessEmailToEmailsFromComments = data => {
     }
   });
 };
-// LIKES
 
+// LIKES
 User.storeLikes = data => {
   return new Promise(async (resolve, reject) => {
+    // DELETE OLD LIKE PROPERTIES
+    await usersCollection.updateOne(
+      {email: data.profileEmail},
+      { $pull : { likesProp: { visitorEmail: data.visitorEmail }}}
+      );
     usersCollection
       .findOneAndUpdate(
         { email: data.profileEmail },
         {
-          $set: {
-            likes: {
-              like: data.like,
+          $push: {
+            likesProp: {
               color: data.color,
               visitorEmail: data.visitorEmail
-            }
-          }
+            },
+          },
+          $inc: { totalLikes: data.like } 
         },
         { returnOriginal: false }
       )
