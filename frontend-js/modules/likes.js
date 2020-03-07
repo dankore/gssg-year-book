@@ -18,29 +18,30 @@ export default class Likes {
     let like = 0;
     let color = "";
     if (this.likesButton.classList.contains("yes")) {
-      like = 1;
-      color = "yes";
-      
-      this.likeWordContainer.style.color = "#3182ce";
-      Array.prototype.forEach.call(this.likesButtonSVG, svg => {
-        svg.style.fill = "#3182ce";
-      });
-    } else {
       like = -1;
       color = "no";
-      
-      this.likeWordContainer.style.color = "black";
+      this.likesButton.classList.remove("yes");
+      this.likesButton.classList.add("no");
       Array.prototype.forEach.call(this.likesButtonSVG, svg => {
-        svg.style.fill = "white";
+        svg.classList.remove("yes");
+        svg.classList.add("no");
+      });
+    } else {
+      like = 1;
+      color = "yes";
+      this.likesButton.classList.remove("no");
+      this.likesButton.classList.add("yes");
+      Array.prototype.forEach.call(this.likesButtonSVG, svg => {
+        svg.classList.add("yes");
+        svg.classList.remove("no");
       });
     }
-    console.log("like value: " + like);
+    console.log("like value: " + like, color);
     axios
       .post("/likes", { like: like, color: color })
       .then(response => {
         this.likesContainer.innerHTML = response.data[0].totalLikes;
-        this.likesButton.classList.add(`${response.data[0].color}`)
-        console.log(response.data[0]);
+        console.log(response.data[0], color);
       })
       .catch(err => {
         console.log(err);

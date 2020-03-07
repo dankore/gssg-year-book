@@ -39,3 +39,10 @@ html {
 .blueOnHover:hover {
   color: #3182ce;
 }
+.yes {
+  color: #3182ce;
+}
+.no {
+  color: black;
+}
+

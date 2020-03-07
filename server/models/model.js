@@ -1059,7 +1059,9 @@ User.storeLikes = data => {
         { returnOriginal: false }
       )
       .then(info => {
+        // FILTER ONLY VISITORS INFO
         const visitorInfo = info.value.likesProp.filter( i => i.visitorEmail == data.visitorEmail);
+        // ADD TOTALLIKES PROP TO FILTERED OBJECT FROM DB 
         visitorInfo[0].totalLikes = info.value.totalLikes
        
         resolve(visitorInfo);

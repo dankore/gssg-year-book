@@ -13,14 +13,13 @@ exports.home = async (req, res) => {
 };
 
 exports.registrationPage = async (req, res) => {
-  if(req.session.user){
+  if (req.session.user) {
     res.redirect("/");
   } else {
     res.render("registrationPage", {
-    reqErrors: req.flash("reqError")
-  });
+      reqErrors: req.flash("reqError")
+    });
   }
-  
 };
 
 exports.registrationSubmission = async (req, res) => {
@@ -48,7 +47,7 @@ exports.registrationSubmission = async (req, res) => {
 };
 
 exports.loginPage = (req, res) => {
-  if(req.session.user){
+  if (req.session.user) {
     res.redirect("/");
   } else {
     res.render("loginPage");
@@ -94,29 +93,38 @@ exports.ifUserExists = (req, res, next) => {
 };
 
 exports.mustBeLoggedIn = (req, res, next) => {
-  if(req.session.user){
-     next()
+  if (req.session.user) {
+    next();
   } else {
     req.flash("errors", "Must be login to perform that action.");
-    req.session.save(_ =>{
+    req.session.save(_ => {
       res.redirect("/");
-    })
-
+    });
   }
-}
+};
 
 exports.isVisitorOwner = (req, res, next) => {
-  const visitorIsOwner = User.isVisitorOwner(req.session.user.email, req.params.email)
-  if(visitorIsOwner){
-    next()
+  const visitorIsOwner = User.isVisitorOwner(
+    req.session.user.email,
+    req.params.email
+  );
+  if (visitorIsOwner) {
+    next();
   } else {
     req.flash("errors", "You do not have permission to perform that action.");
     req.session.save(_ => res.redirect("/"));
   }
-}
+};
 
 exports.profileScreen = (req, res) => {
-  console.log(req.profileUser)
+  const propExists = req.profileUser.likesProp
+    ? req.profileUser.likesProp.filter(
+        prop => prop.visitorEmail == req.session.user.email
+      )
+    : [];
+  console.log(propExists[0].color);
+  req.profileUser.color = propExists[0].color;
+
   if (req.session.user) {
     const visitorIsOwner = User.isVisitorOwner(
       req.session.user.email,
@@ -133,8 +141,8 @@ exports.profileScreen = (req, res) => {
 };
 
 exports.viewEditScreen = async function(req, res) {
-    let profile = await User.findByEmail(req.session.user.email);
-    res.render("editProfilePage", { profile: profile});
+  let profile = await User.findByEmail(req.session.user.email);
+  res.render("editProfilePage", { profile: profile });
 };
 
 exports.edit = async (req, res) => {
@@ -428,7 +436,7 @@ exports.postComments = async (req, res) => {
     .then(_ => {
       res.redirect(`profile/${profileEmail}`);
     })
-    .catch(errorMessage  => {
+    .catch(errorMessage => {
       req.flash("errors", errorMessage);
       req.session.save(async _ => {
         await res.redirect(`profile/${profileEmail}`);
@@ -482,7 +490,6 @@ exports.deleteComment = (req, res) => {
 
 // LIKES
 exports.likes = (req, res) => {
- 
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
   const data = {
     like: req.body.like,
@@ -497,5 +504,4 @@ exports.likes = (req, res) => {
     .catch(err => {
       console.log(err);
     });
-  
 };
