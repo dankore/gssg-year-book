@@ -118,7 +118,7 @@ exports.isVisitorOwner = (req, res, next) => {
 
 exports.profileScreen = (req, res) => {
   if (req.session.user) {
-    // FILTER ONLY THE LIKESPROP BELONGING TO THE SESSION USER
+    // FILTER ONLY LIKESPROP BELONGING TO THE SESSION USER
     const propExists = req.profileUser.likesProp
     ? req.profileUser.likesProp.filter(
         prop => prop.visitorEmail == req.session.user.email
@@ -127,7 +127,7 @@ exports.profileScreen = (req, res) => {
   if(propExists.length > 0){
     req.profileUser.color = propExists[0].color
   };
-  // FILTER ONLY THE LIKESPROP BELONGING TO THE SESSION USER ENDS
+  // FILTER ONLY LIKESPROP BELONGING TO THE SESSION USER ENDS
     const visitorIsOwner = User.isVisitorOwner(
       req.session.user.email,
       req.profileUser.email
@@ -503,7 +503,8 @@ exports.likes = (req, res) => {
     .then(response => {
       res.json(response);
     })
-    .catch(err => {
-      console.log(err);
+    .catch(_ => {
+      req.flash("errors", "Sorry, we are having issues with the Like button. Please try again.");
+      req.session.save(async _ => await res.redirect(`profile/${profileEmail}`));
     });
 };

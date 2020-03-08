@@ -1040,6 +1040,12 @@ User.sendSuccessEmailToEmailsFromComments = data => {
 // LIKES
 User.storeLikes = data => {
   return new Promise(async (resolve, reject) => {
+/**
+ * IF A USER LIKES PROFILE A, THE EMAIL OF THE USER AND COLOR VALUE 
+ * ARE STORED IN THE PROFILE A'S DOCUMENT 
+ * @EMAIL { @STRING } 
+ * @COLOR { @VALUES YES/NO }
+*/
     // DELETE OLD PROPERTIES
     await usersCollection.updateOne(
       { email: data.profileEmail },
@@ -1074,12 +1080,18 @@ User.storeLikes = data => {
       .catch(_ => {
         reject();
       });
+/**
+ * IF A USER LIKES PROFILE A, THE EMAIL OF PROFILE A AND COLOR VALUE 
+ * ARE STORED IN THE USER'S DOCUMENT 
+ * @EMAIL { @STRING } 
+ * @COLOR { @VALUES YES/NO }
+*/
     // DELETE OLD PROPERTIES
     await usersCollection.updateOne(
       { email: data.visitorEmail },
       { $pull: { profilesLiked: { profileEmail: data.profileEmail } } }
     );
-    // ADD THE NEW PROPERTY TOVISITOR'S PROFILE
+    // ADD THE NEW PROPERTY TO VISITOR'S PROFILE
     usersCollection.findOneAndUpdate(
       { email: data.visitorEmail },
       {
