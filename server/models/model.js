@@ -1042,7 +1042,7 @@ User.storeLikes = data => {
   return new Promise(async (resolve, reject) => {
 /**
  * IF A USER LIKES PROFILE A, THE EMAIL OF THE USER AND COLOR VALUE 
- * ARE STORED IN THE PROFILE A'S DOCUMENT 
+ * ARE STORED IN PROFILE A'S DOCUMENT 
  * @EMAIL { @STRING } 
  * @COLOR { @VALUES YES/NO }
 */
