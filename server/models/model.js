@@ -334,7 +334,8 @@ User.findByEmail = function(email) {
             relationship: userDoc.data.relationship,
             comments: userDoc.data.comments,
             totalLikes: userDoc.data.totalLikes,
-            likesProp: userDoc.data.likesProp
+            likesProp: userDoc.data.likesProp,
+            profilesLiked: userDoc.data.profilesLiked
           };
 
           resolve(userDoc);
@@ -464,7 +465,8 @@ User.allProfiles = function() {
         relationship: eachDoc.relationship,
         comments: eachDoc.comments,
         totalLikes: eachDoc.totalLikes,
-        likesProp: eachDoc.likesProp
+        likesProp: eachDoc.likesProp,
+        profilesLiked: eachDoc.profilesLiked
       };
       return eachDoc;
     });
@@ -553,7 +555,8 @@ User.search = async function(searchedItem) {
             relationship: eachDoc.relationship,
             comments: eachDoc.comments,
             totalLikes: eachDoc.totalLikes,
-            likesProp: eachDoc.likesProp
+            likesProp: eachDoc.likesProp,
+            profilesLiked: eachDoc.profilesLiked
           };
           return eachDoc;
         });

@@ -208,9 +208,10 @@ server.use(async (req, res, next) => {
   res.locals.path = req.originalUrl;
   // GET FIRST NAME
   if (req.session.user) {
-    const emails = [];
     await User.findByEmail(req.session.user.email)
       .then(userDoc => {
+        console.log(userDoc.profilesLiked);
+        res.locals.profilesUserLiked = userDoc.profilesLiked;
         res.locals.first_name_welcome = userDoc.firstName;
         res.locals.emailForComment = userDoc.email;
         res.locals.photoUrlForComment = userDoc.photo;
