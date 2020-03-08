@@ -17,11 +17,12 @@ export default class Likes {
   handleButtonClick() {
     let like = 0;
     let color = "";
-    if (this.likesButton.classList.contains("yes")) {
+    if (this.likesButton.classList.contains("yes-toggle")) {
       like = -1;
       color = "no";
-      this.likesButton.classList.remove("yes");
-      this.likesButton.classList.add("no");
+      this.likesButton.classList.remove("yes-toggle");
+      this.likesButton.classList.add("no-toggle");
+      this.likeWordContainer.classList.remove("yes-like-color");
       Array.prototype.forEach.call(this.likesButtonSVG, svg => {
         svg.classList.remove("yes");
         svg.classList.add("no");
@@ -30,8 +31,9 @@ export default class Likes {
     } else {
       like = 1;
       color = "yes";
-      this.likesButton.classList.remove("no");
-      this.likesButton.classList.add("yes");
+      this.likesButton.classList.remove("no-toggle");
+      this.likesButton.classList.add("yes-toggle");
+      this.likeWordContainer.classList.add("yes-like-color");
       Array.prototype.forEach.call(this.likesButtonSVG, svg => {
         svg.classList.add("yes");
         svg.classList.remove("no");
