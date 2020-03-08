@@ -208,6 +208,7 @@ server.use(async (req, res, next) => {
   res.locals.path = req.originalUrl;
   // GET FIRST NAME
   if (req.session.user) {
+    const emails = [];
     await User.findByEmail(req.session.user.email)
       .then(userDoc => {
         res.locals.first_name_welcome = userDoc.firstName;

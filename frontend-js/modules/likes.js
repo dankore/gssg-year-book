@@ -25,7 +25,7 @@ export default class Likes {
       Array.prototype.forEach.call(this.likesButtonSVG, svg => {
         svg.classList.remove("yes");
         svg.classList.add("no");
-        svg.style.fill = "white"
+        svg.style.fill = "white";
       });
     } else {
       like = 1;
@@ -38,12 +38,10 @@ export default class Likes {
         svg.style.fill = "#3182ce";
       });
     }
-    console.log("like value: " + like, color);
     axios
       .post("/likes", { like: like, color: color })
       .then(response => {
         this.likesContainer.innerHTML = response.data[0].totalLikes;
-        console.log(response.data[0], color);
       })
       .catch(err => {
         console.log(err);
