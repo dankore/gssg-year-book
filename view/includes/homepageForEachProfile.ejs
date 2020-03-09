@@ -23,7 +23,7 @@
       <% } %> 
       <!-- LIKES -->
       <% if(user){%> 
-        <% let color = !profilesUserLiked ? [] : profilesUserLiked.map(profileLiked => {%>
+        <% const color = !profilesUserLiked ? [] : profilesUserLiked.map(profileLiked => {%>
          <%if(profileLiked.profileEmail == profile.email){%>
            <% return profileLiked.color%>
          <%}%>

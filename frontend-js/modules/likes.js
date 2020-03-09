@@ -23,6 +23,7 @@ export default class Likes {
       this.likesButton.classList.remove("yes-toggle");
       this.likesButton.classList.add("no-toggle");
       this.likeWordContainer.classList.remove("yes-like-color");
+      this.likesContainer.textContent = +this.likesContainer.textContent - 1
       Array.prototype.forEach.call(this.likesButtonSVG, svg => {
         svg.classList.remove("yes");
         svg.classList.add("no");
@@ -34,6 +35,7 @@ export default class Likes {
       this.likesButton.classList.remove("no-toggle");
       this.likesButton.classList.add("yes-toggle");
       this.likeWordContainer.classList.add("yes-like-color");
+      this.likesContainer.textContent = +this.likesContainer.textContent + 1;
       Array.prototype.forEach.call(this.likesButtonSVG, svg => {
         svg.classList.add("yes");
         svg.classList.remove("no");
@@ -43,7 +45,10 @@ export default class Likes {
     axios
       .post("/likes", { like: like, color: color })
       .then(response => {
-        this.likesContainer.innerHTML = response.data[0].totalLikes;
+        /**
+         * @this.likesContainer.innerHTML = response.data[0].totalLikes  
+         * is slower. Used this.likesContainer.textContent = +this.likesContainer.textContent + 1 /-1 instead;
+         */
       })
       .catch(err => {
         console.log(err);
