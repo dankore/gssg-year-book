@@ -52,7 +52,7 @@ html {
   fill: white;
 }
 button:active {
-  transition: all 120ms ease;
+  transition: all 120ms ease-in-out;
    transform: translateY(1px);
 }
 
