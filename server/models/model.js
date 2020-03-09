@@ -334,7 +334,7 @@ User.findByEmail = function(email) {
             relationship: userDoc.data.relationship,
             comments: userDoc.data.comments,
             totalLikes: userDoc.data.totalLikes,
-            likesProp: userDoc.data.likesProp,
+            profiles_I_liked: userDoc.data.profiles_I_liked,
             profilesLiked: userDoc.data.profilesLiked
           };
 
@@ -465,7 +465,7 @@ User.allProfiles = function() {
         relationship: eachDoc.relationship,
         comments: eachDoc.comments,
         totalLikes: eachDoc.totalLikes,
-        likesProp: eachDoc.likesProp,
+        profiles_I_liked: eachDoc.profiles_I_liked,
         profilesLiked: eachDoc.profilesLiked
       };
       return eachDoc;
@@ -555,7 +555,7 @@ User.search = async function(searchedItem) {
             relationship: eachDoc.relationship,
             comments: eachDoc.comments,
             totalLikes: eachDoc.totalLikes,
-            likesProp: eachDoc.likesProp,
+            profiles_I_liked: eachDoc.profiles_I_liked,
             profilesLiked: eachDoc.profilesLiked
           };
           return eachDoc;
@@ -1040,16 +1040,16 @@ User.sendSuccessEmailToEmailsFromComments = data => {
 // LIKES
 User.storeLikes = data => {
   return new Promise(async (resolve, reject) => {
-/**
- * IF A USER LIKES PROFILE A, THE EMAIL OF THE USER AND COLOR VALUE 
- * ARE STORED IN PROFILE A'S DOCUMENT 
- * @EMAIL { @STRING } 
- * @COLOR { @VALUES YES/NO }
-*/
+    /**
+     * IF A USER LIKES PROFILE A, THE EMAIL OF THE USER AND COLOR VALUE
+     * ARE STORED IN PROFILE A'S DOCUMENT
+     * @EMAIL { @STRING }
+     * @COLOR { @VALUES YES/NO }
+     */
     // DELETE OLD PROPERTIES
     await usersCollection.updateOne(
       { email: data.profileEmail },
-      { $pull: { likesProp: { visitorEmail: data.visitorEmail } } }
+      { $pull: { profiles_I_liked: { visitorEmail: data.visitorEmail } } }
     );
 
     // ADD THE NEW PROPERTY TO  PROFILE OWNER
@@ -1058,7 +1058,7 @@ User.storeLikes = data => {
         { email: data.profileEmail },
         {
           $push: {
-            likesProp: {
+            profiles_I_liked: {
               color: data.color,
               visitorEmail: data.visitorEmail
             }
@@ -1069,7 +1069,7 @@ User.storeLikes = data => {
       )
       .then(info => {
         // FILTER ONLY VISITORS INFO
-        const visitorInfo = info.value.likesProp.filter(
+        const visitorInfo = info.value.profiles_I_liked.filter(
           i => i.visitorEmail == data.visitorEmail
         );
         // ADD TOTALLIKES PROP TO FILTERED OBJECT FROM DB
@@ -1080,12 +1080,12 @@ User.storeLikes = data => {
       .catch(_ => {
         reject();
       });
-/**
- * IF A USER LIKES PROFILE A, THE EMAIL OF PROFILE A AND COLOR VALUE 
- * ARE STORED IN THE USER'S DOCUMENT 
- * @EMAIL { @STRING } 
- * @COLOR { @VALUES YES/NO }
-*/
+    /**
+     * IF A USER LIKES PROFILE A, THE EMAIL OF PROFILE A AND COLOR VALUE
+     * ARE STORED IN THE USER'S DOCUMENT
+     * @EMAIL { @STRING }
+     * @COLOR { @VALUES YES/NO }
+     */
     // DELETE OLD PROPERTIES
     await usersCollection.updateOne(
       { email: data.visitorEmail },

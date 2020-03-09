@@ -118,16 +118,16 @@ exports.isVisitorOwner = (req, res, next) => {
 
 exports.profileScreen = (req, res) => {
   if (req.session.user) {
-    // FILTER ONLY LIKESPROP BELONGING TO THE SESSION USER
-    const propExists = req.profileUser.likesProp
-    ? req.profileUser.likesProp.filter(
-        prop => prop.visitorEmail == req.session.user.email
-      )
-    : [];
-  if(propExists.length > 0){
-    req.profileUser.color = propExists[0].color
-  };
-  // FILTER ONLY LIKESPROP BELONGING TO THE SESSION USER ENDS
+    // FILTER ONLY profiles_I_liked BELONGING TO THE SESSION USER
+    const propExists = req.profileUser.profiles_I_liked
+      ? req.profileUser.profiles_I_liked.filter(
+          prop => prop.visitorEmail == req.session.user.email
+        )
+      : [];
+    if (propExists.length > 0) {
+      req.profileUser.color = propExists[0].color;
+    }
+    // FILTER ONLY profiles_I_liked BELONGING TO THE SESSION USER ENDS
     const visitorIsOwner = User.isVisitorOwner(
       req.session.user.email,
       req.profileUser.email
@@ -504,7 +504,12 @@ exports.likes = (req, res) => {
       res.json(response);
     })
     .catch(_ => {
-      req.flash("errors", "Sorry, we are having issues with the Like button. Please try again.");
-      req.session.save(async _ => await res.redirect(`profile/${profileEmail}`));
+      req.flash(
+        "errors",
+        "Sorry, we are having issues with the Like button. Please try again."
+      );
+      req.session.save(
+        async _ => await res.redirect(`profile/${profileEmail}`)
+      );
     });
 };
