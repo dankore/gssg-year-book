@@ -118,16 +118,16 @@ exports.isVisitorOwner = (req, res, next) => {
 
 exports.profileScreen = (req, res) => {
   if (req.session.user) {
-    // FILTER ONLY profiles_I_liked BELONGING TO THE SESSION USER
-    const propExists = req.profileUser.profiles_I_liked
-      ? req.profileUser.profiles_I_liked.filter(
+    // FILTER ONLY likes_received BELONGING TO THE SESSION USER
+    const propExists = req.profileUser.likes_received
+      ? req.profileUser.likes_received.filter(
           prop => prop.visitorEmail == req.session.user.email
         )
       : [];
     if (propExists.length > 0) {
       req.profileUser.color = propExists[0].color;
     }
-    // FILTER ONLY profiles_I_liked BELONGING TO THE SESSION USER ENDS
+    // FILTER ONLY likes_received BELONGING TO THE SESSION USER ENDS
     const visitorIsOwner = User.isVisitorOwner(
       req.session.user.email,
       req.profileUser.email
