@@ -53,7 +53,7 @@ html {
 }
 button:active {
   transition: all 120ms ease;
-   transform: translateY(0.5px);
+   transform: translateY(1px);
 }
 
 
