@@ -26,7 +26,9 @@
         <!-- GET CURRENT @COLOR VALUE FOR THIS PROFILE. 
         IF COLOR=BLUE, VISITOR ALREADY LIKED THIS PROFILE. -->
         <%let color = "";%> 
-        <%!profilesUserLiked ? [] : profilesUserLiked;%> 
+        <%if(!profilesUserLiked){%>
+          <%profilesUserLiked = [];%>
+        <%}%> 
         <%for(var i = 0; i < profilesUserLiked.length; i++){%> 
         <%  if( profilesUserLiked[i].profileEmail == profile.email){%> 
         <%    color = profilesUserLiked[i].color; %> 
