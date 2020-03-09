@@ -23,11 +23,15 @@
       <% } %> 
       <!-- LIKES -->
        <% if(user){%> 
-        <% const color = !profilesUserLiked ? [] : profilesUserLiked.map(profileLiked => {%>
-         <%if(profileLiked.profileEmail == profile.email){%>
-           <% return profileLiked.color%>
-         <%}%>
-       <%}).filter(Boolean)%>
+        <!-- GET CURRENT @COLOR VALUE FOR THIS PROFILE. 
+        IF COLOR=BLUE, VISITOR ALREADY LIKED THIS PROFILE. -->
+        <%let color = "";%> 
+        <%!profilesUserLiked ? [] : profilesUserLiked;%> 
+        <%for(var i = 0; i < profilesUserLiked.length; i++){%> 
+        <%  if( profilesUserLiked[i].profileEmail == profile.email){%> 
+        <%    color = profilesUserLiked[i].color; %> 
+        <%}%> 
+        <%}%> 
        <div class="flex items-center">
             <svg id="like-button-svg" 
             class="<%= color %>-fill" 
