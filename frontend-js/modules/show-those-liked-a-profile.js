@@ -4,6 +4,7 @@ export default class ShowNames {
       "#like-button-svg-container"
     );
     this.namesContainer = document.querySelector("#names-container");
+    this.main = document.querySelector("main");
     this.events();
   }
   // EVENTS
@@ -17,6 +18,7 @@ export default class ShowNames {
     this.likeButtonSVGContainer.addEventListener("mouseout", () =>
       this.handleMouseOut()
     );
+    this.main.addEventListener("click", ()=> handleCloseNamesConatainer());
   }
 
   // METHODS
@@ -26,4 +28,8 @@ export default class ShowNames {
   handleMouseOut() {
     this.namesContainer.style.display = "none";
   }
+  handleCloseNamesConatainer(){
+    this.namesContainer.style.display = "none";
+  }
+  // END CLASS
 }
