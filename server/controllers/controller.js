@@ -118,16 +118,16 @@ exports.isVisitorOwner = (req, res, next) => {
 
 exports.profileScreen = (req, res) => {
   if (req.session.user) {
-    // FILTER ONLY likes_received BELONGING TO THE SESSION USER
-    const propExists = req.profileUser.likes_received
-      ? req.profileUser.likes_received.filter(
+    // FILTER ONLY likes_received_from BELONGING TO THE SESSION USER
+    const propExists = req.profileUser.likes_received_from
+      ? req.profileUser.likes_received_from.filter(
           prop => prop.visitorEmail == req.session.user.email
         )
       : [];
     if (propExists.length > 0) {
       req.profileUser.color = propExists[0].color;
     }
-    // FILTER ONLY likes_received BELONGING TO THE SESSION USER ENDS
+    // FILTER ONLY likes_received_from BELONGING TO THE SESSION USER ENDS
     const visitorIsOwner = User.isVisitorOwner(
       req.session.user.email,
       req.profileUser.email
@@ -493,6 +493,7 @@ exports.deleteComment = (req, res) => {
 // LIKES
 exports.likes = (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
+  // TODO: ADD _ID TO EACH LIKE
   const data = {
     like: req.body.like,
     color: req.body.color,

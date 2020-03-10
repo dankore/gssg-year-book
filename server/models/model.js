@@ -334,8 +334,8 @@ User.findByEmail = function(email) {
             relationship: userDoc.data.relationship,
             comments: userDoc.data.comments,
             totalLikes: userDoc.data.totalLikes,
-            likes_received: userDoc.data.likes_received,
-            likes_given: userDoc.data.likes_given
+            likes_received_from: userDoc.data.likes_received_from,
+            likes_given_to: userDoc.data.likes_given_to
           };
 
           resolve(userDoc);
@@ -465,8 +465,8 @@ User.allProfiles = function() {
         relationship: eachDoc.relationship,
         comments: eachDoc.comments,
         totalLikes: eachDoc.totalLikes,
-        likes_received: eachDoc.likes_received,
-        likes_given: eachDoc.likes_given
+        likes_received_from: eachDoc.likes_received_from,
+        likes_given_to: eachDoc.likes_given_to
       };
       return eachDoc;
     });
@@ -555,8 +555,8 @@ User.search = async function(searchedItem) {
             relationship: eachDoc.relationship,
             comments: eachDoc.comments,
             totalLikes: eachDoc.totalLikes,
-            likes_received: eachDoc.likes_received,
-            likes_given: eachDoc.likes_given
+            likes_received_from: eachDoc.likes_received_from,
+            likes_given_to: eachDoc.likes_given_to
           };
           return eachDoc;
         });
@@ -1049,7 +1049,7 @@ User.storeLikes = data => {
     // DELETE OLD PROPERTIES
     await usersCollection.updateOne(
       { email: data.profileEmail },
-      { $pull: { likes_received: { visitorEmail: data.visitorEmail } } }
+      { $pull: { likes_received_from: { visitorEmail: data.visitorEmail } } }
     );
 
     // ADD THE NEW PROPERTY TO  PROFILE OWNER
@@ -1058,7 +1058,7 @@ User.storeLikes = data => {
         { email: data.profileEmail },
         {
           $push: {
-            likes_received: {
+            likes_received_from: {
               color: data.color,
               visitorEmail: data.visitorEmail
             }
@@ -1069,7 +1069,7 @@ User.storeLikes = data => {
       )
       .then(info => {
         // FILTER ONLY VISITORS INFO
-        const visitorInfo = info.value.likes_received.filter(
+        const visitorInfo = info.value.likes_received_from.filter(
           i => i.visitorEmail == data.visitorEmail
         );
         // ADD TOTALLIKES PROP TO FILTERED OBJECT FROM DB
@@ -1089,14 +1089,14 @@ User.storeLikes = data => {
     // DELETE OLD PROPERTIES
     await usersCollection.updateOne(
       { email: data.visitorEmail },
-      { $pull: { likes_given: { profileEmail: data.profileEmail } } }
+      { $pull: { likes_given_to: { profileEmail: data.profileEmail } } }
     );
     // ADD THE NEW PROPERTY TO VISITOR'S PROFILE
     usersCollection.findOneAndUpdate(
       { email: data.visitorEmail },
       {
         $push: {
-          likes_given: {
+          likes_given_to: {
             color: data.color,
             profileEmail: data.profileEmail
           }

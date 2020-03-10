@@ -210,7 +210,7 @@ server.use(async (req, res, next) => {
   if (req.session.user) {
     await User.findByEmail(req.session.user.email)
       .then(userDoc => {
-        res.locals.profilesUserLiked = userDoc.likes_given;
+        res.locals.profilesUserLiked = userDoc.likes_given_to;
         res.locals.first_name_welcome = userDoc.firstName;
         res.locals.emailForComment = userDoc.email;
         res.locals.photoUrlForComment = userDoc.photo;
