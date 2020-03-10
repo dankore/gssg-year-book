@@ -11,19 +11,9 @@ export default class ShowNames {
     this.likeButtonSVGContainer.addEventListener("click", () =>
       this.handleButtonClick()
     );
-    this.likeButtonSVGContainer.addEventListener("mouseover", ()=> this.handleMouseOver());
-    this.likeButtonSVGContainer.addEventListener("mouseout", () =>
-      this.handleMouseOut()
-    );
   }
 
   // METHODS
-  handleMouseOver(){
-    this.namesContainer.style.display = "block";
-  }
-  handleMouseOut(){
-    this.namesContainer.style.display = "none";
-  }
   handleButtonClick(){
     if(this.namesContainer.style.display == "none"){
       this.namesContainer.style.display = "block";
