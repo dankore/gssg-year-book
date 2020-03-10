@@ -14,9 +14,12 @@
     <%- include('includes/homepageForEachProfileGuest', {profile: profile}) %>
   <!-- SHOW NUMBER OF COMMENTS AND LIKES END -->
   <%-include('includes/toggleMoreProfile') %>
-  <div class="flex justify-end mt-3 mx-auto" style="width: 18rem;">
-  <%- user ? include('includes/likes') : include('includes/likesGuest') %>
+  <hr class="border border-b-2 border-white mt-3">
+  <div class="flex justify-between items-center mx-auto" style="width: 18rem;">
+    <%- include('includes/clickToComment') %>
+    <%- include('includes/likes') %>
   </div>
+  <hr class="border border-b-2 border-white">
     <%- include('includes/commentsForm') %>
   </div>
   <%- include('includes/footer') %>

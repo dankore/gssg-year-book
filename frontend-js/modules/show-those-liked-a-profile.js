@@ -12,13 +12,13 @@ export default class ShowNames {
     this.likeButtonSVGContainer.addEventListener("mouseover", () =>
       this.handleMouseOver()
     );
-     this.likeButtonSVGContainer.addEventListener("click", () =>
+    this.likeButtonSVGContainer.addEventListener("click", () =>
       this.handleMouseOver()
-     );
+    );
     this.likeButtonSVGContainer.addEventListener("mouseout", () =>
       this.handleMouseOut()
     );
-    this.main.addEventListener("click", ()=> handleCloseNamesConatainer());
+    this.main.addEventListener("click", () => handleCloseNamesConatainer());
   }
 
   // METHODS
@@ -28,7 +28,7 @@ export default class ShowNames {
   handleMouseOut() {
     this.namesContainer.style.display = "none";
   }
-  handleCloseNamesConatainer(){
+  handleCloseNamesConatainer() {
     this.namesContainer.style.display = "none";
   }
   // END CLASS
