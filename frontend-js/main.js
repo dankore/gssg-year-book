@@ -9,6 +9,7 @@ import EditCancelUpdateComments from "./modules/comments-edit-cancel-update-btn"
 import ShowAllComments from "./modules/comments-show-all";
 import Likes from "./modules/likes";
 import ShowNames from "./modules/show-those-liked-a-profile";
+import ClickToComment from "./modules/clickToComment";
 
 if (document.querySelector("#more-profile-btn")) {
   new ToggleProfile();
@@ -45,4 +46,7 @@ if (document.querySelector("#likes-button")) {
 }
 if (document.querySelector("#like-button-svg-container")) {
   new ShowNames();
+}
+if (document.getElementById("click-to-comment")) {
+  new ClickToComment();
 }
