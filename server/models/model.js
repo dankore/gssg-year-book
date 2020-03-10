@@ -1103,7 +1103,8 @@ User.storeLikes = data => {
         $push: {
           likes_given_to: {
             color: data.color,
-            profileEmail: data.profileEmail
+            profileEmail: data.profileEmail,
+            visitorName: data.visitorName
           }
         }
       }

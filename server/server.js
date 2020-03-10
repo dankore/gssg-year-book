@@ -226,7 +226,10 @@ server.use(async (req, res, next) => {
 server.use("/profile/:email", (req, res, next) => {
   User.findByEmail(req.params.email)
     .then(userDoc => {
+      console.log("Server: ");
+      console.log(userDoc.likes_received_from);
       userDoc.url = "https://www.gssgcontactbook.com" + req.originalUrl;
+      res.locals.namesOfLikesReceivedFrom = userDoc.likes_received_from;
       res.locals.seo = userDoc;
     })
     .catch(err => {

@@ -8,6 +8,7 @@ import Filter from "./modules/filter";
 import EditCancelUpdateComments from "./modules/comments-edit-cancel-update-btn";
 import ShowAllComments from "./modules/comments-show-all";
 import Likes from "./modules/likes";
+import ShowNames from "./modules/show-those-liked-a-profile";
 
 if (document.querySelector("#more-profile-btn")) {
   new ToggleProfile();
@@ -41,4 +42,7 @@ if (document.querySelector("#show-all-comments-toggle")) {
 }
 if (document.querySelector("#likes-button")) {
   new Likes();
+}
+if (document.querySelector("#like-button-svg-container")) {
+  new ShowNames();
 }

@@ -662,29 +662,20 @@ let data = [
 ];
 let profile = "olaniyisamojo@yahoo.com";
 let emails = [
-  // { color: "no", profileEmail: "emekaejike203@gmail.com" },
-  // { color: "no", profileEmail: "olaniyisamojo@yahoo.com" },
-  // { color: "yes", profileEmail: "Olivechords@gmail.com" },
-  // { color: "yes", profileEmail: "ajtopsy01@gmail.com" }
-];
+  { color: 'yes',
+    visitorEmail: 'adamu.dankore@gmail.com',
+    visitorName: 'Adamu Muhammad-Dankore' },
+  { color: 'yes',
+    visitorEmail: 'zimmazone@yahoo.com',
+    visitorName: 'jut FRE' } 
+  ]
 
-
-// let g = emails.map(item => {
-
-//   if(item.profileEmail == profile){
-//     return item.color
-//   }
-// }).filter(Boolean)
-let g = ""
+let names = ""
 for(var i = 0; i < emails.length; i++){
-  
-  if(emails[i].profileEmail == profile){
-    console.log(emails[i]);
-    g = emails[i].color
-  }
+  console.log(emails[i].visitorName)
 }
 
-console.log(g)
+// console.log(names)
 
 
     
