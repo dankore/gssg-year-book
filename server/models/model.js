@@ -1060,7 +1060,8 @@ User.storeLikes = data => {
           $push: {
             likes_received_from: {
               color: data.color,
-              visitorEmail: data.visitorEmail
+              visitorEmail: data.visitorEmail,
+              visitorName: data.visitorName
             }
           },
           $inc: { totalLikes: data.like }
@@ -1072,9 +1073,13 @@ User.storeLikes = data => {
         const visitorInfo = info.value.likes_received_from.filter(
           i => i.visitorEmail == data.visitorEmail
         );
-        // ADD TOTALLIKES PROP TO FILTERED OBJECT FROM DB
+        // ADD TOTALLIKES TO FILTERED OBJECT FROM DB
         visitorInfo[0].totalLikes = info.value.totalLikes;
-
+        /**
+         * RESOLVE WITH VISITOR_OBJECT
+         * @VISITOR_OBJECT [ {COLOR: VALUE, VISITOREMAIL: VALUE, 
+         * VISITORNAME: VALUE, TOTALLIKES: VALUE} ]
+         */
         resolve(visitorInfo);
       })
       .catch(_ => {

@@ -491,13 +491,15 @@ exports.deleteComment = (req, res) => {
 };
 
 // LIKES
-exports.likes = (req, res) => {
+exports.likes = async (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
+  const userDoc = await User.findByEmail(req.session.user.email)
   // TODO: ADD _ID TO EACH LIKE
   const data = {
     like: req.body.like,
     color: req.body.color,
     visitorEmail: req.session.user.email,
+    visitorName: `${userDoc.firstName} ${userDoc.lastName}`,
     profileEmail: profileEmail
   };
   User.storeLikes(data)
