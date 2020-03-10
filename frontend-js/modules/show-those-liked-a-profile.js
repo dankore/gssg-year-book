@@ -8,11 +8,11 @@ export default class ShowNames {
   }
   // EVENTS
   events() {
-    this.likeButtonSVGContainer.addEventListener("mouseover", (e) =>
-      this.handleMouseOver(e)
+    this.likeButtonSVGContainer.addEventListener("mouseover", () =>
+      this.handleMouseOver()
     );
-     this.likeButtonSVGContainer.addEventListener("click", e =>
-       this.handleMouseOver(e)
+     this.likeButtonSVGContainer.addEventListener("click", () =>
+      this.handleMouseOver()
      );
     this.likeButtonSVGContainer.addEventListener("mouseout", () =>
       this.handleMouseOut()
@@ -20,7 +20,7 @@ export default class ShowNames {
   }
 
   // METHODS
-  handleMouseOver(e) {
+  handleMouseOver() {
     this.namesContainer.style.display = "block";
   }
   handleMouseOut() {
