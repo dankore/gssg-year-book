@@ -18,7 +18,6 @@ export default class ShowNames {
     this.likeButtonSVGContainer.addEventListener("mouseout", () =>
       this.handleMouseOut()
     );
-    this.main.addEventListener("click", () => this.handleCloseNamesContainer());
   }
 
   // METHODS
@@ -28,8 +27,6 @@ export default class ShowNames {
   handleMouseOut() {
     this.namesContainer.style.display = "none";
   }
-  handleCloseNamesContainer() {
-    this.namesContainer.style.display = "none";
-  }
+ 
   // END CLASS
 }
