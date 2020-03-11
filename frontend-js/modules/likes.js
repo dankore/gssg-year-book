@@ -54,7 +54,7 @@ export default class Likes {
           }
 
           if (arrayOfNames.length < 1) {
-            //  <!-- DO NOTHING -->
+            this.likesContainer.innerHTML = "";
           } else if (arrayOfNames.length == 1) {
             this.likesContainer.innerHTML = `Liked by ${arrayOfNames[0]}`;
           } else if (arrayOfNames.length == 2) {
