@@ -45,31 +45,39 @@ export default class Likes {
     axios
       .post("/likes", { like: like, color: color })
       .then(response => {
-        axios.post("/get-visited-profile-doc").then(res => {
-          let arrayOfNames = [];
-          for (let i = 0; i < res.data.length; i++) {
-            if (res.data[i].color == "yes") {
-              arrayOfNames.push(res.data[i].visitorName);
+        axios
+          .post("/get-visited-profile-doc")
+          .then(res => {
+            /**
+             * GET THE NAMES OF PROFILES WHO LIKED THIS PROFILE
+             * IF @COLOR == "YES" MEANS PROFILE CURRENTLY LIKES THIS PROFILE
+             */
+            let arrayOfNames = [];
+            for (let i = 0; i < res.data.length; i++) {
+              if (res.data[i].color == "yes") {
+                arrayOfNames.push(res.data[i].visitorName);
+              }
             }
-          }
-
-          if (arrayOfNames.length < 1) {
-            this.likesContainer.innerHTML = "";
-          } else if (arrayOfNames.length == 1) {
-            this.likesContainer.innerHTML = `Liked by ${arrayOfNames[0]}`;
-          } else if (arrayOfNames.length == 2) {
-            this.likesContainer.innerHTML = `Liked by ${arrayOfNames.slice(
-              0,
-              1
-            )} & ${arrayOfNames.slice(1).length} other`;
-          } else {
-            this.likesContainer.innerHTML = `Liked by ${arrayOfNames.slice(
-              0,
-              1
-            )} & ${arrayOfNames.slice(1).length} others`;
-          }
-        });
-        // this.test.innerHTML = response.data[0].visitorName;
+            
+            if (arrayOfNames.length < 1) {
+              this.likesContainer.innerHTML = "";
+            } else if (arrayOfNames.length == 1) {
+              this.likesContainer.innerHTML = `Liked by ${arrayOfNames[0]}`;
+            } else if (arrayOfNames.length == 2) {
+              this.likesContainer.innerHTML = `Liked by ${arrayOfNames.slice(
+                0,
+                1
+              )} & ${arrayOfNames.slice(1).length} other`;
+            } else {
+              this.likesContainer.innerHTML = `Liked by ${arrayOfNames.slice(
+                0,
+                1
+              )} & ${arrayOfNames.slice(1).length} others`;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
         /**
          * @this.likesContainer.innerHTML = response.data[0].totalLikes
          * is slower. Used this.likesContainer.textContent = +this.likesContainer.textContent + 1 /-1 instead;

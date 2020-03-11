@@ -44,7 +44,7 @@ if (document.querySelector("#show-all-comments-toggle")) {
 if (document.querySelector("#likes-button")) {
   new Likes();
 }
-if (document.querySelector("#like-button-svg-container")) {
+if (document.querySelector("#likes-container")) {
   new ShowNames();
 }
 if (document.getElementById("click-to-comment")) {
