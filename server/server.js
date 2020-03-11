@@ -223,7 +223,7 @@ server.use(async (req, res, next) => {
 });
 
 // SEO
-server.use("/profile/:email", async (req, res, next) => {
+server.use("/profile/:email", async (req, res, next) => { 
   await User.findByEmail(req.params.email)
     .then(userDoc => {
       userDoc.url = "https://www.gssgcontactbook.com" + req.originalUrl;

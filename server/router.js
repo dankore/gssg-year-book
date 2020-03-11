@@ -67,5 +67,6 @@ router.get("*", controller.notFound);
 
 // LIKES
 router.post("/likes", controller.likes);
+router.post("/get-visited-profile-doc", controller.getProfile);
 // EXPORT CODE
 module.exports = router;

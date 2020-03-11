@@ -81,6 +81,17 @@ exports.logout = function(req, res) {
   });
 };
 
+exports.getProfile = async (req, res) => {
+  const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
+   await User.findByEmail(profileEmail)
+     .then(userDoc => {
+       res.json(userDoc.likes_received_from);
+     })
+     .catch(() => {
+       res.render("404");
+     });
+};
+
 exports.ifUserExists = (req, res, next) => {
   User.findByEmail(req.params.email)
     .then(userDoc => {

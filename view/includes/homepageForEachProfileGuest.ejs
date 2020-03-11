@@ -12,7 +12,7 @@
           <% arrayOfNames.push(locals.namesOfLikesReceivedFrom[i].visitorName) %>
         <%}%> 
        <% }%>   
-       <% console.log(arrayOfNames)%>
+     
        <%let namesOfThoseWhoLikedThisProfile = "";%>
        <!-- CHECK FOR LENGTH -->
        <%if(arrayOfNames.length < 1){%>
@@ -38,6 +38,7 @@
         <%    color = profilesUserLiked[i].color; %> 
         <%}%> 
         <%}%> 
+       
        <div id="like-button-svg-container" class="flex items-center cursor-pointer">
           <svg id="like-button-svg" 
           class="<%= color %>-fill" 
@@ -73,7 +74,6 @@
           <p class="ml-1">Say hello</p>
         </div>
       <% } %> 
-      
     </div>
     </section>
   <!-- SHOW NUMBER OF COMMENTS AND LIKES END -->
