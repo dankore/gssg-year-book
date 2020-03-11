@@ -1,4 +1,4 @@
-Kadane Algorithm;
+
 let input = [-2, 2, 5, -11, 6];
 function maxSumTwo(array) {
   let max_sum = array[0];
@@ -9,4 +9,8 @@ function maxSumTwo(array) {
   }
   return max_sum
 }
-console.log(maxSumTwo(input));
+let data = ['a', 'b']
+
+console.log(data.slice(0,1));
+console.log(data.slice(1).length);
+console.log("Liked by " + data.slice(0,1) + " and " + data.slice(1).length + " others.");

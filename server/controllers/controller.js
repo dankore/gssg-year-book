@@ -499,7 +499,7 @@ exports.likes = async (req, res) => {
     like: req.body.like,
     color: req.body.color,
     visitorEmail: req.session.user.email,
-    visitorName: `${userDoc.firstName} ${userDoc.lastName}`,
+    visitorName: `${userDoc.firstName}`,
     profileEmail: profileEmail
   };
   User.storeLikes(data)

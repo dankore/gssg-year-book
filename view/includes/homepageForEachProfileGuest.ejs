@@ -1,6 +1,58 @@
 <!-- SHOW NUMBER OF COMMENTS AND LIKES -->
     <section class="mx-auto p-2 border-t border-gray-200 text-xs -mt-1 rounded shadow-lg bg-white" style="width: 18rem;">
     <div class="flex justify-between">
+      <!-- LIKES -->
+       <!-- SHOWING NAMES OF THOSE WHO LIKED THE CURRENT USER PROFILE -->
+       <%if(!locals.namesOfLikesReceivedFrom){%>
+       <%locals.namesOfLikesReceivedFrom = [];%>
+       <%}%> 
+       <%let arrayOfNames = []%> 
+       <%for(let i = 0; i < locals.namesOfLikesReceivedFrom.length; i++){%> 
+        <%  if( namesOfLikesReceivedFrom[i].color == "yes"){%> 
+          <% arrayOfNames.push(locals.namesOfLikesReceivedFrom[i].visitorName) %>
+        <%}%> 
+       <% }%>   
+       <% console.log(arrayOfNames)%>
+       <%let namesOfThoseWhoLikedThisProfile = "";%>
+       <!-- CHECK FOR LENGTH -->
+       <%if(arrayOfNames.length < 1){%>
+         <!-- DO NOTHING -->
+       <%} else if(arrayOfNames.length == 1) {%>
+         <%namesOfThoseWhoLikedThisProfile = `Liked by ${arrayOfNames[0]}`%>
+       <%} else if(arrayOfNames.length == 2) {%>
+         <%namesOfThoseWhoLikedThisProfile  = `Liked by ${arrayOfNames.slice(0,1)} and ${arrayOfNames.slice(1).length} other`%>
+       <%} else {%>
+         <%namesOfThoseWhoLikedThisProfile = `Liked by ${arrayOfNames.slice(0,1)} and ${arrayOfNames.slice(1).length} others`%>
+       <%}%>
+        <!-- CHECK FOR LENGTH ENDS-->
+        <!-- SHOWING NAMES OF THOSE WHO LIKED THE CURRENT USER PROFILE -->
+       <% if(user){%> 
+        <!-- GET CURRENT @COLOR VALUE FOR THIS PROFILE. 
+        IF COLOR=BLUE, VISITOR ALREADY LIKED THIS PROFILE. -->
+        <%let color = "";%> 
+        <%if(!profilesUserLiked){%>
+          <%profilesUserLiked = [];%>
+        <%}%> 
+        <%for(let i = 0; i < profilesUserLiked.length; i++){%> 
+        <%  if( profilesUserLiked[i].profileEmail == profile.email){%> 
+        <%    color = profilesUserLiked[i].color; %> 
+        <%}%> 
+        <%}%> 
+       <div id="like-button-svg-container" class="flex items-center cursor-pointer">
+          <svg id="like-button-svg" 
+          class="<%= color %>-fill" 
+          xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="white" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+          <p id="likes-container" class="text-xs"><%= namesOfThoseWhoLikedThisProfile %></p>
+        </div>
+       <%} else {%> 
+          <div id="like-button-svg-container" class="flex items-center cursor-pointer">
+            <svg id="like-button-svg" 
+            xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="white" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+            <p id="likes-container" class="ml-1"><%= profile.totalLikes ? profile.totalLikes : 0 %></p>
+        </div>
+      <%}%> 
+      <!-- LIKES ENDS-->
+      <!-- COMMENTS -->
       <% if(profile.comments.length){ %>
         <!-- CHECK IF COMMENT IS GREATER THAN 1 -->
         <% if(profile.comments.length > 1){ %>
@@ -21,49 +73,7 @@
           <p class="ml-1">Say hello</p>
         </div>
       <% } %> 
-      <!-- LIKES -->
-       <!-- MODAL FOR SHOWING NAMES OF THOSE WHO LIKED THE CURRENT USER PROFILE -->
-         <%if(!locals.namesOfLikesReceivedFrom){%>
-          <%locals.namesOfLikesReceivedFrom = [];%>
-         <%}%> 
-         <ul 
-          id="names-container"
-          class="absolute -mt-12  ml-12 px-2 w-56 rounded text-white bg-black shadow-lg mx-auto"
-          style="display: none; opacity: 70%;"
-         >  
-          <%for(let i = 0; i < locals.namesOfLikesReceivedFrom.length; i++){%> 
-              <%  if( namesOfLikesReceivedFrom[i].color == "yes"){%> 
-                <li class="my-1 text-xs"><%=locals.namesOfLikesReceivedFrom[i].visitorName%></li>
-              <%}%> 
-            <% }%>   
-         </ul>
-        <!-- MODAL FOR SHOWING NAMES OF THOSE WHO LIKED THE CURRENT USER PROFILE END-->
-       <% if(user){%> 
-        <!-- GET CURRENT @COLOR VALUE FOR THIS PROFILE. 
-        IF COLOR=BLUE, VISITOR ALREADY LIKED THIS PROFILE. -->
-        <%let color = "";%> 
-        <%if(!profilesUserLiked){%>
-          <%profilesUserLiked = [];%>
-        <%}%> 
-        <%for(let i = 0; i < profilesUserLiked.length; i++){%> 
-        <%  if( profilesUserLiked[i].profileEmail == profile.email){%> 
-        <%    color = profilesUserLiked[i].color; %> 
-        <%}%> 
-        <%}%> 
-       <div id="like-button-svg-container" class="flex items-center cursor-pointer">
-          <svg id="like-button-svg" 
-          class="<%= color %>-fill" 
-          xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="white" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
-          <p id="likes-container" class="ml-1"><%= profile.totalLikes ? profile.totalLikes : 0 %></p>
-        </div>
-       <%} else {%> 
-          <div id="like-button-svg-container" class="flex items-center cursor-pointer">
-            <svg id="like-button-svg" 
-            xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="white" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
-            <p id="likes-container" class="ml-1"><%= profile.totalLikes ? profile.totalLikes : 0 %></p>
-        </div>
-      <%}%> 
-      <!-- LIKES END-->
+      
     </div>
     </section>
   <!-- SHOW NUMBER OF COMMENTS AND LIKES END -->
