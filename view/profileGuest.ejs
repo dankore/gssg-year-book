@@ -3,7 +3,25 @@
 <%- include('includes/goToHomePage') %>
 <div class="max-w-sm sm:max-w-xs mx-auto">
 <%- include('includes/profileShared') %> 
+<!-- SHOW NUMBER OF COMMENTS AND LIKES -->
+    <%- include('includes/homepageForEachProfileGuest', {profile: profile}) %>
+<!-- SHOW NUMBER OF COMMENTS AND LIKES END -->
 <%- include('includes/toggleMoreProfile') %>
 </div>
+<% if(user){ %>
+  <div class ="mx-auto mt-3" style="width: 18rem;">
+    <hr class="border border-b-px border-white mt-3">
+    <div class="flex justify-between items-center">
+      <%- include('includes/clickToComment') %>
+      <%- include('includes/likes') %>
+    </div>
+    <hr class="border border-b-px border-white">
+  </div>
+  
+<%} else {%>
+  <div class="mt-3 mx-auto" style="width: 18rem;">
+    <%- include('includes/loginToCommentLike') %>
+  </div>
+<%}%>
 <%- include('includes/commentsForm') %>
 <%-include('includes/footer') %>

@@ -1,32 +1,5 @@
-<!-- TOGGLE: SHOW ALL COMMENTS -->
 <section class="mx-auto mt-2 rounded" style="width: 18rem;">
-  <div
-    id="show-all-comments-toggle"
-    class="border cursor-pointer bg-white text-center border-green-600 rounded"
-  >
-  <!-- USER/NON-LOGIN USER SHOW THE SAME BUT WITH LINK FOR NON-LOGIN USER-->
-  <% if(profile.comments.length < 1){ %>
-      <% if(user) { %>
-        <p class="px-5 py-3">Be the first to say hello</p>
-      <%} else { %>
-         <a href="/login"><p class="px-5 py-3">Be the first to say hello</p></a>
-      <%}%>
-  <% } else if (profile.comments.length == 1){ %>
-    <p class="px-5 py-3">Comment (<%= profile.comments.length %>)</p>
-  <%} else if (profile.comments.length <= 2 ){ %>
-    <p class="px-5 py-3">Comments (<%= profile.comments.length %>)</p>
-  <% } else if (profile.comments.length > 2){ %>
-    <p id="before-click-comments-count">Click to view all (<%= profile.comments.length %>) comments</p>
-    <p id="after-click-comments-count" style="display: none;">Comments (<%= profile.comments.length %>)</p>
-  <% } else { %>
-      <% if(user) { %>
-        <p class="px-5 py-3">Be the first to say hello</p>
-      <%} else { %>
-         <a href="/login"><p class="px-5 py-3">Be the first to say hello</p></a>
-      <%}%>
-  <%}%> 
-  </div>
-  <!-- TOGGLE: SHOW ALL COMMENTS ENDS -->
+  <!-- TOGGLE: SHOW ALL COMMENTS -->
   <!-- ADD COMMENTS FORM -->
   <% if(user){ %>
   <div class="bg-white rounded">
@@ -42,6 +15,7 @@
       </div>
       <div style="width: 15rem;">
         <textarea
+          id="textarea-comments"
           type="text"
           name="comment"
           class="focus:bg-gray-100 w-full p-2"

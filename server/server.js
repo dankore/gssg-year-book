@@ -206,10 +206,11 @@ server.use(async (req, res, next) => {
   res.locals.user = req.session.user;
   // IF PATH IS HOMEPAGE SHOW SCROLL-TO-TOP
   res.locals.path = req.originalUrl;
-  // GET FIRST NAME
+  // GLOBALS FOR WHEN A USER IS LOGGED IN
   if (req.session.user) {
     await User.findByEmail(req.session.user.email)
       .then(userDoc => {
+        res.locals.profilesUserLiked = userDoc.likes_given_to;
         res.locals.first_name_welcome = userDoc.firstName;
         res.locals.emailForComment = userDoc.email;
         res.locals.photoUrlForComment = userDoc.photo;
@@ -222,10 +223,11 @@ server.use(async (req, res, next) => {
 });
 
 // SEO
-server.use("/profile/:email", (req, res, next) => {
-  User.findByEmail(req.params.email)
+server.use("/profile/:email", async (req, res, next) => { 
+  await User.findByEmail(req.params.email)
     .then(userDoc => {
       userDoc.url = "https://www.gssgcontactbook.com" + req.originalUrl;
+      res.locals.namesOfLikesReceivedFrom = userDoc.likes_received_from;
       res.locals.seo = userDoc;
     })
     .catch(err => {

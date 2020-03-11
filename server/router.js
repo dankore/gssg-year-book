@@ -55,7 +55,7 @@ router.get("/google-login/callback", passport.authenticate('google', {failureRed
 
 // TWITTER
 router.get("/twitter-login", passport.authenticate('twitter'));
-router.get('/twitter-login/callback', passport.authenticate('twitter', {failureRedirect: '/register' }), controller.twitterLogin);
+router.get('/twitter-login/callback', passport.authenticate('twitt"er', {failureRedirect: '/register' }), controller.twitterLogin);
 
 // COMMENTS
 router.post("/profile", controller.postComments);
@@ -63,6 +63,10 @@ router.post("/delete-comment", controller.deleteComment);
 router.post("/edit-comment", controller.editComment);
 
 // NOT FOUND
-router.get("*", controller.notFound)
+router.get("*", controller.notFound);
+
+// LIKES
+router.post("/likes", controller.likes);
+router.post("/get-visited-profile-doc", controller.getProfile);
 // EXPORT CODE
 module.exports = router;

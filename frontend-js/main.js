@@ -7,6 +7,9 @@ import RegistrationFormLiveValidation from "./modules/registrationFormLiveValida
 import Filter from "./modules/filter";
 import EditCancelUpdateComments from "./modules/comments-edit-cancel-update-btn";
 import ShowAllComments from "./modules/comments-show-all";
+import Likes from "./modules/likes";
+import ShowNames from "./modules/show-those-liked-a-profile";
+import ClickToComment from "./modules/clickToComment";
 
 if (document.querySelector("#more-profile-btn")) {
   new ToggleProfile();
@@ -37,4 +40,13 @@ if (document.querySelectorAll("#edit-button")) {
 }
 if (document.querySelector("#show-all-comments-toggle")) {
   new ShowAllComments();
+}
+if (document.querySelector("#likes-button")) {
+  new Likes();
+}
+if (document.querySelector("#likes-container")) {
+  new ShowNames();
+}
+if (document.getElementById("click-to-comment")) {
+  new ClickToComment();
 }

@@ -39,3 +39,25 @@ html {
 .blueOnHover:hover {
   color: #3182ce;
 }
+.yes-like-color {
+  color: #3182ce;
+}
+.no-like-color {
+  color: black;
+}
+.yes-fill {
+  fill: #3182ce;
+}
+.no-fill {
+  fill: white;
+}
+button:active {
+  transition: all 120ms ease-in-out;
+  transform: translateY(1px);
+}
+.label-onlick-bg-color:active {
+  background-color: #cbd5e0;
+  transition: all 200ms ease-in-out;
+}
+
+
