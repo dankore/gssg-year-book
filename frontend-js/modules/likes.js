@@ -61,12 +61,12 @@ export default class Likes {
             this.likesContainer.innerHTML = `Liked by ${arrayOfNames.slice(
               0,
               1
-            )} and ${arrayOfNames.slice(1).length} other`;
+            )} & ${arrayOfNames.slice(1).length} other`;
           } else {
             this.likesContainer.innerHTML = `Liked by ${arrayOfNames.slice(
               0,
               1
-            )} and ${arrayOfNames.slice(1).length} others`;
+            )} & ${arrayOfNames.slice(1).length} others`;
           }
         });
         // this.test.innerHTML = response.data[0].visitorName;
