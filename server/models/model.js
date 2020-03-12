@@ -267,8 +267,12 @@ User.prototype.register = function() {
       // Hash user password
       let salt = bcrypt.genSaltSync(10);
       this.data.password = bcrypt.hashSync(this.data.password, salt);
+      // INITIALIZE THE BELOW FOR EACH REGISTERED USER
       this.data.photo = "";
       this.data.comments = [];
+      this.data.likes_received_from = [];
+      this.data.likes_given_to = [];
+
       await usersCollection.insertOne(this.data);
 
       // EMAIL USER FOR A SUCCESSFULL REGISTRATION
@@ -832,7 +836,10 @@ User.doesEmailExists = email => {
 User.addSocialUser = data => {
   return new Promise(async (resolve, reject) => {
     try {
+      // INITIALIZE THE BELOW PROPERTIES FOR EACH REGISTERED USER
       data.comments = [];
+      data.likes_received_from = [];
+      data.likes_given_to = [];
       await usersCollection.insertOne(data);
       resolve(
         "Success, Up GSS Gwarinpa! Click 'Edit Profile' to add your nickname, birthday, and more."
