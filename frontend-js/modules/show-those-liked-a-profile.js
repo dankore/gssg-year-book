@@ -3,6 +3,7 @@ export default class ShowNames {
   constructor() {
     this.likesContainer = document.querySelector("#likes-container");
     this.namesContainerUL = document.querySelector("#names-container-ul");
+    this.main = document.querySelector("main");
     this.events();
   }
   // EVENTS
@@ -10,9 +11,16 @@ export default class ShowNames {
     this.likesContainer.addEventListener("click", () =>
       this.handleButtonClick()
     );
+    this.likesContainer.addEventListener("mouseover", () =>
+      this.handleButtonClick()
+    );
+    this.main.addEventListener("click", ()=> this.closeLikesContainer());
   }
 
   // METHODS
+  closeLikesContainer() {
+     this.namesContainerUL.style.display = "none";
+  }
   handleButtonClick() {
     axios
       .post("/get-visited-profile-doc")
