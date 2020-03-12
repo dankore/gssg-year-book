@@ -4,10 +4,10 @@ const sortProfiles = array => {
     if(a.likes_received_from && b.likes_received_from){
         const aNumComments = a.comments.length
         const bNumComments = b.comments.length
-        const aNumLikesReceived = a.likes_received_from.length
-        const bNumLikesReceived = b.likes_received_from.length
-
-        return (bNumComments + bNumLikesReceived) - (aNumComments + aNumLikesReceived)
+        const aNumLikesReceived = a.likes_received_from.filter( item => item.color == "yes").length // IF COLOR VALUE IS YES IT MEANS THE PROFILE IS LIKED
+        const bNumLikesReceived = b.likes_received_from.filter( item => item.color == "yes").length
+        
+        return (bNumComments + bNumLikesReceived) - (aNumComments + aNumLikesReceived);
       } else {
         return b.comments.length - a.comments.length
       }
