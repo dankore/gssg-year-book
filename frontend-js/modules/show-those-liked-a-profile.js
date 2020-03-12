@@ -8,11 +8,11 @@ export default class ShowNames {
   }
   // EVENTS
   events() {
-    this.likesContainer.addEventListener("click", () =>
-      this.handleButtonClick()
+    this.likesContainer.addEventListener("click", (e) =>
+      this.handleButtonClick(e)
     );
-    this.likesContainer.addEventListener("mouseover", () =>
-      this.handleButtonClick()
+    this.likesContainer.addEventListener("mouseover", (e) =>
+      this.handleButtonClick(e)
     );
     this.main.addEventListener("click", ()=> this.closeLikesContainer());
   }
@@ -21,7 +21,8 @@ export default class ShowNames {
   closeLikesContainer() {
      this.namesContainerUL.style.display = "none";
   }
-  handleButtonClick() {
+  handleButtonClick(e) {
+    e.stopPropagation();
     axios
       .post("/get-visited-profile-doc")
       .then(res => {
