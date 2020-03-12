@@ -1,3 +1,19 @@
+// SORT PROFILES
+const sortProfiles = array => {
+ return array.sort((a, b) => {
+    if(a.likes_received_from && b.likes_received_from){
+        const aNumComments = a.comments.length
+        const bNumComments = b.comments.length
+        const aNumLikesReceived = a.likes_received_from.length
+        const bNumLikesReceived = b.likes_received_from.length
+
+        return (bNumComments + bNumLikesReceived) - (aNumComments + aNumLikesReceived)
+      } else {
+        return b.comments.length - a.comments.length
+      }
+    });
+}
+
 // VALIDATION: ALLOWS ONLY LETTERS, NUMBERS, DASHES, AND HYPHENS
 const isAlphaNumericDashHyphen = stringInput => {
   return /^[\w-]+$/.test(stringInput);
@@ -96,3 +112,4 @@ exports.statsByYear = statsByYear;
 exports.getEmailFromHeadersReferrer = getEmailFromHeadersReferrer;
 exports.getHMS = getHMS;
 exports.getMonthDayYear = getMonthDayYear;
+exports.sortProfiles = sortProfiles;

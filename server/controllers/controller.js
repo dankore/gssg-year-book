@@ -5,7 +5,8 @@ const User = require("../models/model"),
 
 exports.home = async (req, res) => {
   let profiles = await User.allProfiles();
-  profiles.sort((a, b) => b.comments.length - a.comments.length); // SORT BY # OF COMMENTS
+  // SORT BY TOTAL NUMBER OF COMMENTS AND LIKES
+  profiles = helpers.sortProfiles(profiles);
   res.render("homePage", {
     profiles: profiles,
     statsByYear: helpers.statsByYear(profiles)
@@ -230,7 +231,8 @@ exports.account.delete = (req, res) => {
 exports.search = async (req, res) => {
   try {
     let searchResultsArray = await User.search(req.body.q);
-    searchResultsArray.sort((a, b) => a.year - b.year); // SORT BY YEAR DESCENDING
+    // SORT BY TOTAL NUMBER OF COMMENTS AND LIKES
+    searchResultsArray = helpers.sortProfiles(searchResultsArray);
     res.render("homePage", {
       profiles: searchResultsArray,
       statsByYear: helpers.statsByYear(searchResultsArray)
