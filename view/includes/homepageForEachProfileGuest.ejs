@@ -9,7 +9,9 @@
        <%let arrayOfNames = []%> 
        <%for(let i = 0; i < locals.namesOfLikesReceivedFrom.length; i++){%> 
         <%  if( namesOfLikesReceivedFrom[i].color == "yes"){%> 
-          <% arrayOfNames.push(locals.namesOfLikesReceivedFrom[i].visitorName) %>
+          <%  let fullName = locals.namesOfLikesReceivedFrom[i].visitorName; %>
+          <%  let firstName = fullName.split(" ")[0]; %>
+          <% arrayOfNames.push(firstName) %>
         <%}%> 
        <% }%>   
      
@@ -76,7 +78,7 @@
       <% } %> 
     </div>
     <!-- TOGGLE: SHOW NAMES OF USERS WHO LIKED THIS PROFILE -->
-    <ul id="names-container-ul" class="p-1 absolute rounded opacity-75 bg-black text-white shadow-lg" style="display: none; width: 10rem;"></ul>
+    <ul id="names-container-ul" class="p-1 absolute rounded opacity-75 bg-black text-white shadow-lg" style="display: none;"></ul>
     <!-- TOGGLE: SHOW NAMES OF USERS WHO LIKED THIS PROFILE END-->
     </section>
     
