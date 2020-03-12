@@ -55,7 +55,9 @@ export default class Likes {
             let arrayOfNames = [];
             for (let i = 0; i < res.data.length; i++) {
               if (res.data[i].color == "yes") {
-                arrayOfNames.push(res.data[i].visitorName);
+                let fullName = res.data[i].visitorName;
+                let firstName = fullName.split(" ")[0];
+                arrayOfNames.push(firstName);
               }
             }
             
