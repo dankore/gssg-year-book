@@ -6,3 +6,5 @@ Any kind of code contribution is very much appreciated in any area such as code 
 make a copy of the repository, make your changes and make a pull request. Thank you.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/apps/gss-contact-book/activity)
+
+![sample profile](https://gss-gwarinpa.s3.us-east-2.amazonaws.com/for_readme.PNG)
