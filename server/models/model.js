@@ -1095,25 +1095,29 @@ User.storeLikes = data => {
          /**
           * Only send email if a user likes a profile. If a user unlikes 
           * a profile. DO NOT send email
+          * Also if a user likes their profile, DO NOT send email
           * @variable [array] info.value.likes_received_from, from DB
           * @variable [array] emailsForLikes
           */
+          // console.log(info.value.likes_received_from)
         const emailsForLikes = [];
         for(let i = 0; i < info.value.likes_received_from.length; i++){
           const currentElement = info.value.likes_received_from[i];
           // data.color == "yes" ensures only after a like an email would be sent
-          if(currentElement.color === "yes" && data.color === "yes"){ 
+          if(currentElement.color === "yes" && data.color === "yes" && currentElement.visitorEmail !== data.profileEmail){ 
             emailsForLikes.push(currentElement.visitorEmail);
           }
         };
 
+      
+       console.log(emailsForLikes)
         if(emailsForLikes.length > 0){
           const likeSuccessEmail = new Emailer(
           emailsForLikes,
           '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
           `New like from ${data.visitorName}`,
           `<div style="width: 320px;">
-          <p>GSS Gwarinpa Contact Book 📗</p>
+          <p>GSS Gwarinpa Contact Book</p>
             <hr style="margin-bottom: 50px;">
             <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
             <p style="font-size: 15px;"><strong>${data.visitorName}</strong> liked <strong>${info.value.firstName} ${info.value.lastName}'s</strong> profile.</p>
@@ -1123,6 +1127,7 @@ User.storeLikes = data => {
             style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
               font-size: 15px; width: 300px; text-align: center; display:inline-block;">View on GSS Gwarinpa Contact Book
             </a>
+            <p style="font-size: 8px; margin-top: 15px;">You are receiving this email because you liked ${info.value.firstName} ${info.value.lastName}'s profile.</p>
           </div>
           `);
         transporter.transporter.sendMail(likeSuccessEmail, (error, info) => {
@@ -1130,8 +1135,8 @@ User.storeLikes = data => {
           else
             console.log("Multiple Like Success Emails sent: " + info.response);
         });
-        // EMAIL USERS FOR A SUCCESSFULL LIKE ENDS
       };
+       // EMAIL USERS FOR A SUCCESSFULL LIKE ENDS
       })
       .catch(_ => {
         reject();
