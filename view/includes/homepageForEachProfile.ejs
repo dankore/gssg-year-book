@@ -30,7 +30,7 @@
         <!-- GET CURRENT @COLOR VALUE FOR ALL PROFILES. 
         IF COLOR=BLUE, VISITOR ALREADY LIKED THE PROFILE. -->
         <%let color = "";%> 
-        <%if(!profilesUserLiked){%>
+        <%if(!locals.profilesUserLiked){%>
           <%profilesUserLiked = [];%>
         <%}%>
         <%for(var i = 0; i < profilesUserLiked.length; i++){%> 
