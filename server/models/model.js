@@ -1104,13 +1104,15 @@ User.storeLikes = data => {
         for(let i = 0; i < info.value.likes_received_from.length; i++){
           const currentElement = info.value.likes_received_from[i];
           // data.color == "yes" ensures only after a like an email would be sent
-          if(currentElement.color === "yes" && data.color === "yes" && currentElement.visitorEmail !== data.profileEmail){ 
+          if(currentElement.color === "yes" && data.color === "yes"){ // && currentElement.visitorEmail !== data.profileEmail
             emailsForLikes.push(currentElement.visitorEmail);
+            emailsForLikes.push(data.profileEmail);
           }
         };
 
-      
-       console.log(emailsForLikes)
+     
+       console.log(emailsForLikes);
+
         if(emailsForLikes.length > 0){
           const likeSuccessEmail = new Emailer(
           emailsForLikes,
@@ -1136,7 +1138,7 @@ User.storeLikes = data => {
             console.log("Multiple Like Success Emails sent: " + info.response);
         });
       };
-       // EMAIL USERS FOR A SUCCESSFULL LIKE ENDS
+      //  EMAIL USERS FOR A SUCCESSFULL LIKE ENDS
       })
       .catch(_ => {
         reject();
