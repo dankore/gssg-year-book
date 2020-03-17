@@ -1099,29 +1099,25 @@ User.storeLikes = data => {
          * @variable [array] info.value.likes_received_from, from DB
          * @variable [array] emailsForLikes
          */
-        // console.log(info.value.likes_received_from)
         let emailsForLikes = [];
-        for (let i = 0; i < info.value.likes_received_from.length; i++) {
-          const currentElement = info.value.likes_received_from[i];
-          // data.color == "yes" ensures only after a like an email would be sent
-          if (currentElement.color === "yes" && data.color === "yes") {
-            emailsForLikes.push(currentElement.visitorEmail, data.profileEmail);
-          }
-        };
-
-        // IF I LIKE MY PROFILE, DO NOT SEND ME EMAIL
-        if(data.visitorEmail == data.profileEmail){
-          for (let i = 0; i < info.value.likes_received_from.length; i++) {
-          const currentElement = info.value.likes_received_from[i];
-          // data.color == "yes" ensures only after a like an email would be sent
-          if (currentElement.color === "yes" && data.color === "yes" && currentElement.visitorEmail == data.visitorEmail) {
-            emailsForLikes = emailsForLikes.filter(item => item != currentElement.visitorEmail)
-          }
-         }
-        };
         
+          for (let i = 0; i < info.value.likes_received_from.length; i++) {
+            const currentElement = info.value.likes_received_from[i];
+            // THIS LOGIC: IF I LIKE MY PROFILE OR LIKE OTHER PROFILE, DO NOT SEND ME EMAIL
+            if (data.profileEmail == data.visitorEmail && data.color == "yes") {
+              // data.color == "yes" ensures only after a like an email would be sent
+              if (currentElement.color === "yes" && data.color === "yes" && currentElement.visitorEmail !== data.profileEmail) {
+                emailsForLikes.push(currentElement.visitorEmail);
+              }
+            } else {
+              if (currentElement.color === "yes" && data.color === "yes" && currentElement.visitorEmail !== data.visitorEmail) {
+                emailsForLikes.push(currentElement.visitorEmail, data.profileEmail);
+              }
+            }
+
+          }
         // REMOVE DUPLICATES
-        emailsForLikes = [...new Set(emailsForLikes)];
+        emailsForLikes = [...new Set(emailsForLikes)]; // TODO: REFAC ABOVE LOGIC TO ELIMINATE [..new Set()]
        // IF EMAIL LIST NOT EMPTY, THEN SEND EMAIL
         if(emailsForLikes.length > 0){
             const likeSuccessEmail = new Emailer(
