@@ -669,7 +669,7 @@ User.prototype.resetPassword = function(url) {
         const msgSendToken = new Emailer(
           userDoc.email,
           '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-          `${userDoc.firstName}, Reset Your Password - GSS Gwarinpa Contact Book 📗`,
+          `${userDoc.firstName}, Reset Your Password - GSS Gwarinpa Contact Book`,
           `Hello ${userDoc.firstName},` +
             "<br><br>" +
             "Please click on the following link to complete the process:\n" +
@@ -783,7 +783,7 @@ User.prototype.resetToken = function(token) {
       const msgConfirmation = new Emailer(
         user.email,
         '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-        `${user.firstName}, You Successfully Reset Your Password - GSS Gwarinpa Contact Book 📗`,
+        `${user.firstName}, You Successfully Reset Your Password - GSS Gwarinpa Contact Book`,
         `Hello ${user.firstName},` +
           "<br><br>" +
           `This is a confirmation that the password for your account <strong>${user.email}</strong> has just been changed.\n` +
@@ -908,19 +908,69 @@ User.addComment = data => {
               commentDate: data.commentDate
             }
           }
-        }
-      );
-      resolve("Comment added.");
+        },
+        { returnOriginal: false }
+      ).then(info => {
 
-      // EMAIL USERS FOR A SUCCESSFULL COMMENT
-      User.sendSuccessEmailToEmailsFromComments(data);
+        resolve("Comment added.");
+
+       /**
+       * EMAIL USERS FOR A SUCCESSFULL COMMENT
+       * TODO: OPTIMIZE GETTING EMAIL BY REMOVING [...NEW SET()]
+       */
+        const emails = info.value.comments;
+        let emailListFromComments = [data.profileEmail];
+
+        for (let i = 0; i < emails.length; i++) {
+          const currentElement = emails[i];
+          // IF CURRENT LOGGED IN USER COMMENT ON ANOTHER PROFILE. DO NOT SEND HIM/HER EMAIL
+          if(currentElement.visitorEmail !== data.visitorEmail){
+            emailListFromComments.push(emails[i].visitorEmail); 
+          }
+        };
+
+      // REMOVE DUPLICATE EMAILS FROM LIST
+      emailListFromComments = [...new Set(emailListFromComments)];
+
+      const commentSuccessEmail = new Emailer(
+        emailListFromComments,
+        '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+        `New comment from ${data.visitorFirstName}`,
+        `<div style="width: 320px;">
+         <p>GSS Gwarinpa Contact Book</p>
+          <hr style="margin-bottom: 50px;">
+          <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
+            <img src=${data.photo} style="width: 60px; height: 60px; border-radius: 5px;" alt="profile photo"/>
+            <span>${data.visitorFirstName}</span> |
+            <em>${data.commentDate}</em>
+          <p style="font-size: 15px;"><strong>${data.comment}</strong></p>
+          </div>
+          <a 
+          href="https://www.gssgcontactbook.com/profile/${data.profileEmail}" 
+          style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
+            font-size: 15px; width: 300px; text-align: center; display:inline-block;">View on GSS Gwarinpa Contact Book
+          </a>
+        </div>
+        `
+      );
+      transporter.transporter.sendMail(commentSuccessEmail, (error, info) => {
+        if (error) console.log(error);
+        else
+          console.log("Multiple Comment Success Emails sent: " + info.response);
+      });
       // EMAIL USERS FOR A SUCCESSFULL COMMENT ENDS
+
+      })
+      .catch(_=>{
+        reject("Comment not added. Please try again. @[then/catch]");
+      })
+      
     } catch {
-      reject("Comment not added. Please try again.");
+      reject("Comment not added. Please try again.  @[try/catch]");
     }
   });
 };
-// UPDATE COMMENTS FOR A USER WHO UPDATES THEIR PROFILE
+// UPDATE FIRST NAME IN COMMENTS FOR A USER WHO UPDATES THEIR PROFILE
 User.updateCommentFirtName = (email, firstName) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -982,64 +1032,6 @@ User.deleteComment = (commentId, profileEmail) => {
       resolve("Comment deleted.");
     } catch {
       reject("Sorry, comment was not deleted. Please try again.");
-    }
-  });
-};
-
-User.sendSuccessEmailToEmailsFromComments = data => {
-  const emailArray = [data.profileEmail];
-  return new Promise(async (resolve, reject) => {
-    try {
-      let userDoc = await usersCollection
-        .find({ email: data.profileEmail })
-        .toArray();
-
-      // DEFAULT IMAGE IF NO IMAGE IS PROVIDED
-      if (!data.photo) {
-        data.photo =
-          "https://gss-gwarinpa.s3.us-east-2.amazonaws.com/blank.png";
-      }
-      // GET EMAILS FROM ALL COMMENTS FROM DB
-      userDoc.map(allProperties =>
-        allProperties.comments.map(comment =>
-          emailArray.push(comment.visitorEmail)
-        )
-      );
-
-      const emailList = [...new Set(emailArray)]; // REMOVE DUPLICATE EMAILS
-
-      // EMAIL USERS FOR A SUCCESSFULL COMMENT
-      const commentSuccessEmail = new Emailer(
-        emailList,
-        '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-        `New comment from ${data.visitorFirstName}`,
-        `<div style="width: 320px;">
-         <p>GSS Gwarinpa Contact Book 📗</p>
-          <hr style="margin-bottom: 50px;">
-          <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
-            <img src=${data.photo} style="width: 60px; height: 60px; border-radius: 5px;" alt="profile photo"/>
-            <span>${data.visitorFirstName}</span> |
-            <em>${data.commentDate}</em>
-          <p style="font-size: 15px;"><strong>${data.comment}</strong></p>
-          </div>
-          <a 
-          href="https://www.gssgcontactbook.com/profile/${data.profileEmail}" 
-          style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
-            font-size: 15px; width: 300px; text-align: center; display:inline-block;">View on GSS Gwarinpa Contact Book
-          </a>
-        </div>
-        `
-      );
-      transporter.transporter.sendMail(commentSuccessEmail, (error, info) => {
-        if (error) console.log(error);
-        else
-          console.log("Multiple Comment Success Emails sent: " + info.response);
-      });
-      // EMAIL USERS FOR A SUCCESSFULL COMMENT ENDS
-
-      resolve("Email sent");
-    } catch {
-      reject(err => console.log(err));
     }
   });
 };
