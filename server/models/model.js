@@ -669,7 +669,7 @@ User.prototype.resetPassword = function(url) {
         const msgSendToken = new Emailer(
           userDoc.email,
           '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-          `${userDoc.firstName}, Reset Your Password - GSS Gwarinpa Contact Book 📗`,
+          `${userDoc.firstName}, Reset Your Password - GSS Gwarinpa Contact Book`,
           `Hello ${userDoc.firstName},` +
             "<br><br>" +
             "Please click on the following link to complete the process:\n" +
@@ -783,7 +783,7 @@ User.prototype.resetToken = function(token) {
       const msgConfirmation = new Emailer(
         user.email,
         '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-        `${user.firstName}, You Successfully Reset Your Password - GSS Gwarinpa Contact Book 📗`,
+        `${user.firstName}, You Successfully Reset Your Password - GSS Gwarinpa Contact Book`,
         `Hello ${user.firstName},` +
           "<br><br>" +
           `This is a confirmation that the password for your account <strong>${user.email}</strong> has just been changed.\n` +
@@ -1014,7 +1014,7 @@ User.sendSuccessEmailToEmailsFromComments = data => {
         '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
         `New comment from ${data.visitorFirstName}`,
         `<div style="width: 320px;">
-         <p>GSS Gwarinpa Contact Book 📗</p>
+         <p>GSS Gwarinpa Contact Book</p>
           <hr style="margin-bottom: 50px;">
           <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
             <img src=${data.photo} style="width: 60px; height: 60px; border-radius: 5px;" alt="profile photo"/>
