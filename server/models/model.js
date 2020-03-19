@@ -892,7 +892,6 @@ User.validateComment = data => {
 // ADD A COMMENT
 User.addComment = data => {
   return new Promise(async (resolve, reject) => {
-    try {
       User.validateComment(data.comment);
       // FIND OWNER OF PROFILEEMAIL AND ADD COMMENT
       await usersCollection.findOneAndUpdate(
@@ -917,21 +916,33 @@ User.addComment = data => {
        /**
        * EMAIL USERS FOR A SUCCESSFULL COMMENT
        * TODO: OPTIMIZE GETTING EMAIL BY REMOVING [...NEW SET()]
+       * @variable [array] info.value.comments
        */
-        const emails = info.value.comments;
-        let emailListFromComments = [data.profileEmail];
+        let emailListFromComments = [];
+        
+        for (let i = 0; i < info.value.comments.length; i++) {
+          const currentElement = info.value.comments[i];
 
-        for (let i = 0; i < emails.length; i++) {
-          const currentElement = emails[i];
-          // IF CURRENT LOGGED IN USER COMMENT ON ANOTHER PROFILE. DO NOT SEND HIM/HER EMAIL
-          if(currentElement.visitorEmail !== data.visitorEmail){
-            emailListFromComments.push(emails[i].visitorEmail); 
-          }
+          // IF CURRENT LOGGED IN USER COMMENT ON THEIR PROFILE. DO NOT SEND HIM/HER EMAIL
+          if (data.profileEmail == data.visitorEmail) {
+            if (currentElement.visitorEmail !== data.visitorEmail) {
+              emailListFromComments.push(currentElement.visitorEmail);
+            };
+          } else {
+            // IF CURRENT LOGGED IN USER COMMENT ON ANOTHER PROFILE. DO NOT SEND HIM/HER EMAIL
+            if (currentElement.visitorEmail !== data.visitorEmail) {
+              emailListFromComments.push(currentElement.visitorEmail);
+            };
+
+            emailListFromComments.push(data.profileEmail);
+          };
         };
 
       // REMOVE DUPLICATE EMAILS FROM LIST
       emailListFromComments = [...new Set(emailListFromComments)];
-
+        
+        // ONLY SEND EMAIL IF EMAIL LIST IS GREATER THAN 0
+      if(emailListFromComments.length > 0){
       const commentSuccessEmail = new Emailer(
         emailListFromComments,
         '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
@@ -958,16 +969,13 @@ User.addComment = data => {
         else
           console.log("Multiple Comment Success Emails sent: " + info.response);
       });
+    };
       // EMAIL USERS FOR A SUCCESSFULL COMMENT ENDS
 
       })
       .catch(_=>{
         reject("Comment not added. Please try again. @[then/catch]");
       })
-      
-    } catch {
-      reject("Comment not added. Please try again.  @[try/catch]");
-    }
   });
 };
 // UPDATE FIRST NAME IN COMMENTS FOR A USER WHO UPDATES THEIR PROFILE
