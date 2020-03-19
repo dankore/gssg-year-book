@@ -1,16 +1,31 @@
-function twoSum(array, target){
-  let map = new Map();
+let a = ['a', 'b', 'a', 'e', 'f'];
+let obj = {};
 
-  for (let i = 0; i < array.length; i++) {
-    if(map.has(array[i])){
-      return [map.get(array[i]), i]
-    }
-    map.set(target - array[i], i)
+for (let i = 0; i < a.length; i++) {
+  const element = a[i];
+  if (element != 'a') {
+    obj[element] = i;
   }
+
+ 
 }
 
+ console.log(obj);
 
-console.log(twoSum([4, 7, 8, 5, 8, 9, 1], 5))
+
+// function twoSum(array, target){
+//   let map = new Map();
+
+//   for (let i = 0; i < array.length; i++) {
+//     if(map.has(array[i])){
+//       return [map.get(array[i]), i]
+//     }
+//     map.set(target - array[i], i)
+//   }
+// }
+
+
+// console.log(twoSum([4, 7, 8, 5, 8, 9, 1], 5))
 
 
 
