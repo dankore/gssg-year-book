@@ -941,37 +941,69 @@ User.addComment = data => {
       // REMOVE DUPLICATE EMAILS FROM LIST
       emailListFromComments = [...new Set(emailListFromComments)];
         
-        // ONLY SEND EMAIL IF EMAIL LIST IS GREATER THAN 0
+      // ONLY SEND EMAIL IF EMAIL LIST IS GREATER THAN 0
       if(emailListFromComments.length > 0){
-      const commentSuccessEmail = new Emailer(
-        emailListFromComments,
-        '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-        `New comment from ${data.visitorFirstName}`,
-        `<div style="width: 320px;">
-         <p>GSS Gwarinpa Contact Book</p>
-          <hr style="margin-bottom: 50px;">
-          <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
-            <img src=${data.photo} style="width: 60px; height: 60px; border-radius: 5px;" alt="profile photo"/>
-            <span>${data.visitorFirstName}</span> |
-            <em>${data.commentDate}</em>
-          <p style="font-size: 15px;"><strong>${data.comment}</strong></p>
-          </div>
-          <a 
-          href="https://www.gssgcontactbook.com/profile/${data.profileEmail}" 
-          style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
-            font-size: 15px; width: 300px; text-align: center; display:inline-block;">View on GSS Gwarinpa Contact Book
-          </a>
-        </div>
-        `
-      );
-      transporter.transporter.sendMail(commentSuccessEmail, (error, info) => {
-        if (error) console.log(error);
-        else
-          console.log("Multiple Comment Success Emails sent: " + info.response);
-      });
-    };
+        for (let i = 0; i < emailListFromComments.length; i++) {
+          if(emailListFromComments[i] == data.profileEmail){
+            const commentSuccessEmail = new Emailer(
+            emailListFromComments[i],
+            '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+            `${data.visitorFirstName} commented on your profile`,
+            `<div style="width: 320px;">
+            <p>GSS Gwarinpa Contact Book</p>
+              <hr style="margin-bottom: 50px;">
+              <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
+                <img src=${data.photo} style="width: 60px; height: 60px; border-radius: 5px;" alt="profile photo"/>
+                <span>${data.visitorFirstName}</span> |
+                <em>${data.commentDate}</em>
+              <p style="font-size: 15px;"><strong>${data.comment}</strong></p>
+              </div>
+              <a 
+              href="https://www.gssgcontactbook.com/profile/${data.profileEmail}" 
+              style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
+                font-size: 15px; width: 300px; text-align: center; display:inline-block;">View on GSS Gwarinpa Contact Book
+              </a>
+              <p style="font-size: 10px; margin-top: 15px;">You are receiving this email because you are the owner of the profile that was commented on by ${data.visitorFirstName}.</p>
+            </div>
+            `
+            );
+            transporter.transporter.sendMail(commentSuccessEmail, (error, info) => {
+              if (error) console.log(error);
+              else
+                console.log("Comment Success Emails Sent to Profile Owner: " + info.response);
+            });
+          } else {
+            const commentSuccessEmail = new Emailer(
+              emailListFromComments[i],
+              '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+              `${data.visitorFirstName} commented on ${info.value.firstName} ${info.value.lastName}'s profile`,
+              `<div style="width: 320px;">
+              <p>GSS Gwarinpa Contact Book</p>
+              <hr style="margin-bottom: 50px;">
+              <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
+                <img src=${data.photo} style="width: 60px; height: 60px; border-radius: 5px;" alt="profile photo"/>
+                <span>${data.visitorFirstName}</span> |
+                <em>${data.commentDate}</em>
+              <p style="font-size: 15px;"><strong>${data.comment}</strong></p>
+              </div>
+              <a 
+              href="https://www.gssgcontactbook.com/profile/${data.profileEmail}" 
+              style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
+                font-size: 15px; width: 300px; text-align: center; display:inline-block;">View on GSS Gwarinpa Contact Book
+              </a>
+              <p style="font-size: 10px; margin-top: 15px;">You are receiving this email because you commented on ${info.value.firstName} ${info.value.lastName}'s profile.</p>
+            </div>
+            `
+            );
+          transporter.transporter.sendMail(commentSuccessEmail, (error, info) => {
+            if (error) console.log(error);
+            else
+              console.log("Comment Success Emails Sent to Others: " + info.response);
+          });
+          }
+        }
+      };
       // EMAIL USERS FOR A SUCCESSFULL COMMENT ENDS
-
       })
       .catch(_=>{
         reject("Comment not added. Please try again. @[then/catch]");
