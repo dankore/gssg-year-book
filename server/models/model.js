@@ -1100,7 +1100,7 @@ User.storeLikes = data => {
          * @variable [array] emailsForLikes
          */
         let emailsForLikes = [];
-        
+       
           for (let i = 0; i < info.value.likes_received_from.length; i++) {
             const currentElement = info.value.likes_received_from[i];
             // THIS LOGIC: IF I LIKE MY PROFILE OR LIKE OTHER PROFILE, DO NOT SEND ME EMAIL
@@ -1111,7 +1111,9 @@ User.storeLikes = data => {
               }
             } else {
               if (currentElement.color === "yes" && data.color === "yes" && currentElement.visitorEmail !== data.visitorEmail) {
-                emailsForLikes.push(currentElement.visitorEmail, data.profileEmail);
+                emailsForLikes.push(currentElement.visitorEmail);
+              } else if(currentElement.color === "yes" && data.color === "yes"){
+                emailsForLikes.push(data.profileEmail);
               }
             }
 
