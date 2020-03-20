@@ -1118,16 +1118,52 @@ User.storeLikes = data => {
             }
 
           }
+   
         // REMOVE DUPLICATES
-        emailsForLikes = [...new Set(emailsForLikes)]; // TODO: REFAC ABOVE LOGIC TO ELIMINATE [..new Set()]
+       emailsForLikes = [...new Set(emailsForLikes)]; // TODO: REFAC ABOVE LOGIC TO ELIMINATE [..new Set()]
+      
        // IF EMAIL LIST NOT EMPTY, THEN SEND EMAIL
         if(emailsForLikes.length > 0){
-            const likeSuccessEmail = new Emailer(
-            emailsForLikes,
-            '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-            `New like from ${data.visitorName}`,
-            `<div style="width: 320px;">
-            <p>GSS Gwarinpa Contact Book</p>
+          // IF PROFILE ONWER, SEND A PERSONALIZED EMAIL
+          for (let i = 0; i < emailsForLikes.length; i++) {
+            if (emailsForLikes[i] == data.profileEmail) {
+              const likeSuccessEmail = new Emailer(
+              emailsForLikes[i],
+              '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+              `New like from ${data.visitorName}`,
+              `<div style="width: 320px;">
+              <p>GSS Gwarinpa Contact Book</p>
+              <hr style="margin-bottom: 50px;">
+              <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
+              <p style="font-size: 15px;"><strong>${data.visitorName}</strong> liked <strong>your</strong> profile.</p>
+              </div>
+              <a
+              href="https://www.gssgcontactbook.com/profile/${data.profileEmail}"
+              style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white;
+                font-size: 15px; width: 300px; text-align: center; display:inline-block;">View on GSS Gwarinpa Contact Book
+              </a>
+              <p style="font-size: 10px; margin-top: 15px;">You are receiving this email because you are the owner of the profile that was liked by ${data.visitorName}.</p>
+            </div>
+            `
+              );
+              transporter.transporter.sendMail(
+                likeSuccessEmail,
+                (error, info) => {
+                  if (error) console.log(error);
+                  else
+                    console.log(
+                      "Likes Success Email Sent to Profile Owner: " +
+                        info.response
+                    );
+                }
+              );
+            } else {
+              const likeSuccessEmail = new Emailer(
+              emailsForLikes[i],
+              '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+              `New like from ${data.visitorName}`,
+              `<div style="width: 320px;">
+              <p>GSS Gwarinpa Contact Book</p>
               <hr style="margin-bottom: 50px;">
               <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
               <p style="font-size: 15px;"><strong>${data.visitorName}</strong> liked <strong>${info.value.firstName} ${info.value.lastName}'s</strong> profile.</p>
@@ -1138,13 +1174,25 @@ User.storeLikes = data => {
                 font-size: 15px; width: 300px; text-align: center; display:inline-block;">View on GSS Gwarinpa Contact Book
               </a>
               <p style="font-size: 8px; margin-top: 15px;">You are receiving this email because you liked ${info.value.firstName} ${info.value.lastName}'s profile.</p>
-            </div>
-            `);
-          transporter.transporter.sendMail(likeSuccessEmail, (error, info) => {
-            if (error) console.log(error);
-            else
-              console.log("Multiple Like Success Emails sent: " + info.response);
-          });
+             </div>
+             `
+              );
+              transporter.transporter.sendMail(
+                likeSuccessEmail,
+                (error, info) => {
+                  if (error) console.log(error);
+                  else
+                    console.log(
+                      "Likes Success Email Sent to Others: " + info.response
+                    );
+                }
+              );
+            }
+            
+            
+          }
+          
+
         };
         //  EMAIL USERS FOR A SUCCESSFULL LIKE ENDS
       })
