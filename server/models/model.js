@@ -6,7 +6,7 @@ const usersCollection = require("../../db")
   crypto = require("crypto"),
   transporter = require("../misc/emailTransporter"),
   Emailer = require("../misc/mail"),
-  Email = require("../misc/emails"),
+  Email = require("../misc/notificationEmails"),
   helpers = require("../misc/helpers"),
   ObjectId = require("mongodb").ObjectID;
 
@@ -268,29 +268,12 @@ User.prototype.register = function() {
 
       await usersCollection.insertOne(this.data);
 
-      // EMAIL USER FOR A SUCCESSFULL REGISTRATION
-      const regSuccessEmail = new Emailer(
-        this.data.email,
-        '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-        `Congratulations, ${this.data.firstName}! Registration Success.`,
-        `<p>Hello <strong>${this.data.firstName},</strong></p>
-        <p>You have successfully created an account and added your profile to GSS Gwarinpa Contact Book.</p>
-        <a 
-        href="https://www.gssgcontactbook.com" 
-        style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
-          font-size: 15px; width: 300px; text-align: center; display:inline-block;">Discover GSS Gwarinpa Contact Book
-        </a>
-        `
-      );
-      transporter.transporter.sendMail(regSuccessEmail, (error, info) => {
-        if (error) console.log(error);
-        else console.log("Registration Email sent: " + info.response);
-      });
-      // EMAIL USER FOR A SUCCESSFULL REGISTRATION ENDS
-
       resolve(
         "Success, Up GSS Gwarinpa! Add your photo, nickname, birthday, and more below."
       );
+      // EMAIL USER FOR A SUCCESSFULL REGISTRATION
+      new Email().regSuccessEmail(this.data.email, this.data.firstName);
+      // EMAIL USER FOR A SUCCESSFULL REGISTRATION ENDS
     } else {
       reject(this.errors);
     }
