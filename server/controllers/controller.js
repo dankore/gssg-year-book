@@ -4,7 +4,6 @@ const User = require("../models/model"),
   ObjectId = require("mongodb").ObjectID;
 
 exports.home = async (req, res) => {
-  User.sendEmails();
   let profiles = await User.allProfiles();
   // SORT BY TOTAL NUMBER OF COMMENTS AND LIKES
   profiles = helpers.sortProfiles(profiles);

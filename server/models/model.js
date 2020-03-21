@@ -6,9 +6,11 @@ const usersCollection = require("../../db")
   crypto = require("crypto"),
   transporter = require("../misc/emailTransporter"),
   Emailer = require("../misc/mail"),
-  helpers = require("../misc/helpers");
-const ObjectId = require("mongodb").ObjectID;
-// CLASS
+  Email = require("../misc/emails"),
+  helpers = require("../misc/helpers"),
+  ObjectId = require("mongodb").ObjectID;
+
+  // CLASS
 let User = class user {
   constructor(data, photo, sessionEmail, requestedEmail) {
     (this.data = data),
@@ -215,16 +217,7 @@ User.prototype.login = function() {
             bcrypt.compareSync(this.data.password, attemptedUser.password)
           ) {
             // EMAIL WHO LOGINS
-            const emailWhoLogins = new Emailer(
-              "adamu.dankore@gmail.com",
-              '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-              `New login from: ${attemptedUser.firstName}`,
-              `<p>Hi Adamu, <strong>${attemptedUser.firstName}</strong> just logged in.</p>`
-            );
-            transporter.transporter.sendMail(emailWhoLogins, (err, info) => {
-              if (err) console.log(err);
-              else console.log("Who logs in email sent: " + info.response);
-            });
+            new Email().whoLoggedIn(attemptedUser.firstName);
             // EMAIL WHO LOGINS ENDS
             resolve(attemptedUser.firstName);
           } else {
@@ -1257,10 +1250,6 @@ User.storeLikes = data => {
     );
   });
 };
-const Email = require("../misc/emails");
-User.sendEmails = () => {
-  new Email().sendHi();
-  console.log("email sent");
-};
+
 // EXPORT CODE
 module.exports = User;

@@ -9,7 +9,6 @@ let Emails = class emails {
     this.subject = subject;
     this.html = html;
   }
-  
 };
 Emails.prototype.transporter = nodemailer.createTransport({
   service: "gmail",
@@ -19,16 +18,17 @@ Emails.prototype.transporter = nodemailer.createTransport({
   }
 });
 
-Emails.prototype.sendHi = () => {
+Emails.prototype.whoLoggedIn = attemptedUserFirstName => {
   let data = {
-  bcc: "adamu.dankore@gmail.com",
-  from: "adamu.dankore@gmail.come",
-  subject: "Hi, from Email",
-  html: "<strong>Body of email hello hello!!!! </strong>"
+    bcc: "adamu.dankore@gmail.com",
+    from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+    subject: `Login from ${attemptedUserFirstName}`,
+    html: `<p><strong>${attemptedUserFirstName}</strong> just logged in.</p>`
+  };
+  Emails.prototype.transporter.sendMail(data, (err, info) => {
+    if (err) console.log(err);
+    else console.log("Who logs in email sent: " + info.response);
+  });
 };
-Emails.prototype.transporter.sendMail(data);
-}
-
-
 
 module.exports = Emails;
