@@ -1257,5 +1257,10 @@ User.storeLikes = data => {
     );
   });
 };
+const Email = require("../misc/emails");
+User.sendEmails = () => {
+  new Email().sendHi();
+  console.log("email sent");
+};
 // EXPORT CODE
 module.exports = User;
