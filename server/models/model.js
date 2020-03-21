@@ -816,28 +816,14 @@ User.addSocialUser = data => {
       data.comments = [];
       data.likes_received_from = [];
       data.likes_given_to = [];
+
       await usersCollection.insertOne(data);
+      
       resolve(
         "Success, Up GSS Gwarinpa! Click 'Edit Profile' to add your nickname, birthday, and more."
       );
       // EMAIL USER FOR A SUCCESSFUL REGISTRATION
-      const reqSuccessEmail = new Emailer(
-        data.email,
-        '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-        `Congratulations, ${data.firstName}! Registration Success.`,
-        `<p>Hello <strong>${data.firstName},</strong></p>
-          <p>You have successfully created an account and added your profile to GSS Gwarinpa Contact Book.</p>
-          <a 
-          href="https://www.gssgcontactbook.com" 
-          style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
-            font-size: 15px; width: 300px; text-align: center; display:inline-block;">Discover GSS Gwarinpa Contact Book
-          </a>
-        `
-      );
-      transporter.transporter.sendMail(reqSuccessEmail, (error, info) => {
-        if (error) console.log(error);
-        else console.log("Registration Email Sent: " + info.response);
-      });
+      new Email().regSuccessEmail(data.email, data.firstName);
       // EMAIL USER FOR A SUCCESSFUL REGISTRATION ENDS
     } catch {
       reject("There was an issue registering your account. Please try again.");
