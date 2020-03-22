@@ -5,8 +5,7 @@ const usersCollection = require("../../db")
   bcrypt = require("bcryptjs"),
   crypto = require("crypto"),
   transporter = require("../misc/emailTransporter"),
-  Emailer = require("../misc/mail"),
-  Email = require("../misc/notificationEmails"),
+  Email = require("../misc/emailNotifications"),
   helpers = require("../misc/helpers"),
   ObjectId = require("mongodb").ObjectID;
 
