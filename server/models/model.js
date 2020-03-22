@@ -8,7 +8,7 @@ const usersCollection = require("../../db")
   helpers = require("../misc/helpers"),
   ObjectId = require("mongodb").ObjectID;
 
-  // CLASS
+// CLASS
 let User = class user {
   constructor(data, photo, sessionEmail, requestedEmail) {
     (this.data = data),
@@ -640,7 +640,12 @@ User.prototype.resetPassword = function(url) {
           }
         );
         // SEND TOKEN TO USER'S EMAIL
-        new Email().sendResetPasswordToken(userDoc.email, userDoc.firstName, url, token);
+        new Email().sendResetPasswordToken(
+          userDoc.email,
+          userDoc.firstName,
+          url,
+          token
+        );
         // SEND TOKEN TO USER'S EMAIL ENDs
         resolve(
           `Sucesss! Check your email inbox at ${userDoc.email} for further instruction. Check your SPAM folder too.`
@@ -728,11 +733,14 @@ User.prototype.resetToken = function(token) {
         }
       );
 
-       resolve(
+      resolve(
         "Password successfully reset. You may now login to your account."
       );
       // SEND CONFIRMATION EMAIL
-      new Email().sendResetPasswordConfirmationMessage(user.email, user.firstName);
+      new Email().sendResetPasswordConfirmationMessage(
+        user.email,
+        user.firstName
+      );
       // SEND CONFIRMATION EMAIL ENDS
 
       // SET RESET TOKEN AND EXPIRY TO UNDEFINED
@@ -777,7 +785,7 @@ User.addSocialUser = data => {
       data.likes_given_to = [];
 
       await usersCollection.insertOne(data);
-      
+
       resolve(
         "Success, Up GSS Gwarinpa! Click 'Edit Profile' to add your nickname, birthday, and more."
       );
@@ -813,9 +821,10 @@ User.validateComment = data => {
 // ADD A COMMENT
 User.addComment = data => {
   return new Promise(async (resolve, reject) => {
-      User.validateComment(data.comment);
-      // FIND OWNER OF PROFILEEMAIL AND ADD COMMENT
-      await usersCollection.findOneAndUpdate(
+    User.validateComment(data.comment);
+    // FIND OWNER OF PROFILEEMAIL AND ADD COMMENT
+    await usersCollection
+      .findOneAndUpdate(
         { email: data.profileEmail },
         {
           $push: {
@@ -830,10 +839,10 @@ User.addComment = data => {
           }
         },
         { returnOriginal: false }
-      ).then(info => {
-        
+      )
+      .then(info => {
         resolve("Comment added.");
-        
+
         // EMAIL USERS FOR A SUCCESSFULL COMMENT
         new Email().sendCommentSuccessMessage(
           info.value.comments,
@@ -848,9 +857,9 @@ User.addComment = data => {
         );
         //EMAIL USERS FOR A SUCCESSFULL COMMENT ENDS
       })
-      .catch(_=>{
+      .catch(_ => {
         reject("Comment not added. Please try again. @[then/catch]");
-      })
+      });
   });
 };
 // UPDATE FIRST NAME IN COMMENTS FOR A USER WHO UPDATES THEIR PROFILE
@@ -975,7 +984,6 @@ User.storeLikes = data => {
           info.value.lastName
         );
         // EMAIL USERS FOR A SUCCESSFULL LIKE ENDS
-        
       })
       .catch(_ => {
         reject();
