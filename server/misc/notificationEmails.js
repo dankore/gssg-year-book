@@ -18,6 +18,56 @@ Emails.prototype.transporter = nodemailer.createTransport({
   }
 });
 
+Emails.prototype.sendResetPasswordConfirmationMessage = (email, firstName) => {
+  const data = {
+    bcc: email,
+    from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+    subject:`${firstName}, You Successfully Reset Your Password - GSS Gwarinpa Contact Book`,
+    html:  `Hello ${firstName},` +
+          "<br><br>" +
+          `This is a confirmation that the password for your account <strong>${email}</strong> has just been changed.\n` +
+          "<br><br>" +
+          "If you did not reset your password, secure your account by resetting your password:\n" +
+          '<a href="https://www.gssgcontactbook.com/reset-password">Reset your password</a>'
+  };
+  Emails.prototype.transporter.sendMail(data, (err, info) => {
+    if (err) console.log(err);
+    else console.log("Reset Password Confirmation Sent Via Email: " + info.response);
+  });
+};
+
+
+Emails.prototype.sendResetPasswordToken = (email, firstName, url, token) => {
+  const data = {
+    bcc: email,
+    from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+    subject:`${firstName}, Reset Your Password - GSS Gwarinpa Contact Book`,
+    html:  `Hello ${firstName},` +
+            "<br><br>" +
+            "Please click on the following link to complete the process:\n" +
+            '<a href="https://' +
+            url +
+            "/reset-password/" +
+            token +
+            '">Reset your password</a><br>' +
+            "OR" +
+            "<br>" +
+            "Paste the below URL into your browser to complete the process:" +
+            "<br>" +
+            "https://" +
+            url +
+            "/reset-password/" +
+            token +
+            "<br><br>" +
+            "If you did not request this, please ignore this email and your password will remain unchanged.\n"
+  };
+  Emails.prototype.transporter.sendMail(data, (err, info) => {
+    if (err) console.log(err);
+    else console.log("Reset Password Token Sent Via Email: " + info.response);
+  });
+};
+
+
 Emails.prototype.regSuccessEmail = (email, firstName) => {
   let data = {
     bcc: email,

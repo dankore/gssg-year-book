@@ -642,33 +642,7 @@ User.prototype.resetPassword = function(url) {
           }
         );
         // SEND TOKEN TO USER'S EMAIL
-        const msgSendToken = new Emailer(
-          userDoc.email,
-          '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-          `${userDoc.firstName}, Reset Your Password - GSS Gwarinpa Contact Book`,
-          `Hello ${userDoc.firstName},` +
-            "<br><br>" +
-            "Please click on the following link to complete the process:\n" +
-            '<a href="https://' +
-            url +
-            "/reset-password/" +
-            token +
-            '">Reset your password</a><br>' +
-            "OR" +
-            "<br>" +
-            "Paste the below URL into your browser to complete the process:" +
-            "<br>" +
-            "https://" +
-            url +
-            "/reset-password/" +
-            token +
-            "<br><br>" +
-            "If you did not request this, please ignore this email and your password will remain unchanged.\n"
-        );
-        transporter.transporter.sendMail(msgSendToken, (error, info) => {
-          if (error) console.log(error);
-          else console.log("Token Email sent: " + info.response);
-        });
+        new Email().sendResetPasswordToken(userDoc.email, userDoc.firstName, url, token);
         // SEND TOKEN TO USER'S EMAIL ENDs
         resolve(
           `Sucesss! Check your email inbox at ${userDoc.email} for further instruction. Check your SPAM folder too.`
@@ -755,22 +729,12 @@ User.prototype.resetToken = function(token) {
           }
         }
       );
-      // SEND CONFIRMATION EMAIL
-      const msgConfirmation = new Emailer(
-        user.email,
-        '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-        `${user.firstName}, You Successfully Reset Your Password - GSS Gwarinpa Contact Book`,
-        `Hello ${user.firstName},` +
-          "<br><br>" +
-          `This is a confirmation that the password for your account <strong>${user.email}</strong> has just been changed.\n` +
-          "<br><br>" +
-          "If you did not reset your password, secure your account by resetting your password:\n" +
-          '<a href="https://www.gssgcontactbook.com/reset-password">Reset your password</a>'
+
+       resolve(
+        "Password successfully reset. You may now login to your account."
       );
-      transporter.transporter.sendMail(msgConfirmation, (error, info) => {
-        if (error) console.log(error);
-        else console.log("Confirmation Email sent: " + info.response);
-      });
+      // SEND CONFIRMATION EMAIL
+      new Email().sendResetPasswordConfirmationMessage(user.email, user.firstName);
       // SEND CONFIRMATION EMAIL ENDS
 
       // SET RESET TOKEN AND EXPIRY TO UNDEFINED
@@ -782,9 +746,6 @@ User.prototype.resetToken = function(token) {
             resetPasswordExpires: undefined
           }
         }
-      );
-      resolve(
-        "Password successfully reset. You may now login to your account."
       );
     } else {
       reject(this.errors);
