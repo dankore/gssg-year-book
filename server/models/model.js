@@ -849,98 +849,6 @@ User.addComment = data => {
           info.value.lastName
         );
         //EMAIL USERS FOR A SUCCESSFULL COMMENT ENDS
-
-       /**
-       * EMAIL USERS FOR A SUCCESSFULL COMMENT
-       * TODO: OPTIMIZE GETTING EMAIL BY REMOVING [...NEW SET()]
-       * @variable [array] info.value.comments
-       */
-      //   let emailListFromComments = [];
-        
-      //   for (let i = 0; i < info.value.comments.length; i++) {
-      //     const currentElement = info.value.comments[i];
-
-      //     // IF CURRENT LOGGED IN USER COMMENT ON THEIR PROFILE. DO NOT SEND HIM/HER EMAIL
-      //     if (data.profileEmail == data.visitorEmail) {
-      //       if (currentElement.visitorEmail !== data.visitorEmail) {
-      //         emailListFromComments.push(currentElement.visitorEmail);
-      //       };
-      //     } else {
-      //       // IF CURRENT LOGGED IN USER COMMENT ON ANOTHER PROFILE. DO NOT SEND HIM/HER EMAIL
-      //       if (currentElement.visitorEmail !== data.visitorEmail) {
-      //         emailListFromComments.push(currentElement.visitorEmail);
-      //       };
-
-      //       emailListFromComments.push(data.profileEmail);
-      //     };
-      //   };
-
-      // // REMOVE DUPLICATE EMAILS FROM LIST
-      // emailListFromComments = [...new Set(emailListFromComments)];
-        
-      // // ONLY SEND EMAIL IF EMAIL LIST IS GREATER THAN 0
-      // if(emailListFromComments.length > 0){
-      //   for (let i = 0; i < emailListFromComments.length; i++) {
-      //     if(emailListFromComments[i] == data.profileEmail){
-      //       const commentSuccessEmail = new Emailer(
-      //       emailListFromComments[i],
-      //       '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-      //       `${data.visitorFirstName} commented on your profile`,
-      //       `<div style="width: 320px;">
-      //       <p>GSS Gwarinpa Contact Book</p>
-      //         <hr style="margin-bottom: 50px;">
-      //         <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
-      //           <img src=${data.photo} style="width: 60px; height: 60px; border-radius: 5px;" alt="profile photo"/>
-      //           <span>${data.visitorFirstName}</span> |
-      //           <em>${data.commentDate}</em>
-      //         <p style="font-size: 15px;"><strong>${data.comment}</strong></p>
-      //         </div>
-      //         <a 
-      //         href="https://www.gssgcontactbook.com/profile/${data.profileEmail}" 
-      //         style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
-      //           font-size: 15px; width: 300px; text-align: center; display:inline-block;">View on GSS Gwarinpa Contact Book
-      //         </a>
-      //         <p style="font-size: 10px; margin-top: 15px;">You are receiving this email because you are the owner of the profile that was commented on by ${data.visitorFirstName}.</p>
-      //       </div>
-      //       `
-      //       );
-      //       transporter.transporter.sendMail(commentSuccessEmail, (error, info) => {
-      //         if (error) console.log(error);
-      //         else
-      //           console.log("Comment Success Emails Sent to Profile Owner: " + info.response);
-      //       });
-      //     } else {
-      //       const commentSuccessEmail = new Emailer(
-      //         emailListFromComments[i],
-      //         '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-      //         `${data.visitorFirstName} commented on ${info.value.firstName} ${info.value.lastName}'s profile`,
-      //         `<div style="width: 320px;">
-      //         <p>GSS Gwarinpa Contact Book</p>
-      //         <hr style="margin-bottom: 50px;">
-      //         <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
-      //           <img src=${data.photo} style="width: 60px; height: 60px; border-radius: 5px;" alt="profile photo"/>
-      //           <span>${data.visitorFirstName}</span> |
-      //           <em>${data.commentDate}</em>
-      //         <p style="font-size: 15px;"><strong>${data.comment}</strong></p>
-      //         </div>
-      //         <a 
-      //         href="https://www.gssgcontactbook.com/profile/${data.profileEmail}" 
-      //         style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
-      //           font-size: 15px; width: 300px; text-align: center; display:inline-block;">View on GSS Gwarinpa Contact Book
-      //         </a>
-      //         <p style="font-size: 10px; margin-top: 15px;">You are receiving this email because you commented on ${info.value.firstName} ${info.value.lastName}'s profile.</p>
-      //       </div>
-      //       `
-      //       );
-      //     transporter.transporter.sendMail(commentSuccessEmail, (error, info) => {
-      //       if (error) console.log(error);
-      //       else
-      //         console.log("Comment Success Emails Sent to Others: " + info.response);
-      //     });
-      //     }
-      //   }
-      // };
-      // EMAIL USERS FOR A SUCCESSFULL COMMENT ENDS
       })
       .catch(_=>{
         reject("Comment not added. Please try again. @[then/catch]");
@@ -1058,112 +966,18 @@ User.storeLikes = data => {
          */
         resolve(visitorInfo);
 
-        // SEND EMAIL
-
-        // EMAIL USERS FOR A SUCCESSFULL LIKE
-        /**
-         * Only send email if a user likes a profile. If a user unlikes
-         * a profile. DO NOT send email
-         * Also if a user likes their profile, DO NOT send email
-         * @variable [array] info.value.likes_received_from, from DB
-         * @variable [array] emailsForLikes
-         */
-        let emailsForLikes = [];
-       
-          for (let i = 0; i < info.value.likes_received_from.length; i++) {
-            const currentElement = info.value.likes_received_from[i];
-            // THIS LOGIC: IF I LIKE MY PROFILE OR LIKE OTHER PROFILE, DO NOT SEND ME EMAIL
-            if (data.profileEmail == data.visitorEmail && data.color == "yes") {
-              // data.color == "yes" ensures only after a like an email would be sent
-              if (currentElement.color === "yes" && data.color === "yes" && currentElement.visitorEmail !== data.profileEmail) {
-                emailsForLikes.push(currentElement.visitorEmail);
-              }
-            } else {
-              if (currentElement.color === "yes" && data.color === "yes" && currentElement.visitorEmail !== data.visitorEmail) {
-                emailsForLikes.push(currentElement.visitorEmail);
-              } else if(currentElement.color === "yes" && data.color === "yes"){
-                emailsForLikes.push(data.profileEmail);
-              }
-            }
-
-          }
-   
-        // REMOVE DUPLICATES
-       emailsForLikes = [...new Set(emailsForLikes)]; // TODO: REFAC ABOVE LOGIC TO ELIMINATE [..new Set()]
-      
-       // IF EMAIL LIST NOT EMPTY, THEN SEND EMAIL
-        if(emailsForLikes.length > 0){
-          // IF PROFILE ONWER, SEND A PERSONALIZED EMAIL
-          for (let i = 0; i < emailsForLikes.length; i++) {
-            if (emailsForLikes[i] == data.profileEmail) {
-              const likeSuccessEmail = new Emailer(
-              emailsForLikes[i],
-              '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-              `New like from ${data.visitorName}`,
-              `<div style="width: 320px;">
-              <p>GSS Gwarinpa Contact Book</p>
-              <hr style="margin-bottom: 50px;">
-              <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
-              <p style="font-size: 15px;"><strong>${data.visitorName}</strong> liked <strong>your</strong> profile.</p>
-              </div>
-              <a
-              href="https://www.gssgcontactbook.com/profile/${data.profileEmail}"
-              style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white;
-                font-size: 15px; width: 300px; text-align: center; display:inline-block;">View on GSS Gwarinpa Contact Book
-              </a>
-              <p style="font-size: 10px; margin-top: 15px;">You are receiving this email because you are the owner of the profile that was liked by ${data.visitorName}.</p>
-            </div>
-            `
-              );
-              transporter.transporter.sendMail(
-                likeSuccessEmail,
-                (error, info) => {
-                  if (error) console.log(error);
-                  else
-                    console.log(
-                      "Likes Success Email Sent to Profile Owner: " +
-                        info.response
-                    );
-                }
-              );
-            } else {
-              const likeSuccessEmail = new Emailer(
-              emailsForLikes[i],
-              '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-              `New like from ${data.visitorName}`,
-              `<div style="width: 320px;">
-              <p>GSS Gwarinpa Contact Book</p>
-              <hr style="margin-bottom: 50px;">
-              <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
-              <p style="font-size: 15px;"><strong>${data.visitorName}</strong> liked <strong>${info.value.firstName} ${info.value.lastName}'s</strong> profile.</p>
-              </div>
-              <a
-              href="https://www.gssgcontactbook.com/profile/${data.profileEmail}"
-              style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white;
-                font-size: 15px; width: 300px; text-align: center; display:inline-block;">View on GSS Gwarinpa Contact Book
-              </a>
-              <p style="font-size: 8px; margin-top: 15px;">You are receiving this email because you liked ${info.value.firstName} ${info.value.lastName}'s profile.</p>
-             </div>
-             `
-              );
-              transporter.transporter.sendMail(
-                likeSuccessEmail,
-                (error, info) => {
-                  if (error) console.log(error);
-                  else
-                    console.log(
-                      "Likes Success Email Sent to Others: " + info.response
-                    );
-                }
-              );
-            }
-            
-            
-          }
-          
-
-        };
-        //  EMAIL USERS FOR A SUCCESSFULL LIKE ENDS
+        // EMAIL USERS FOR A SUCCESSFULL LIKE ENDS
+        new Email().sendLikesSuccessMessage(
+          info.value.likes_received_from,
+          data.profileEmail,
+          data.visitorEmail,
+          data.color,
+          data.visitorName,
+          info.value.firstName,
+          info.value.lastName
+        );
+        // EMAIL USERS FOR A SUCCESSFULL LIKE ENDS
+        
       })
       .catch(_ => {
         reject();
