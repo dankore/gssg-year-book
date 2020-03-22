@@ -18,6 +18,107 @@ Emails.prototype.transporter = nodemailer.createTransport({
   }
 });
 
+
+Emails.prototype.sendCommentSuccessMessage = (
+  comments, 
+  visitorFirstName,
+  visitorEmail,
+  photoUrl,
+  commentDate,
+  comment,
+  profileOwnerEmail,
+  profileOwnerFirstName,
+  profileOwnerLastName
+  ) => {
+   
+  /**
+     * EMAIL USERS FOR A SUCCESSFULL COMMENT
+     * TODO: OPTIMIZE GETTING EMAIL BY REMOVING [...NEW SET()]
+     * @variable [array] info.value.comments
+  */
+  let emailListFromComments = [];
+        
+        for (let i = 0; i < comments.length; i++) {
+          const currentElement = comments[i];
+
+          // IF CURRENT LOGGED IN USER COMMENT ON THEIR PROFILE. DO NOT SEND HIM/HER EMAIL
+          if (profileOwnerEmail == visitorEmail) {
+            if (currentElement.visitorEmail !== visitorEmail) {
+              emailListFromComments.push(currentElement.visitorEmail);
+            };
+          } else {
+            // IF CURRENT LOGGED IN USER COMMENT ON ANOTHER PROFILE. DO NOT SEND HIM/HER EMAIL
+            if (currentElement.visitorEmail !== visitorEmail) {
+              emailListFromComments.push(currentElement.visitorEmail);
+            };
+
+            emailListFromComments.push(profileOwnerEmail);
+          };
+        };
+
+      // REMOVE DUPLICATE EMAILS FROM LIST
+      emailListFromComments = [...new Set(emailListFromComments)];
+
+   if(emailListFromComments.length > 0){
+    for (let i = 0; i < emailListFromComments.length; i++) {
+      let data;
+      if(emailListFromComments[i] == profileOwnerEmail){
+          data = {
+          bcc: emailListFromComments[i],
+          from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+          subject:`${visitorFirstName} commented on your profile`,
+          html:  `<div style="width: 320px;">
+                  <p>GSS Gwarinpa Contact Book</p>
+                    <hr style="margin-bottom: 50px;">
+                    <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
+                      <img src=${photoUrl} style="width: 60px; height: 60px; border-radius: 5px;" alt="profile photo"/>
+                      <span>${visitorFirstName}</span> |
+                      <em>${commentDate}</em>
+                    <p style="font-size: 15px;"><strong>${comment}</strong></p>
+                    </div>
+                    <a 
+                    href="https://www.gssgcontactbook.com/profile/${profileOwnerEmail}" 
+                    style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
+                      font-size: 15px; width: 300px; text-align: center; display:inline-block;">View on GSS Gwarinpa Contact Book
+                    </a>
+                    <p style="font-size: 10px; margin-top: 15px;">You are receiving this email because you are the owner of the profile that was commented on by ${visitorFirstName}.</p>
+                  </div>
+                  `
+        };
+      } else {
+          data = {
+          bcc: emailListFromComments[i],
+          from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+          subject:`${visitorFirstName} commented on ${profileOwnerFirstName} ${profileOwnerLastName}'s profile`,
+          html:  `<div style="width: 320px;">
+                  <p>GSS Gwarinpa Contact Book</p>
+                    <hr style="margin-bottom: 50px;">
+                    <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
+                      <img src=${photoUrl} style="width: 60px; height: 60px; border-radius: 5px;" alt="profile photo"/>
+                      <span>${visitorFirstName}</span> |
+                      <em>${commentDate}</em>
+                    <p style="font-size: 15px;"><strong>${comment}</strong></p>
+                    </div>
+                    <a 
+                    href="https://www.gssgcontactbook.com/profile/${profileOwnerEmail}" 
+                    style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
+                      font-size: 15px; width: 300px; text-align: center; display:inline-block;">View on GSS Gwarinpa Contact Book
+                    </a>
+                    <p style="font-size: 10px; margin-top: 15px;">You are receiving this email because you commented on ${profileOwnerFirstName} ${profileOwnerLastName}'s profile.</p>
+                  </div>
+                  `
+        };
+      };
+      Emails.prototype.transporter.sendMail(data, (err, info) => {
+          if (err) console.log(err);
+          else console.log("Comment Success Emails Sent to Profile Owner: " + info.response);
+        });
+    }
+    // END OF 1ST IF
+}
+  // END OF FUNCTION
+};
+
 Emails.prototype.sendResetPasswordConfirmationMessage = (email, firstName) => {
   const data = {
     bcc: email,
@@ -69,7 +170,7 @@ Emails.prototype.sendResetPasswordToken = (email, firstName, url, token) => {
 
 
 Emails.prototype.regSuccessEmail = (email, firstName) => {
-  let data = {
+  const data = {
     bcc: email,
     from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
     subject: `Congratulations, ${firstName}! Registration Success.`,
@@ -89,7 +190,7 @@ Emails.prototype.regSuccessEmail = (email, firstName) => {
 };
 
 Emails.prototype.whoLoggedIn = attemptedUserFirstName => {
-  let data = {
+  const data = {
     bcc: "adamu.dankore@gmail.com",
     from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
     subject: `Login from ${attemptedUserFirstName}`,

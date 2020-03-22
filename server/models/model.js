@@ -833,99 +833,113 @@ User.addComment = data => {
         },
         { returnOriginal: false }
       ).then(info => {
-
+        
         resolve("Comment added.");
+        
+        // EMAIL USERS FOR A SUCCESSFULL COMMENT
+        new Email().sendCommentSuccessMessage(
+          info.value.comments,
+          data.visitorFirstName,
+          data.visitorEmail,
+          data.photo,
+          data.commentDate,
+          data.comment,
+          data.profileEmail,
+          info.value.firstName,
+          info.value.lastName
+        );
+        //EMAIL USERS FOR A SUCCESSFULL COMMENT ENDS
 
        /**
        * EMAIL USERS FOR A SUCCESSFULL COMMENT
        * TODO: OPTIMIZE GETTING EMAIL BY REMOVING [...NEW SET()]
        * @variable [array] info.value.comments
        */
-        let emailListFromComments = [];
+      //   let emailListFromComments = [];
         
-        for (let i = 0; i < info.value.comments.length; i++) {
-          const currentElement = info.value.comments[i];
+      //   for (let i = 0; i < info.value.comments.length; i++) {
+      //     const currentElement = info.value.comments[i];
 
-          // IF CURRENT LOGGED IN USER COMMENT ON THEIR PROFILE. DO NOT SEND HIM/HER EMAIL
-          if (data.profileEmail == data.visitorEmail) {
-            if (currentElement.visitorEmail !== data.visitorEmail) {
-              emailListFromComments.push(currentElement.visitorEmail);
-            };
-          } else {
-            // IF CURRENT LOGGED IN USER COMMENT ON ANOTHER PROFILE. DO NOT SEND HIM/HER EMAIL
-            if (currentElement.visitorEmail !== data.visitorEmail) {
-              emailListFromComments.push(currentElement.visitorEmail);
-            };
+      //     // IF CURRENT LOGGED IN USER COMMENT ON THEIR PROFILE. DO NOT SEND HIM/HER EMAIL
+      //     if (data.profileEmail == data.visitorEmail) {
+      //       if (currentElement.visitorEmail !== data.visitorEmail) {
+      //         emailListFromComments.push(currentElement.visitorEmail);
+      //       };
+      //     } else {
+      //       // IF CURRENT LOGGED IN USER COMMENT ON ANOTHER PROFILE. DO NOT SEND HIM/HER EMAIL
+      //       if (currentElement.visitorEmail !== data.visitorEmail) {
+      //         emailListFromComments.push(currentElement.visitorEmail);
+      //       };
 
-            emailListFromComments.push(data.profileEmail);
-          };
-        };
+      //       emailListFromComments.push(data.profileEmail);
+      //     };
+      //   };
 
-      // REMOVE DUPLICATE EMAILS FROM LIST
-      emailListFromComments = [...new Set(emailListFromComments)];
+      // // REMOVE DUPLICATE EMAILS FROM LIST
+      // emailListFromComments = [...new Set(emailListFromComments)];
         
-      // ONLY SEND EMAIL IF EMAIL LIST IS GREATER THAN 0
-      if(emailListFromComments.length > 0){
-        for (let i = 0; i < emailListFromComments.length; i++) {
-          if(emailListFromComments[i] == data.profileEmail){
-            const commentSuccessEmail = new Emailer(
-            emailListFromComments[i],
-            '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-            `${data.visitorFirstName} commented on your profile`,
-            `<div style="width: 320px;">
-            <p>GSS Gwarinpa Contact Book</p>
-              <hr style="margin-bottom: 50px;">
-              <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
-                <img src=${data.photo} style="width: 60px; height: 60px; border-radius: 5px;" alt="profile photo"/>
-                <span>${data.visitorFirstName}</span> |
-                <em>${data.commentDate}</em>
-              <p style="font-size: 15px;"><strong>${data.comment}</strong></p>
-              </div>
-              <a 
-              href="https://www.gssgcontactbook.com/profile/${data.profileEmail}" 
-              style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
-                font-size: 15px; width: 300px; text-align: center; display:inline-block;">View on GSS Gwarinpa Contact Book
-              </a>
-              <p style="font-size: 10px; margin-top: 15px;">You are receiving this email because you are the owner of the profile that was commented on by ${data.visitorFirstName}.</p>
-            </div>
-            `
-            );
-            transporter.transporter.sendMail(commentSuccessEmail, (error, info) => {
-              if (error) console.log(error);
-              else
-                console.log("Comment Success Emails Sent to Profile Owner: " + info.response);
-            });
-          } else {
-            const commentSuccessEmail = new Emailer(
-              emailListFromComments[i],
-              '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-              `${data.visitorFirstName} commented on ${info.value.firstName} ${info.value.lastName}'s profile`,
-              `<div style="width: 320px;">
-              <p>GSS Gwarinpa Contact Book</p>
-              <hr style="margin-bottom: 50px;">
-              <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
-                <img src=${data.photo} style="width: 60px; height: 60px; border-radius: 5px;" alt="profile photo"/>
-                <span>${data.visitorFirstName}</span> |
-                <em>${data.commentDate}</em>
-              <p style="font-size: 15px;"><strong>${data.comment}</strong></p>
-              </div>
-              <a 
-              href="https://www.gssgcontactbook.com/profile/${data.profileEmail}" 
-              style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
-                font-size: 15px; width: 300px; text-align: center; display:inline-block;">View on GSS Gwarinpa Contact Book
-              </a>
-              <p style="font-size: 10px; margin-top: 15px;">You are receiving this email because you commented on ${info.value.firstName} ${info.value.lastName}'s profile.</p>
-            </div>
-            `
-            );
-          transporter.transporter.sendMail(commentSuccessEmail, (error, info) => {
-            if (error) console.log(error);
-            else
-              console.log("Comment Success Emails Sent to Others: " + info.response);
-          });
-          }
-        }
-      };
+      // // ONLY SEND EMAIL IF EMAIL LIST IS GREATER THAN 0
+      // if(emailListFromComments.length > 0){
+      //   for (let i = 0; i < emailListFromComments.length; i++) {
+      //     if(emailListFromComments[i] == data.profileEmail){
+      //       const commentSuccessEmail = new Emailer(
+      //       emailListFromComments[i],
+      //       '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+      //       `${data.visitorFirstName} commented on your profile`,
+      //       `<div style="width: 320px;">
+      //       <p>GSS Gwarinpa Contact Book</p>
+      //         <hr style="margin-bottom: 50px;">
+      //         <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
+      //           <img src=${data.photo} style="width: 60px; height: 60px; border-radius: 5px;" alt="profile photo"/>
+      //           <span>${data.visitorFirstName}</span> |
+      //           <em>${data.commentDate}</em>
+      //         <p style="font-size: 15px;"><strong>${data.comment}</strong></p>
+      //         </div>
+      //         <a 
+      //         href="https://www.gssgcontactbook.com/profile/${data.profileEmail}" 
+      //         style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
+      //           font-size: 15px; width: 300px; text-align: center; display:inline-block;">View on GSS Gwarinpa Contact Book
+      //         </a>
+      //         <p style="font-size: 10px; margin-top: 15px;">You are receiving this email because you are the owner of the profile that was commented on by ${data.visitorFirstName}.</p>
+      //       </div>
+      //       `
+      //       );
+      //       transporter.transporter.sendMail(commentSuccessEmail, (error, info) => {
+      //         if (error) console.log(error);
+      //         else
+      //           console.log("Comment Success Emails Sent to Profile Owner: " + info.response);
+      //       });
+      //     } else {
+      //       const commentSuccessEmail = new Emailer(
+      //         emailListFromComments[i],
+      //         '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+      //         `${data.visitorFirstName} commented on ${info.value.firstName} ${info.value.lastName}'s profile`,
+      //         `<div style="width: 320px;">
+      //         <p>GSS Gwarinpa Contact Book</p>
+      //         <hr style="margin-bottom: 50px;">
+      //         <div style="padding: 10px; margin-bottom: 10px; overflow-wrap: break-word; min-width: 0px; width: 300px; background-color: #F2F3F5; border-radius: 5px;">
+      //           <img src=${data.photo} style="width: 60px; height: 60px; border-radius: 5px;" alt="profile photo"/>
+      //           <span>${data.visitorFirstName}</span> |
+      //           <em>${data.commentDate}</em>
+      //         <p style="font-size: 15px;"><strong>${data.comment}</strong></p>
+      //         </div>
+      //         <a 
+      //         href="https://www.gssgcontactbook.com/profile/${data.profileEmail}" 
+      //         style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
+      //           font-size: 15px; width: 300px; text-align: center; display:inline-block;">View on GSS Gwarinpa Contact Book
+      //         </a>
+      //         <p style="font-size: 10px; margin-top: 15px;">You are receiving this email because you commented on ${info.value.firstName} ${info.value.lastName}'s profile.</p>
+      //       </div>
+      //       `
+      //       );
+      //     transporter.transporter.sendMail(commentSuccessEmail, (error, info) => {
+      //       if (error) console.log(error);
+      //       else
+      //         console.log("Comment Success Emails Sent to Others: " + info.response);
+      //     });
+      //     }
+      //   }
+      // };
       // EMAIL USERS FOR A SUCCESSFULL COMMENT ENDS
       })
       .catch(_=>{
