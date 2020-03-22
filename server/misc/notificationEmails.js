@@ -10,6 +10,9 @@ let Emails = class emails {
     this.html = html;
   }
 };
+
+
+
 Emails.prototype.transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -17,6 +20,8 @@ Emails.prototype.transporter = nodemailer.createTransport({
     pass: process.env.GMAILPW
   }
 });
+
+
 
 Emails.prototype.sendLikesSuccessMessage = (
   likes, 
@@ -60,10 +65,8 @@ Emails.prototype.sendLikesSuccessMessage = (
 
    if(emailsForLikes.length > 0){
     for (let i = 0; i < emailsForLikes.length; i++) {
-      console.log(emailsForLikes[i]);
       let data;
       if (emailsForLikes[i] == profileOwnerEmail) {
-        console.log("a");
           data = {
           bcc: emailsForLikes[i],
           from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
@@ -84,7 +87,6 @@ Emails.prototype.sendLikesSuccessMessage = (
             `
         };
       } else {
-        console.log("b");
           data = {
           bcc: emailsForLikes[i],
           from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
@@ -114,6 +116,8 @@ Emails.prototype.sendLikesSuccessMessage = (
 }
   // END OF FUNCTION
 };
+
+
 
 Emails.prototype.sendCommentSuccessMessage = (
   comments, 
@@ -215,6 +219,8 @@ Emails.prototype.sendCommentSuccessMessage = (
   // END OF FUNCTION
 };
 
+
+
 Emails.prototype.sendResetPasswordConfirmationMessage = (email, firstName) => {
   const data = {
     bcc: email,
@@ -232,6 +238,7 @@ Emails.prototype.sendResetPasswordConfirmationMessage = (email, firstName) => {
     else console.log("Reset Password Confirmation Sent Via Email: " + info.response);
   });
 };
+
 
 
 Emails.prototype.sendResetPasswordToken = (email, firstName, url, token) => {
@@ -265,6 +272,8 @@ Emails.prototype.sendResetPasswordToken = (email, firstName, url, token) => {
 };
 
 
+
+
 Emails.prototype.regSuccessEmail = (email, firstName) => {
   const data = {
     bcc: email,
@@ -285,6 +294,8 @@ Emails.prototype.regSuccessEmail = (email, firstName) => {
   });
 };
 
+
+
 Emails.prototype.whoLoggedIn = attemptedUserFirstName => {
   const data = {
     bcc: "adamu.dankore@gmail.com",
@@ -298,4 +309,6 @@ Emails.prototype.whoLoggedIn = attemptedUserFirstName => {
   });
 };
 
+
+// EXPORT CODE
 module.exports = Emails;
