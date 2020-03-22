@@ -6,9 +6,11 @@ const usersCollection = require("../../db")
   crypto = require("crypto"),
   transporter = require("../misc/emailTransporter"),
   Emailer = require("../misc/mail"),
-  helpers = require("../misc/helpers");
-const ObjectId = require("mongodb").ObjectID;
-// CLASS
+  Email = require("../misc/notificationEmails"),
+  helpers = require("../misc/helpers"),
+  ObjectId = require("mongodb").ObjectID;
+
+  // CLASS
 let User = class user {
   constructor(data, photo, sessionEmail, requestedEmail) {
     (this.data = data),
@@ -215,16 +217,7 @@ User.prototype.login = function() {
             bcrypt.compareSync(this.data.password, attemptedUser.password)
           ) {
             // EMAIL WHO LOGINS
-            const emailWhoLogins = new Emailer(
-              "adamu.dankore@gmail.com",
-              '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-              `New login from: ${attemptedUser.firstName}`,
-              `<p>Hi Adamu, <strong>${attemptedUser.firstName}</strong> just logged in.</p>`
-            );
-            transporter.transporter.sendMail(emailWhoLogins, (err, info) => {
-              if (err) console.log(err);
-              else console.log("Who logs in email sent: " + info.response);
-            });
+            new Email().whoLoggedIn(attemptedUser.firstName);
             // EMAIL WHO LOGINS ENDS
             resolve(attemptedUser.firstName);
           } else {
@@ -275,29 +268,12 @@ User.prototype.register = function() {
 
       await usersCollection.insertOne(this.data);
 
-      // EMAIL USER FOR A SUCCESSFULL REGISTRATION
-      const regSuccessEmail = new Emailer(
-        this.data.email,
-        '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-        `Congratulations, ${this.data.firstName}! Registration Success.`,
-        `<p>Hello <strong>${this.data.firstName},</strong></p>
-        <p>You have successfully created an account and added your profile to GSS Gwarinpa Contact Book.</p>
-        <a 
-        href="https://www.gssgcontactbook.com" 
-        style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
-          font-size: 15px; width: 300px; text-align: center; display:inline-block;">Discover GSS Gwarinpa Contact Book
-        </a>
-        `
-      );
-      transporter.transporter.sendMail(regSuccessEmail, (error, info) => {
-        if (error) console.log(error);
-        else console.log("Registration Email sent: " + info.response);
-      });
-      // EMAIL USER FOR A SUCCESSFULL REGISTRATION ENDS
-
       resolve(
         "Success, Up GSS Gwarinpa! Add your photo, nickname, birthday, and more below."
       );
+      // EMAIL USER FOR A SUCCESSFULL REGISTRATION
+      new Email().regSuccessEmail(this.data.email, this.data.firstName);
+      // EMAIL USER FOR A SUCCESSFULL REGISTRATION ENDS
     } else {
       reject(this.errors);
     }
@@ -840,28 +816,14 @@ User.addSocialUser = data => {
       data.comments = [];
       data.likes_received_from = [];
       data.likes_given_to = [];
+
       await usersCollection.insertOne(data);
+      
       resolve(
         "Success, Up GSS Gwarinpa! Click 'Edit Profile' to add your nickname, birthday, and more."
       );
       // EMAIL USER FOR A SUCCESSFUL REGISTRATION
-      const reqSuccessEmail = new Emailer(
-        data.email,
-        '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
-        `Congratulations, ${data.firstName}! Registration Success.`,
-        `<p>Hello <strong>${data.firstName},</strong></p>
-          <p>You have successfully created an account and added your profile to GSS Gwarinpa Contact Book.</p>
-          <a 
-          href="https://www.gssgcontactbook.com" 
-          style="text-decoration: none; padding: 10px; background-color: #38a169; border-radius: 5px; color: white; 
-            font-size: 15px; width: 300px; text-align: center; display:inline-block;">Discover GSS Gwarinpa Contact Book
-          </a>
-        `
-      );
-      transporter.transporter.sendMail(reqSuccessEmail, (error, info) => {
-        if (error) console.log(error);
-        else console.log("Registration Email Sent: " + info.response);
-      });
+      new Email().regSuccessEmail(data.email, data.firstName);
       // EMAIL USER FOR A SUCCESSFUL REGISTRATION ENDS
     } catch {
       reject("There was an issue registering your account. Please try again.");
@@ -1257,5 +1219,6 @@ User.storeLikes = data => {
     );
   });
 };
+
 // EXPORT CODE
 module.exports = User;
