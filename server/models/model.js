@@ -842,13 +842,8 @@ User.addComments = data => {
         }
       )
       .then(info => {
-        let l = info.value.commentss.pop();
-        console.log(l);
-        // let lastComment = info.value.commentss.map(
-        //   comment => comment.comment
-        // );
-        // lastComment = lastComment.pop();
-        resolve(l);
+        const lastCommentDoc = info.value.commentss.pop();
+        resolve(lastCommentDoc);
       })
       .catch(_ => {
         reject("Comment not added. Please try again. @[then/catch]");

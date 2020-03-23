@@ -447,12 +447,15 @@ exports.getComments = async (req, res) => {
   };
 
   User.addComments(data)
-  .then(response =>{
-    res.json(response);
-  })
-  .catch(err=>{
-    console.log(err)
-  })
+    .then(response => {
+      res.json(response);
+    })
+    .catch(errorMessage => {
+      req.flash("errors", errorMessage);
+      req.session.save(async _ => {
+        await res.redirect(`profile/${profileEmail}`);
+      });
+    });
 }
 // COMMENTS
 exports.postComments = async (req, res) => {
