@@ -430,8 +430,8 @@ exports.sort = (req, res) => {
       });
     });
 };
-// COMMENTS REFAC
-exports.getComments = async (req, res) => {
+// COMMENTS
+exports.addComment = async (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
   const userDoc = await User.findByEmail(req.session.user.email);
   const commentDate = helpers.getMonthDayYear() + ", " + helpers.getHMS();
@@ -446,7 +446,7 @@ exports.getComments = async (req, res) => {
     commentDate: commentDate
   };
 
-  User.addComments(data)
+  User.saveComment(data)
     .then(response => {
       res.json(response);
     })
@@ -457,33 +457,6 @@ exports.getComments = async (req, res) => {
       });
     });
 }
-// COMMENTS
-exports.postComments = async (req, res) => {
-  const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
-  const userDoc = await User.findByEmail(req.session.user.email);
-  const commentDate = helpers.getMonthDayYear() + ", " + helpers.getHMS();
-  // GET RID OF BOGUS AND SANITIZE DATA
-  const data = {
-    commentId: new ObjectId(),
-    comment: req.body.comment,
-    visitorEmail: req.session.user.email,
-    visitorFirstName: userDoc.firstName,
-    profileEmail: profileEmail,
-    photo: userDoc.photo,
-    commentDate: commentDate
-  };
-
-  User.addComment(data)
-    .then(_ => {
-      res.redirect(`profile/${profileEmail}`);
-    })
-    .catch(errorMessage => {
-      req.flash("errors", errorMessage);
-      req.session.save(async _ => {
-        await res.redirect(`profile/${profileEmail}`);
-      });
-    });
-};
 
 // UPDATE A COMMENT
 exports.editComment = (req, res) => {

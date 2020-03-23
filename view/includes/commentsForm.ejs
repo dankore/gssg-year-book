@@ -3,7 +3,7 @@
   <!-- ADD COMMENTS FORM -->
   <% if(user){ %>
   <div class="bg-white rounded">
-    <form action="/profile" method="POST" class="flex p-2">
+    <section class="flex p-2">
       <div class="mr-1">
         <a href="/profile/<%= emailForComment %>">
           <% if(photoUrlForComment){ %>
@@ -15,18 +15,18 @@
       </div>
       <div style="width: 15rem;">
         <textarea
-          id="textarea-comments"
+          id="input-comment"
           type="text"
           name="comment"
           class="focus:bg-gray-100 w-full p-2"
           placeholder="What's on your mind?"
           style="background-color: #F2F3F5; white-space: pre-wrap;"
         ></textarea>
-        <button class="rounded bg-blue-600 hover:bg-blue-800 text-white w-full">
+        <button id="button-comment" class="rounded bg-blue-600 hover:bg-blue-800 text-white w-full">
           Submit
         </button>
       </div>
-    </form>
+    </section>
   </div>
   <% } %>
   <!-- COMMENTS FORM END -->
@@ -35,7 +35,7 @@
     IF COMMENTS ARRAY EXISTS ON USER DOCUMENT, THEN CHECK IF COMMENTS ARRAY HAS ANY ELEMENT(COMMENTS).
     SHOW NO COMMENT FOUND FOR BOTH IF FALSE
    -->
-  <ul id="all-comments-container" class="mb-6 bg-white relative">
+  <ul id="comment-container-ul" class="mb-6 bg-white relative">
     <% if(profile.comments.length){ %> 
     <% profile.comments.reverse().forEach(comment => { %>
     <li class="my-2 p-2 rounded">

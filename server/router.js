@@ -58,7 +58,7 @@ router.get("/twitter-login", passport.authenticate('twitter'));
 router.get('/twitter-login/callback', passport.authenticate('twitter', {failureRedirect: '/register' }), controller.twitterLogin);
 
 // COMMENTS
-router.post("/profile", controller.postComments);
+router.post("/get-comments", controller.addComment);
 router.post("/delete-comment", controller.deleteComment);
 router.post("/edit-comment", controller.editComment);
 
@@ -69,7 +69,5 @@ router.get("*", controller.notFound);
 router.post("/likes", controller.likes);
 router.post("/get-visited-profile-doc", controller.getProfile);
 
-// NEW COMMENTS REFAC
-router.post("/get-comments", controller.getComments)
 // EXPORT CODE
 module.exports = router;

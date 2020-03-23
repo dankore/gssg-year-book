@@ -819,14 +819,16 @@ User.validateComment = data => {
   }
 };
 // ADD COMMENTS
-User.addComments = data => {
+User.saveComment = data => {
   return new Promise(async (resolve, reject) => {
+    User.validateComment(data.comment);
+    // FIND OWNER OF PROFILEE AND ADD COMMENT
     await usersCollection
       .findOneAndUpdate(
-        { email: "zimmazone@yahoo.com" },
+        { email: data.profileEmail},
         {
           $push: {
-            commentss: {
+            comments: {
               commentId: data.commentId,
               comment: data.comment,
               visitorEmail: data.visitorEmail,
@@ -837,13 +839,26 @@ User.addComments = data => {
           }
         },
         {
-          projection: { commentss: 1 },
+          projection: { comments: 1 },
           returnOriginal: false
         }
       )
       .then(info => {
-        const lastCommentDoc = info.value.commentss.pop();
+        const lastCommentDoc = info.value.comments.pop();
         resolve(lastCommentDoc);
+        // EMAIL USERS FOR A SUCCESSFULL COMMENT
+        new Email().sendCommentSuccessMessage(
+          info.value.comments,
+          data.visitorFirstName,
+          data.visitorEmail,
+          data.photo,
+          data.commentDate,
+          data.comment,
+          data.profileEmail,
+          info.value.firstName,
+          info.value.lastName
+        );
+        //EMAIL USERS FOR A SUCCESSFULL COMMENT ENDS
       })
       .catch(_ => {
         reject("Comment not added. Please try again. @[then/catch]");
