@@ -812,16 +812,19 @@ User.sortProfiles = q => {
     }
   });
 };
+
 User.validateComment = data => {
   if (data === "") {
     reject("Body of comment cannot be empty.");
     return;
   }
 };
+
 // ADD COMMENTS
 User.saveComment = data => {
   return new Promise(async (resolve, reject) => {
-    User.validateComment(data.comment);
+   // CHECK FOR EMPTY AN COMMENT
+    if(!data.comment) return;
     // FIND OWNER OF PROFILEE AND ADD COMMENT
     await usersCollection
       .findOneAndUpdate(
@@ -865,50 +868,7 @@ User.saveComment = data => {
       });
   });
 };
-// ADD A COMMENT
-User.addComment = data => {
-  return new Promise(async (resolve, reject) => {
-    User.validateComment(data.comment);
-    // FIND OWNER OF PROFILEEMAIL AND ADD COMMENT
-    await usersCollection
-      .findOneAndUpdate(
-        { email: data.profileEmail },
-        {
-          $push: {
-            comments: {
-              commentId: data.commentId,
-              comment: data.comment,
-              visitorEmail: data.visitorEmail,
-              visitorFirstName: data.visitorFirstName,
-              photo: data.photo,
-              commentDate: data.commentDate
-            }
-          }
-        },
-        { returnOriginal: false }
-      )
-      .then(info => {
-        resolve("Comment added.");
 
-        // EMAIL USERS FOR A SUCCESSFULL COMMENT
-        new Email().sendCommentSuccessMessage(
-          info.value.comments,
-          data.visitorFirstName,
-          data.visitorEmail,
-          data.photo,
-          data.commentDate,
-          data.comment,
-          data.profileEmail,
-          info.value.firstName,
-          info.value.lastName
-        );
-        //EMAIL USERS FOR A SUCCESSFULL COMMENT ENDS
-      })
-      .catch(_ => {
-        reject("Comment not added. Please try again. @[then/catch]");
-      });
-  });
-};
 // UPDATE FIRST NAME IN COMMENTS FOR A USER WHO UPDATES THEIR PROFILE
 User.updateCommentFirtName = (email, firstName) => {
   return new Promise(async (resolve, reject) => {

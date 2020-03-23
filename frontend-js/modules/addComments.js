@@ -14,6 +14,7 @@ export default class AddComments {
 
   // METHODS
   handleClick() {
+    if(!this.input.value) return;
     axios.post("/get-comments", { comment: this.input.value }).then(res => {
       this.injectIntoHtml(res.data);
     });
