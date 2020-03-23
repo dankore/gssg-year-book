@@ -823,12 +823,12 @@ User.validateComment = data => {
 // ADD COMMENTS
 User.saveComment = data => {
   return new Promise(async (resolve, reject) => {
-   // CHECK FOR EMPTY AN COMMENT
-    if(!data.comment) return;
+    // CHECK FOR EMPTY AN COMMENT
+    if (!data.comment) return;
     // FIND OWNER OF PROFILEE AND ADD COMMENT
     await usersCollection
       .findOneAndUpdate(
-        { email: data.profileEmail},
+        { email: data.profileEmail },
         {
           $push: {
             comments: {
@@ -847,7 +847,8 @@ User.saveComment = data => {
         }
       )
       .then(info => {
-        const lastCommentDoc = info.value.comments.pop();
+        const lastCommentDoc =
+          info.value.comments[info.value.comments.length - 1];
         resolve(lastCommentDoc);
         // EMAIL USERS FOR A SUCCESSFULL COMMENT
         new Email().sendCommentSuccessMessage(
