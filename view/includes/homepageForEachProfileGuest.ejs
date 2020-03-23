@@ -1,5 +1,5 @@
 <!-- SHOW NUMBER OF COMMENTS AND LIKES -->
-    <section class="mx-auto p-2 border-t border-gray-200 text-xs -mt-1 rounded shadow-lg bg-white" style="width: 18rem;">
+    <section class="mx-auto p-2 border-t text-xs border-gray-200 -mt-1 rounded shadow-lg bg-white" style="width: 18rem;">
     <div class="flex justify-between">
       <!-- LIKES -->
        <!-- SHOWING NAMES OF THOSE WHO LIKED THE CURRENT USER PROFILE -->
@@ -45,13 +45,13 @@
           <svg id="like-button-svg" 
           class="<%= color %>-fill mr-1" 
           xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="white" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
-          <p id="likes-container" class="text-xs cursor-pointer"><%= namesOfThoseWhoLikedThisProfile %></p>
+          <p id="likes-container" class="cursor-pointer"><%= namesOfThoseWhoLikedThisProfile %></p>
         </div>
        <%} else {%> 
           <div id="like-button-svg-container" class="relative flex items-center">
             <svg id="like-button-svg" 
             xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="white" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
-            <p id="likes-container" class="ml-1 text-xs cursor-pointer"><%= namesOfThoseWhoLikedThisProfile %></p>
+            <p id="likes-container" class="ml-1 cursor-pointer"><%= namesOfThoseWhoLikedThisProfile %></p>
         </div>
       <%}%> 
       <!-- LIKES ENDS-->
@@ -59,21 +59,21 @@
       <% if(profile.comments.length){ %>
         <!-- CHECK IF COMMENT IS GREATER THAN 1 -->
         <% if(profile.comments.length > 1){ %>
-          <div class="flex">
+          <div class="flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M2 15V5c0-1.1.9-2 2-2h16a2 2 0 0 1 2 2v15a1 1 0 0 1-1.7.7L16.58 17H4a2 2 0 0 1-2-2zM20 5H4v10h13a1 1 0 0 1 .7.3l2.3 2.29V5z"/></svg>
-          <p class="ml-1"><%= profile.comments.length %> comments</p>
+          <div class="ml-1 flex"><span class="inline-block mr-1"><%= profile.comments.length %></span> comments</div>
         </div>
         <% } else { %>
-          <div class="flex">
+          <div class="flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M2 15V5c0-1.1.9-2 2-2h16a2 2 0 0 1 2 2v15a1 1 0 0 1-1.7.7L16.58 17H4a2 2 0 0 1-2-2zM20 5H4v10h13a1 1 0 0 1 .7.3l2.3 2.29V5z"/></svg>
-          <p class="ml-1"><%= profile.comments.length %> comment</p>
+          <div class="ml-1 flex"><span class="inline-block mr-1"><%= profile.comments.length %></span> comment</div>
         </div>
         <!-- CHECK IF COMMENT IS GREATER THAN 1 ENDS-->
         <% } %> 
       <% } else { %>
-        <div class="flex">
+        <div class="flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M2 15V5c0-1.1.9-2 2-2h16a2 2 0 0 1 2 2v15a1 1 0 0 1-1.7.7L16.58 17H4a2 2 0 0 1-2-2zM20 5H4v10h13a1 1 0 0 1 .7.3l2.3 2.29V5z"/></svg>
-          <p class="ml-1">Say hello</p>
+          <p class="ml-1 flex">Say hello</p>
         </div>
       <% } %> 
     </div>
