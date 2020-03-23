@@ -1,21 +1,19 @@
 const axios = require("axios");
 
-export default class AddComments{
-  constructor(){
+export default class AddComments {
+  constructor() {
     this.input = document.querySelector("#input-comment");
     this.button = document.querySelector("#button-comment");
     this.events();
   }
 
-  events(){
-    this.button.addEventListener("click", ()=>this.handleClick());
+  events() {
+    this.button.addEventListener("click", () => this.handleClick());
   }
 
-  handleClick(){
-   let text = this.input.value
-    axios.post("get-comments", {comment: text})
-    .then(res =>{
-      console.log(res.data)
-    })
+  handleClick() {
+    axios.post("/get-comments", { comment: this.input.value }).then(res => {
+      console.log(res.data);
+    });
   }
 }

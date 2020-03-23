@@ -70,6 +70,6 @@ router.post("/likes", controller.likes);
 router.post("/get-visited-profile-doc", controller.getProfile);
 
 // NEW COMMENTS REFAC
-router.post("get-comments", controller.getComments)
+router.post("/get-comments", controller.getComments)
 // EXPORT CODE
 module.exports = router;

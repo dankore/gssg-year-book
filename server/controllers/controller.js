@@ -430,7 +430,30 @@ exports.sort = (req, res) => {
       });
     });
 };
+// COMMENTS REFAC
+exports.getComments = async (req, res) => {
+  const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
+  const userDoc = await User.findByEmail(req.session.user.email);
+  const commentDate = helpers.getMonthDayYear() + ", " + helpers.getHMS();
+  // GET RID OF BOGUS AND SANITIZE DATA
+  const data = {
+    commentId: new ObjectId(),
+    comment: req.body.comment,
+    visitorEmail: req.session.user.email,
+    visitorFirstName: userDoc.firstName,
+    profileEmail: profileEmail,
+    photo: userDoc.photo,
+    commentDate: commentDate
+  };
 
+  User.addComments(data)
+  .then(response =>{
+    res.json(response);
+  })
+  .catch(err=>{
+    console.log(err)
+  })
+}
 // COMMENTS
 exports.postComments = async (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
@@ -502,10 +525,7 @@ exports.deleteComment = (req, res) => {
       });
     });
 };
-// COMMENTS REFAC
-exports.getComments = (req, res) => {
-  consol.log(req.body)
-}
+
 // LIKES
 exports.likes = async (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL

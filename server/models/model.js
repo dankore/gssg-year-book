@@ -818,6 +818,43 @@ User.validateComment = data => {
     return;
   }
 };
+// ADD COMMENTS
+User.addComments = data => {
+  return new Promise(async (resolve, reject) => {
+    await usersCollection
+      .findOneAndUpdate(
+        { email: "zimmazone@yahoo.com" },
+        {
+          $push: {
+            commentss: {
+              commentId: data.commentId,
+              comment: data.comment,
+              visitorEmail: data.visitorEmail,
+              visitorFirstName: data.visitorFirstName,
+              photo: data.photo,
+              commentDate: data.commentDate
+            }
+          }
+        },
+        {
+          projection: { commentss: 1 },
+          returnOriginal: false
+        }
+      )
+      .then(info => {
+        let l = info.value.commentss.pop();
+        console.log(l);
+        // let lastComment = info.value.commentss.map(
+        //   comment => comment.comment
+        // );
+        // lastComment = lastComment.pop();
+        resolve(l);
+      })
+      .catch(_ => {
+        reject("Comment not added. Please try again. @[then/catch]");
+      });
+  });
+};
 // ADD A COMMENT
 User.addComment = data => {
   return new Promise(async (resolve, reject) => {
