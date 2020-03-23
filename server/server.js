@@ -224,7 +224,8 @@ server.use(async (req, res, next) => {
 
 // SEO
 server.use("/profile/:email", async (req, res, next) => { 
-  await User.findByEmail(req.params.email)
+  if(req.params.email){
+    await User.findByEmail(req.params.email)
     .then(userDoc => {
       userDoc.url = "https://www.gssgcontactbook.com" + req.originalUrl;
       res.locals.namesOfLikesReceivedFrom = userDoc.likes_received_from;
@@ -233,6 +234,7 @@ server.use("/profile/:email", async (req, res, next) => {
     .catch(err => {
       console.log("Server line 167 " + err);
     });
+  }
   next();
 });
 // SEO ENDS

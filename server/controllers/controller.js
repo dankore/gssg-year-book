@@ -502,7 +502,10 @@ exports.deleteComment = (req, res) => {
       });
     });
 };
-
+// COMMENTS REFAC
+exports.getComments = (req, res) => {
+  consol.log(req.body)
+}
 // LIKES
 exports.likes = async (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL

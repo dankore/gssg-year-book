@@ -10,6 +10,7 @@ import ShowAllComments from "./modules/comments-show-all";
 import Likes from "./modules/likes";
 import ShowNames from "./modules/show-those-liked-a-profile";
 import ClickToComment from "./modules/clickToComment";
+import AddComment from "./modules/addComments";
 
 if (document.querySelector("#more-profile-btn")) {
   new ToggleProfile();
@@ -49,4 +50,7 @@ if (document.querySelector("#likes-container")) {
 }
 if (document.getElementById("click-to-comment")) {
   new ClickToComment();
+}
+if (document.getElementById("button-comment")) {
+  new AddComment();
 }
