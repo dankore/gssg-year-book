@@ -4,44 +4,73 @@ export default class AddComments {
   constructor() {
     this.input = document.querySelector("#input-comment");
     this.addCommentButton = document.querySelector("#button-comment");
-    this.commentsContainer = document.querySelector("#comment-container-ul");
-    this.deleteCommentButton = document.querySelectorAll("#delete-comment-button");
+    this.commentsContainerUl = document.querySelector("#comment-container-ul");
+    this.deleteCommentButton = document.querySelectorAll(
+      "#delete-comment-button"
+    );
+    this.commentsCount = document.querySelector("#comment-count");
+    this.commentWordContainer = document.querySelector("#comment-word");
     this.document = document;
     this.events();
-    
   }
   // EVENTS
   events() {
     this.addCommentButton.addEventListener("click", () => this.handleClick());
     this.document.addEventListener("click", e => {
-      if (e.target && e.target.id == "delete-comment-button"){
+      if (e.target && e.target.id == "delete-comment-button") {
         this.handleDeleteComment(e);
       }
-   })
+    });
   }
 
-  
   // METHODS
-  handleDeleteComment(e){
-    if(confirm("Are you sure?")){
+  handleDeleteComment(e) {
+    if (confirm("Are you sure?")) {
       axios
-        .post("/delete-comment", {commentId: e.target.getAttribute("data-id") })
+        .post("/delete-comment", {
+          commentId: e.target.getAttribute("data-id")
+        })
         .then(_ => {
+          this.handleCommentCountAndCommentGrammar(-1);
+
           e.target.parentElement.parentElement.parentElement.parentElement.remove();
         })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }
+  handleCommentCountAndCommentGrammar(count) {
+    // INCREASE / DECREASE COMMENTS COUNT
+    if (count == 1) {
+      this.commentsCount.innerText = +this.commentsCount.innerText + 1; // INCREASE # OF COMMENTS
+    } else {
+      if (this.commentsCount.innerText == 1) {
+        this.commentsCount.innerText = ""; // INSTEAD OF DISPLAYING ZERO, DISPLAY NOTHING
+      } else {
+        this.commentsCount.innerText = +this.commentsCount.innerText - 1; // DECREASE # OF COMMENTS
+      }
+    }
+    // CHANGE FROM COMMENT TO COMMENTS AND VICE VERSA
+    const currentCommentsCount = this.commentsCount.innerText;
+    if (currentCommentsCount <= 1) {
+      this.commentWordContainer.innerText = "comment";
+    } else {
+      this.commentWordContainer.innerText = "comments";
     }
   }
 
-
   handleClick() {
-    if(!this.input.value) return;
+    if (!this.input.value) return;
     axios.post("/get-comments", { comment: this.input.value }).then(res => {
+      this.handleCommentCountAndCommentGrammar(1);
+
       this.injectIntoHtml(res.data);
     });
   }
 
   injectIntoHtml(data) {
-    this.commentsContainer.insertAdjacentHTML(
+    this.commentsContainerUl.insertAdjacentHTML(
       "afterbegin",
       this.dataTemplate(data)
     );
