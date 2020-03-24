@@ -3,16 +3,43 @@ const axios = require("axios");
 export default class AddComments {
   constructor() {
     this.input = document.querySelector("#input-comment");
-    this.button = document.querySelector("#button-comment");
+    this.addCommentButton = document.querySelector("#button-comment");
     this.commentsContainer = document.querySelector("#comment-container-ul");
+    this.deleteCommentButton = document.querySelectorAll("#delete-comment-button");
+    this.document = document;
     this.events();
+    
   }
   // EVENTS
   events() {
-    this.button.addEventListener("click", () => this.handleClick());
+    this.addCommentButton.addEventListener("click", () => this.handleClick());
+    this.document.addEventListener("click", e => {
+      if (e.target && e.target.id == "delete-comment-button"){
+        console.log(e.target);
+       console.log("hi");
+      }
+   })
+    // Array.prototype.forEach.call(this.deleteCommentButton, delBtn => {
+    //   delBtn.addEventListener("click", e => this.handleDeleteComment(e));
+    // })
   }
 
+  
   // METHODS
+  // handleDeleteComment(e){
+   
+  //   // console.log(e.target);
+     
+  //     // if(confirm("Are you sure?")){
+  //       // axios
+  //       //   .post("/delete-comment", {commentId: e.target.getAttribute("data-id") })
+  //       //   .then(_ =>{
+  //       //     // e.target.target.parentElement.parentElement.remove();
+  //       //   })
+  //     // }
+  // }
+
+
   handleClick() {
     if(!this.input.value) return;
     axios.post("/get-comments", { comment: this.input.value }).then(res => {
@@ -31,7 +58,7 @@ export default class AddComments {
 
   dataTemplate(data) {
     return `
-    <li class="my-2 p-2 rounded">
+    <li id="li-comment" class="my-2 p-2 rounded">
       <div class="flex">
         <div class="flex mr-1">
           <a href="/profile/${data.visitorEmail}">
@@ -76,14 +103,10 @@ export default class AddComments {
             <p>Edit</p>
           </button>
           <!-- EDIT BUTTON ENDS-->
+
           <!-- DELETE BUTTON -->
-          <form action="/delete-comment" method="POST">
-            <button
-              name="commentId"
-              value=" ${data.commentId}"
-              class="flex items-center ml-2"
-            >
-              <svg
+          <label class="flex items-center ml-2" for="delete-comment-button">
+            <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 width="15"
@@ -95,54 +118,18 @@ export default class AddComments {
                   d="M8 6V4c0-1.1.9-2 2-2h4a2 2 0 0 1 2 2v2h5a1 1 0 0 1 0 2h-1v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8H3a1 1 0 1 1 0-2h5zM6 8v12h12V8H6zm8-2V4h-4v2h4zm-4 4a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0v-6a1 1 0 0 1 1-1zm4 0a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0v-6a1 1 0 0 1 1-1z"
                 />
               </svg>
-              <p>Delete</p>
-            </button>
+            <input
+              type="button"
+              value="Delete"
+              id="delete-comment-button"
+              data-id="${data.commentId}"
+              class="delete-comment flex items-center ml-1"
+            />
+            </label>
             <!-- DELETE BUTTON ENDS -->
-          </form>
+
         </div>
       </div>
-      <!-- EDIT COMMENT FORM -->
-      <div
-        id="comment-edit-container"
-        class="absolute w-full -ml-2 -mt-12"
-        style="display: none;"
-      >
-        <form
-          id="edit-comment-form"
-          action="/edit-comment"
-          method="POST"
-          class="w-full  p-2 bg-gray-200 border border-blue-400 rounded"
-        >
-          <textarea
-            name="comment"
-            value=" ${data.comment}"
-            class="w-full"
-          >
-          ${data.comment}
-          </textarea
-          >
-          <input
-            type="hidden"
-            name="commentId"
-            value="${data.commentId}"
-          />
-        </form>
-        <div class="flex justify-between">
-          <button
-            id="cancel-edit-comment"
-            class="bg-green-600 text-white px-2 rounded"
-          >
-            Cancel
-          </button>
-          <button
-            id="update-comment"
-            class="bg-blue-600 text-white px-2 rounded"
-          >
-            Update
-          </button>
-        </div>
-      </div>
-      <!-- EDIT COMMENT FORM ENDS -->
     </li>`;
   }
   // END CLASS

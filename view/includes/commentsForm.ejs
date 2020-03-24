@@ -36,9 +36,9 @@
     SHOW NO COMMENT FOUND FOR BOTH IF FALSE
    -->
   <ul id="comment-container-ul" class="mb-6 bg-white relative">
-    <% if(profile.comments.length){ %> 
+    <% if(profile.comments){ %> 
     <% profile.comments.reverse().forEach(comment => { %>
-    <li class="my-2 p-2 rounded">
+    <li id="li-comment" class="my-2 p-2 rounded">
       <div class="flex">
         <div class="flex mr-1">
           <a href="/profile/<%= comment.visitorEmail %>">
@@ -87,11 +87,10 @@
           </button>
           <!-- EDIT BUTTON ENDS-->
           <!-- DELETE BUTTON -->
-          <form action="/delete-comment" method="POST">
             <button
-              name="commentId"
-              value="<%- comment.commentId %>"
-              class="flex items-center ml-2"
+              id = "delete-comment-button"
+              data-id="<%- comment.commentId %>"
+              class="delete-me flex items-center ml-2"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +106,6 @@
               </svg>
               <p>Delete</p>
             </button>
-          </form>
           <!-- DELETE BUTTON ENDS -->
           <%}%> <%}%>
         </div>

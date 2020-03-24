@@ -2,8 +2,8 @@
 const sortProfiles = array => {
  return array.sort((a, b) => {
     if(a.likes_received_from && b.likes_received_from){
-        const aNumComments = a.comments.length
-        const bNumComments = b.comments.length
+        const aNumComments = a.comments ? a.comments.length : [];
+        const bNumComments = b.comments ? b.comments.length : [];
         const aNumLikesReceived = a.likes_received_from.filter( item => item.color == "yes").length // IF COLOR VALUE IS YES IT MEANS THE PROFILE IS LIKED
         const bNumLikesReceived = b.likes_received_from.filter( item => item.color == "yes").length
         
