@@ -53,7 +53,9 @@ export default class AddComments {
     }
     // CHANGE FROM COMMENT TO COMMENTS AND VICE VERSA
     const currentCommentsCount = this.commentsCount.innerText;
-    if (currentCommentsCount <= 1) {
+    if (currentCommentsCount == 0) {
+      this.commentWordContainer.innerText = "";
+    } else if(currentCommentsCount == 1){
       this.commentWordContainer.innerText = "comment";
     } else {
       this.commentWordContainer.innerText = "comments";
