@@ -127,7 +127,7 @@ export default class AddComments {
           <!-- EDIT BUTTON ENDS-->
 
           <!-- DELETE BUTTON -->
-          <label class="flex items-center ml-2" for="delete-comment-button">
+          <label class="flex items-center ml-2 cursor-pointer" for="delete-comment-button">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -145,7 +145,7 @@ export default class AddComments {
               value="Delete"
               id="delete-comment-button"
               data-id="${data.commentId}"
-              class="delete-comment flex bg-white items-center"
+              class="delete-comment flex bg-white items-center cursor-pointer"
             />
             </label>
             <!-- DELETE BUTTON ENDS -->
