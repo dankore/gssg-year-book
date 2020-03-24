@@ -486,7 +486,7 @@ exports.editComment = (req, res) => {
 // DELETE A COMMENT
 exports.deleteComment = (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
-  console.log(req.body.commentId);
+ 
   User.deleteComment(req.body.commentId, profileEmail)
     .then(successMessage => {
       req.flash("success", successMessage);

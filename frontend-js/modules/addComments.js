@@ -15,29 +15,22 @@ export default class AddComments {
     this.addCommentButton.addEventListener("click", () => this.handleClick());
     this.document.addEventListener("click", e => {
       if (e.target && e.target.id == "delete-comment-button"){
-        console.log(e.target);
-       console.log("hi");
+        this.handleDeleteComment(e);
       }
    })
-    // Array.prototype.forEach.call(this.deleteCommentButton, delBtn => {
-    //   delBtn.addEventListener("click", e => this.handleDeleteComment(e));
-    // })
   }
 
   
   // METHODS
-  // handleDeleteComment(e){
-   
-  //   // console.log(e.target);
-     
-  //     // if(confirm("Are you sure?")){
-  //       // axios
-  //       //   .post("/delete-comment", {commentId: e.target.getAttribute("data-id") })
-  //       //   .then(_ =>{
-  //       //     // e.target.target.parentElement.parentElement.remove();
-  //       //   })
-  //     // }
-  // }
+  handleDeleteComment(e){
+    if(confirm("Are you sure?")){
+      axios
+        .post("/delete-comment", {commentId: e.target.getAttribute("data-id") })
+        .then(_ => {
+          e.target.parentElement.parentElement.parentElement.parentElement.remove();
+        })
+    }
+  }
 
 
   handleClick() {
@@ -123,7 +116,7 @@ export default class AddComments {
               value="Delete"
               id="delete-comment-button"
               data-id="${data.commentId}"
-              class="delete-comment flex items-center ml-1"
+              class="delete-comment flex bg-white items-center"
             />
             </label>
             <!-- DELETE BUTTON ENDS -->
