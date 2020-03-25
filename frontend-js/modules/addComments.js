@@ -22,15 +22,15 @@ export default class AddComments {
       if (e.target && e.target.id == "delete-comment-button") {
         this.handleDeleteComment(e);
       }
-       if (e.target && e.target.id == "edit-comment-button") {
-         this.handleEditComment(e);
-       }
+      if (e.target && e.target.id == "edit-comment-button") {
+        this.handleEditComment(e);
+      }
     });
   }
 
   // METHODS
-  handleEditComment(e){
-    console.log(e.target)
+  handleEditComment(e) {
+    console.log(e.target);
   }
 
   handleDeleteComment(e) {
@@ -117,8 +117,9 @@ export default class AddComments {
         <p>
           ${data.commentDate}
         </p>
-        <!--__EDIT BUTTON_____________-->
+
         <div class="flex">
+        <!--__EDIT BUTTON_____________-->
           <label for="edit-comment-button" class="flex items-center cursor-pointer">
             <svg
               xmlns="http://www.w3.org/2000/svg"
