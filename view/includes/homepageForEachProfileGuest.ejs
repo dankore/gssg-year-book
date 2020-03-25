@@ -4,31 +4,31 @@
       <!-- LIKES -->
        <!-- SHOWING NAMES OF THOSE WHO LIKED THE CURRENT USER PROFILE -->
        <%if(!locals.namesOfLikesReceivedFrom){%>
-       <%locals.namesOfLikesReceivedFrom = [];%>
-       <%}%> 
-       <%let arrayOfNames = []%> 
-       <%for(let i = 0; i < locals.namesOfLikesReceivedFrom.length; i++){%> 
-        <%  if( namesOfLikesReceivedFrom[i].color == "yes"){%> 
+       <% locals.namesOfLikesReceivedFrom = []; %>
+       <% } %> 
+       <% let arrayOfNames = [] %> 
+       <%for(let i = 0; i < locals.namesOfLikesReceivedFrom.length; i++){ %> 
+        <%  if( namesOfLikesReceivedFrom[i].color == "yes" ){ %> 
           <%  let fullName = locals.namesOfLikesReceivedFrom[i].visitorName; %>
           <%  let firstName = fullName.split(" ")[0]; %>
           <% arrayOfNames.push(firstName) %>
-        <%}%> 
-       <% }%>   
+        <% } %> 
+       <% } %>   
      
-       <%let namesOfThoseWhoLikedThisProfile = "";%>
+       <% let namesOfThoseWhoLikedThisProfile = ""; %>
        <!-- CHECK FOR LENGTH -->
-       <%if(arrayOfNames.length < 1){%>
+       <% if(arrayOfNames.length < 1){ %>
          <!-- DO NOTHING -->
-       <%} else if(arrayOfNames.length == 1) {%>
-         <%namesOfThoseWhoLikedThisProfile = `Liked by ${arrayOfNames[0]}`%>
-       <%} else if(arrayOfNames.length == 2) {%>
-         <%namesOfThoseWhoLikedThisProfile  = `Liked by ${arrayOfNames.slice(0,1)} & ${arrayOfNames.slice(1).length} other`%>
-       <%} else {%>
-         <%namesOfThoseWhoLikedThisProfile = `Liked by ${arrayOfNames.slice(0,1)} & ${arrayOfNames.slice(1).length} others`%>
-       <%}%>
+       <% } else if(arrayOfNames.length == 1) { %>
+         <% namesOfThoseWhoLikedThisProfile = `Liked by ${arrayOfNames[0]}` %>
+       <% } else if(arrayOfNames.length == 2) { %>
+         <%namesOfThoseWhoLikedThisProfile  = `Liked by ${arrayOfNames.slice(0, 1)} & ${arrayOfNames.slice(1).length} other`%>
+       <% } else { %>
+         <% namesOfThoseWhoLikedThisProfile = `Liked by ${arrayOfNames.slice(0, 1)} & ${arrayOfNames.slice(1).length} others`%>
+       <% } %>
         <!-- CHECK FOR LENGTH ENDS-->
         <!-- SHOWING NAMES OF THOSE WHO LIKED THE CURRENT USER PROFILE -->
-       <% if(user){%> 
+       <% if(user) {%> 
         <!-- GET CURRENT @COLOR VALUE FOR THIS PROFILE. 
         IF COLOR=BLUE, VISITOR ALREADY LIKED THIS PROFILE. -->
         <%let color = "";%> 

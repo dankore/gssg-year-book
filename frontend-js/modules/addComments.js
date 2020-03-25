@@ -10,6 +10,7 @@ export default class AddComments {
     );
     this.commentsCount = document.querySelector("#comment-count");
     this.commentWordContainer = document.querySelector("#comment-word");
+    this.editCommentForm = document.querySelectorAll("#comment-edit-container");
     this.document = document;
     this.events();
   }
@@ -18,6 +19,7 @@ export default class AddComments {
     this.addCommentButton.addEventListener("click", () =>
       this.handleAddCommentClick()
     );
+
     this.document.addEventListener("click", e => {
       if (e.target && e.target.id == "delete-comment-button") {
         this.handleDeleteComment(e);
@@ -30,7 +32,15 @@ export default class AddComments {
 
   // METHODS
   handleEditComment(e) {
-    console.log(e.target);
+    const editCommentFormElem =
+      e.target.parentElement.parentElement.parentElement.parentElement
+        .children[2];
+
+    if (editCommentFormElem.style.display == "none") {
+      editCommentFormElem.style.display = "block";
+    } else {
+      editCommentFormElem.style.display = "none";
+    }
   }
 
   handleDeleteComment(e) {
@@ -140,7 +150,9 @@ export default class AddComments {
               class="flex bg-white items-center cursor-pointer"
             />
           </label>
-         <!--__EDIT BUTTON ENDS_____________-->
+          <!--__EDIT BUTTON ENDS_____________-->
+
+        
 
           <!-- DELETE BUTTON -->
           <label class="flex items-center ml-2 cursor-pointer" for="delete-comment-button">
@@ -165,9 +177,28 @@ export default class AddComments {
             />
             </label>
             <!-- DELETE BUTTON ENDS -->
-
         </div>
       </div>
+        
+      <!--__EDIT FORM_____________-->
+        <div
+          id="comment-edit-container"
+          class="absolute w-full -ml-2 -mt-10"
+          style="display: none;"
+        >
+        <input
+          type="text"
+          name="comment"
+          value="${data.comment}"
+          class="w-full  p-2 bg-gray-200 border border-blue-400 rounded"
+          >
+        <input
+          type="hidden"
+          name="commentId"
+          value="${data.commentId}"
+        >
+        </div>
+       <!--__EDIT FORM ENDS_____________-->
     </li>`;
   }
   // END CLASS
