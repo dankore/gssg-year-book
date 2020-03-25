@@ -152,8 +152,6 @@ export default class AddComments {
           </label>
           <!--__EDIT BUTTON ENDS_____________-->
 
-        
-
           <!-- DELETE BUTTON -->
           <label class="flex items-center ml-2 cursor-pointer" for="delete-comment-button">
             <svg
