@@ -197,6 +197,20 @@ export default class AddComments {
           name="commentId"
           value="${data.commentId}"
         >
+        <div class="flex justify-between">
+          <button
+            id="cancel-edit-comment"
+            class="bg-green-600 text-white px-2 rounded"
+          >
+            Cancel
+          </button>
+          <button
+            id="update-comment"
+            class="bg-blue-600 text-white px-2 rounded"
+          >
+            Update
+          </button>
+        </div>
         </div>
        <!--__EDIT FORM ENDS_____________-->
     </li>`;
