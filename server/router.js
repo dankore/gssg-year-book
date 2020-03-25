@@ -37,6 +37,7 @@ router.post("/reset-password/:token", controller.resetPasswordToken);
 
 // SEARCH
 router.post("/", controller.search);
+router.get("/sort", controller.sortGet);
 router.post("/sort", controller.sort)
 
 // PRIVACY

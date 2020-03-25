@@ -84,13 +84,13 @@ exports.logout = function(req, res) {
 
 exports.getProfile = async (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
-   await User.findByEmail(profileEmail)
-     .then(userDoc => {
-       res.json(userDoc.likes_received_from);
-     })
-     .catch(() => {
-       res.render("404");
-     });
+  await User.findByEmail(profileEmail)
+    .then(userDoc => {
+      res.json(userDoc.likes_received_from);
+    })
+    .catch(() => {
+      res.render("404");
+    });
 };
 
 exports.ifUserExists = (req, res, next) => {
@@ -415,6 +415,11 @@ exports.twitterLogin = async (req, res) => {
   }
 };
 
+// REDIRECT TO HOME IF USERS TRY TO LOAD '/SORT' PAGE SINCE IT DOEN NOT EXISTS
+exports.sortGet = (req, res) => {
+  res.redirect("/");
+};
+
 exports.sort = (req, res) => {
   User.sortProfiles(req.body.q)
     .then(profiles => {
@@ -456,7 +461,7 @@ exports.addComment = async (req, res) => {
         await res.redirect(`profile/${profileEmail}`);
       });
     });
-}
+};
 
 // UPDATE A COMMENT
 exports.editComment = (req, res) => {
@@ -486,7 +491,7 @@ exports.editComment = (req, res) => {
 // DELETE A COMMENT
 exports.deleteComment = (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
- 
+
   User.deleteComment(req.body.commentId, profileEmail)
     .then(successMessage => {
       req.flash("success", successMessage);
@@ -505,7 +510,7 @@ exports.deleteComment = (req, res) => {
 // LIKES
 exports.likes = async (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
-  const userDoc = await User.findByEmail(req.session.user.email)
+  const userDoc = await User.findByEmail(req.session.user.email);
   // TODO: ADD _ID TO EACH LIKE
   const data = {
     like: req.body.like,
