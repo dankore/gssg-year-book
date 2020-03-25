@@ -15,7 +15,7 @@ export default class AddComments {
   }
   // EVENTS
   events() {
-    this.addCommentButton.addEventListener("click", () => this.handleClick());
+    this.addCommentButton.addEventListener("click", () => this.handleAddCommentClick());
     this.document.addEventListener("click", e => {
       if (e.target && e.target.id == "delete-comment-button") {
         this.handleDeleteComment(e);
@@ -40,6 +40,7 @@ export default class AddComments {
         });
     }
   }
+
   handleCommentCountAndCommentGrammar(count) {
     // INCREASE / DECREASE COMMENTS COUNT
     if (count == 1) {
@@ -55,15 +56,17 @@ export default class AddComments {
     const currentCommentsCount = this.commentsCount.innerText;
     if (currentCommentsCount == 0) {
       this.commentWordContainer.innerText = "";
-    } else if(currentCommentsCount == 1){
+    } else if (currentCommentsCount == 1) {
       this.commentWordContainer.innerText = "comment";
     } else {
       this.commentWordContainer.innerText = "comments";
     }
   }
 
-  handleClick() {
+  handleAddCommentClick() {
+    // IF INPUT BOX IS EMPTY, DO NOT SAVE
     if (!this.input.value) return;
+    // SEND DATA TO DB
     axios.post("/get-comments", { comment: this.input.value }).then(res => {
       this.handleCommentCountAndCommentGrammar(1);
 
