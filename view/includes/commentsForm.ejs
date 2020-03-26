@@ -117,30 +117,22 @@
         </div>
       </div>
       <!-- EDIT COMMENT FORM -->
-      <div
-        id="comment-edit-container"
-        class="absolute w-full -ml-2 -mt-12"
-        style="display: none;"
-      >
-        <form
-          id="edit-comment-form"
-          action="/edit-comment"
-          method="POST"
-          class="w-full  p-2 bg-gray-200 border border-blue-400 rounded"
+        <div
+          id="comment-edit-container-server-side"
+          class="absolute w-full -ml-2 -mt-10"
+          style="display: none;"
         >
-          <textarea
-            name="comment"
-            value="<%= comment.comment %>"
-            class="w-full"
+        <input
+          type="text"
+          name="comment"
+          value="<%= comment.comment %>"
+          class="w-full  p-2 bg-gray-200 border border-blue-400 rounded"
           >
-<%= comment.comment %></textarea
-          >
-          <input
-            type="hidden"
-            name="commentId"
-            value="<%= comment.commentId %>"
-          />
-        </form>
+        <input
+          type="hidden"
+          name="commentId"
+          value="<%= comment.commentId %>"
+        >
         <div class="flex justify-between">
           <button
             id="cancel-edit-comment"
@@ -149,7 +141,7 @@
             Cancel
           </button>
           <button
-            id="update-comment"
+            id="update-comment-server-side"
             class="bg-blue-600 text-white px-2 rounded"
           >
             Update

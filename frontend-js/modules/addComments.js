@@ -10,7 +10,9 @@ export default class AddComments {
     );
     this.commentsCount = document.querySelector("#comment-count");
     this.commentWordContainer = document.querySelector("#comment-word");
-    this.editCommentForm = document.querySelectorAll("#comment-edit-container");
+    this.editCommentForm = document.querySelectorAll(
+      "#comment-edit-container-server-side"
+    );
     this.document = document;
     this.events();
   }
@@ -19,6 +21,10 @@ export default class AddComments {
     this.addCommentButton.addEventListener("click", () =>
       this.handleAddCommentClick()
     );
+
+    Array.prototype.forEach.call(this.editCommentForm, editForm => {
+      editForm.addEventListener("click", e => this.handleEditCommentServerSide(e));
+    });
 
     this.document.addEventListener("click", e => {
       if (e.target && e.target.id == "delete-comment-button") {
@@ -29,8 +35,13 @@ export default class AddComments {
       }
     });
   }
-
+  
   // METHODS
+  handleEditCommentServerSide(e){
+    if(e.target && e.target.id == 'update-comment-server-side'){
+      console.log(e.target)
+    }
+  }
   handleEditComment(e) {
     const editCommentFormElem =
       e.target.parentElement.parentElement.parentElement.parentElement
@@ -50,31 +61,34 @@ export default class AddComments {
     }
   }
 
-   actuallyUpdateComment (event) {
+  actuallyUpdateComment(event) {
     const parentElement_of_editCommentForm =
       event.target.parentElement.parentElement;
     const editCommentForm = parentElement_of_editCommentForm.children[0];
 
-    console.log(parentElement_of_editCommentForm);
+    const commentContainer =
+      event.target.parentElement.parentElement.parentElement.children[0]
+        .children[1].children[1];
+    const timeStampContainer =
+      event.target.parentElement.parentElement.parentElement.children[1]
+        .children[0];
 
     if (!editCommentForm.value) return; // DIS-ALLOW EMPTY TEXT
-
-     axios
+    axios
       .post("/edit-comment", {
         commentId: event.target.getAttribute("data-id"),
         comment: editCommentForm.value
       })
-      .then(res =>{
-         console.log(res.data);
-         // TODO REMOVE LAST COMMENT AFTER UPDATE
-         this.injectIntoHtml(res.data)
-         parentElement_of_editCommentForm.remove();
+      .then(res => {
+        // TODO REMOVE LAST COMMENT AFTER UPDATE
+        commentContainer.innerText = res.data.comment;
+        timeStampContainer.innerText = res.data.commentDate;
       })
       .catch(_ => {
         console.log("Error updating comment.");
       });
 
-      parentElement_of_editCommentForm.remove();
+    parentElement_of_editCommentForm.remove();
   }
 
   handleDeleteComment(e) {
