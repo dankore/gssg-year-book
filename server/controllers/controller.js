@@ -474,11 +474,8 @@ exports.editComment = (req, res) => {
   };
 
   User.updateComment(data)
-    .then(successMessage => {
-      req.flash("success", successMessage);
-      req.session.save(async _ => {
-        await res.redirect(`profile/${profileEmail}`);
-      });
+    .then(response => {
+      res.json(response);
     })
     .catch(errorMessage => {
       req.flash("errors", errorMessage);

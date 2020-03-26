@@ -35,12 +35,40 @@ export default class AddComments {
     const editCommentFormElem =
       e.target.parentElement.parentElement.parentElement.parentElement
         .children[2];
+    const updateButton = editCommentFormElem.children[2].children[1];
+
+    if (updateButton && updateButton.id == "update-comment") {
+      updateButton.addEventListener("click", event =>
+        this.actuallyUpdateComment(event)
+      );
+    }
 
     if (editCommentFormElem.style.display == "none") {
       editCommentFormElem.style.display = "block";
     } else {
       editCommentFormElem.style.display = "none";
     }
+  }
+
+   actuallyUpdateComment (event) {
+    const parentElement_of_editCommentForm =
+      event.target.parentElement.parentElement;
+    const editCommentForm = parentElement_of_editCommentForm.children[0];
+    if (!editCommentForm.value) return; // DIS-ALLOW EMPTY TEXT
+
+     axios
+      .post("/edit-comment", {
+        commentId: event.target.getAttribute("data-id"),
+        comment: editCommentForm.value
+      })
+      .then(res =>{
+         console.log(res.data);
+      })
+      .catch(_ => {
+        console.log("Error updating comment.");
+      });
+
+      parentElement_of_editCommentForm.remove();
   }
 
   handleDeleteComment(e) {
