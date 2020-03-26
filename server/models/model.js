@@ -898,10 +898,10 @@ User.updateCommentFirtName = (email, firstName) => {
 // UPDATE A COMMENT
 User.updateComment = data => {
   return new Promise(async (resolve, reject) => {
-    try {
-      User.validateComment(data.comment);
+    User.validateComment(data.comment);
 
-      await usersCollection.updateOne(
+    usersCollection
+      .findOneAndUpdate(
         { email: data.profileEmail },
         {
           $set: {
@@ -910,15 +910,21 @@ User.updateComment = data => {
           }
         },
         {
+          projection: { comments: 1 },
+          returnOriginal: false,
           arrayFilters: [
             { "elem.commentId": { $eq: new ObjectId(data.commentId) } }
           ]
         }
-      );
-      resolve("Comment updated.");
-    } catch {
-      reject("Comment was not updated.");
-    }
+      )
+      .then(info => {
+         const lastCommentDoc =
+           info.value.comments[info.value.comments.length - 1];
+         resolve(lastCommentDoc);
+      })
+      .catch(() => {
+        reject("Comment was not updated.");
+      });
   });
 };
 // DELETE A COMMENT

@@ -54,6 +54,9 @@ export default class AddComments {
     const parentElement_of_editCommentForm =
       event.target.parentElement.parentElement;
     const editCommentForm = parentElement_of_editCommentForm.children[0];
+
+    console.log(parentElement_of_editCommentForm);
+
     if (!editCommentForm.value) return; // DIS-ALLOW EMPTY TEXT
 
      axios
@@ -63,6 +66,9 @@ export default class AddComments {
       })
       .then(res =>{
          console.log(res.data);
+         // TODO REMOVE LAST COMMENT AFTER UPDATE
+         this.injectIntoHtml(res.data)
+         parentElement_of_editCommentForm.remove();
       })
       .catch(_ => {
         console.log("Error updating comment.");
