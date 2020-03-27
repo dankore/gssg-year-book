@@ -23,7 +23,9 @@ export default class AddComments {
     );
 
     Array.prototype.forEach.call(this.editCommentForm, editForm => {
-      editForm.addEventListener("click", e => this.handleEditCommentServerSide(e));
+      editForm.addEventListener("click", e =>
+        this.handleEditCommentServerSide(e)
+      );
     });
 
     this.document.addEventListener("click", e => {
@@ -35,20 +37,23 @@ export default class AddComments {
       }
     });
   }
-  
+
   // METHODS
-  handleEditCommentServerSide(e){
-    if(e.target && e.target.id == 'update-comment-server-side'){
-      console.log(e.target)
+  handleEditCommentServerSide(e) {
+    if (e.target && e.target.id == "update-comment-server-side") {
+      console.log(e.target);
     }
   }
   handleEditComment(e) {
     const editCommentFormElem =
       e.target.parentElement.parentElement.parentElement.parentElement
         .children[2];
-    
-    console.log(e.target.parentElement.parentElement.parentElement.parentElement.parentElement)
-    
+
+    console.log(
+      e.target.parentElement.parentElement.parentElement.parentElement
+        .parentElement
+    );
+
     const updateButton = editCommentFormElem.children[2].children[1];
 
     if (updateButton && updateButton.id == "update-comment") {
@@ -137,132 +142,65 @@ export default class AddComments {
     // IF INPUT BOX IS EMPTY, DO NOT SAVE
     if (!this.input.value) return;
     // SEND DATA TO DB
-    axios.post("/get-comments", { comment: this.input.value }).then(res => {
-      this.handleCommentCountAndCommentGrammar(1);
+    axios
+      .post("/get-comments", { comment: this.input.value })
+      .then(res => {
+        this.handleCommentCountAndCommentGrammar(1);
 
-      this.injectIntoHtml(res.data);
-    });
+        // BUILT HTML
+        let li = document.createElement("li");
+        li.id = "li-comment";
+        li.classList.add("my-2", "p-2", "rounded");
+
+        let divCommentPhoto = document.createElement("div");
+        divCommentPhoto.classList.add("flex");
+
+        let divPhoto = document.createElement("div");
+        divPhoto.classList.add("flex", "mr-1");
+
+        let link = document.createElement("a");
+        link.setAttribute("href", `/profile/${res.data.visitorEmail}`);
+
+        let img = document.createElement("img");
+        img.setAttribute("src", `${res.data.photo}`);
+        img.classList.add("w-8", "h-8", "rounded-full");
+        img.setAttribute("alt", "profile pic");
+
+        // DIV FIRST NAME AND COMMENT AND LINK
+        let firstNameCommentDiv = document.createElement("div");
+        firstNameCommentDiv.classList.add("rounded", "px-2");
+        firstNameCommentDiv.setAttribute(
+          "style",
+          "overflow-wrap:break-word;min-width:0px;width:15rem;background-color:#F2F3F5;"
+        );
+        let link2 = document.createElement("a");
+        link2.setAttribute("href", `${res.data.photo}`);
+        link2.classList.add("font-medium");
+        link2.innerText = `${res.data.visitorFirstName}`;
+        let p = document.createElement("p");
+        p.innerText = `${res.data.comment}`;
+
+        // APPEND
+        link.appendChild(img);
+        divPhoto.appendChild(link);
+
+        firstNameCommentDiv.appendChild(link2);
+        firstNameCommentDiv.appendChild(p);
+
+        divCommentPhoto.appendChild(divPhoto);
+        divCommentPhoto.appendChild(firstNameCommentDiv);
+
+        li.appendChild(divCommentPhoto);
+
+        // INSERT INTO DOM
+        this.commentsContainerUl.insertAdjacentElement("afterbegin", li);
+        this.input.value = "";
+        this.input.focus();
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
-  injectIntoHtml(data) {
-    this.commentsContainerUl.insertAdjacentHTML(
-      "afterbegin",
-      this.dataTemplate(data)
-    );
-    this.input.value = "";
-    this.input.focus();
-  }
-
-  dataTemplate(data) {
-    return `
-    <li id="li-comment" class="my-2 p-2 rounded">
-      <div class="flex">
-        <div class="flex mr-1">
-          <a href="/profile/${data.visitorEmail}">
-            <img src="${data.photo}" class="w-8 h-8 rounded-full" alt="profile pic"/>
-          </a>
-        </div>
-        <div
-          class="rounded px-2"
-          style="overflow-wrap: break-word; min-width: 0px; width: 15rem; background-color: #F2F3F5;"
-        >
-          <a href="/profile/${data.visitorEmail}" class="font-medium">
-            ${data.visitorFirstName}
-          </a>
-          <p>
-            ${data.comment}
-          </p>
-        </div>
-      </div>
-      <div class="flex justify-between items-center mt-2 text-xs">
-        <p>
-          ${data.commentDate}
-        </p>
-
-        <div class="flex">
-        <!--__EDIT BUTTON_____________-->
-          <label for="edit-comment-button" class="flex items-center cursor-pointer">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              width="15"
-              height="15"
-            >
-              <path
-                fill="green"
-                class="heroicon-ui"
-                d="M6.3 12.3l10-10a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-10 10a1 1 0 0 1-.7.3H7a1 1 0 0 1-1-1v-4a1 1 0 0 1 .3-.7zM8 16h2.59l9-9L17 4.41l-9 9V16zm10-2a1 1 0 0 1 2 0v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h6a1 1 0 0 1 0 2H4v14h14v-6z"
-              />
-            </svg>
-            <input
-              type="button"
-              value="Edit"
-              id="edit-comment-button"
-              class="flex bg-white items-center cursor-pointer"
-            />
-          </label>
-          <!--__EDIT BUTTON ENDS_____________-->
-
-          <!-- DELETE BUTTON -->
-          <label class="flex items-center ml-2 cursor-pointer" for="delete-comment-button">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width="15"
-                height="15"
-              >
-                <path
-                  fill="red"
-                  class="heroicon-ui"
-                  d="M8 6V4c0-1.1.9-2 2-2h4a2 2 0 0 1 2 2v2h5a1 1 0 0 1 0 2h-1v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8H3a1 1 0 1 1 0-2h5zM6 8v12h12V8H6zm8-2V4h-4v2h4zm-4 4a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0v-6a1 1 0 0 1 1-1zm4 0a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0v-6a1 1 0 0 1 1-1z"
-                />
-              </svg>
-            <input
-              type="button"
-              value="Delete"
-              id="delete-comment-button"
-              data-id="${data.commentId}"
-              class="flex bg-white items-center cursor-pointer"
-            />
-            </label>
-            <!-- DELETE BUTTON ENDS -->
-        </div>
-      </div>
-        
-      <!--__EDIT FORM_____________-->
-        <div
-          id="comment-edit-container"
-          class="absolute w-full -ml-2 -mt-10"
-          style="display: none;"
-        >
-        <input
-          type="text"
-          name="comment"
-          value="${data.comment}"
-          class="w-full  p-2 bg-gray-200 border border-blue-400 rounded"
-          >
-        <input
-          type="hidden"
-          name="commentId"
-          value="${data.commentId}"
-        >
-        <div class="flex justify-between">
-          <button
-            id="cancel-edit-comment"
-            class="border border-blue-600 px-2 rounded"
-          >
-            Cancel
-          </button>
-          <input 
-            id="update-comment"
-            type="button"
-            data-id="${data.commentId}"
-            value="Update"
-            class="bg-blue-600 text-white px-2 rounded"
-        </div>
-        </div>
-       <!--__EDIT FORM ENDS_____________-->
-    </li>`;
-  }
   // END CLASS
 }
