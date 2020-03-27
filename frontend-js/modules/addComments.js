@@ -6,7 +6,7 @@ export default class AddComments {
     this.input = document.querySelector("#input-comment");
     this.addCommentButton = document.querySelector("#button-comment");
     this.commentsContainerUl = document.querySelector("#comment-container-ul");
-    this.editCommentButton = document.querySelectorAll("#edit-comment-button");
+    // this.editCommentButton = document.querySelectorAll("#edit-comment-button");
     this.deleteCommentButton = document.querySelectorAll(
       "#delete-comment-button"
     );
@@ -22,81 +22,79 @@ export default class AddComments {
       this.handleAddCommentClick()
     );
 
-    Array.prototype.forEach.call(this.editCommentButton, editButton => {
-      editButton.addEventListener("click", e =>
-        this.handleEditComment(e)
-      );
-    });
-
-    // this.document.addEventListener("click", e => {
-    //   if (e.target && e.target.id == "delete-comment-button") {
-    //     this.handleDeleteComment(e);
-    //   }
-    //   if (e.target && e.target.id == "edit-comment-button") {
-    //     this.handleEditComment(e);
-    //   }
+    // Array.prototype.forEach.call(this.editCommentButton, editButton => {
+    //   editButton.addEventListener("click", e => this.handleEditComment(e));
     // });
+
+    this.document.addEventListener("click", e => {
+      if (e.target && e.target.id == "delete-comment-button") {
+        this.handleDeleteComment(e);
+      }
+      if (e.target && e.target.id == "edit-comment-button") {
+        this.handleEditComment(e);
+      }
+    });
   }
 
   // METHODS
-  handleEditComment(e){
-    console.log("hi");
-  }
-  // handleEditCommentServerSide(e) {
-  //   if (e.target && e.target.id == "update-comment-server-side") {
+  // handleEditComment(e) {
+  //   if (e.target && e.target.id == "update-comment") {
   //     console.log(e.target);
   //   }
   // }
-  // handleEditComment(e) {
-  //   const editCommentFormElem =
-  //     e.target.parentElement.parentElement.parentElement.parentElement;
 
-  //   console.log(editCommentFormElem);
+  handleEditComment(e) {
+    const editCommentFormElem =
+      e.target.parentElement.parentElement.parentElement.parentElement
+        .children[2];
+    const updateButton = editCommentFormElem.children[2].children[1];
+    
+    // TOGGLE EDIT CONTAINER
+    if (editCommentFormElem.style.display == "none") {
+      editCommentFormElem.style.display = "block";
+    } else {
+      editCommentFormElem.style.display = "none";
+    }
 
-  //   // const updateButton = editCommentFormElem.children[2].children[1];
+    if (updateButton && updateButton.id == "update-comment") {
+      updateButton.addEventListener("click", event =>
+        this.actuallyUpdateComment(event)
+      );
+    }
+  }
 
-  //   // if (updateButton && updateButton.id == "update-comment") {
-  //   //   updateButton.addEventListener("click", event =>
-  //   //     this.actuallyUpdateComment(event)
-  //   //   );
-  //   // }
+  actuallyUpdateComment(event) {
+    const parentElement_of_editCommentForm =
+      event.target.parentElement.parentElement;
 
-  //   // if (editCommentFormElem.style.display == "none") {
-  //   //   editCommentFormElem.style.display = "block";
-  //   // } else {
-  //   //   editCommentFormElem.style.display = "none";
-  //   // }
-  // }
+    const editCommentForm = parentElement_of_editCommentForm.children[0];
 
-  // actuallyUpdateComment(event) {
-  //   const parentElement_of_editCommentForm =
-  //     event.target.parentElement.parentElement;
-  //   const editCommentForm = parentElement_of_editCommentForm.children[0];
+    const commentContainer =
+      event.target.parentElement.parentElement.parentElement.children[0]
+        .children[1].children[1];
 
-  //   const commentContainer =
-  //     event.target.parentElement.parentElement.parentElement.children[0]
-  //       .children[1].children[1];
-  //   const timeStampContainer =
-  //     event.target.parentElement.parentElement.parentElement.children[1]
-  //       .children[0];
+    const timeStampContainer =
+      event.target.parentElement.parentElement.parentElement.children[1]
+        .children[0];
 
-  //   if (!editCommentForm.value) return; // DIS-ALLOW EMPTY TEXT
-  //   axios
-  //     .post("/edit-comment", {
-  //       commentId: event.target.getAttribute("data-id"),
-  //       comment: editCommentForm.value
-  //     })
-  //     .then(res => {
-  //       // TODO REMOVE LAST COMMENT AFTER UPDATE
-  //       commentContainer.innerText = res.data.comment;
-  //       timeStampContainer.innerText = res.data.commentDate;
-  //     })
-  //     .catch(_ => {
-  //       console.log("Error updating comment.");
-  //     });
+    if (!editCommentForm.value) return; // DIS-ALLOW EMPTY TEXT
+    axios
+      .post("/edit-comment", {
+        commentId: editCommentForm.getAttribute("data-id"),
+        comment: editCommentForm.value
+      })
+      .then(res => {
+        console.log(res.data);
+        // TODO REMOVE LAST COMMENT AFTER UPDATE
+        commentContainer.innerText = res.data.comment;
+        timeStampContainer.innerText = res.data.commentDate;
+      })
+      .catch(_ => {
+        console.log("Error updating comment.");
+      });
 
-  //   parentElement_of_editCommentForm.remove();
-  // }
+    parentElement_of_editCommentForm.style.display = 'none';
+  }
 
   handleDeleteComment(e) {
     if (confirm("Are you sure?")) {

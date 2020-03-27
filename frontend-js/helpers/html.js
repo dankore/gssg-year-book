@@ -55,7 +55,7 @@ ReuseableHtml.prototype.li = data => {
   const editDeleteWrapper = document.createElement("div");
   editDeleteWrapper.classList.add("flex");
 
-  // EDIT BUTTON
+  // EDIT BUTTONedit-comment-button
   const editLabel = document.createElement("label");
   editLabel.setAttribute("for", "edit-comment-button");
   editLabel.classList.add("flex", "items-center", "cursor-pointer");
@@ -93,6 +93,7 @@ ReuseableHtml.prototype.li = data => {
   const editcommentInput = document.createElement("input");
   editcommentInput.setAttribute("type", "text");
   editcommentInput.setAttribute("value", `${data.comment}`);
+  editcommentInput.setAttribute("data-id", `${data.commentId}`);
   editcommentInput.classList.add(
     "w-full",
     "p-2",
