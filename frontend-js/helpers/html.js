@@ -84,7 +84,56 @@ ReuseableHtml.prototype.li = data => {
   );
   // DATE, EDIT, DELETE ENDS
 
-  // APPEND
+  // EDIT COMMENT FORM
+  const editCommentWrapper = document.createElement("div");
+  editCommentWrapper.id = "edit-comment-container";
+  editCommentWrapper.classList.add("absolute", "w-full", "-ml-2", "-mt-10");
+  editCommentWrapper.style.display = "none";
+  // INPUT
+  const editcommentInput = document.createElement("input");
+  editcommentInput.setAttribute("type", "text");
+  editcommentInput.setAttribute("value", `${data.comment}`);
+  editcommentInput.classList.add(
+    "w-full",
+    "p-2",
+    "bg-gray-200",
+    "border",
+    "border-blue-400",
+    "rounded"
+  );
+  // INPUT HIDDEN
+  const editcommentInputHidden = document.createElement("input");
+  editcommentInputHidden.setAttribute("type", "hidden");
+  editcommentInputHidden.setAttribute("value", `${data.commentId}`);
+  // CANCEL AND UPDATE BUTTONS
+  // WRAPPER
+  const editCommentControlsWrapper = document.createElement("div");
+  editCommentControlsWrapper.classList.add("flex", "justify-between");
+  // CANCEL BUTTON
+  const editCommentCancelButton = document.createElement("button");
+  editCommentCancelButton.id = "cancel-edit-comment";
+  editCommentCancelButton.classList.add(
+    "bg-green-600",
+    "text-white",
+    "px-2",
+    "rounded"
+  );
+  const editCommentCancelButtonText = document.createTextNode("Cancel");
+  editCommentCancelButton.appendChild(editCommentCancelButtonText);
+  // UPDATE BUTTON
+  const editCommentUpdateButton = document.createElement("button");
+  editCommentUpdateButton.id = "update-comment";
+  editCommentUpdateButton.classList.add(
+    "bg-blue-600",
+    "text-white",
+    "px-2",
+    "rounded"
+  );
+  const editCommentUpdateButtonText = document.createTextNode("Update");
+  editCommentUpdateButton.appendChild(editCommentUpdateButtonText);
+  // EDIT COMMENT FORM ENDS
+
+  // APPEND SECTION
   link.appendChild(img);
   divPhoto.appendChild(link);
 
@@ -128,8 +177,16 @@ ReuseableHtml.prototype.li = data => {
   editDeleteWrapper.appendChild(deleteLabel);
   // ADD ABOVE WRAPPER TO PARENT WRAPPER
   dateEditDeleteDiv.appendChild(editDeleteWrapper);
+  // EDIT COMMENT CONTAINER
+  editCommentControlsWrapper.appendChild(editCommentCancelButton);
+  editCommentControlsWrapper.appendChild(editCommentUpdateButton);
+  editCommentWrapper.appendChild(editcommentInput);
+  editCommentWrapper.appendChild(editcommentInputHidden);
+  editCommentWrapper.appendChild(editCommentControlsWrapper);
 
   li.appendChild(divCommentPhoto);
   li.appendChild(dateEditDeleteDiv);
+  li.appendChild(editCommentWrapper);
+
   return li;
 };

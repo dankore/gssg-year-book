@@ -1,5 +1,4 @@
 const axios = require("axios");
-import ReuseableHTML from "../helpers/html";
 import ReuseableHtml from "../helpers/html";
 
 export default class AddComments {
@@ -7,14 +6,13 @@ export default class AddComments {
     this.input = document.querySelector("#input-comment");
     this.addCommentButton = document.querySelector("#button-comment");
     this.commentsContainerUl = document.querySelector("#comment-container-ul");
+    this.editCommentButton = document.querySelectorAll("#edit-comment-button");
     this.deleteCommentButton = document.querySelectorAll(
       "#delete-comment-button"
     );
     this.commentsCount = document.querySelector("#comment-count");
     this.commentWordContainer = document.querySelector("#comment-word");
-    this.editCommentForm = document.querySelectorAll(
-      "#comment-edit-container-server-side"
-    );
+    this.editCommentForm = document.querySelectorAll("#edit-comment-container");
     this.document = document;
     this.events();
   }
@@ -24,48 +22,51 @@ export default class AddComments {
       this.handleAddCommentClick()
     );
 
-    Array.prototype.forEach.call(this.editCommentForm, editForm => {
-      editForm.addEventListener("click", e =>
-        this.handleEditCommentServerSide(e)
+    Array.prototype.forEach.call(this.editCommentButton, editButton => {
+      editButton.addEventListener("click", e =>
+        this.handleEditComment(e)
       );
     });
 
-    this.document.addEventListener("click", e => {
-      if (e.target && e.target.id == "delete-comment-button") {
-        this.handleDeleteComment(e);
-      }
-      if (e.target && e.target.id == "edit-comment-button") {
-        this.handleEditComment(e);
-      }
-    });
+    // this.document.addEventListener("click", e => {
+    //   if (e.target && e.target.id == "delete-comment-button") {
+    //     this.handleDeleteComment(e);
+    //   }
+    //   if (e.target && e.target.id == "edit-comment-button") {
+    //     this.handleEditComment(e);
+    //   }
+    // });
   }
 
   // METHODS
-  handleEditCommentServerSide(e) {
-    if (e.target && e.target.id == "update-comment-server-side") {
-      console.log(e.target);
-    }
+  handleEditComment(e){
+    console.log("hi");
   }
-  handleEditComment(e) {
-    const editCommentFormElem =
-      e.target.parentElement.parentElement.parentElement.parentElement;
+  // handleEditCommentServerSide(e) {
+  //   if (e.target && e.target.id == "update-comment-server-side") {
+  //     console.log(e.target);
+  //   }
+  // }
+  // handleEditComment(e) {
+  //   const editCommentFormElem =
+  //     e.target.parentElement.parentElement.parentElement.parentElement;
 
-    console.log(editCommentFormElem);
+  //   console.log(editCommentFormElem);
 
-    // const updateButton = editCommentFormElem.children[2].children[1];
+  //   // const updateButton = editCommentFormElem.children[2].children[1];
 
-    // if (updateButton && updateButton.id == "update-comment") {
-    //   updateButton.addEventListener("click", event =>
-    //     this.actuallyUpdateComment(event)
-    //   );
-    // }
+  //   // if (updateButton && updateButton.id == "update-comment") {
+  //   //   updateButton.addEventListener("click", event =>
+  //   //     this.actuallyUpdateComment(event)
+  //   //   );
+  //   // }
 
-    // if (editCommentFormElem.style.display == "none") {
-    //   editCommentFormElem.style.display = "block";
-    // } else {
-    //   editCommentFormElem.style.display = "none";
-    // }
-  }
+  //   // if (editCommentFormElem.style.display == "none") {
+  //   //   editCommentFormElem.style.display = "block";
+  //   // } else {
+  //   //   editCommentFormElem.style.display = "none";
+  //   // }
+  // }
 
   // actuallyUpdateComment(event) {
   //   const parentElement_of_editCommentForm =

@@ -51,6 +51,6 @@ if (document.querySelector("#likes-container")) {
 if (document.getElementById("click-to-comment")) {
   new ClickToComment();
 }
-if (document.getElementById("button-comment")) {
+if (document.getElementById("edit-comment-button")) {
   new AddComment();
 }
