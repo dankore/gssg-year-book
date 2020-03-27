@@ -56,7 +56,7 @@
           <a href="/profile/<%= comment.visitorEmail %>" class="font-medium"
             ><%= comment.visitorFirstName %></a
           >
-          <p><%- filterUserHTML(comment.comment) %></p>
+          <p><%= comment.comment %></p>
         </div>
       </div>
       <div class="flex justify-between items-center mt-2 text-xs">
@@ -67,7 +67,7 @@
           <% if(user){ %> <% if(comment.visitorEmail == user.email){ %>
           <!-- EDIT BUTTON -->
           <label
-            for="edit-comment-button"
+            for="edit-comment-button-server-side"
             class="flex items-center cursor-pointer"
           >
             <svg
@@ -85,7 +85,7 @@
             <input
               type="button"
               value="Edit"
-              id="edit-comment-button"
+              id="edit-comment-button-server-side"
               class="flex bg-white items-center cursor-pointer"
             />
           </label>
@@ -118,15 +118,15 @@
       </div>
       <!-- EDIT COMMENT FORM -->
       <div
-          id="edit-comment-container"
+          id="edit-comment-container-server-side"
           class="absolute w-full -ml-2 -mt-10"
           style="display: none;"
         >
         <input
           type="text"
-          name="comment"
           value="<%= comment.comment %>"
-          class="w-full  p-2 bg-gray-200 border border-blue-400 rounded"
+          data-id="<%= comment.commentId %>"
+          class="w-full p-2 bg-gray-200 border border-blue-400 rounded"
           >
         <input
           type="hidden"
@@ -141,6 +141,7 @@
             Cancel
           </button>
           <button
+            data-id="<%= comment.commentId %>"
             id="update-comment"
             class="bg-blue-600 text-white px-2 rounded"
           >

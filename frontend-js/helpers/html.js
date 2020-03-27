@@ -124,6 +124,7 @@ ReuseableHtml.prototype.li = data => {
   // UPDATE BUTTON
   const editCommentUpdateButton = document.createElement("button");
   editCommentUpdateButton.id = "update-comment";
+  editCommentUpdateButton.setAttribute('data-id', `${data.commentId}`)
   editCommentUpdateButton.classList.add(
     "bg-blue-600",
     "text-white",

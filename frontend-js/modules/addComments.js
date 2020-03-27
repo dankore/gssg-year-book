@@ -6,13 +6,15 @@ export default class AddComments {
     this.input = document.querySelector("#input-comment");
     this.addCommentButton = document.querySelector("#button-comment");
     this.commentsContainerUl = document.querySelector("#comment-container-ul");
-    // this.editCommentButton = document.querySelectorAll("#edit-comment-button");
+    this.editCommentButton = document.querySelectorAll(
+      "#edit-comment-button-server-side"
+    );
     this.deleteCommentButton = document.querySelectorAll(
       "#delete-comment-button"
     );
     this.commentsCount = document.querySelector("#comment-count");
     this.commentWordContainer = document.querySelector("#comment-word");
-    this.editCommentForm = document.querySelectorAll("#edit-comment-container");
+    this.editCommentForm = document.querySelectorAll("#edit-comment-container-server-side");
     this.document = document;
     this.events();
   }
@@ -22,9 +24,9 @@ export default class AddComments {
       this.handleAddCommentClick()
     );
 
-    // Array.prototype.forEach.call(this.editCommentButton, editButton => {
-    //   editButton.addEventListener("click", e => this.handleEditComment(e));
-    // });
+    Array.prototype.forEach.call(this.editCommentButton, editButton => {
+      editButton.addEventListener("click", e => this.handleEditComment(e));
+    });
 
     this.document.addEventListener("click", e => {
       if (e.target && e.target.id == "delete-comment-button") {
@@ -37,18 +39,16 @@ export default class AddComments {
   }
 
   // METHODS
-  // handleEditComment(e) {
-  //   if (e.target && e.target.id == "update-comment") {
-  //     console.log(e.target);
-  //   }
-  // }
+  handleEditCommentServerSide(e) {
+    console.log("server side")
+  }
 
   handleEditComment(e) {
     const editCommentFormElem =
       e.target.parentElement.parentElement.parentElement.parentElement
         .children[2];
     const updateButton = editCommentFormElem.children[2].children[1];
-    
+   
     // TOGGLE EDIT CONTAINER
     if (editCommentFormElem.style.display == "none") {
       editCommentFormElem.style.display = "block";
@@ -77,10 +77,12 @@ export default class AddComments {
       event.target.parentElement.parentElement.parentElement.children[1]
         .children[0];
 
+    console.log(event.target, editCommentForm, commentContainer, timeStampContainer);
+
     if (!editCommentForm.value) return; // DIS-ALLOW EMPTY TEXT
     axios
       .post("/edit-comment", {
-        commentId: editCommentForm.getAttribute("data-id"),
+        commentId: event.target.getAttribute("data-id"),
         comment: editCommentForm.value
       })
       .then(res => {
