@@ -1,4 +1,6 @@
 const axios = require("axios");
+import ReuseableHTML from '../helpers/html'
+import ReuseableHtml from '../helpers/html';
 
 export default class AddComments {
   constructor() {
@@ -147,53 +149,11 @@ export default class AddComments {
       .then(res => {
         this.handleCommentCountAndCommentGrammar(1);
 
-        // BUILT HTML
-        let li = document.createElement("li");
-        li.id = "li-comment";
-        li.classList.add("my-2", "p-2", "rounded");
-
-        let divCommentPhoto = document.createElement("div");
-        divCommentPhoto.classList.add("flex");
-
-        let divPhoto = document.createElement("div");
-        divPhoto.classList.add("flex", "mr-1");
-
-        let link = document.createElement("a");
-        link.setAttribute("href", `/profile/${res.data.visitorEmail}`);
-
-        let img = document.createElement("img");
-        img.setAttribute("src", `${res.data.photo}`);
-        img.classList.add("w-8", "h-8", "rounded-full");
-        img.setAttribute("alt", "profile pic");
-
-        // DIV FIRST NAME AND COMMENT AND LINK
-        let firstNameCommentDiv = document.createElement("div");
-        firstNameCommentDiv.classList.add("rounded", "px-2");
-        firstNameCommentDiv.setAttribute(
-          "style",
-          "overflow-wrap:break-word;min-width:0px;width:15rem;background-color:#F2F3F5;"
-        );
-        let link2 = document.createElement("a");
-        link2.setAttribute("href", `${res.data.photo}`);
-        link2.classList.add("font-medium");
-        link2.innerText = `${res.data.visitorFirstName}`;
-        let p = document.createElement("p");
-        p.innerText = `${res.data.comment}`;
-
-        // APPEND
-        link.appendChild(img);
-        divPhoto.appendChild(link);
-
-        firstNameCommentDiv.appendChild(link2);
-        firstNameCommentDiv.appendChild(p);
-
-        divCommentPhoto.appendChild(divPhoto);
-        divCommentPhoto.appendChild(firstNameCommentDiv);
-
-        li.appendChild(divCommentPhoto);
-
         // INSERT INTO DOM
-        this.commentsContainerUl.insertAdjacentElement("afterbegin", li);
+        this.commentsContainerUl.insertAdjacentElement(
+          "afterbegin",
+          new ReuseableHtml().li(res.data)
+        );
         this.input.value = "";
         this.input.focus();
       })
