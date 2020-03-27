@@ -46,6 +46,9 @@ export default class AddComments {
     const editCommentFormElem =
       e.target.parentElement.parentElement.parentElement.parentElement
         .children[2];
+    
+    console.log(e.target.parentElement.parentElement.parentElement.parentElement.parentElement)
+    
     const updateButton = editCommentFormElem.children[2].children[1];
 
     if (updateButton && updateButton.id == "update-comment") {
