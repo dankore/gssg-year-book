@@ -851,17 +851,17 @@ User.saveComment = data => {
           info.value.comments[info.value.comments.length - 1];
         resolve(lastCommentDoc);
         // EMAIL USERS FOR A SUCCESSFULL COMMENT
-        // new Email().sendCommentSuccessMessage(
-        //   info.value.comments,
-        //   data.visitorFirstName,
-        //   data.visitorEmail,
-        //   data.photo,
-        //   data.commentDate,
-        //   data.comment,
-        //   data.profileEmail,
-        //   info.value.firstName,
-        //   info.value.lastName
-        // );
+        new Email().sendCommentSuccessMessage(
+          info.value.comments,
+          data.visitorFirstName,
+          data.visitorEmail,
+          data.photo,
+          data.commentDate,
+          data.comment,
+          data.profileEmail,
+          info.value.firstName,
+          info.value.lastName
+        );
         //EMAIL USERS FOR A SUCCESSFULL COMMENT ENDS
       })
       .catch(_ => {
