@@ -29,6 +29,7 @@ export default class AddComments {
       );
     });
 
+    // HANDLES CLIENT SIDE EVENTS I.E <LI> TAGS INJECTED INTO THE DOM DYNAMICALLY
     this.document.addEventListener("click", e => {
       if (e.target && e.target.id == "delete-comment-button") {
         this.handleDeleteComment(e);
@@ -39,19 +40,31 @@ export default class AddComments {
       if (e.target && e.target.id == "update-comment") {
         this.handleUpdateComment(e);
       }
+      if (e.target && e.target.id == "cancel-edit-comment") {
+        this.handleCancelEditCommentConatiner(e);
+      }
     });
 
     // END EVENTS
   }
 
   // METHODS
+  handleCancelEditCommentConatiner(e) {
+    const editCommentContainer =
+      e.target.parentElement.parentElement.parentElement.children[2];
+
+    editCommentContainer.style.display = "none";
+  }
+
   handleOpenCloseEditContainer(e) {
     const editCommentContainer =
       e.target.parentElement.parentElement.parentElement.children[2];
+    const inputEditContainer = editCommentContainer.children[0];
 
     // TOGGLE EDIT CONTAINER
     if (editCommentContainer.style.display == "none") {
       editCommentContainer.style.display = "block";
+      inputEditContainer.focus();
     } else {
       editCommentContainer.style.display = "none";
     }
