@@ -8,18 +8,18 @@ export default class ShowNames {
   }
   // EVENTS
   events() {
-    this.likesContainer.addEventListener("click", (e) =>
+    this.likesContainer.addEventListener("click", e =>
       this.handleButtonClick(e)
     );
-    this.likesContainer.addEventListener("mouseover", (e) =>
+    this.likesContainer.addEventListener("mouseover", e =>
       this.handleButtonClick(e)
     );
-    this.main.addEventListener("click", ()=> this.closeLikesContainer());
+    this.main.addEventListener("click", () => this.closeLikesContainer());
   }
 
   // METHODS
   closeLikesContainer() {
-     this.namesContainerUL.style.display = "none";
+    this.namesContainerUL.style.display = "none";
   }
   handleButtonClick(e) {
     e.stopPropagation();
