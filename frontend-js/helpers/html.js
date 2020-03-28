@@ -72,6 +72,7 @@ ReuseableHtml.prototype.li = data => {
     "flex",
     "ml-3",
     "bg-white",
+    "text-red-600",
     "items-center",
     "cursor-pointer"
   );
@@ -95,7 +96,7 @@ ReuseableHtml.prototype.li = data => {
     "border-blue-400",
     "rounded"
   );
-  
+
   // CANCEL AND UPDATE BUTTONS
   // WRAPPER
   const editCommentControlsWrapper = document.createElement("div");
@@ -113,8 +114,8 @@ ReuseableHtml.prototype.li = data => {
   editCommentCancelButton.appendChild(editCommentCancelButtonText);
   // UPDATE BUTTON
   const editCommentUpdateButton = document.createElement("button");
-  editCommentUpdateButton.id = "update-comment";
-  editCommentUpdateButton.setAttribute('data-id', `${data.commentId}`)
+  editCommentUpdateButton.id = "update-comment-button";
+  editCommentUpdateButton.setAttribute("data-id", `${data.commentId}`);
   editCommentUpdateButton.classList.add(
     "bg-blue-600",
     "text-white",
@@ -137,7 +138,6 @@ ReuseableHtml.prototype.li = data => {
 
   dateEditDeleteDiv.appendChild(commentDateBox);
 
-  
   // ADD LABELS TO WRAPPER DIV
   editDeleteWrapper.appendChild(inputEdit);
   editDeleteWrapper.appendChild(inputDelete);

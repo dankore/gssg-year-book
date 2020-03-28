@@ -9,7 +9,7 @@ export default class AddComments {
     this.editCommentButton = document.querySelectorAll(
       "#edit-comment-button-server-side"
     );
-    this.updateButton = document.querySelectorAll("#update-comment");
+    this.updateButton = document.querySelectorAll("#update-comment-button");
     this.commentsCount = document.querySelector("#comment-count");
     this.commentWordContainer = document.querySelector("#comment-word");
     this.document = document;
@@ -37,7 +37,7 @@ export default class AddComments {
       if (e.target && e.target.id == "edit-comment-button") {
         this.handleOpenCloseEditContainer(e);
       }
-      if (e.target && e.target.id == "update-comment") {
+      if (e.target && e.target.id == "update-comment-button") {
         this.handleUpdateComment(e);
       }
       if (e.target && e.target.id == "cancel-edit-comment") {
