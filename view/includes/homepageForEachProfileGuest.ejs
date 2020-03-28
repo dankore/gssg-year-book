@@ -4,31 +4,31 @@
       <!-- LIKES -->
        <!-- SHOWING NAMES OF THOSE WHO LIKED THE CURRENT USER PROFILE -->
        <%if(!locals.namesOfLikesReceivedFrom){%>
-       <%locals.namesOfLikesReceivedFrom = [];%>
-       <%}%> 
-       <%let arrayOfNames = []%> 
-       <%for(let i = 0; i < locals.namesOfLikesReceivedFrom.length; i++){%> 
-        <%  if( namesOfLikesReceivedFrom[i].color == "yes"){%> 
+       <% locals.namesOfLikesReceivedFrom = []; %>
+       <% } %> 
+       <% let arrayOfNames = [] %> 
+       <%for(let i = 0; i < locals.namesOfLikesReceivedFrom.length; i++){ %> 
+        <%  if( namesOfLikesReceivedFrom[i].color == "yes" ){ %> 
           <%  let fullName = locals.namesOfLikesReceivedFrom[i].visitorName; %>
           <%  let firstName = fullName.split(" ")[0]; %>
           <% arrayOfNames.push(firstName) %>
-        <%}%> 
-       <% }%>   
+        <% } %> 
+       <% } %>   
      
-       <%let namesOfThoseWhoLikedThisProfile = "";%>
+       <% let namesOfThoseWhoLikedThisProfile = ""; %>
        <!-- CHECK FOR LENGTH -->
-       <%if(arrayOfNames.length < 1){%>
+       <% if(arrayOfNames.length < 1){ %>
          <!-- DO NOTHING -->
-       <%} else if(arrayOfNames.length == 1) {%>
-         <%namesOfThoseWhoLikedThisProfile = `Liked by ${arrayOfNames[0]}`%>
-       <%} else if(arrayOfNames.length == 2) {%>
-         <%namesOfThoseWhoLikedThisProfile  = `Liked by ${arrayOfNames.slice(0,1)} & ${arrayOfNames.slice(1).length} other`%>
-       <%} else {%>
-         <%namesOfThoseWhoLikedThisProfile = `Liked by ${arrayOfNames.slice(0,1)} & ${arrayOfNames.slice(1).length} others`%>
-       <%}%>
+       <% } else if(arrayOfNames.length == 1) { %>
+         <% namesOfThoseWhoLikedThisProfile = `Liked by ${arrayOfNames[0]}` %>
+       <% } else if(arrayOfNames.length == 2) { %>
+         <%namesOfThoseWhoLikedThisProfile  = `Liked by ${arrayOfNames.slice(0, 1)} & ${arrayOfNames.slice(1).length} other`%>
+       <% } else { %>
+         <% namesOfThoseWhoLikedThisProfile = `Liked by ${arrayOfNames.slice(0, 1)} & ${arrayOfNames.slice(1).length} others`%>
+       <% } %>
         <!-- CHECK FOR LENGTH ENDS-->
         <!-- SHOWING NAMES OF THOSE WHO LIKED THE CURRENT USER PROFILE -->
-       <% if(user){%> 
+       <% if(user) {%> 
         <!-- GET CURRENT @COLOR VALUE FOR THIS PROFILE. 
         IF COLOR=BLUE, VISITOR ALREADY LIKED THIS PROFILE. -->
         <%let color = "";%> 
@@ -41,7 +41,7 @@
         <%}%> 
         <%}%> 
        
-       <div id="like-button-svg-container" class="relative flex items-center">
+       <div id="like-button-svg-container" class="relative flex items-center ml-2">
           <svg id="like-button-svg" 
           class="<%= color %>-fill mr-1" 
           xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="white" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
@@ -56,17 +56,22 @@
       <%}%> 
       <!-- LIKES ENDS-->
       <!-- COMMENTS -->
-      <% if(profile.comments.length){ %>
+      <% if(profile.comments){ %>
         <!-- CHECK IF COMMENT IS GREATER THAN 1 -->
         <% if(profile.comments.length > 1){ %>
           <div class="flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M2 15V5c0-1.1.9-2 2-2h16a2 2 0 0 1 2 2v15a1 1 0 0 1-1.7.7L16.58 17H4a2 2 0 0 1-2-2zM20 5H4v10h13a1 1 0 0 1 .7.3l2.3 2.29V5z"/></svg>
-          <div class="ml-1 flex"><span class="inline-block mr-1"><%= profile.comments.length %></span> comments</div>
+          <div class="ml-1 flex"><span id="comment-count" class="inline-block mr-1"><%= profile.comments.length %></span> <span id="comment-word">comments</span></div>
         </div>
         <% } else { %>
           <div class="flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M2 15V5c0-1.1.9-2 2-2h16a2 2 0 0 1 2 2v15a1 1 0 0 1-1.7.7L16.58 17H4a2 2 0 0 1-2-2zM20 5H4v10h13a1 1 0 0 1 .7.3l2.3 2.29V5z"/></svg>
-          <div class="ml-1 flex"><span class="inline-block mr-1"><%= profile.comments.length %></span> comment</div>
+           <% if(profile.comments.length == 1){ %>
+              <div class="ml-1 flex"><span id="comment-count" class="inline-block mr-1"><%= profile.comments.length %></span> <span id="comment-word">comment</span></div>
+           <% } else { %>
+            <!-- SHOW NOTHING BUT LEAVE HTML-->
+             <div class="ml-1 flex"><span id="comment-count" class="inline-block mr-1"></span> <span id="comment-word"></span></div>
+           <% } %> 
         </div>
         <!-- CHECK IF COMMENT IS GREATER THAN 1 ENDS-->
         <% } %> 

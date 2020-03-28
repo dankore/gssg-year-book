@@ -812,17 +812,20 @@ User.sortProfiles = q => {
     }
   });
 };
+
 User.validateComment = data => {
   if (data === "") {
     reject("Body of comment cannot be empty.");
     return;
   }
 };
-// ADD A COMMENT
-User.addComment = data => {
+
+// ADD COMMENTS
+User.saveComment = data => {
   return new Promise(async (resolve, reject) => {
-    User.validateComment(data.comment);
-    // FIND OWNER OF PROFILEEMAIL AND ADD COMMENT
+    // CHECK FOR EMPTY AN COMMENT
+    if (!data.comment) return;
+    // FIND OWNER OF PROFILEE AND ADD COMMENT
     await usersCollection
       .findOneAndUpdate(
         { email: data.profileEmail },
@@ -838,23 +841,27 @@ User.addComment = data => {
             }
           }
         },
-        { returnOriginal: false }
+        {
+          projection: { comments: 1 },
+          returnOriginal: false
+        }
       )
       .then(info => {
-        resolve("Comment added.");
-
+        const lastCommentDoc =
+          info.value.comments[info.value.comments.length - 1];
+        resolve(lastCommentDoc);
         // EMAIL USERS FOR A SUCCESSFULL COMMENT
-        new Email().sendCommentSuccessMessage(
-          info.value.comments,
-          data.visitorFirstName,
-          data.visitorEmail,
-          data.photo,
-          data.commentDate,
-          data.comment,
-          data.profileEmail,
-          info.value.firstName,
-          info.value.lastName
-        );
+        // new Email().sendCommentSuccessMessage(
+        //   info.value.comments,
+        //   data.visitorFirstName,
+        //   data.visitorEmail,
+        //   data.photo,
+        //   data.commentDate,
+        //   data.comment,
+        //   data.profileEmail,
+        //   info.value.firstName,
+        //   info.value.lastName
+        // );
         //EMAIL USERS FOR A SUCCESSFULL COMMENT ENDS
       })
       .catch(_ => {
@@ -862,6 +869,7 @@ User.addComment = data => {
       });
   });
 };
+
 // UPDATE FIRST NAME IN COMMENTS FOR A USER WHO UPDATES THEIR PROFILE
 User.updateCommentFirtName = (email, firstName) => {
   return new Promise(async (resolve, reject) => {
@@ -890,10 +898,10 @@ User.updateCommentFirtName = (email, firstName) => {
 // UPDATE A COMMENT
 User.updateComment = data => {
   return new Promise(async (resolve, reject) => {
-    try {
-      User.validateComment(data.comment);
+    User.validateComment(data.comment);
 
-      await usersCollection.updateOne(
+    usersCollection
+      .findOneAndUpdate(
         { email: data.profileEmail },
         {
           $set: {
@@ -902,15 +910,23 @@ User.updateComment = data => {
           }
         },
         {
+          projection: { comments: 1 },
+          returnOriginal: false,
           arrayFilters: [
             { "elem.commentId": { $eq: new ObjectId(data.commentId) } }
           ]
         }
-      );
-      resolve("Comment updated.");
-    } catch {
-      reject("Comment was not updated.");
-    }
+      )
+      .then(info => {
+        // TODO - USE FOR LOOP
+        const lastCommentDoc = info.value.comments.filter(
+          doc => doc.commentId == data.commentId
+        )[0];
+        resolve(lastCommentDoc);
+      })
+      .catch(() => {
+        reject("Comment was not updated.");
+      });
   });
 };
 // DELETE A COMMENT

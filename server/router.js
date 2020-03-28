@@ -37,6 +37,7 @@ router.post("/reset-password/:token", controller.resetPasswordToken);
 
 // SEARCH
 router.post("/", controller.search);
+router.get("/sort", controller.sortGet);
 router.post("/sort", controller.sort)
 
 // PRIVACY
@@ -58,7 +59,7 @@ router.get("/twitter-login", passport.authenticate('twitter'));
 router.get('/twitter-login/callback', passport.authenticate('twitter', {failureRedirect: '/register' }), controller.twitterLogin);
 
 // COMMENTS
-router.post("/profile", controller.postComments);
+router.post("/get-comments", controller.addComment);
 router.post("/delete-comment", controller.deleteComment);
 router.post("/edit-comment", controller.editComment);
 
@@ -68,5 +69,6 @@ router.get("*", controller.notFound);
 // LIKES
 router.post("/likes", controller.likes);
 router.post("/get-visited-profile-doc", controller.getProfile);
+
 // EXPORT CODE
 module.exports = router;

@@ -84,13 +84,13 @@ exports.logout = function(req, res) {
 
 exports.getProfile = async (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
-   await User.findByEmail(profileEmail)
-     .then(userDoc => {
-       res.json(userDoc.likes_received_from);
-     })
-     .catch(() => {
-       res.render("404");
-     });
+  await User.findByEmail(profileEmail)
+    .then(userDoc => {
+      res.json(userDoc.likes_received_from);
+    })
+    .catch(() => {
+      res.render("404");
+    });
 };
 
 exports.ifUserExists = (req, res, next) => {
@@ -415,6 +415,11 @@ exports.twitterLogin = async (req, res) => {
   }
 };
 
+// REDIRECT TO HOME IF USERS TRY TO LOAD '/SORT' PAGE SINCE IT DOEN NOT EXISTS
+exports.sortGet = (req, res) => {
+  res.redirect("/");
+};
+
 exports.sort = (req, res) => {
   User.sortProfiles(req.body.q)
     .then(profiles => {
@@ -430,9 +435,8 @@ exports.sort = (req, res) => {
       });
     });
 };
-
 // COMMENTS
-exports.postComments = async (req, res) => {
+exports.addComment = async (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
   const userDoc = await User.findByEmail(req.session.user.email);
   const commentDate = helpers.getMonthDayYear() + ", " + helpers.getHMS();
@@ -447,9 +451,9 @@ exports.postComments = async (req, res) => {
     commentDate: commentDate
   };
 
-  User.addComment(data)
-    .then(_ => {
-      res.redirect(`profile/${profileEmail}`);
+  User.saveComment(data)
+    .then(response => {
+      res.json(response);
     })
     .catch(errorMessage => {
       req.flash("errors", errorMessage);
@@ -470,11 +474,8 @@ exports.editComment = (req, res) => {
   };
 
   User.updateComment(data)
-    .then(successMessage => {
-      req.flash("success", successMessage);
-      req.session.save(async _ => {
-        await res.redirect(`profile/${profileEmail}`);
-      });
+    .then(response => {
+      res.json(response);
     })
     .catch(errorMessage => {
       req.flash("errors", errorMessage);
@@ -490,23 +491,17 @@ exports.deleteComment = (req, res) => {
 
   User.deleteComment(req.body.commentId, profileEmail)
     .then(successMessage => {
-      req.flash("success", successMessage);
-      req.session.save(async _ => {
-        await res.redirect(`profile/${profileEmail}`);
-      });
+      res.json(successMessage);
     })
     .catch(errorMessage => {
-      req.flash("errors", errorMessage);
-      req.session.save(async _ => {
-        await res.redirect(`profile/${profileEmail}`);
-      });
+      res.json(errorMessage);
     });
 };
 
 // LIKES
 exports.likes = async (req, res) => {
   const profileEmail = helpers.getEmailFromHeadersReferrer(req.headers.referer); // GET EMAIL FROM URL
-  const userDoc = await User.findByEmail(req.session.user.email)
+  const userDoc = await User.findByEmail(req.session.user.email);
   // TODO: ADD _ID TO EACH LIKE
   const data = {
     like: req.body.like,
@@ -515,17 +510,12 @@ exports.likes = async (req, res) => {
     visitorName: `${userDoc.firstName} ${userDoc.lastName}`,
     profileEmail: profileEmail
   };
+
   User.storeLikes(data)
     .then(response => {
       res.json(response);
     })
-    .catch(_ => {
-      req.flash(
-        "errors",
-        "Sorry, we are having issues with the Like button. Please try again."
-      );
-      req.session.save(
-        async _ => await res.redirect(`profile/${profileEmail}`)
-      );
+    .catch(errorMessage => {
+      res.json(errorMessage);
     });
 };

@@ -2,7 +2,7 @@ export default class EditCancelUpdateComments {
   constructor() {
     this.editBtn = document.querySelectorAll("#edit-button");
     this.cancelEditBtn = document.querySelectorAll("#cancel-edit-comment");
-    this.updateBtn = document.querySelectorAll("#update-comment");
+    this.updateBtn = document.querySelectorAll("#update-comment-button");
     this.events();
   }
 
@@ -27,12 +27,14 @@ export default class EditCancelUpdateComments {
   }
 
   handleCancelBtnClick(e) {
-    const editCommentFormContainer = e.currentTarget.parentElement.parentElement;
+    const editCommentFormContainer =
+      e.currentTarget.parentElement.parentElement;
     editCommentFormContainer.style.display = "none";
   }
 
   handleUpdateBtnClick(e) {
-    const editCommentFormContainer = e.currentTarget.parentElement.parentElement.children[0];
+    const editCommentFormContainer =
+      e.currentTarget.parentElement.parentElement.children[0];
     editCommentFormContainer.submit(); // SUBMIT FORM
   }
 
