@@ -9,6 +9,7 @@ export default class AddComments {
     this.editCommentButton = document.querySelectorAll(
       "#edit-comment-button-server-side"
     );
+    this.updateButton = document.querySelectorAll("#update-comment");
     this.commentsCount = document.querySelector("#comment-count");
     this.commentWordContainer = document.querySelector("#comment-word");
     this.document = document;
@@ -19,37 +20,109 @@ export default class AddComments {
     this.addCommentButton.addEventListener("click", () =>
       this.handleAddCommentClick()
     );
-
-    Array.prototype.forEach.call(this.editCommentButton, editButton => {
-      editButton.addEventListener("click", e => this.handleEditCommentServerSide(e));
+    Array.prototype.forEach.call(this.updateButton, updateBtn => {
+      updateBtn.addEventListener("click", e => this.handleUpdate(e));
+    });
+    Array.prototype.forEach.call(this.editCommentButton, editBtn => {
+      editBtn.addEventListener("click", e => this.handleUpdateToggle(e));
     });
 
+    
     this.document.addEventListener("click", e => {
       if (e.target && e.target.id == "delete-comment-button") {
         this.handleDeleteComment(e);
       }
-      if (e.target && e.target.id == "edit-comment-button") {
-        this.handleEditComment(e);
-      }
     });
+
+    // END EVENTS
   }
 
   // METHODS
-  handleEditCommentServerSide(e) {
-    const editCommentContainer = e.target.parentElement.parentElement.parentElement.parentElement.children[2];
-    
+  handleUpdateToggle(e){
+    console.log("toggle!")
+    const editCommentContainer = e.target.parentElement.parentElement.parentElement.children[2];
+    const updateButtonServerSide = editCommentContainer.children[1].children[1];
+    const inputEditContainer = editCommentContainer.children[0];
+    const timesStampContainerServerSide = e.target.parentElement.parentElement.parentElement.children[1].children[0];
+    const commentContainerServerSide = e.target.parentElement.parentElement.parentElement.children[0].children[1].children[1];
+
     // TOGGLE EDIT CONTAINER
     if (editCommentContainer.style.display == "none") {
       editCommentContainer.style.display = "block";
     } else {
       editCommentContainer.style.display = "none";
     }
-    console.log('server')
-    console.log(e.target);
-    console.log(editCommentContainer);
 
   }
 
+
+   handleUpdate(e){
+    console.log("update!");
+    const editCommentContainer = e.target.parentElement.parentElement.parentElement.children[2];
+    const updateButtonServerSide = editCommentContainer.children[1].children[1];
+    const inputEditContainer = editCommentContainer.children[0];
+    const timesStampContainerServerSide = e.target.parentElement.parentElement.parentElement.children[1].children[0];
+    const commentContainerServerSide = e.target.parentElement.parentElement.parentElement.children[0].children[1].children[1];
+
+
+    updateButtonServerSide.addEventListener('click', ()=> {
+        if (!inputEditContainer.value) return; // DIS-ALLOW EMPTY TEXT
+      axios
+        .post("/edit-comment", {
+          commentId: inputEditContainer.getAttribute("data-id"),
+          comment: inputEditContainer.value
+        })
+        .then(res => {
+          console.log(res.data);
+          // TODO REMOVE LAST COMMENT AFTER UPDATE
+          commentContainerServerSide.innerText = res.data.comment;
+          timesStampContainerServerSide.innerText = res.data.commentDate;
+        })
+        .catch(_ => {
+          console.log("Error updating comment.");
+        });
+
+      editCommentContainer.style.display = 'none';
+    })
+  }
+//   handleEditCommentServerSide(e) {
+//      console.log('server')
+//     const editCommentContainer = e.target.parentElement.parentElement.parentElement.children[2];
+//     const updateButtonServerSide = editCommentContainer.children[1].children[1];
+//     const inputEditContainer = editCommentContainer.children[0];
+//     const timesStampContainerServerSide = e.target.parentElement.parentElement.parentElement.children[1].children[0];
+//     const commentContainerServerSide = e.target.parentElement.parentElement.parentElement.children[0].children[1].children[1];
+
+//     // TOGGLE EDIT CONTAINER
+//     if (editCommentContainer.style.display == "none") {
+//       editCommentContainer.style.display = "block";
+//     } else {
+//       editCommentContainer.style.display = "none";
+//     }
+  
+//     // UPDATE 
+//     updateButtonServerSide.addEventListener('click', ()=> {
+//         if (!inputEditContainer.value) return; // DIS-ALLOW EMPTY TEXT
+//       axios
+//         .post("/edit-comment", {
+//           commentId: inputEditContainer.getAttribute("data-id"),
+//           comment: inputEditContainer.value
+//         })
+//         .then(res => {
+//           console.log(res.data);
+//           // TODO REMOVE LAST COMMENT AFTER UPDATE
+//           commentContainerServerSide.innerText = res.data.comment;
+//           timesStampContainerServerSide.innerText = res.data.commentDate;
+//         })
+//         .catch(_ => {
+//           console.log("Error updating comment.");
+//         });
+
+//       editCommentContainer.style.display = 'none';
+//     }, {once: true})
+// }
+
+  
   handleEditComment(e) {
     const editCommentFormElem =
       e.target.parentElement.parentElement.parentElement.parentElement
@@ -108,8 +181,6 @@ export default class AddComments {
   // }
 
   handleDeleteComment(e) {
-    console.log(e.target.parentElement.parentElement.parentElement);
-    console.log(e.target.getAttribute("data-id"))
     if (confirm("Are you sure?")) {
       axios
         .post("/delete-comment", {

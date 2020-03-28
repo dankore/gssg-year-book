@@ -472,7 +472,7 @@ exports.editComment = (req, res) => {
     comment: req.body.comment,
     profileEmail: profileEmail
   };
-
+console.log(data);
   User.updateComment(data)
     .then(response => {
       res.json(response);
