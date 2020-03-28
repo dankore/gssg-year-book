@@ -472,7 +472,7 @@ exports.editComment = (req, res) => {
     comment: req.body.comment,
     profileEmail: profileEmail
   };
-console.log(data);
+
   User.updateComment(data)
     .then(response => {
       res.json(response);
@@ -491,16 +491,10 @@ exports.deleteComment = (req, res) => {
 
   User.deleteComment(req.body.commentId, profileEmail)
     .then(successMessage => {
-      req.flash("success", successMessage);
-      req.session.save(async _ => {
-        await res.redirect(`profile/${profileEmail}`);
-      });
+      res.json(successMessage);
     })
     .catch(errorMessage => {
-      req.flash("errors", errorMessage);
-      req.session.save(async _ => {
-        await res.redirect(`profile/${profileEmail}`);
-      });
+      res.json(errorMessage);
     });
 };
 
@@ -516,17 +510,12 @@ exports.likes = async (req, res) => {
     visitorName: `${userDoc.firstName} ${userDoc.lastName}`,
     profileEmail: profileEmail
   };
+
   User.storeLikes(data)
     .then(response => {
       res.json(response);
     })
-    .catch(_ => {
-      req.flash(
-        "errors",
-        "Sorry, we are having issues with the Like button. Please try again."
-      );
-      req.session.save(
-        async _ => await res.redirect(`profile/${profileEmail}`)
-      );
+    .catch(errorMessage => {
+      res.json(errorMessage);
     });
 };
