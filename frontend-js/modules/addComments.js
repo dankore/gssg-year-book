@@ -54,7 +54,6 @@ export default class AddComments {
     console.log("update!");
     const editCommentContainer =
       e.target.parentElement.parentElement.parentElement.children[2];
-    const updateButtonServerSide = editCommentContainer.children[1].children[1];
     const inputEditContainer = editCommentContainer.children[0];
     const timesStampContainerServerSide =
       e.target.parentElement.parentElement.parentElement.children[1]
@@ -63,22 +62,22 @@ export default class AddComments {
       e.target.parentElement.parentElement.parentElement.children[0].children[1]
         .children[1];
 
-      if (!inputEditContainer.value) return; // DIS-ALLOW EMPTY TEXT
-      axios
-        .post("/edit-comment", {
-          commentId: inputEditContainer.getAttribute("data-id"),
-          comment: inputEditContainer.value
-        })
-        .then(res => {
-          // TODO REMOVE LAST COMMENT AFTER UPDATE
-          commentContainerServerSide.innerText = res.data.comment;
-          timesStampContainerServerSide.innerText = res.data.commentDate;
-        })
-        .catch(_ => {
-          console.log("Error updating comment.");
-        });
+    if (!inputEditContainer.value) return; // DIS-ALLOW EMPTY TEXT
+    axios
+      .post("/edit-comment", {
+        commentId: inputEditContainer.getAttribute("data-id"),
+        comment: inputEditContainer.value
+      })
+      .then(res => {
+        // TODO REMOVE LAST COMMENT AFTER UPDATE
+        commentContainerServerSide.innerText = res.data.comment;
+        timesStampContainerServerSide.innerText = res.data.commentDate;
+      })
+      .catch(_ => {
+        console.log("Error updating comment.");
+      });
 
-      editCommentContainer.style.display = "none";
+    editCommentContainer.style.display = "none";
   }
   //   handleEditCommentServerSide(e) {
   //      console.log('server')
