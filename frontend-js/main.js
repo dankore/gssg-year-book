@@ -36,9 +36,6 @@ if (document.querySelector("#registration-form")) {
 if (document.querySelector("#filter-icon-container")) {
   new Filter();
 }
-// if (document.querySelectorAll("#edit-button")) {
-//   new EditCancelUpdateComments();
-// }
 if (document.querySelector("#show-all-comments-toggle")) {
   new ShowAllComments();
 }

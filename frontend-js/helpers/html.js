@@ -56,10 +56,6 @@ ReuseableHtml.prototype.li = data => {
   editDeleteWrapper.classList.add("flex");
 
   // EDIT BUTTONedit-comment-button
-  const editLabel = document.createElement("label");
-  editLabel.setAttribute("for", "edit-comment-button");
-  editLabel.classList.add("flex", "items-center", "cursor-pointer");
-
   const inputEdit = document.createElement("input");
   inputEdit.setAttribute("type", "button");
   inputEdit.setAttribute("value", "Edit");
@@ -67,10 +63,6 @@ ReuseableHtml.prototype.li = data => {
   inputEdit.classList.add("flex", "bg-white", "items-center", "cursor-pointer");
 
   // DELETE BUTTON
-  const deleteLabel = document.createElement("label");
-  deleteLabel.setAttribute("for", "delete-comment-button");
-  deleteLabel.classList.add("flex", "items-center", "ml-2", "cursor-pointer");
-
   const inputDelete = document.createElement("input");
   inputDelete.setAttribute("type", "button");
   inputDelete.setAttribute("value", "Delete");
@@ -78,6 +70,7 @@ ReuseableHtml.prototype.li = data => {
   inputDelete.id = "delete-comment-button";
   inputDelete.classList.add(
     "flex",
+    "ml-3",
     "bg-white",
     "items-center",
     "cursor-pointer"
@@ -102,10 +95,7 @@ ReuseableHtml.prototype.li = data => {
     "border-blue-400",
     "rounded"
   );
-  // INPUT HIDDEN
-  const editcommentInputHidden = document.createElement("input");
-  editcommentInputHidden.setAttribute("type", "hidden");
-  editcommentInputHidden.setAttribute("value", `${data.commentId}`);
+  
   // CANCEL AND UPDATE BUTTONS
   // WRAPPER
   const editCommentControlsWrapper = document.createElement("div");
@@ -146,44 +136,17 @@ ReuseableHtml.prototype.li = data => {
   divCommentPhoto.appendChild(firstNameCommentDiv);
 
   dateEditDeleteDiv.appendChild(commentDateBox);
-  editLabel.appendChild(inputEdit);
-  editLabel.innerHTML =
-    `<svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        width="15"
-        height="15"
-    >
-        <path
-        fill="green"
-        class="heroicon-ui"
-        d="M6.3 12.3l10-10a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-10 10a1 1 0 0 1-.7.3H7a1 1 0 0 1-1-1v-4a1 1 0 0 1 .3-.7zM8 16h2.59l9-9L17 4.41l-9 9V16zm10-2a1 1 0 0 1 2 0v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h6a1 1 0 0 1 0 2H4v14h14v-6z"
-        />
-    </svg>` + editLabel.innerHTML;
-  deleteLabel.appendChild(inputDelete);
-  deleteLabel.innerHTML =
-    `<svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        width="15"
-        height="15"
-        >
-        <path
-            fill="red"
-            class="heroicon-ui"
-            d="M8 6V4c0-1.1.9-2 2-2h4a2 2 0 0 1 2 2v2h5a1 1 0 0 1 0 2h-1v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8H3a1 1 0 1 1 0-2h5zM6 8v12h12V8H6zm8-2V4h-4v2h4zm-4 4a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0v-6a1 1 0 0 1 1-1zm4 0a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0v-6a1 1 0 0 1 1-1z"
-        />
-    </svg>` + deleteLabel.innerHTML;
+
+  
   // ADD LABELS TO WRAPPER DIV
-  editDeleteWrapper.appendChild(editLabel);
-  editDeleteWrapper.appendChild(deleteLabel);
+  editDeleteWrapper.appendChild(inputEdit);
+  editDeleteWrapper.appendChild(inputDelete);
   // ADD ABOVE WRAPPER TO PARENT WRAPPER
   dateEditDeleteDiv.appendChild(editDeleteWrapper);
   // EDIT COMMENT CONTAINER
   editCommentControlsWrapper.appendChild(editCommentCancelButton);
   editCommentControlsWrapper.appendChild(editCommentUpdateButton);
   editCommentWrapper.appendChild(editcommentInput);
-  editCommentWrapper.appendChild(editcommentInputHidden);
   editCommentWrapper.appendChild(editCommentControlsWrapper);
 
   li.appendChild(divCommentPhoto);
