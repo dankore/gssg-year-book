@@ -918,9 +918,8 @@ User.updateComment = data => {
         }
       )
       .then(info => {
-         const lastCommentDoc =
-           info.value.comments[info.value.comments.length - 1];
-         resolve(lastCommentDoc);
+        const lastCommentDoc = info.value.comments.filter(doc => doc.commentId == data.commentId)[0];
+        resolve(lastCommentDoc);
       })
       .catch(() => {
         reject("Comment was not updated.");
