@@ -147,6 +147,10 @@ export default class AddComments {
         this.handleCommentCountAndCommentGrammar(1);
 
         // INSERT INTO DOM
+        // IF NO PROFILE IMAGE, SET DEFAULT TO BLANK.PNG
+        !res.data.photo ? 
+           res.data.photo = "https://gss-gwarinpa.s3.us-east-2.amazonaws.com/blank.png" : res.data.photo;
+        
         this.commentsContainerUl.insertAdjacentElement(
           "afterbegin",
           new ReuseableHtml().li(res.data)
