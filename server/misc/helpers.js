@@ -1,3 +1,12 @@
+const singlePropArrayFilter = (arr, valueToFilter) => {
+  let commentId;
+  for(let i = 0; i < arr.length; i++){
+    if(arr[i].commentId == valueToFilter){
+      return arr[i];
+    }
+  }
+}
+
 // SORT PROFILES
 const sortProfiles = array => {
  return array.sort((a, b) => {
@@ -113,3 +122,4 @@ exports.getEmailFromHeadersReferrer = getEmailFromHeadersReferrer;
 exports.getHMS = getHMS;
 exports.getMonthDayYear = getMonthDayYear;
 exports.sortProfiles = sortProfiles;
+exports.singlePropArrayFilter = singlePropArrayFilter;

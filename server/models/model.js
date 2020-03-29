@@ -918,11 +918,10 @@ User.updateComment = data => {
         }
       )
       .then(info => {
-        // TODO - USE FOR LOOP
-        const lastCommentDoc = info.value.comments.filter(
-          doc => doc.commentId == data.commentId
-        )[0];
-        resolve(lastCommentDoc);
+        // FILTER ONLY THE COMMENT THAT WAS UPDATED
+        const commentUpdatedObject = helpers.singlePropArrayFilter(info.value.comments, data.commentId);
+        
+        resolve(commentUpdatedObject);
       })
       .catch(() => {
         reject("Comment was not updated.");
