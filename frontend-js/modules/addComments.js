@@ -12,7 +12,7 @@ export default class AddComments {
     this.updateButton = document.querySelectorAll("#update-comment-button");
     this.commentsCount = document.querySelector("#comment-count");
     this.commentWordContainer = document.querySelector("#comment-word");
-    this.document = document;
+    this.commentsSection = document.querySelector("#comments-section")
     this.events();
   }
   // EVENTS
@@ -27,20 +27,12 @@ export default class AddComments {
       );
     });
 
-    // HANDLES CLIENT SIDE EVENTS I.E <LI> TAGS INJECTED INTO THE DOM DYNAMICALLY
-    this.document.addEventListener("click", e => {
-      if (e.target && e.target.id == "delete-comment-button") {
-        this.handleDeleteComment(e);
-      }
-      if (e.target && e.target.id == "edit-comment-button") {
-        this.handleOpenCloseEditContainer(e);
-      }
-      if (e.target && e.target.id == "update-comment-button") {
-        this.handleUpdateComment(e);
-      }
-      if (e.target && e.target.id == "cancel-edit-comment") {
-        this.handleCancelEditCommentConatiner(e);
-      }
+    // HANDLES CLIENT/SERVER SIDES EVENTS I.E <LI> TAGS INJECTED INTO THE DOM DYNAMICALLY
+    this.commentsSection.addEventListener("click", e => {
+      e.target && "delete-comment-button" == e.target.id && this.handleDeleteComment(e);
+      e.target && "edit-comment-button" == e.target.id && this.handleOpenCloseEditContainer(e);
+      e.target && "update-comment-button" == e.target.id && this.handleUpdateComment(e);
+      e.target && "cancel-edit-comment" == e.target.id && this.handleCancelEditCommentConatiner(e);
     });
 
     // END EVENTS
