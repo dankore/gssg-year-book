@@ -19,7 +19,7 @@ export default class ShowNames {
 
   // METHODS
   closeLikesContainer() {
-    this.namesContainerUL.style.display = "none";
+    if(this.namesContainerUL) this.namesContainerUL.style.display = "none";
   }
   handleButtonClick(e) {
     e.stopPropagation();
