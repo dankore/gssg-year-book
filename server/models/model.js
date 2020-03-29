@@ -919,6 +919,9 @@ User.updateComment = data => {
       )
       .then(info => {
         // TODO - USE FOR LOOP
+        console.log("_____");
+        console.log(info.value.comments);
+         console.log("_____");
         const lastCommentDoc = info.value.comments.filter(
           doc => doc.commentId == data.commentId
         )[0];

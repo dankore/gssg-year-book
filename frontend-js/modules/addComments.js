@@ -20,9 +20,7 @@ export default class AddComments {
     this.addCommentButton.addEventListener("click", () =>
       this.handleAddCommentClick()
     );
-    Array.prototype.forEach.call(this.updateButton, updateBtn => {
-      updateBtn.addEventListener("click", e => this.handleUpdateComment(e));
-    });
+
     Array.prototype.forEach.call(this.editCommentButton, editBtn => {
       editBtn.addEventListener("click", e =>
         this.handleOpenCloseEditContainer(e)
