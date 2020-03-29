@@ -1,7 +1,7 @@
 export default class ClickToComment {
   constructor() {
     this.clickToCommentBtn = document.getElementById("click-to-comment");
-    this.textareaComment = document.getElementById("textarea-comments");
+    this.textareaComment = document.getElementById("input-comment");
     this.events();
   }
   // EVENTS
