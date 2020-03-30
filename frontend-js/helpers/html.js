@@ -55,7 +55,7 @@ ReuseableHtml.prototype.li = data => {
   const editDeleteWrapper = document.createElement("div");
   editDeleteWrapper.classList.add("flex");
 
-  // EDIT BUTTONedit-comment-button
+  // EDIT BUTTON
   const inputEdit = document.createElement("input");
   inputEdit.setAttribute("type", "button");
   inputEdit.setAttribute("value", "Edit");
@@ -81,7 +81,7 @@ ReuseableHtml.prototype.li = data => {
   // EDIT COMMENT FORM
   const editCommentWrapper = document.createElement("div");
   editCommentWrapper.id = "edit-comment-container";
-  editCommentWrapper.classList.add("absolute", "w-full", "-ml-2", "-mt-10");
+  editCommentWrapper.classList.add("modal");
   editCommentWrapper.style.display = "none";
   // INPUT
   const editcommentInput = document.createElement("input");
