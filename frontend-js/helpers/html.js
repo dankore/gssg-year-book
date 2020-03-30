@@ -103,7 +103,7 @@ ReuseableHtml.prototype.li = data => {
   editCommentControlsWrapper.classList.add("flex", "justify-between");
   // CANCEL BUTTON
   const editCommentCancelButton = document.createElement("button");
-  editCommentCancelButton.id = "cancel-edit-comment";
+  editCommentCancelButton.id = "cancel-comment-button";
   editCommentCancelButton.classList.add(
     "bg-green-600",
     "text-white",
