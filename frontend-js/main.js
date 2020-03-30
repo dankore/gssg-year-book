@@ -26,4 +26,4 @@ document.querySelector("#show-all-comments-toggle") && new ShowAllComments();
 document.querySelector("#likes-button") && new Likes();
 document.querySelector("#likes-container") && new ShowNames();
 document.getElementById("click-to-comment") && new ClickToComment();
-document.getElementById("button-comment") && new AddComment();
+document.getElementById("add-comment-button") && new AddComment();

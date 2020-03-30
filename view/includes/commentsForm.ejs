@@ -1,5 +1,9 @@
-<section id="comments-section" class="mx-auto mt-2 rounded" style="width: 18rem;">
- <!-- ADD COMMENTS FORM -->
+<section
+  id="comments-section"
+  class="mx-auto mt-2 rounded"
+  style="width: 18rem;"
+>
+  <!-- ADD COMMENTS FORM -->
   <% if(user){ %>
   <div class="bg-white rounded">
     <section class="flex p-2">
@@ -30,7 +34,7 @@
           style="background-color: #F2F3F5; white-space: pre-wrap;"
         />
         <button
-          id="button-comment"
+          id="add-comment-button"
           class="rounded bg-blue-600 hover:bg-blue-800 text-white w-full"
         >
           Submit
@@ -87,7 +91,7 @@
           <input
             type="button"
             value="Edit"
-            id="edit-comment-button-server-side"
+            id="edit-comment-button"
             class="flex bg-white items-center cursor-pointer"
           />
           <!-- EDIT BUTTON ENDS-->
@@ -104,11 +108,7 @@
         </div>
       </div>
       <!-- EDIT COMMENT FORM -->
-      <div
-        id="edit-comment-container-server-side"
-        class="modal"
-        style="display: none;"
-      >
+      <div class="modal" style="display: none;">
         <input
           type="text"
           value="<%= comment.comment %>"
@@ -117,7 +117,7 @@
         />
         <div class="flex justify-between">
           <button
-            id="cancel-edit-comment"
+            id="cancel-comment-button"
             class="bg-green-600 text-white px-2 rounded"
           >
             Cancel
@@ -131,10 +131,9 @@
           </button>
         </div>
       </div>
-      
+
       <!-- EDIT COMMENT FORM ENDS -->
     </li>
     <% }) %> <%}%>
-    
   </ul>
 </section>

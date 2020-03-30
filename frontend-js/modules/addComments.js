@@ -4,12 +4,7 @@ import ReuseableHtml from "../helpers/html";
 export default class AddComments {
   constructor() {
     this.input = document.querySelector("#input-comment");
-    this.addCommentButton = document.querySelector("#button-comment");
     this.commentsContainerUl = document.querySelector("#comment-container-ul");
-    this.editCommentButton = document.querySelectorAll(
-      "#edit-comment-button-server-side"
-    );
-    this.updateButton = document.querySelectorAll("#update-comment-button");
     this.commentsCount = document.querySelector("#comment-count");
     this.commentWordContainer = document.querySelector("#comment-word");
     this.commentsSection = document.querySelector("#comments-section");
@@ -18,22 +13,13 @@ export default class AddComments {
   }
   // EVENTS
   events() {
-    this.addCommentButton.addEventListener("click", () =>
-      this.handleAddCommentClick()
-    );
-
-    Array.prototype.forEach.call(this.editCommentButton, editBtn => {
-      editBtn.addEventListener("click", e =>
-        this.handleOpenCloseEditContainer(e)
-      );
-    });
-
     // HANDLES CLIENT/SERVER SIDES EVENTS I.E <LI> TAGS INJECTED INTO THE DOM DYNAMICALLY
     this.commentsSection.addEventListener("click", e => {
+      e.target && "add-comment-button" == e.target.id && this.handleAddCommentClick();
       e.target && "delete-comment-button" == e.target.id && this.handleDeleteComment(e);
       e.target && "edit-comment-button" == e.target.id && this.handleOpenCloseEditContainer(e);
       e.target && "update-comment-button" == e.target.id && this.handleUpdateComment(e);
-      e.target && "cancel-edit-comment" == e.target.id && this.handleCancelEditCommentConatiner(e);
+      e.target && "cancel-comment-button" == e.target.id && this.handleCancelEditCommentConatiner(e);
     });
 
     // END EVENTS
@@ -54,9 +40,7 @@ export default class AddComments {
       e.target.parentElement.parentElement.parentElement.children[2];
     const inputEditContainer = editCommentContainer.children[0];
 
-    // ADD OPACITY TO EDIT CONTAINER
-
-    // TOGGLE EDIT CONTAINER
+      // TOGGLE EDIT CONTAINER
     if (editCommentContainer.style.display == "none") {
       editCommentContainer.style.display = "block";
 
@@ -65,9 +49,6 @@ export default class AddComments {
 
       inputEditContainer.focus();
     } else {
-      this.modalOverlay.classList.remove("active");
-      editCommentContainer.classList.remove("active");
-
       editCommentContainer.style.display = "none";
     }
   }
