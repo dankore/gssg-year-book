@@ -45,7 +45,7 @@
     IF COMMENTS ARRAY EXISTS ON USER DOCUMENT, THEN CHECK IF COMMENTS ARRAY HAS ANY ELEMENT(COMMENTS).
     SHOW NO COMMENT FOUND FOR BOTH IF FALSE
    -->
-  <ul id="comment-container-ul" class="mb-6 bg-white relative">
+  <ul id="comment-container-ul" class="mb-6 bg-white">
     <% if(profile.comments){ %> <% profile.comments.reverse().forEach(comment =>
     { %>
     <li id="li-comment" class="my-2 p-2 rounded">
@@ -106,7 +106,7 @@
       <!-- EDIT COMMENT FORM -->
       <div
         id="edit-comment-container-server-side"
-        class="absolute w-full -ml-2"
+        class="modal"
         style="display: none;"
       >
         <input
@@ -131,8 +131,10 @@
           </button>
         </div>
       </div>
+      
       <!-- EDIT COMMENT FORM ENDS -->
     </li>
     <% }) %> <%}%>
+    
   </ul>
 </section>

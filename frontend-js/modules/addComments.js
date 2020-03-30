@@ -12,7 +12,8 @@ export default class AddComments {
     this.updateButton = document.querySelectorAll("#update-comment-button");
     this.commentsCount = document.querySelector("#comment-count");
     this.commentWordContainer = document.querySelector("#comment-word");
-    this.commentsSection = document.querySelector("#comments-section")
+    this.commentsSection = document.querySelector("#comments-section");
+    this.modalOverlay = document.querySelector(".modal-overlay");
     this.events();
   }
   // EVENTS
@@ -42,7 +43,9 @@ export default class AddComments {
   handleCancelEditCommentConatiner(e) {
     const editCommentContainer =
       e.target.parentElement.parentElement.parentElement.children[2];
-
+    
+    this.modalOverlay.classList.remove("active");
+    editCommentContainer.classList.remove("active");
     editCommentContainer.style.display = "none";
   }
 
@@ -51,11 +54,20 @@ export default class AddComments {
       e.target.parentElement.parentElement.parentElement.children[2];
     const inputEditContainer = editCommentContainer.children[0];
 
+    // ADD OPACITY TO EDIT CONTAINER
+
     // TOGGLE EDIT CONTAINER
     if (editCommentContainer.style.display == "none") {
       editCommentContainer.style.display = "block";
+
+      this.modalOverlay.classList.add("active");
+      editCommentContainer.classList.add("active");
+
       inputEditContainer.focus();
     } else {
+      this.modalOverlay.classList.remove("active");
+      editCommentContainer.classList.remove("active");
+
       editCommentContainer.style.display = "none";
     }
   }
@@ -84,7 +96,9 @@ export default class AddComments {
       .catch(_ => {
         console.log("Error updating comment.");
       });
-
+    
+    this.modalOverlay.classList.remove("active");
+    editCommentContainer.classList.remove("active");
     editCommentContainer.style.display = "none";
   }
 
