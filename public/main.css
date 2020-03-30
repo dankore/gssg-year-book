@@ -1,3 +1,5 @@
+/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
+
 html {
   scroll-behavior: smooth;
 }
@@ -18,19 +20,25 @@ html {
 }
 
 .liveValidationMessage {
+  -webkit-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
   transition: all 0.5s ease-out;
   top: -6px;
   position: absolute;
   visibility: hidden;
   z-index: 1;
-  transform: translateY(100%);
+  -webkit-transform: translateY(100%);
+      -ms-transform: translateY(100%);
+          transform: translateY(100%);
   padding: 5px;
   opacity: 0;
 }
 .liveValidationMessage--show {
   visibility: visible;
   opacity: 1;
-  transform: translateY(0);
+  -webkit-transform: translateY(0);
+      -ms-transform: translateY(0);
+          transform: translateY(0);
 }
 .top-bar {
   border-top-width: 2px;
@@ -52,11 +60,17 @@ html {
   fill: white;
 }
 button:active {
+  -webkit-transition: all 120ms ease-in-out;
+  -o-transition: all 120ms ease-in-out;
   transition: all 120ms ease-in-out;
-  transform: translateY(1px);
+  -webkit-transform: translateY(1px);
+      -ms-transform: translateY(1px);
+          transform: translateY(1px);
 }
 .label-onlick-bg-color:active {
   background-color: #cbd5e0;
+  -webkit-transition: all 200ms ease-in-out;
+  -o-transition: all 200ms ease-in-out;
   transition: all 200ms ease-in-out;
 }
 .modal-overlay {
@@ -78,7 +92,11 @@ button:active {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0);
+    -webkit-transform: translate(-50%, -50%) scale(0);
+        -ms-transform: translate(-50%, -50%) scale(0);
+            transform: translate(-50%, -50%) scale(0);
+    -webkit-transition: 200ms ease-in-out;
+    -o-transition: 200ms ease-in-out;
     transition: 200ms ease-in-out;
     border: 0.2px solid black;
     border-radius: 10px;
@@ -88,7 +106,9 @@ button:active {
     max-width: 80%;
 }
 .modal.active {
-    transform: translate(-50%, -50%) scale(1);
+    -webkit-transform: translate(-50%, -50%) scale(1);
+        -ms-transform: translate(-50%, -50%) scale(1);
+            transform: translate(-50%, -50%) scale(1);
 }
 
 
