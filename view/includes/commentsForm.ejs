@@ -112,17 +112,17 @@
           data-id="<%= comment.commentId %>"
           class="w-full p-2 bg-gray-200 border border-blue-400 rounded"
         ><%= comment.comment %></textarea>
-        <div class="flex justify-between">
+        <div class="flex justify-between py-4">
           <button
             id="cancel-comment-button"
-            class="bg-green-600 text-white px-2 rounded"
+            class="bg-green-600 text-white px-2 rounded hover:bg-green-800"
           >
             Cancel
           </button>
           <button
             data-id="<%= comment.commentId %>"
             id="update-comment-button"
-            class="bg-blue-600 text-white px-2 rounded"
+            class="bg-blue-600 text-white px-2 rounded hover:bg-blue-800"
           >
             Update
           </button>

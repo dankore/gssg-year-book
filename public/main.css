@@ -81,11 +81,15 @@ button:active {
     left: 0;
     bottom: 0;
     opacity: 0;
+    filter: alpha(opacity=0); /* IE8 and lower */
+    zoom: 1; /* Triggers "hasLayout" in IE 7 and lower */
     z-index: -1;
 }
 .modal-overlay.active {
-  z-index: 19;
-    opacity: 0.4;
+  z-index: 0;
+    opacity: 0.5;
+    filter: alpha(opacity=50); /* IE8 and lower */
+    zoom: 1; /* Triggers "hasLayout" in IE 7 and lower */
     cursor: pointer;
 }
 .modal {
@@ -109,7 +113,7 @@ button:active {
     -webkit-transform: translate(-50%, -50%) scale(1);
         -ms-transform: translate(-50%, -50%) scale(1);
             transform: translate(-50%, -50%) scale(1);
-            z-index: 20;
+            z-index: 1;
 }
 .modal::before {
   content: "Edit Comment";
