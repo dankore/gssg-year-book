@@ -27,7 +27,7 @@
       <div style="width: 15rem;">
         <textarea
           id="input-comment"
-          rows="1"
+          rows="2"
           class="focus:bg-gray-100 w-full rounded px-2"
           placeholder="What's on your mind?"
           style="background-color: #F2F3F5; white-space:pre-wrap"
@@ -110,7 +110,6 @@
       <div class="modal shadow-2xl" style="display: none;">
         <textarea
           data-id="<%= comment.commentId %>"
-          rows ="1"
           class="w-full p-2 bg-gray-200 border border-blue-400 rounded"
         ><%= comment.comment %></textarea>
         <div class="flex justify-between py-4">
