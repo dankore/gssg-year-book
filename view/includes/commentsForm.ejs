@@ -25,14 +25,13 @@
         </a>
       </div>
       <div style="width: 15rem;">
-        <input
+        <textarea
           id="input-comment"
-          type="text"
-          name="comment"
-          class="focus:bg-gray-100 w-full p-2"
+          rows="1"
+          class="focus:bg-gray-100 w-full p-2 rounded"
           placeholder="What's on your mind?"
-          style="background-color: #F2F3F5; white-space: pre-wrap;"
-        />
+          style="background-color: #F2F3F5; white-space: pre-wrap;">
+        </textarea>
         <button
           id="add-comment-button"
           class="rounded bg-blue-600 hover:bg-blue-800 text-white w-full"
@@ -108,13 +107,11 @@
         </div>
       </div>
       <!-- EDIT COMMENT FORM -->
-      <div class="modal" style="display: none;">
-        <input
-          type="text"
-          value="<%= comment.comment %>"
+      <div class="modal shadow-2xl" style="display: none;">
+        <textarea
           data-id="<%= comment.commentId %>"
           class="w-full p-2 bg-gray-200 border border-blue-400 rounded"
-        />
+        ><%= comment.comment %></textarea>
         <div class="flex justify-between">
           <button
             id="cancel-comment-button"

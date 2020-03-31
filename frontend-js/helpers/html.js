@@ -83,10 +83,9 @@ ReuseableHtml.prototype.li = data => {
   editCommentWrapper.id = "edit-comment-container";
   editCommentWrapper.classList.add("modal");
   editCommentWrapper.style.display = "none";
-  // INPUT
-  const editcommentInput = document.createElement("input");
-  editcommentInput.setAttribute("type", "text");
-  editcommentInput.setAttribute("value", `${data.comment}`);
+  // TEXT-AREA
+  const editcommentInput = document.createElement("textarea");
+  editcommentInput.innerText = `${data.comment}`
   editcommentInput.setAttribute("data-id", `${data.commentId}`);
   editcommentInput.classList.add(
     "w-full",
