@@ -99,7 +99,7 @@ ReuseableHtml.prototype.li = data => {
   // CANCEL AND UPDATE BUTTONS
   // WRAPPER
   const editCommentControlsWrapper = document.createElement("div");
-  editCommentControlsWrapper.classList.add("flex", "justify-between");
+  editCommentControlsWrapper.classList.add("flex", "justify-between", "py-4");
   // CANCEL BUTTON
   const editCommentCancelButton = document.createElement("button");
   editCommentCancelButton.id = "cancel-comment-button";
@@ -107,7 +107,8 @@ ReuseableHtml.prototype.li = data => {
     "bg-green-600",
     "text-white",
     "px-2",
-    "rounded"
+    "rounded",
+    "hover:bg-green-800"
   );
   const editCommentCancelButtonText = document.createTextNode("Cancel");
   editCommentCancelButton.appendChild(editCommentCancelButtonText);
@@ -119,7 +120,8 @@ ReuseableHtml.prototype.li = data => {
     "bg-blue-600",
     "text-white",
     "px-2",
-    "rounded"
+    "rounded",
+    "hover:bg-blue-800"
   );
   const editCommentUpdateButtonText = document.createTextNode("Update");
   editCommentUpdateButton.appendChild(editCommentUpdateButtonText);
