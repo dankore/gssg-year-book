@@ -31,7 +31,7 @@ ReuseableHtml.prototype.li = data => {
     "overflow-wrap:break-word;min-width:0px;width:15rem;background-color:#F2F3F5;"
   );
   const link2 = document.createElement("a");
-  link2.setAttribute("href", `${data.photo}`);
+  link2.setAttribute("href", "/profile/".concat(data.visitorEmail));
   link2.classList.add("font-medium");
   link2.innerText = `${data.visitorFirstName}`;
   const commentBox = document.createElement("p");
