@@ -99,7 +99,6 @@ button:active {
     -webkit-transition: 200ms ease-in-out;
     -o-transition: 200ms ease-in-out;
     transition: 200ms ease-in-out;
-    border: 0.2px solid black;
     border-radius: 10px;
     z-index: 0;
     background-color: white;
@@ -111,6 +110,12 @@ button:active {
         -ms-transform: translate(-50%, -50%) scale(1);
             transform: translate(-50%, -50%) scale(1);
             z-index: 20;
+}
+.modal::before {
+  content: "Edit Comment";
+  margin-top: 5px;
+  margin-bottom: 10px;
+  display: block;
 }
 
 
