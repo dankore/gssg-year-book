@@ -85,12 +85,13 @@ ReuseableHtml.prototype.li = data => {
   editCommentWrapper.style.display = "none";
   // TEXT-AREA
   const editcommentInput = document.createElement("textarea");
-  editcommentInput.innerText = `${data.comment}`
+  editcommentInput.id = "input-comment";
+  editcommentInput.innerText = `${data.comment}`;
   editcommentInput.setAttribute("data-id", `${data.commentId}`);
+  editcommentInput.setAttribute("style", "background-color: #F2F3F5; white-space:pre-wrap; overflow: hidden;");
   editcommentInput.classList.add(
     "w-full",
     "p-2",
-    "bg-gray-200",
     "border",
     "border-blue-400",
     "rounded"

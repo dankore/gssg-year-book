@@ -13,7 +13,10 @@ export default class AddComments {
   }
   // EVENTS
   events() {
-    this.input.addEventListener("keyup", e => this.handleInputkeyUp(e))
+    // SHOW INPUT CONTENT IN TEXTAREA TAGS
+    this.commentsSection.addEventListener("keyup", e => {
+      e.target && "input-comment" == e.target.id && this.handleInputkeyUp(e);
+    })
     // HANDLES CLIENT/SERVER SIDES EVENTS I.E <LI> TAGS INJECTED INTO THE DOM DYNAMICALLY
     this.commentsSection.addEventListener("click", e => {
       e.target && "add-comment-button" == e.target.id && this.handleAddCommentClick();
@@ -28,6 +31,8 @@ export default class AddComments {
 
   // METHODS
   handleInputkeyUp(e){
+    e.target.style.height = "1px";
+    e.target.style.height = (25+e.target.scrollHeight) + "px";
     this.input.style.height = "1px";
     this.input.style.height = (25+this.input.scrollHeight)+"px";
   }
