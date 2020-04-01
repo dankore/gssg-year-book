@@ -109,8 +109,10 @@
       <!-- EDIT COMMENT FORM -->
       <div class="modal shadow-2xl" style="display: none;">
         <textarea
+          id="input-comment"
           data-id="<%= comment.commentId %>"
-          class="w-full p-2 bg-gray-200 border border-blue-400 rounded"
+          class="w-full p-2 border border-blue-400 rounded"
+          style="background-color: #F2F3F5; white-space:pre-wrap; overflow: hidden;"
         ><%= comment.comment %></textarea>
         <div class="flex justify-between py-4">
           <button
