@@ -12,7 +12,9 @@ let Emails = class emails {
 };
 
 Emails.prototype.transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
   auth: {
     user: "gssgcontactbook@gmail.com",
     pass: process.env.GMAILPW
