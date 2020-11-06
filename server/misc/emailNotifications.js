@@ -13,8 +13,9 @@ let Emails = class emails {
 
 Emails.prototype.transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
-  port: 465,
-  secure: true,
+  port: 587,
+  ignoreTLS: false,
+  secure: false,
   auth: {
     user: "gssgcontactbook@gmail.com",
     pass: process.env.GMAILPW
