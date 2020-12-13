@@ -5,7 +5,7 @@ dotenv.config();
 MongoClient.connect(process.env.CONNECTIONSTRING, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(function (client) {
         module.exports = client;
-        const port = process.env.PORT;
+        const port = process.env.PORT || 3000;
         const server = require('./server/server');
         server.listen(port, () => console.log("Listening on port " + port));
     })

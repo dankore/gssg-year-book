@@ -12,13 +12,14 @@ let Emails = class emails {
 };
 
 Emails.prototype.transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
+  host: 'smtp.mail.yahoo.com',
+  port: 465,
   ignoreTLS: false,
+  service: 'yahoo',
   secure: false,
   auth: {
-    user: "gssgcontactbook@gmail.com",
-    pass: process.env.GMAILPW
+    user: "gssgcontactbook@yahoo.com",
+    pass: process.env.YMAILPW
   }
 });
 
@@ -74,7 +75,7 @@ Emails.prototype.sendLikesSuccessMessage = (
       if (emailsForLikes[i] == profileOwnerEmail) {
         data = {
           bcc: emailsForLikes[i],
-          from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+          from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@yahoo.com>',
           subject: `New like from ${visitorName}`,
           html: `<div style="width: 320px;">
               <p>GSS Gwarinpa Contact Book</p>
@@ -94,7 +95,7 @@ Emails.prototype.sendLikesSuccessMessage = (
       } else {
         data = {
           bcc: emailsForLikes[i],
-          from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+          from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@yahoo.com>',
           subject: `New like from ${visitorName}`,
           html: `<div style="width: 320px;">
               <p>GSS Gwarinpa Contact Book</p>
@@ -167,7 +168,7 @@ Emails.prototype.sendCommentSuccessMessage = (
       if (emailListFromComments[i] == profileOwnerEmail) {
         data = {
           bcc: emailListFromComments[i],
-          from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+          from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@yahoo.com>',
           subject: `${visitorFirstName} commented on your profile`,
           html: `<div style="width: 320px;">
                   <p>GSS Gwarinpa Contact Book</p>
@@ -190,7 +191,7 @@ Emails.prototype.sendCommentSuccessMessage = (
       } else {
         data = {
           bcc: emailListFromComments[i],
-          from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+          from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@yahoo.com>',
           subject: `${visitorFirstName} commented on ${profileOwnerFirstName} ${profileOwnerLastName}'s profile`,
           html: `<div style="width: 320px;">
                   <p>GSS Gwarinpa Contact Book</p>
@@ -224,7 +225,7 @@ Emails.prototype.sendCommentSuccessMessage = (
 Emails.prototype.sendResetPasswordConfirmationMessage = (email, firstName) => {
   const data = {
     bcc: email,
-    from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+    from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@yahoo.com>',
     subject: `${firstName}, You Successfully Reset Your Password - GSS Gwarinpa Contact Book`,
     html:
       `Hello ${firstName},` +
@@ -246,7 +247,7 @@ Emails.prototype.sendResetPasswordConfirmationMessage = (email, firstName) => {
 Emails.prototype.sendResetPasswordToken = (email, firstName, url, token) => {
   const data = {
     bcc: email,
-    from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+    from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@yahoo.com>',
     subject: `${firstName}, Reset Your Password - GSS Gwarinpa Contact Book`,
     html:
       `Hello ${firstName},` +
@@ -277,7 +278,7 @@ Emails.prototype.sendResetPasswordToken = (email, firstName, url, token) => {
 Emails.prototype.regSuccessEmail = (email, firstName) => {
   const data = {
     bcc: email,
-    from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+    from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@yahoo.com>',
     subject: `Congratulations, ${firstName}! Registration Success.`,
     html: `<p>Hello <strong>${firstName},</strong></p>
         <p>You have successfully created an account and added your profile to GSS Gwarinpa Contact Book.</p>
@@ -297,7 +298,7 @@ Emails.prototype.regSuccessEmail = (email, firstName) => {
 Emails.prototype.whoLoggedIn = attemptedUserFirstName => {
   const data = {
     bcc: "adamu.dankore@gmail.com",
-    from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@gmail.com>',
+    from: '"GSS Gwarinpa Contact Book 📗" <gssgcontactbook@yahoo.com>',
     subject: `Login from ${attemptedUserFirstName}`,
     html: `<p><strong>${attemptedUserFirstName}</strong> just logged in.</p>`
   };
