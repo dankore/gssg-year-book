@@ -1,82 +1,61 @@
 <%- include('includes/header') %>
-<section class="max-w-sm px-2 mx-auto sm:px-0">
-<div class="">
-  <a href="/" class="block my-6 text-2xl text-center">GSS Gwarinpa Contact Book</a>
-    <!-- FB LOGIN LINK-->
-    <a href="/fb-login">
-      <div
-        class="flex justify-center items-center text-white rounded px-2 mb-4"
-        style="background-color: #4D68A1;"
-      >
-        <img src="../../static/fb-btn.png" class="rounded mr-2" alt="fb-logo"/>
-        <p>Sign in with Facebook</p>
-      </div>
-    </a>
-    <!-- FB LOGIN LINK ENDS-->
-    <!-- TWITTER LOGIN LINK-->
-    <a href="/twitter-login">
-      <div
-        class="flex justify-center items-center text-white rounded px-2 mb-4"
-         style="background-color: #00acee;"
-      >
-        <img src="../../static/twitter-icon.png" class="rounded mr-2" alt="twitter-icon"/>
-        <p>Sign in with Twitter</p>
-      </div>
-    </a>
-    <!-- TWITTER LOGIN LINK ENDS-->
-    <!-- GOOGLE LOGIN LINK-->
-    <a href="/google-login">
-      <div
-        class="flex justify-center items-center border border-red-400 bg-white rounded px-2"
-      >
-        <img src="../../static/google-btn.png" class="rounded mr-2" alt="google-icon"/>
-        <p>Sign in with Google</p>
-      </div>
-    </a>
-    <!-- GOOGLE LOGIN LINK ENDS-->
-  <p class="my-2 text-center">Or Use Your Email</p>
-  </div>
-<div class="bg-white  rounded">
-  <form action="/login" method="POST" class="p-2 sm:p-4">
-    <%- include('includes/flash') %>
-    <div class="mb-4">
-      <label
-        for="email"
-        class="w-full text-xs font-bold block mb-1 uppercase tracking-wide text-gray-700 "
-        >Enter Your Email</label
-      >
-      <input
-        id="email"
-        name="email"
-        type="text"
-        class="w-full py-3 px-4 appearance-none bg-gray-200 focus:outline-none focus:border-gray-500 focus:bg-white appearance-none border rounded py-1 px-3 text-gray-700 leading-tight"
-      />
+  <section class="max-w-sm px-2 mx-auto sm:px-0">
+    <div>
+      <a href="/" class="block my-6 text-2xl text-center">GSS Gwarinpa Contact Book</a>
+      <!-- FB LOGIN LINK-->
+      <a href="/fb-login">
+        <div class="flex justify-center items-center text-white rounded px-2 mb-4" style="background-color: #4D68A1;">
+          <img src="../../static/fb-btn.png" class="rounded mr-2" alt="fb-logo" />
+          <p>Sign in with Facebook <sup>*</sup></p>
+        </div>
+      </a>
+      <!-- FB LOGIN LINK ENDS-->
+      <!-- TWITTER LOGIN LINK-->
+      <a href="/twitter-login">
+        <div class="flex justify-center items-center text-white rounded px-2 mb-4" style="background-color: #00acee;">
+          <img src="../../static/twitter-icon.png" class="rounded mr-2" alt="twitter-icon" />
+          <p>Sign in with Twitter <sup>*</sup></p>
+        </div>
+      </a>
+      <!-- TWITTER LOGIN LINK ENDS-->
+      <!-- GOOGLE LOGIN LINK-->
+      <a href="/google-login">
+        <div class="flex justify-center items-center border border-red-400 bg-white rounded px-2">
+          <img src="../../static/google-btn.png" class="rounded mr-2" alt="google-icon" />
+          <p>Sign in with Google <sup>*</sup></p>
+        </div>
+      </a>
+      <!-- GOOGLE LOGIN LINK ENDS-->
+      <p class="my-2 text-center">Or Use Your Email</p>
     </div>
-    <div class="mb-4">
-      <div
-        class="flex justify-between mb-1 text-xs uppercase font-bold tracking-wide text-gray-700"
-      >
-        <label for="password" class="">Enter Your Password </label>
-        <a href="/reset-password" class="inline-block text-blue-600">
-          Forgot Your Password?
-        </a>
-      </div>
-      <input
-        id="password"
-        name="password"
-        type="password"
-        autocomplete="current-password"
-        class="w-full py-3 px-4 appearance-none bg-gray-200 focus:outline-none focus:border-gray-500 focus:bg-white appearance-none border rounded py-1 px-3 text-gray-700 leading-tight"
-      />
+    <div class="bg-white rounded">
+      <form action="/login" method="POST" class="p-2 sm:p-4">
+        <%- include('includes/flash') %>
+          <div class="mb-4">
+            <label for="email" class="w-full text-xs font-bold block mb-1 uppercase tracking-wide text-gray-700 ">Enter
+              Your Email</label>
+            <input id="email" name="email" type="text"
+              class="w-full py-3 px-4 appearance-none bg-gray-200 focus:outline-none focus:border-gray-500 focus:bg-white appearance-none border rounded py-1 px-3 text-gray-700 leading-tight" />
+          </div>
+          <div class="mb-4">
+            <div class="flex justify-between mb-1 text-xs uppercase font-bold tracking-wide text-gray-700">
+              <label for="password" class="">Enter Your Password </label>
+              <a href="/reset-password" class="inline-block text-blue-600">
+                Forgot Your Password?
+              </a>
+            </div>
+            <input id="password" name="password" type="password" autocomplete="current-password"
+              class="w-full py-3 px-4 appearance-none bg-gray-200 focus:outline-none focus:border-gray-500 focus:bg-white appearance-none border rounded py-1 px-3 text-gray-700 leading-tight" />
+          </div>
+          <button class="w-full text-white rounded border border-white bg-blue-600 hover:bg-blue-800 px-2 py-3">
+            Login
+          </button>
+      </form>
     </div>
-    <button
-      class="w-full text-white rounded border border-white bg-blue-600 hover:bg-blue-800 px-2 py-3"
-    >
-      Login
-    </button>
-  </form>
-</div>
-<a href="/register" class="block mt-3 px-4">Don't have an account? <span class="text-blue-600">Create yours for free</span></a>
-</section>
+    <a href="/register" class="block mt-3 px-4">Don't have an account? <span class="text-blue-600">Create yours for
+        free</span></a>
+    <p style="font-size: 10px; margin-top: 5px;"><sup>*</sup>In order to register with these services on this site, you
+      need an email address associated with your account.</p>
+  </section>
 
-<%- include('includes/footer') %>
+  <%- include('includes/footer') %>

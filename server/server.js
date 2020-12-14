@@ -1,3 +1,4 @@
+require('dotenv').config;
 const express = require("express"),
   session = require("express-session"),
   MongoStore = require("connect-mongo")(session),
@@ -25,7 +26,7 @@ passport.use(
         "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true",
       callbackURL: `${process.env.TWITTER_CALLABCK_URL}`
     },
-    function(token, tokenSecret, user, cb) {
+    function (token, tokenSecret, user, cb) {
       User.doesEmailExists(user.emails[0].value)
         .then(userBool => {
           if (userBool) {
@@ -64,7 +65,7 @@ passport.use(
       clientSecret: `${process.env.GOOGLE_CLIENT_SECRET}`,
       callbackURL: `${process.env.GOOGLE_CALLABCK_URL}`
     },
-    function(accessToken, refreshToken, user, cb) {
+    function (accessToken, refreshToken, user, cb) {
       User.doesEmailExists(user._json.email)
         .then(userBool => {
           console.log("Server 29. New user: " + userBool);
@@ -108,7 +109,7 @@ passport.use(
       enableProof: true
     },
 
-    function(accessToken, refreshToken, user, cb) {
+    function (accessToken, refreshToken, user, cb) {
       // CHECK IF fbUser exist in database
       User.doesEmailExists(user._json.email)
         .then(userBool => {
@@ -140,11 +141,11 @@ passport.use(
   )
 );
 
-passport.serializeUser(function(user, cb) {
+passport.serializeUser(function (user, cb) {
   cb(null, user);
 });
 
-passport.deserializeUser(function(obj, cb) {
+passport.deserializeUser(function (obj, cb) {
   cb(null, obj);
 });
 
@@ -223,16 +224,16 @@ server.use(async (req, res, next) => {
 });
 
 // SEO
-server.use("/profile/:email", async (req, res, next) => { 
-      await User.findByEmail(req.params.email)
-        .then(userDoc => {
-          userDoc.url = "https://www.gssgcontactbook.com" + req.originalUrl;
-          res.locals.namesOfLikesReceivedFrom = userDoc.likes_received_from;
-          res.locals.seo = userDoc;
-        })
-        .catch(err => {
-          console.log("Server line 235 " + err);
-        });
+server.use("/profile/:email", async (req, res, next) => {
+  await User.findByEmail(req.params.email)
+    .then(userDoc => {
+      userDoc.url = "https://www.gssgcontactbook.com" + req.originalUrl;
+      res.locals.namesOfLikesReceivedFrom = userDoc.likes_received_from;
+      res.locals.seo = userDoc;
+    })
+    .catch(err => {
+      console.log("Server line 235 " + err);
+    });
   next();
 });
 // SEO ENDS
