@@ -201,7 +201,7 @@ User.prototype.login = function() {
         // IF NO MATCHING EMAIL FOUND
         if (!attemptedUser) {
           reject(
-            "That email has not been registered. Click 'Add Your Profile' above to register."
+            "That email has not been registered. Click 'Add Your Contact' above to register."
           );
         }
         // IF MATCHING EMAIL FOUND
