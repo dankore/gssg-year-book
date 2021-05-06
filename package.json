@@ -43,7 +43,7 @@
     "passport-google-oauth": "^2.0.0",
     "passport-twitter": "^1.0.4",
     "passport-yahoo-oauth": "^0.2.0",
-    "sanitize-html": "^1.22.0",
+    "sanitize-html": "^2.3.2",
     "validator": "^12.1.0",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"
